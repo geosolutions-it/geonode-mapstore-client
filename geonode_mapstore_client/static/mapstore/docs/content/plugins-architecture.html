@@ -1,0 +1,102 @@
+
+<html><head></head><body><h1 id="plugins-architecture">Plugins Architecture</h1>
+<hr />
+<p>MapStore2 fully embraces both ReactJS and Redux concepts, enhancing them with the <strong>plugin</strong> concept.</p>
+<p>A plugin in MapStore2 is a smart ReactJS component that is:</p>
+<ul>
+<li><strong>connected</strong> to a Redux store, so that some properties are automatically wired to the standard MapStore2 state</li>
+<li><strong>wired</strong> to standard actions for common events</li>
+</ul>
+<p>In addition a plugin:</p>
+<ul>
+<li>declares some <strong>reducers</strong> that need to be added to the Redux store, if needed</li>
+<li>declares some <strong>epics</strong> that need to be added to the redux-observable middleare, if needed</li>
+<li>is fully <strong>configurable</strong> to be easily customized to a certain level</li>
+</ul>
+<h2 id="building-an-application-using-plugins">Building an application using plugins</h2>
+<p>To use plugins you need to:</p>
+<ul>
+<li>declare available (required) plugins, properly requiring them from the root application component</li>
+<li>load / declare plugins configuration</li>
+<li>create a store that dynamically includes plugins required reducers</li>
+<li>use a PluginsContainer component as the container for your plugins enabled application slice (can be the whole application or just a part of it)</li>
+</ul>
+<h3 id="declare-available-plugins">Declare available plugins</h3>
+<p>Create a plugins.js file where you declare all the needed plugins:</p>
+<p>plugins.js:</p>
+<pre><code class="lang-javascript">module.exports = {
+    plugins: {
+        MyPlugin: require('../plugins/My')
+    },
+    requires: {}
+};
+</code></pre>
+<h3 id="load-create-plugins-configuration-object">Load / Create plugins configuration object</h3>
+<p>Use pluginsConfig.json to configure your plugins.</p>
+<p>pluginsConfig.json:</p>
+<pre><code class="lang-javascript">{
+    ...
+    "standard": [
+        {
+            "name": "Map",
+            "cfg": {
+                "zoomControl": false,
+                "tools": ["locate"]
+            }
+        },
+        ...
+    ],
+    ...
+}
+</code></pre>
+<h3 id="declare-a-plugins-compatible-redux-store">Declare a plugins compatible Redux Store</h3>
+<p>Create a store that properly initializes plugins reducers and epics (see <a href="https://github.com/geosolutions-it/MapStore2/blob/master/web/client/stores/StandardStore.js">standardStore.js</a>) :</p>
+<p>store.js:</p>
+<pre><code class="lang-javascript">const {combineReducers} = require('../utils/PluginsUtils');
+const {createDebugStore} = require('../utils/DebugUtils');
+
+module.exports = (plugins) =&gt; {
+  const allReducers = combineReducers(plugins, {
+     ...
+  });
+  return createDebugStore(allReducers, {});
+};
+</code></pre>
+<h3 id="use-a-plugincontainer-to-render-all-your-plugins">Use a PluginContainer to render all your plugins</h3>
+<p>In the root application component require plugins declaration and configuration  and use them to initialize both the store and a PluginsContainer (see our <a href="https://github.com/geosolutions-it/MapStore2/blob/master/web/client/components/plugins/PluginsContainer.jsx">PluginContainer.jsx</a>):</p>
+<p>App.jsx:</p>
+<pre><code class="lang-javascript">const {pluginsDef} = require('./plugins.js');
+const pluginsCfg = require('./pluginsConfig.json');
+
+const store = require('./store')(pluginsDef);
+
+const plugins = PluginsUtils.getPlugins(pluginsDef);
+
+ReactDOM.render(&lt;PluginsContainer plugins={plugins} mode="standard" pluginsConfig={pluginsCfg}/&gt;, ...container...);
+</code></pre>
+<h2 id="developing-a-plugin">Developing a plugin</h2>
+<p>An example is better than a thousand words:</p>
+<p>My.jsx:</p>
+<pre><code class="lang-javascript">
+// this is a dumb component
+const MyComponent = require('../components/MyComponent');
+const {connect} = require('../utils/PluginsUtils');
+
+// let's wire it to state and actions
+const MyPlugin = connect((state) =&gt; ({
+   myproperty: state.myreducer.property
+}), {
+   myaction
+})(MyComponent);
+
+// let's export the plugin and a set of required reducers
+const myreducer = require('../reducers/myreducer');
+module.exports = {
+   MyPlugin,
+   reducers: {myreducer}
+};
+</code></pre>
+<h2 id="the-plugins-example-application">The Plugins Example Application</h2>
+<p>The <a href="http://dev.mapstore2.geo-solutions.it/mapstore/examples/plugins/">example</a> shows the plugins infrastructure power in an interactive way.</p>
+<p>The UI allows to add / remove plugins from the base applications, and to configure them using a JSON object with plugins configuration properties.</p>
+</body></html>

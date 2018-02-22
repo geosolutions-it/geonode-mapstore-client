@@ -1,0 +1,66 @@
+
+<html><head></head><body><h1 id="map-options">Map options</h1>
+<hr />
+<p>projection: {string} expressed in EPSG values
+units: {string} uom of the coordinates
+center: [object] center of the map with starting point in the bottom-left corner
+zoom: {number} level of zoom
+maxExtent: {number[]} max bbox of the map expressed [minx, miny, maxx, maxy]
+layers: {object[]} list of layers to be loaded on the map</p>
+<p>i.e.</p>
+<blockquote>
+<p><code>{ "projection": "EPSG:900913",
+    "units": "m",
+    "center": {"x": 1000000.000000, "y": 5528000.000000, "crs": "EPSG:900913"},
+    "zoom": 15,
+    "maxExtent": [
+        -20037508.34, -20037508.34,
+        20037508.34, 20037508.34
+    ],
+    "layers": [{...},{...}]
+}</code></p>
+<h1 id="layers-option">Layers option</h1>
+<hr />
+</blockquote>
+<p>i.e.</p>
+<blockquote>
+<p><code>{
+    "url": "http..."
+    "format": "image/png8"
+    "title": "Open Street Map",
+    "name": "mapnik",
+    "group": "background",
+    "visibility": false
+}</code></p>
+</blockquote>
+<h2 id="layer-types">Layer types</h2>
+<ul>
+<li>WMS</li>
+<li>Bing</li>
+<li>Google</li>
+<li>MapQuest</li>
+<li>OSM</li>
+<li>TileProvider</li>
+</ul>
+<h3 id="wms">WMS</h3>
+<h3 id="bing">Bing</h3>
+<h3 id="google">Google</h3>
+<h3 id="mapquest">MapQuest</h3>
+<h3 id="tileprovider">TileProvider</h3>
+<p>TileProvider is a shortcut to easily configure many different layer sources.
+It's enough to add provider property and 'tileprovider' as type property to the layer configuration object. Property value should be in the form of ProviderName.VariantName.</p>
+<p>List of available layer <a href="https://github.com/geosolutions-it/MapStore2/blob/master/web/client/utils/ConfigProvider.js">here</a></p>
+<p>i.e.</p>
+<blockquote>
+<p><code>{
+"type": "tileprovider",
+"title": "Title",
+"provider": "Stamen.Toner",
+"name": "Name",
+"group": "GroupName",
+"visibility": false
+}</code></p>
+</blockquote>
+<p>Options passed in configuration object, if already configured by TileProvider,  will be overridden.</p>
+<p>Openlayer's TileProvider at the moment doesn't support minZoom configuration property and hi resolution map</p>
+</body></html>

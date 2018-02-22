@@ -1,0 +1,62 @@
+
+<html><head></head><body><h1 id="configuring-plugins">Configuring plugins</h1>
+<hr />
+<p>To configure the plugins used by your application, a dedicated section is available in the <strong>localConfig.json</strong> configuration file:</p>
+<pre><code class="lang-js">"plugins": {
+  ...
+}
+</code></pre>
+<p>Inside the <strong>plugins</strong> section, several modes can be configured (e.g. desktop or mobile), each one with its own list of plugins:</p>
+<pre><code class="lang-js">"plugins": {
+  "mobile": [...],
+  "desktop": [...]
+}
+</code></pre>
+<p>Each plugin can be simply listed (and the default configuration is used):</p>
+<pre><code class="lang-js">"plugins": {
+  ...
+  "desktop": ["Map", "MousePosition", "Toolbar", "TOC"]
+}
+</code></pre>
+<p>or fully configured:</p>
+<pre><code class="lang-js">"plugins": {
+  ...
+  "desktop": [{
+    "name": "Map",
+       ...
+    }
+  },
+  ...
+  ]
+}
+</code></pre>
+<h2 id="dynamic-configuration">Dynamic configuration</h2>
+<p>Configuration properties of plugins can use expressions, so that they are dynamically bound to the
+application state.</p>
+<p>An expression is anything between curly brackets ({...}) that is a javascript expression,
+where the <strong>monitored state</strong> of the application is available as a set of variables.</p>
+<p>To define the monitored state, you have to add a <strong>monitorState</strong> property in <strong>localConfig.json</strong>.</p>
+<pre><code class="lang-js">{
+  ...
+  "monitorState": [{"name": "mapType", "path": "mapType.mapType"}]
+  ...
+}
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><strong>name</strong> is the name of the variable that can be used in expressions</li>
+<li><strong>path</strong> is a javascript object path to the state fragment to be monitored (e.g. map.present.zoom)</li>
+</ul>
+<p>When you have a monitored state, you can use it in configuration properties this way:
+Be sure to write a valid javascript expression.</p>
+<pre><code class="lang-js">"cfg": {
+  ...
+  "myProp": "{state('mapType') === 'openlayers' ? 1 : 2}"
+  ...
+}
+</code></pre>
+<p>Expressions are supported in <strong>cfg</strong> properties and in <strong>hideFrom</strong> and <strong>showIn</strong> sections.</p>
+<p>In addition to monitored state also the <strong>page request parameters</strong> are available as variables to be
+used in expressions.</p>
+<p>Look at the <a href="./api/plugins">plugin reference page</a> for a list of available configuration properties.</p>
+</body></html>

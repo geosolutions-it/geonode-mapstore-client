@@ -1,0 +1,42 @@
+
+<html><head></head><body><h1 id="code-conventions">Code conventions</h1>
+<hr />
+<p>In order to preserve quality, maintainability and testability when you develop in MapStore 2  you should follow the following rules and best practices. </p>
+<h1 id="tl-dr">TL;DR</h1>
+<hr />
+<ul>
+<li>Access to the state using state selectors</li>
+<li>Prefer <code>initialState</code> for initial/default configuration over plugin configuration</li>
+<li>Reuse components with HOCs or create stateless and context-less new components (as much as possible)</li>
+<li>Use axios and redux-observable for async</li>
+</ul>
+<h2 id="access-to-the-state-using-state-selectors">Access to the state using state selectors</h2>
+<p>Is <strong>strongly recommended</strong> to not access to the state directly inside the <code>mapStateToProps</code> function of <code>react-redux</code> .
+Use (or define) selectors in the <code>selectors</code> directory. This provides the following advantages:</p>
+<ul>
+<li>Selectors can be reused in epics.</li>
+<li>Ready to use optimization with reselect</li>
+<li>Simplify future refactoring</li>
+<li>Easy unit testing and bug identification</li>
+</ul>
+<p>Wrapping all the access to the state inside well-defined selector makes easier to add functionalities and will increase code maintainability. You should always reuse existing selectors (or create new ones) to access to the application state for core application functionalities.
+It will help also future refactoring because any change to the state structure (from the reducer point of view) or data source (from the components point of view) requires only changes to the interested selectors.</p>
+<p>A selector should be placed into the proper <code>selectors/&lt;state-slice&gt;.js</code> file with the same name of the relative reducer.
+When a selector retrieves data from more than one state slices, you should place it in the selector nearest by concern. For instance <code>isFeatureGridOpen</code> should be placed into <code>featuregrid</code></p>
+<p>If you don't work on a core functionality, where the state is shared between many components, defining the selector directly in the plug-in is not denied (e.g. examples).</p>
+<h2 id="prefer-initialstate-over-plugin-configuration">Prefer <code>initialState</code> over plugin configuration</h2>
+<p>In the past we had a plug-in configuration and initial state. 
+The plug-in configuration can be used only for not-shared and constant configurations of the plugin (e.g. a flag that enables a functionality that is present only in the plugin). If you are not in one of these 2 cases, you should prefer the state. 
+Use the <code>initialState</code> in localConfig to configure the application.</p>
+<p><strong>note</strong>: An empty React state has to be set as NULL (null), empty objects ({}) are not valid empty states.</p>
+<h2 id="reuse-components-with-hocs">Reuse components with HOCs</h2>
+<p>In order to encourage the reuse of the components into a consistent UI you should reuse the existing components as much as possible. Remap your properties with application or local state using recompose HOC.
+When you have to write a new components, they should be stateless and context-less, when possible.
+This is not mandatory because mapping existing libs to the one-way data binding paradigm or wrap them into components is hard and may require some state/context trick. Anyway is <strong>strongly recommended</strong>.</p>
+<h2 id="use-axios-and-redux-observable-for-async">Use axios and redux-observable for async</h2>
+<p>We are moving from redux-thunk to redux-observable. All new functionalities that require async/side effect should be implemented using the redux-observable middleware. redux-thunk usage is deprecated and will be removed soon.</p>
+<p>Because of the authentication system management, all AJAX request should pass throw <code>axios</code>.
+Using axios + RxJS means that you will have to wrap axios calls in something like:</p>
+<pre><code>Rx.Observable.defer( () =&gt; axios.post(...)).map...
+</code></pre><p>Use defer to allow the usage of RxJS retry. We still not support real AJAX cancellation at all, but we would like to provide some utility function/operator to bind <code>axios</code> cancellation functionalities into the RxJS flow in the future.</p>
+</body></html>

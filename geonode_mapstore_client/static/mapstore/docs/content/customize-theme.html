@@ -1,0 +1,24 @@
+
+<html><head></head><body><h1 id="how-to-customize-the-theme">How to Customize the Theme</h1>
+<hr />
+<p>The look and feel is completely customizable either using one of the included themes, or building your own. Themes are built using <a href="http://lesscss.org/">less</a>.<br>You can find the default theme here: <a href="https://github.com/geosolutions-it/MapStore2/tree/master/web/client/themes/default">https://github.com/geosolutions-it/MapStore2/tree/master/web/client/themes/default</a></p>
+<p>In the <a href="https://github.com/geosolutions-it/MapStore2/tree/master/web/client/themes">themes folder</a> you can also find other ones that you can study.</p>
+<p>To add a new theme:</p>
+<ol>
+<li>create a new folder in the themes folder with the name of your theme</li>
+<li>create less files in the folder (at least <code>theme.less</code>, the main file, and <code>variables.less</code>, to customize standard variables)</li>
+<li>add the new theme to the <a href="https://github.com/geosolutions-it/MapStore2/blob/master/web/client/themes/index.js">index file</a>, with the id corresponding to the theme folder name</li>
+</ol>
+<p>You can then switch your application to use the theme adding a new section in the <code>appConfig.js</code> file:</p>
+<pre><code>initialState: {
+    defaultState: {
+        ...
+        theme: {
+            selectedTheme: {
+                id: &lt;your theme id&gt;
+            }
+        },
+        ...
+     }
+}
+</code></pre></body></html>

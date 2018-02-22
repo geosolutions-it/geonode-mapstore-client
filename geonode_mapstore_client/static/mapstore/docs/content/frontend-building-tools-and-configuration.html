@@ -1,0 +1,52 @@
+
+<html><head></head><body><p>Frontend building is delegated to <a href="https://www.npmjs.com/">NPM</a> and so leverages the NodeJS ecosystem.</p>
+<p>In particular:</p>
+<ul>
+<li>a <strong><a href="https://github.com/geosolutions-it/MapStore2/blob/master/package.json">package.json</a></strong> file is used to configure frontend dependencies, needed tools and building scripts</li>
+<li><strong><a href="https://babeljs.io/">babel</a></strong> is used for ES6/7 and JSX transpiling integrated with the other tools (e.g. webpack)</li>
+<li><strong><a href="http://webpack.github.io/docs/webpack-dev-server.html">webpack-dev-server</a></strong> is used to host the development application instance</li>
+<li><strong><a href="http://mochajs.org/">mocha</a>/<a href="https://github.com/mjackson/expect">expect</a></strong> is used as a testing framework (with BDD style unit-tests)</li>
+<li><strong><a href="http://webpack.github.io/">webpack</a></strong>: as the bundling tool, for development (see <a href="https://github.com/geosolutions-it/MapStore2/blob/master/webpack.config.js">webpack.config.js</a>), deploy (see <a href="https://github.com/geosolutions-it/MapStore2/blob/master/prod-webpack.config.js">prod-webpack.config.js</a>) and test (see <a href="https://github.com/geosolutions-it/MapStore2/blob/master/tests.webpack.js">test.webpack.js</a></li>
+<li><strong><a href="http://karma-runner.github.io/">karma</a></strong> is used as the test suite runner, with several plugins to allow for custom reporting, browser running and so on; the test suite running is configured through different configuration files, for <strong><a href="https://github.com/geosolutions-it/MapStore2/blob/master/karma.conf.single-run.js">single running</a></strong>  or <strong><a href="https://github.com/geosolutions-it/MapStore2/blob/master/karma.conf.continuous-test.js">continuous testing</a></strong></li>
+<li><strong><a href="https://gotwarlost.github.io/istanbul/">istanbul</a>/<a href="https://www.npmjs.com/package/coveralls">coveralls</a></strong> are used for code coverage reporting</li>
+<li><strong><a href="eslint.org">eslint</a></strong> is used to enforce coding styles guidelines, the tool is configured using a <strong><a href="https://github.com/geosolutions-it/MapStore2/blob/master/.eslintrc">.eslintrc</a></strong> file</li>
+</ul>
+<h1 id="available-scripts">Available scripts</h1>
+<hr />
+<ul>
+<li>download dependencies and init developer environment</li>
+</ul>
+<p><code>npm install</code></p>
+<ul>
+<li>start development instance</li>
+</ul>
+<p><code>npm start</code></p>
+<ul>
+<li>start development instance with examples</li>
+</ul>
+<p><code>npm run examples</code></p>
+<ul>
+<li>run test suite once</li>
+</ul>
+<p><code>npm test</code></p>
+<ul>
+<li>run continuous test suite running</li>
+</ul>
+<p><code>npm run continuoustest</code></p>
+<ul>
+<li>run single build / bundling</li>
+</ul>
+<p><code>npm run compile</code></p>
+<ul>
+<li>run ESLint checks</li>
+</ul>
+<p><code>npm run lint</code></p>
+<ul>
+<li>run tests from Maven</li>
+</ul>
+<p><code>npm run mvntest</code></p>
+<ul>
+<li>build for travis</li>
+</ul>
+<p><code>npm run travis</code></p>
+</body></html>

@@ -1,0 +1,93 @@
+
+<html><head></head><body><h2 id="pull-request-guidelines">Pull request guidelines</h2>
+<p>Your pull request must:</p>
+<ul>
+<li><p>Follow MapStore 2's coding style.</p>
+</li>
+<li><p>The new components have to be tested.</p>
+</li>
+<li><p>Pass the integration tests run automatically by the Travis Continuous
+Integration system.</p>
+</li>
+<li><p>Address a single issue or add a single item of functionality.</p>
+</li>
+<li><p>Contain a clean history of small, incremental, logically separate commits,
+with no merge commits.</p>
+</li>
+<li><p>Use clear commit messages.</p>
+</li>
+<li><p>Be possible to merge automatically.</p>
+</li>
+</ul>
+<h3 id="follow-mapstore-2-s-coding-style">Follow MapStore 2's coding style</h3>
+<p>MapStore 2 follows a strict coding style, enforced by <a href="http://eslint.org/">ESLint</a> rules.</p>
+<p>The set of used rules can be found in the <a href="https://github.com/geosolutions-it/MapStore2/blob/master/.eslintrc">.eslintrc</a> file, in the root folder of the project.</p>
+<p>You can run the linter locally on your machine before committing using the <code>lint</code>
+target:</p>
+<pre><code>$ npm lint
+</code></pre><p>In addition, take care of adding the standard file header in each javascript / css added file, and update copyright years in modified ones.</p>
+<p>This is the standard file header:</p>
+<pre><code>/*
+ * Copyright &lt;year&gt;, GeoSolutions Sas.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+</code></pre><h3 id="the-components-have-to-be-tested">The components have to be tested</h3>
+<p>It is strongly recommended that you run</p>
+<pre><code>$ npm test
+</code></pre><p>before every commit.  This will catch many problems quickly, and it is much
+faster than waiting for the Travis CI integration tests to run.</p>
+<p>The <code>test</code> build target runs a number of quick tests on your code.  </p>
+<h3 id="configure-your-editor">Configure your editor</h3>
+<p>If possible, configure your editor to follow the coding conventions of the
+library.  A <code>.editorconfig</code> file is included at the root of the repository that
+can be used to configure whitespace and charset handling in your editor.  See
+that file for a description of the conventions.  The <a href="http://editorconfig.org/#download">EditorConfig</a> site links to plugins for various editors.</p>
+<h3 id="pass-the-integration-tests-run-automatically-by-the-travis-ci-system">Pass the integration tests run automatically by the Travis CI system</h3>
+<p>The integration tests contain a number of automated checks to ensure that the
+code follows the MapStore 2 style and does not break tests or examples.  You
+can run the integration tests locally using the <code>test</code> target:</p>
+<pre><code>$ npm test
+</code></pre><h3 id="address-a-single-issue-or-add-a-single-item-of-functionality">Address a single issue or add a single item of functionality</h3>
+<p>Please submit separate pull requests for separate issues.  This allows each to
+be reviewed on its own merits.</p>
+<h3 id="contain-a-clean-history-of-small-incremental-logically-separate-commits-with-no-merge-commits">Contain a clean history of small, incremental, logically separate commits, with no merge commits</h3>
+<p>The commit history explains to the reviewer the series of modifications to the
+code that you have made and breaks the overall contribution into a series of
+easily-understandable chunks.  Any individual commit should not add more than
+one new class or one new function.  Do not submit commits that change thousands
+of lines or that contain more than one distinct logical change.  Trivial
+commits, e.g. to fix lint errors, should be merged into the commit that
+introduced the error.  See the <a href="http://en.wikipedia.org/wiki/Atomic_commit#Atomic_Commit_Convention">Atomic Commit Convention on Wikipedia</a> for more detail.</p>
+<p><code>git apply --patch</code> and <code>git rebase</code> can help you create a clean commit
+history.
+<a href="http://www.reviewboard.org/docs/codebase/dev/git/clean-commits/">Reviewboard.org</a>
+and <a href="http://git-scm.com/book/en/Git-Tools-Rewriting-History">Pro GIT</a> have
+explain how to use them.</p>
+<h3 id="use-clear-commit-messages">Use clear commit messages</h3>
+<p>Commit messages should be short, begin with a verb in the imperative, and
+contain no trailing punctuation. We follow
+<a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html</a>
+for the formatting of commit messages.</p>
+<p>Git commit message should look like:</p>
+<pre><code>Header line: explaining the commit in one line
+
+Body of commit message is a few lines of text, explaining things
+in more detail, possibly giving some background about the issue
+being fixed, etc etc.
+
+The body of the commit message can be several paragraphs, and
+please do proper word-wrap and keep columns shorter than about
+74 characters or so. That way "git log" will show things
+nicely even when it's indented.
+
+Further paragraphs come after blank lines.
+</code></pre><p>Please keep the header line short, no more than 50 characters.</p>
+<h3 id="be-possible-to-merge-automatically">Be possible to merge automatically</h3>
+<p>Occasionally other changes to <code>master</code> might mean that your pull request cannot
+be merged automatically.  In this case you may need to rebase your branch on a
+more recent <code>master</code>, resolve any conflicts, and <code>git push --force</code> to update
+your branch so that it can be merged automatically.</p>
+</body></html>

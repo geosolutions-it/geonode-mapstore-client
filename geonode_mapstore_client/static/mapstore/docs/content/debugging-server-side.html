@@ -1,0 +1,43 @@
+
+<html><head></head><body><h1 id="run-or-debug-server-side-part-using-mvn-and-eclipse">Run or Debug server side part using mvn and eclipse</h1>
+<hr />
+<p>To run or debug the server side part of MapStore we suggest to use jetty:run plugin. 
+This guide explains how to do it with Eclipse. This procedure is tested with Eclipse Luna. </p>
+<h2 id="simply-run-the-server-side-part">Simply Run the server side part</h2>
+<p>you can simply run the server side part using <code>mvn jetty:run</code> command. To run the server side part only, run: </p>
+<pre><code>mvn jetty:run -Pserveronly
+</code></pre><p>This will skip the javascript building phase, you can now connect the webpack proxy to the server side proxy and debug client side part using: </p>
+<pre><code>npm start
+</code></pre><h2 id="enable-remote-debugging-with-jetty-run">Enable Remote Debugging with jetty:run</h2>
+<p>Set the maven options as following : </p>
+<pre><code># Linux 
+MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n"
+</code></pre><pre><code># Windows
+set MAVEN_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n
+</code></pre><p>then run jetty</p>
+<pre><code>mvn jetty:run -Pserveronly
+</code></pre><h3 id="setup-eclipse-project">Setup eclipse project</h3>
+<ul>
+<li>Run eclipse plugin<pre><code>mvn eclipse:eclipse
+</code></pre></li>
+<li>Import the project in eclipse from <strong>File --&gt; Import</strong> </li>
+<li>Then select Existing project into the Workspace</li>
+<li>Select root directory as "web" (to avoid eclipse to iterate over all node_modules directories looking for eclipse project) </li>
+<li>import the project</li>
+</ul>
+<h3 id="start-debugging-with-eclipse">Start Debugging with eclipse</h3>
+<ul>
+<li>Start Eclipse and open <strong>Run --&gt; Debug Configurations</strong> </li>
+<li>Create a new Remote Java Application selecting the project "mapstore-web" setting:<ul>
+<li>host localhost</li>
+<li>port 4000 </li>
+<li>Click on <em>Debug</em> 
+Remote debugging is now available. </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>NOTE</strong> With some version of eclipse you will have to set <code>suspend=y</code> in mvn options to make it work. In this case 
+the server will wait for the debug connection at port 4000 (<code>address=4000</code>)</p>
+</blockquote>
+</body></html>

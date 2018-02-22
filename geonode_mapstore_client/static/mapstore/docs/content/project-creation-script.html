@@ -1,0 +1,49 @@
+
+<html><head></head><body><h3 id="create-your-own-mapstore2-project">Create your own MapStore2 project</h3>
+<p>To create a new MapStore2 based project you can use the createProject script:</p>
+<pre><code>node ./createProject.js &lt;projectType&gt; &lt;projectName&gt; &lt;projectVersion&gt; &lt;projectDescription&gt; &lt;gitRepositoryUrl&gt; &lt;outputFolder&gt;
+</code></pre><p>All the arguments are mandatory:</p>
+<ul>
+<li><strong>projectName</strong>: short project name that will be used as the repository name on github, webapp path and name in package.json</li>
+<li><strong>projectType</strong>: type of project to create, currently two types of projects are supported:<ul>
+<li><strong>standard</strong>: is a copy of the standard MapStore2 project, ready to be used and customized</li>
+<li><strong>custom</strong>: is a simple (skeleton) project, useful if you want to build a custom application using the SDK</li>
+</ul>
+</li>
+<li><strong>projectVersion</strong>: project version in package.json (X.Y.Z)</li>
+<li><strong>projectDescription</strong>: project description, used in sample index page and as description in package.json</li>
+<li><strong>gitRepositoryUrl</strong>: full url to the github repository where the project will be published</li>
+<li><strong>outputFolder</strong>: folder where the project will be created</li>
+</ul>
+<p>At the end of the script execution, the given outputFolder will be populated by all the configuration files needed to start working on the project. Moreover, the local git repo will be initialized and the MapStore2 submodule added and downloaded.</p>
+<p>If you create a <em>standard</em> project, you can customize it editing <strong>js/app.jsx</strong>: look at the comments for hints and the MapStore2 documentation for more details.</p>
+<p>If you create a <em>custom</em> project, you will find a simple application in the <strong>js</strong> folder (app.jsx is the entry point) with two pages (home and main).</p>
+<p>The following steps are:</p>
+<ul>
+<li>npm install to download dependencies</li>
+<li>npm start to test the project</li>
+<li>git add / push to publish the initial project on the git repo</li>
+<li>./build.sh to build the full war</li>
+</ul>
+<h3 id="create-a-new-project-type">Create a new project type</h3>
+<p>If you are not happy with the available project types (<em>standard</em> and <em>custom</em>), you can extend them adding a new folder in <strong>project</strong>.</p>
+<p>The folder will contain two subfolders:</p>
+<ul>
+<li><strong>static</strong>: for static content, to be copied as is to the project folder</li>
+<li><strong>templates</strong>: for template files, containing project-dependent variables that will be replaced by the createProject script. You can use the following variables:<ul>
+<li><strong>__PROJECTNAME__</strong>: \<projectname\> parameter value</projectname\></li>
+<li><strong>__PROJECTDESCRIPTION__</strong>: \<projectdescription\> parameter value</projectdescription\></li>
+<li><strong>__PROJECTVERSION__</strong>: \<projectversion\> parameter value</projectversion\></li>
+<li><strong>__REPOURL__</strong>: \<gitrepositoryurl\> parameter value</gitrepositoryurl\></li>
+</ul>
+</li>
+</ul>
+<p>In addition to static and templates, the following files from the root MapStore2 folder will be copied:</p>
+<ul>
+<li>.babelrc</li>
+<li>.editorconfig</li>
+<li>.eslintrc</li>
+<li>.eslintignore</li>
+<li>LICENSE.txt</li>
+</ul>
+</body></html>

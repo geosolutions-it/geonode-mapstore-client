@@ -1,0 +1,8 @@
+
+<html><head></head><body><h1 id="faq">FAQ</h1>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="autowatch-doesn-t-work-on-linux-">Autowatch doesn't work on Linux.</h3>
+<p>You should need to increase <code>max_user_watches</code> variable for inotify.</p>
+<pre><code>echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;&amp; sudo sysctl -p
+</code></pre></body></html>
