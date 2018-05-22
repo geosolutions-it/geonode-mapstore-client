@@ -22,8 +22,8 @@ Run `npm test` to run the full test suite with code coverage report.
 
 ## Building
 
-Building is done via webpack and the command is `npm build`  
-The dist folder is where the minified versions of these files are stored.  
+- Building is done via webpack and the command is `npm build`  
+- The dist folder is where the minified versions of these files are stored.  
 
 ## Deployment to GH-pages
 
@@ -36,21 +36,32 @@ The deplyoment uses the `index-gh.html` please keep this file in sync with `inde
 
 ## Integrating into GeoNode/Django
 
-Add `django-geonode-mapstore-client` to your requirements.txt
-Add `geonode-mapstore-client` to your `INSTALLED_APPS`
+- Add `django-geonode-mapstore-client` to your requirements.txt
+- Add `geonode-mapstore-client` to your `INSTALLED_APPS`
 
 ### For GeoNode
-@DEPRECATED
-Change the `LAYER_PREVIEW_LIBRARY` to `mapstore2`
+Update your `settings.py` as follows:
+
+```
+# To enable the MapStore2 based Client enable those
+if 'geonode_mapstore_client' not in INSTALLED_APPS:
+    INSTALLED_APPS += ('geonode_mapstore_client', )
+GEONODE_CLIENT_LAYER_PREVIEW_LIBRARY = 'mapstore'  # DEPRECATED use HOOKSET instead
+GEONODE_CLIENT_HOOKSET = "geonode_mapstore_client.hooksets.MapStoreHookSet"
+```
 
 ### For Django
 We added templatetags you can use in your templates
 
-Add `{% client_viewer_js %}` to include the viewer javasricpt
-Add `{% client_composer_js %}` to include the composer javasricpt
+- Add `{% client_viewer_js %}` to include the viewer javasricpt
+- Add `{% client_composer_js %}` to include the composer javasricpt
 
 The following templates are available:
+
 `client_map_view_html` for the full map view
+
 `client_map_detail_view_html` for a smaller map view (as in the map preview)
+
 `client_map_new_html` create a new map with composer
+
 `client_layer_map_html` smaller map view for the layer preview
