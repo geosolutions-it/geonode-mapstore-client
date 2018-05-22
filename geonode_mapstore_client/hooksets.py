@@ -8,10 +8,11 @@
 # LICENSE file in the root directory of this source tree.
 #
 #########################################################################
+from geonode.client.hooksets import GeoExtHookSet
 from .converters import ms2_config_converter
 
 
-class MapStoreHookSet(object):
+class MapStoreHookSet(GeoExtHookSet):
 
     def get_request(self, context):
         if context and 'request' in context:
@@ -47,47 +48,50 @@ class MapStoreHookSet(object):
         self.initialize_context(context)
         return 'geonode-mapstore-client/layer_map.html'
 
-    def layer_edit_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/layer_map.html'
+    # -- Not implemented yet
+    # def layer_edit_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/layer_map.html'
 
     def layer_update_template(self, context=None):
         self.initialize_context(context)
         return 'geonode-mapstore-client/layer_map.html'
 
-    def layer_embed_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/layer_map.html'
+    # -- Not implemented yet
+    # def layer_embed_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/layer_map.html'
 
     def layer_download_template(self, context=None):
         self.initialize_context(context)
         return 'geonode-mapstore-client/layer_map.html'
 
     # Maps
-    def map_detail_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/map_detail.html'
-
-    def map_new_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/map_new.html'
-
-    def map_view_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/map_view.html'
-
-    def map_edit_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/edit_map.html'
-
-    def map_update_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/edit_map.html'
-
-    def map_embed_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/map_view.html'
-
-    def map_download_template(self, context=None):
-        self.initialize_context(context)
-        return 'geonode-mapstore-client/map_view.html'
+    # -- Not implemented yet
+    # def map_detail_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/map_detail.html'
+    #
+    # def map_new_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/map_new.html'
+    #
+    # def map_view_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/map_view.html'
+    #
+    # def map_edit_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/edit_map.html'
+    #
+    # def map_update_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/edit_map.html'
+    #
+    # def map_embed_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/map_view.html'
+    #
+    # def map_download_template(self, context=None):
+    #     self.initialize_context(context)
+    #     return 'geonode-mapstore-client/map_view.html'

@@ -138,7 +138,34 @@ class MapStore2GeoExtConfigConverter(object):
                         overlay['format'] = layer['format'] if 'format' in layer else "image/png"
 
                         overlay['bbox'] = {}
-                        if 'bbox' in layer:
+                        if 'capability' in layer:
+                            capa = layer['capability']
+                            if 'styles' in capa:
+                                overlay['styles'] = capa['styles']
+                            if 'abstract' in capa:
+                                overlay['abstract'] = capa['abstract']
+                            if 'attribution' in capa:
+                                overlay['attribution'] = capa['attribution']
+                            if 'keywords' in capa:
+                                overlay['keywords'] = capa['keywords']
+                            if 'dimensions' in capa:
+                                overlay['dimensions'] = capa['dimensions']
+                            if 'llbbox' in capa:
+                                overlay['llbbox'] = capa['llbbox']
+                            if 'bbox' in capa:
+                                bbox = capa['bbox']
+                                if viewer_obj['map']['projection'] in bbox:
+                                    proj = viewer_obj['map']['projection']
+                                    bbox = capa['bbox'][proj]
+                                    overlay['bbox']['bounds'] = {
+                						"minx": self.get_valid_number(bbox['bbox'][0]),
+                						"miny": self.get_valid_number(bbox['bbox'][1]),
+                						"maxx": self.get_valid_number(bbox['bbox'][2]),
+                						"maxy": self.get_valid_number(bbox['bbox'][3])
+                					}
+                                    overlay['bbox']['crs'] = bbox['srs']
+
+                        if 'bbox' in layer and not overlay['bbox']:
                             overlay['bbox']['bounds'] = {
         						"minx": self.get_valid_number(layer['bbox'][0], default=layer['bbox'][2], complementar=True),
         						"miny": self.get_valid_number(layer['bbox'][1], default=layer['bbox'][3], complementar=True),
@@ -188,7 +215,7 @@ class MapStore2GeoExtConfigConverter(object):
             ycoord = SpatialReference(srid)
             trans = CoordTransform(ycoord, gcoord)
             poly.transform(trans)
-            zoom = GoogleZoom().get_zoom(poly)
+            zoom = GoogleZoom().get_zoom(poly) + 1
         except:
             traceback.print_exc()
             tb = traceback.format_exc()

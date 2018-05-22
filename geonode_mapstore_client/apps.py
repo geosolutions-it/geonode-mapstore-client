@@ -8,9 +8,14 @@
 # LICENSE file in the root directory of this source tree.
 #
 #########################################################################
-default_app_config = "geonode_mapstore_client.apps.AppConfig"
+from django.apps import AppConfig as BaseAppConfig
 
 
-class GeoNodeMapstore2Exception(Exception):
-    """Base class for exceptions in this module."""
-    pass
+class AppConfig(BaseAppConfig):
+
+    name = "geonode_mapstore_client"
+    label = "geonode_mapstore_client"
+
+    def ready(self):
+        super(AppConfig, self).ready()
+        # run_setup_hooks()

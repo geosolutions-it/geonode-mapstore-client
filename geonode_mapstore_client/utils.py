@@ -10,10 +10,11 @@
 #########################################################################
 from __future__ import unicode_literals
 
+from geonode_mapstore_client import GeoNodeMapstore2Exception
+
 from math import atan, exp, log, pi, sin
 
 from django.contrib.gis.geos import GEOSGeometry, LinearRing, Point, Polygon
-from django.contrib.gis.maps.google.gmap import GoogleMapException
 from django.utils.six.moves import range
 
 # Constants used for degree to radian conversion, and vice-versa.
