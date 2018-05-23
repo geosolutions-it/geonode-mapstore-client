@@ -28,12 +28,19 @@ class MapStoreHookSet(GeoExtHookSet):
         if context:
             request = self.get_request(context)
             context['ACCESS_TOKEN'] = self.get_access_token(request)
-            if 'viewer' in context:
+            config = context['viewer'] if 'viewer' in context else None
+            if not config and len(context.dicts) > 0:
+                for ctx in context.dicts:
+                    if 'preview' in ctx and (
+                        ctx['preview'] in ('geoext', 'mapstore', 'mapstore2', 'ms2') and 'config' in ctx):
+                        config = ctx['config']
+            ms2_config = {}
+            if config:
                 try:
-                    ms2_config = ms2_config_converter.convert(context['viewer'], request)
-                    context['ms2_config'] = ms2_config
+                    ms2_config = ms2_config_converter.convert(config, request)
                 except:
-                    context['ms2_config'] = ''
+                    ms2_config = '{}'
+            context['ms2_config'] = ms2_config
 
     # Layers
     def layer_detail_template(self, context=None):
@@ -67,11 +74,11 @@ class MapStoreHookSet(GeoExtHookSet):
         return 'geonode-mapstore-client/layer_map.html'
 
     # Maps
+    def map_detail_template(self, context=None):
+        self.initialize_context(context)
+        return 'geonode-mapstore-client/map_detail.html'
+
     # -- Not implemented yet
-    # def map_detail_template(self, context=None):
-    #     self.initialize_context(context)
-    #     return 'geonode-mapstore-client/map_detail.html'
-    #
     # def map_new_template(self, context=None):
     #     self.initialize_context(context)
     #     return 'geonode-mapstore-client/map_new.html'

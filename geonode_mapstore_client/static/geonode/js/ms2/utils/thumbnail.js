@@ -45,7 +45,7 @@ var createMapThumbnail = function(obj_id) {
         url = url.replace('new', obj_id);
     }
 
-    url+= '/thumbnail';
+    url += '/thumbnail';
     var body = ("<div style='height:" + height + "px; width: " + width + "px;'>" + map.html() + "</div>");
 
     $.ajax({
