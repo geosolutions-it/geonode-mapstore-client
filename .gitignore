@@ -9,7 +9,7 @@ pip-log.txt
 .idea/
 .vscode/
 .pytest_cache/
-dist/
+# dist/
 build/
 _build/
 reports/
@@ -19,7 +19,7 @@ node_modules/
 build
 target
 MANIFEST
-dist
+# dist
 
 django_geonode_mapstore_client.egg-info/
-geonode_mapstore_client/static/geonode_mapstore_client
+# geonode_mapstore_client/static/geonode_mapstore_client
