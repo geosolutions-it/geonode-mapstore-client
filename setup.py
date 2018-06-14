@@ -15,8 +15,20 @@ setup(
     long_description=open(os.path.join(here, 'README.md')).read(),
     license='BSD, see LICENSE file.',
     install_requires=[],
+
+    # adding packages
     packages=find_packages(),
+
+    # trying to add files...
     include_package_data = True,
+    package_data = {
+        '': ['*.*'],
+        '': ['static/*.*'],
+        'static': ['*.*'],
+        '': ['templates/*.*'],
+        'templates': ['*.*'],
+    },
+
     zip_safe = False,
     classifiers  = [],
 )
