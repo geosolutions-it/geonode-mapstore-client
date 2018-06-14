@@ -126,8 +126,8 @@ class MapStore2GeoExtConfigConverter(object):
             for layer in layers:
                 if 'group' not in layer or layer['group'] != "background":
                     source = sources[layer['source']]
-                    if 'ptype' in source and 'gxp_wmscsource' == source['ptype']:
-                        overlay = {}
+                    overlay = {}
+                    if 'url' in source:
                         overlay['type'] = "wms"
                         overlay['url'] = source['url']
                         overlay['visibility'] = layer['visibility'] if 'visibility' in layer else True
