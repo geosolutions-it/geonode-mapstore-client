@@ -14,7 +14,9 @@ setup(
     description="Use GeoNode client in your django projects",
     long_description=open(os.path.join(here, 'README.md')).read(),
     license='BSD, see LICENSE file.',
-    install_requires=[],
+    install_requires=[
+        "django-mapstore-adapter",
+    ],
 
     # adding packages
     packages=find_packages(),
