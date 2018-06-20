@@ -15,7 +15,7 @@ setup(
     long_description=open(os.path.join(here, 'README.md')).read(),
     license='BSD, see LICENSE file.',
     install_requires=[
-        "django-mapstore-adapter",
+        "django-mapstore-adapter >= 0.1.0",
     ],
 
     # adding packages
