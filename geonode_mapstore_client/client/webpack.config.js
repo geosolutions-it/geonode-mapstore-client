@@ -19,10 +19,11 @@ module.exports = assign({}, require('./MapStore2/buildConfig')(
     },
     extractThemesPlugin,
     false,
-    "/dist/",
+    "http://localhost:8081/dist/",
     '.msgapi'
 ), {
     devServer: {
+        
         headers: {
             'Access-Control-Allow-Origin': '*'
         },
@@ -35,6 +36,7 @@ module.exports = assign({}, require('./MapStore2/buildConfig')(
                 }
             },
             '/pdf': {
+                logLevel: "debug",
                 target: "https://dev.mapstore.geo-solutions.it/mapstore",
                 secure: false,
                 headers: {
@@ -42,6 +44,7 @@ module.exports = assign({}, require('./MapStore2/buildConfig')(
                 }
             },
             '/mapstore/pdf': {
+                logLevel: "debug",
                 target: "https://dev.mapstore.geo-solutions.it",
                 secure: false,
                 headers: {
