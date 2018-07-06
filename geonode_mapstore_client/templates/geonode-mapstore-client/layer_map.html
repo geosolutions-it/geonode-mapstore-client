@@ -5,6 +5,8 @@
 #embedded_map {
     position: relative;
     height: 400px;
+    z-index: 1029;
+    overflow: hidden;
 }
 #mapstore2-embedded {
 
@@ -17,8 +19,18 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#embedded_map').addClass('ms2');
     MapStore2.create('embedded_map',{
         config: {{ ms2_config }},
+        initialState: {
+                defaultState: {
+                    security: {
+                        token: "{{ ACCESS_TOKEN }}"
+                    }
+                }
+        },
+        proxy: "{{ SITEURL }}proxy?url=",
+        printingEnabled: true,
         localConfig: {
-            translations: '',
+            printUrl: "{{ SITEURL }}gs/pdf/info.json",
+            translations: '', 
             useAuthenticationRules: true,
             authenticationRules: [{
                 "urlPattern": ".*geostore.*",
@@ -27,17 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 "urlPattern": ".*geoserver.*",
                 "authkeyParamName": "access_token",
                 "method": "authkey"
-            }],
-            initialState: {
-                defaultState: {
-                    security: {
-                        token: "{{ ACCESS_TOKEN }}"
-                    },
-                    version: {
-                        current: "${mapstore2.version}"
-                    }
-                }
-            }
+            }]
           }
       });
 });

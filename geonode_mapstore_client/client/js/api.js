@@ -1,11 +1,12 @@
 /**
- * Copyright 2016, GeoSolutions Sas.
+ * Copyright 2018, GeoSolutions Sas.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
+require('react-widgets/dist/css/react-widgets.css');
+const assign = require("object-assign");
 const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
 /**
  * Add custom (overriding) translations with:
@@ -37,17 +38,15 @@ ConfigUtils.setConfigProp('themePrefix', 'msgapi');
  *     }]
  * });
  */
-const appConfig = require('../MapStore2/web/client/product/appConfig');
-
-
-
+// const appConfig = require('../MapStore2/web/client/product/appConfig');
 
 /**
  * Define a custom list of plugins with:
  *
  * const plugins = require('./plugins');
  */
-const plugins = require('../MapStore2/web/client/product/apiPlugins');
+// const plugins = require('../MapStore2/web/client/product/plugins');
+const plugins = require('./plugins');
 
 // require('../MapStore2/web/client/product/main')(appConfig, plugins);
 
@@ -63,13 +62,21 @@ const getScriptPath = function() {
     return scriptEl && scriptEl.src && scriptEl.src.substring(0, scriptEl.src.lastIndexOf('/')) || 'https://dev.mapstore2.geo-solutions.it/mapstore/dist';
 };
 
-const MapStore2 = require('../MapStore2/web/client/jsapi/MapStore2')
-  .withPlugins(plugins, {
-      theme: {
-          path: getScriptPath() + '/themes'
-      },
-      noLocalConfig: true,
-      initialState: require('../MapStore2/web/client/product/appConfigEmbedded').initialState,
-      translations: getScriptPath() + '/../MapStore2/web/client/translations' 
-  });
-window.MapStore2 = MapStore2;
+const MapStore2 = require('../MapStore2/web/client/jsapi/MapStore2').withPlugins(plugins, {
+    theme: {
+        path: getScriptPath() + '/themes'
+    },
+    plugins: require('./viewerConfig').plugins,
+    noLocalConfig: true,
+    initialState: require('./viewerConfig').initialState,
+    translations: getScriptPath() + '/../MapStore2/web/client/translations'
+});
+// window.MapStore2 = MapStore2;
+window.MapStore2 = assign({}, MapStore2, { create: function(container, opts) {
+    if (opts && opts.localConfig) {
+        Object.keys(opts.localConfig).map(function(c) {ConfigUtils.setConfigProp(c, opts.localConfig[c]); });
+    }
+    return MapStore2.create(container, opts);
+}
+});
+
