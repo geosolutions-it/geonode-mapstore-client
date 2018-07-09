@@ -17,7 +17,7 @@
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function () {
     $('#embedded_map').addClass('ms2');
-    MapStore2.create('embedded_map',{
+    MapStore2.create('embedded_map', {
         config: {{ ms2_config }},
         initialState: {
                 defaultState: {
@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         proxy: "{{ SITEURL }}proxy?url=",
         printingEnabled: true,
         localConfig: {
+            loadAfterTheme: true,
             printUrl: "{{ SITEURL }}gs/pdf/info.json",
             translations: '', 
             useAuthenticationRules: true,
