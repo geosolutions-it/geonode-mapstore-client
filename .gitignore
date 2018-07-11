@@ -23,3 +23,5 @@ MANIFEST
 
 django_geonode_mapstore_client.egg-info/
 # geonode_mapstore_client/static/geonode_mapstore_client
+geonode_mapstore_client/client/package-lock.json
+dist/
