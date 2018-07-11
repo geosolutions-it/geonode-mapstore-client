@@ -27,7 +27,8 @@ module.exports = {
         ScaleBoxPlugin: require('../MapStore2/web/client/plugins/ScaleBox'),
         MapFooterPlugin: require('../MapStore2/web/client/plugins/MapFooter'),
         PrintPlugin: require('../MapStore2/web/client/plugins/Print'),
-        MeasurePlugin: require('../MapStore2/web/client/plugins/Measure')
+        MeasurePlugin: require('../MapStore2/web/client/plugins/Measure'),
+        LoginPlugin: require('../MapStore2/web/client/plugins/Login')
     },
     requires: {
         ReactSwipe: require('react-swipeable-views').default,

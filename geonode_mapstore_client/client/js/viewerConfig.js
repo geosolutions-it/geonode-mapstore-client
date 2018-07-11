@@ -62,7 +62,8 @@ module.exports = {
           {
             "name": "Identify",
             "cfg": {
-                "showFullscreen": true,
+                "showFullscreen": false,
+                "dock": false,
                 "position": "bottom",
                 "size": 0.5,
                 "fluid": true,

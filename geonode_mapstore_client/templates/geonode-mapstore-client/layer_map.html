@@ -20,13 +20,29 @@ document.addEventListener('DOMContentLoaded', function () {
     MapStore2.create('embedded_map', {
         config: {{ ms2_config }},
         initialState: {
-                defaultState: {
-                    security: {
+            defaultState: {
+                mode: "embedded",
+                mousePosition: {enabled: false},
+                controls: {
+                    print: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        active: null,
+                        expanded: false
+                    },
+                    drawer: {
+                        enabled: false,
+                        menu: "1"
+                    }
+                },
+                mapInfo: {enabled: true, infoFormat: "text/html" },
+                security: {
                         token: "{{ ACCESS_TOKEN }}"
                     }
-                }
+            }
         },
-        proxy: "{{ SITEURL }}proxy?url=",
+        proxy: "{{ SITEURL }}proxy/?url=",
         printingEnabled: true,
         localConfig: {
             loadAfterTheme: true,
@@ -41,7 +57,131 @@ document.addEventListener('DOMContentLoaded', function () {
                 "authkeyParamName": "access_token",
                 "method": "authkey"
             }]
-          }
+          },
+        plugins: {
+        "desktop": [{
+            "name": "Map",
+            "cfg": {
+                "tools": ["locate", "measurement"],
+                "mapOptions": {
+                "openlayers": {
+                  "interactions": {
+                    "pinchRotate": false,
+                    "altShiftDragRotate": false
+                  }
+                },
+                "leaflet": {
+                    "attribution": {
+                      "container": "#mapstore-map-footer-container"
+                    }
+                  }
+              }
+            }
+        }, {
+          "name": "DrawerMenu"
+          }, {
+              "name": "BackgroundSelector",
+              "cfg": {
+                  "style": {"bottom": 0, "marginBottom": 30},
+                  "dimensions": {
+                  "side": 65,
+                  "sidePreview": 65,
+                  "frame": 3,
+                  "margin": 5,
+                  "label": false,
+                  "vertical": false
+                 }
+              }
+          },
+          {
+            "name": "Identify",
+            "cfg": {
+                "showFullscreen": false,
+                "dock": false,
+                "position": "bottom",
+                "size": 0.5,
+                "fluid": true,
+                "viewerOptions": {
+                    "container": "{context.ReactSwipe}"
+                }
+            },
+            "override": {
+                "Toolbar": {
+                  "position": 11,
+                  "alwaysVisible": false
+                }
+              }
+        }, {
+            "name": "ZoomAll",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": false
+                }
+            }
+        }, {
+            "name": "TOC",
+            "cfg": {
+                "activateMapTitle": false,
+                "activateSettingsTool": false,
+                "activateMetedataTool": false,
+                "activateRemoveLayer": false
+            }
+
+        }, {
+            "name": "Settings",
+            "cfg": {
+                "wrap": true
+            }
+        }, {
+            "name": "Toolbar",
+            "id": "NavigationBar",
+            "cfg": {
+                "id": "navigationBar",
+                "layout": "horizontal"
+            }
+        }, {
+            "name": "MapLoading",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }, "Cookie",
+        "OmniBar", {
+            "name": "GoFull",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": false
+                }
+            }
+        },
+        "Expander", "ScaleBox", "Undo", "Redo",
+       {name: "FullScreen",
+       "override": {
+        "Toolbar": {
+            "alwaysVisible": false
+        }
+    }
+    }, "BurgerMenu", "MapFooter", "Print",
+        {
+            "name": "ZoomIn",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }, {
+            "name": "Measure"
+        }, {
+            "name": "ZoomOut",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }
+    ]
+    }
       });
 });
 </script>
