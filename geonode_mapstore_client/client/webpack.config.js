@@ -52,7 +52,7 @@ module.exports = assign({}, require('./MapStore2/buildConfig')(
                 }
             },
             '/proxy': {
-                target: "https://dev.mapstore.geo-solutions.it/mapstore",
+                target: "http://localhost:8000",
                 secure: false,
                 headers: {
                     host: "dev.mapstore.geo-solutions.it"

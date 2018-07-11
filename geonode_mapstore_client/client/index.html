@@ -34,66 +34,196 @@
         function init() {
             MapStore2.create('container',{
             config: {
-                "catalogServices": { 
-                    "selectedService": "GeoNode Catalogue", 
-                    "services": {
-                        "Demo WMS Service": {
-                            "autoload": false,
-                            "title": "Demo WMS Service",
-                            "type": "wms",
-                            "url": "https://demo.geo-solutions.it/geoserver/wms"
-                        },
-                        "Demo WMTS Service": {
-                            "autoload": false,
-                            "title": "Demo WMTS Service",
-                            "type": "wmts",
-                            "url": "https://demo.geo-solutions.it/geoserver/gwc/service/wmts"
-                        },
-                        "GeoNode Catalogue": {
-                            "GeoNode Catalogue": {
-                                "autoload": true,
-                                "title": "GeoNode Catalogue",
-                                "type": "csw",
-                                "url": "http://localhost:8000/catalogue/csw"
-                            }
-                        }
-                    }
-                }, 
-                "map": {
-                    "center": {
-                        "crs": "EPSG:3857",
-                        "x": 16270120.86775,
-                        "y": -5107675.859305
-                    }, 
-                    "layers": [
-                        {"format": "image/png8", "group": "background", "restUrl": "/gs/rest", "title": "Local GeoServer", "type": "wms", "url": "http://localhost:8080/geoserver/wms", "visibility": false},
-                        {"group": "background", "name": "mapnik", "source": "osm", "title": "Open Street Map", "type": "osm", "visibility": true},
-                        {"group": "background", "name": "HYBRID", "source": "google", "title": "Google HYBRID", "type": "google", "visibility": false},
-                        {"group": "background", "name": "osm", "source": "mapquest", "title": "MapQuest OSM", "type": "mapquest", "visibility": false},
-                        {"apiKey": "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf", "group": "background", "name": "Aerial", "source": "bing", "title": "Bing Aerial", "type": "bing", "visibility": false},
-                        {"group": "background", "name": "Night2012", "provider": "NASAGIBS.ViirsEarthAtNight2012", "source": "nasagibs", "title": "NASAGIBS Night 2012", "type": "tileprovider", "visibility": false},
-                        {"format": "image/jpeg", "group": "background", "name": "rv1", "title": "e-Geos Ortofoto RealVista 1.0", "type": "wms", "url": "http://www.realvista.it/reflector/open/service", "visibility": false},
-                        {"format": "image/png", "group": "background", "name": "sde:NE2_HR_LC_SR_W_DR", "title": "Natural Earth", "type": "wms", "url": "https://demo.geo-solutions.it/geoserver/wms", "visibility": false},
-                        {"format": "image/png", "group": "background", "name": "sde:HYP_HR_SR_OB_DR", "title": "Hypsometric", "type": "wms", "url": "https://demo.geo-solutions.it/geoserver/wms", "visibility": false},
-                        {"format": "image/png", "group": "background", "name": "sde:GRAY_HR_SR_OB_DR", "title": "Gray Earth", "type": "wms", "url": "https://demo.geo-solutions.it/geoserver/wms", "visibility": false},
-                        {"group": "background", "name": "OpenTopoMap", "provider": "OpenTopoMap", "source": "OpenTopoMap", "title": "OpenTopoMap", "type": "tileprovider", "visibility": false},
-                        {"abstract": "No abstract provided.", "attribution": {"title": "admin"}, "bbox": {"bounds": {"maxx": 16528622.3695, "maxy": -4804213.11999, "minx": 16011619.366, "miny": -5411138.59862}, "crs": "EPSG:3857"}, "format": "image/png", "group": "", "keywords": ["boundaries", "features"], "llbbox": [143.834824, -43.648056, 148.479141, -39.573891], "name": "geonode:boundaries", "opacity": 1.0, "styles": [{"legend": {"format": "image/png", "height": "40", "href": "http://localhost:8080/geoserver/ows?service=wms&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=geonode%3Aboundaries", "width": "22"}, "name": "boundaries", "title": "boundaries"}], 
-                            "title": "boundaries", "type": "wms", "url": "http://localhost:8080/geoserver/ows", "visibility": true}
-                        ],
-                    "maxExtent": [-20037508.34, -20037508.34, 20037508.34, 20037508.34],
-                    "maxResolution": 156543.03390625,
-                    "projection": "EPSG:3857",
-                    "units": "m",
-                    "zoom": 7
-                },
-                "version": 2,
-                
+    "catalogServices": {
+        "selectedService": "GeoNode Catalogue",
+        "services": {
+            "Demo WMS Service": {
+                "autoload": false,
+                "title": "Demo WMS Service",
+                "type": "wms",
+                "url": "https://demo.geo-solutions.it/geoserver/wms"
             },
-        proxy: "http://localhost:8081/proxy?url=",
+            "Demo WMTS Service": {
+                "autoload": false,
+                "title": "Demo WMTS Service",
+                "type": "wmts",
+                "url": "https://demo.geo-solutions.it/geoserver/gwc/service/wmts"
+            },
+            "GeoNode Catalogue": {
+                "GeoNode Catalogue": {
+                    "autoload": true,
+                    "title": "GeoNode Catalogue",
+                    "type": "csw",
+                    "url": "http://localhost:8000/catalogue/csw"
+                }
+            }
+        }
+    },
+    "map": {
+        "center": {
+            "crs": "EPSG:3857",
+            "x": -8233981.29895,
+            "y": 4980132.418785
+        },
+        "layers": [
+            {
+                "group": "background",
+                "name": "mapnik",
+                "source": "osm",
+                "title": "Open Street Map",
+                "type": "osm",
+                "visibility": true
+            },
+            {
+                "group": "background",
+                "name": "HYBRID",
+                "source": "google",
+                "title": "Google HYBRID",
+                "type": "google",
+                "visibility": false
+            },
+            {
+                "group": "background",
+                "name": "osm",
+                "source": "mapquest",
+                "title": "MapQuest OSM",
+                "type": "mapquest",
+                "visibility": false
+            },
+            {
+                "apiKey": "AqTGBsziZHIJYYxgivLBf0hVdrAk9mWO5cQcb8Yux8sW5M8c8opEC2lZqKR1ZZXf",
+                "group": "background",
+                "name": "Aerial",
+                "source": "bing",
+                "title": "Bing Aerial",
+                "type": "bing",
+                "visibility": false
+            },
+            {
+                "group": "background",
+                "name": "Night2012",
+                "provider": "NASAGIBS.ViirsEarthAtNight2012",
+                "source": "nasagibs",
+                "title": "NASAGIBS Night 2012",
+                "type": "tileprovider",
+                "visibility": false
+            },
+            {
+                "format": "image/jpeg",
+                "group": "background",
+                "name": "rv1",
+                "title": "e-Geos Ortofoto RealVista 1.0",
+                "type": "wms",
+                "url": "http://www.realvista.it/reflector/open/service",
+                "visibility": false
+            },
+            {
+                "format": "image/png",
+                "group": "background",
+                "name": "sde:NE2_HR_LC_SR_W_DR",
+                "title": "Natural Earth",
+                "type": "wms",
+                "url": "https://demo.geo-solutions.it/geoserver/wms",
+                "visibility": false
+            },
+            {
+                "format": "image/png",
+                "group": "background",
+                "name": "sde:HYP_HR_SR_OB_DR",
+                "title": "Hypsometric",
+                "type": "wms",
+                "url": "https://demo.geo-solutions.it/geoserver/wms",
+                "visibility": false
+            },
+            {
+                "format": "image/png",
+                "group": "background",
+                "name": "sde:GRAY_HR_SR_OB_DR",
+                "title": "Gray Earth",
+                "type": "wms",
+                "url": "https://demo.geo-solutions.it/geoserver/wms",
+                "visibility": false
+            },
+            {
+                "group": "background",
+                "name": "OpenTopoMap",
+                "provider": "OpenTopoMap",
+                "source": "OpenTopoMap",
+                "title": "OpenTopoMap",
+                "type": "tileprovider",
+                "visibility": false
+            },
+            {
+                "abstract": "No abstract provided.",
+                "attribution": {
+                    "title": "admin"
+                },
+                "bbox": {
+                    "bounds": {
+                        "maxx": -8227290.16266,
+                        "maxy": 4994389.51827,
+                        "minx": -8240672.43524,
+                        "miny": 4965875.3193
+                    },
+                    "crs": "EPSG:3857"
+                },
+                "format": "image/png",
+                "group": "",
+                "keywords": [
+                    "features",
+                    "roads"
+                ],
+                "llbbox": [
+                    -74.02722,
+                    40.684221,
+                    -73.907005,
+                    40.878178
+                ],
+                "name": "geonode:roads",
+                "opacity": 1,
+                "styles": [
+                    {
+                        "legend": {
+                            "format": "image/png",
+                            "height": "40",
+                            "href": "http://localhost:8080/geoserver/ows?service=wms&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=geonode%3Aroads",
+                            "width": "22"
+                        },
+                        "name": "roads",
+                        "title": "roads"
+                    }
+                ],
+                "title": "roads",
+                "type": "wms",
+                "url": "http://localhost:8080/geoserver/ows",
+                "visibility": true,
+                "featureInfo": {
+                    "format": 'TEMPLATE',
+                    "template": '<div class="row"><div class="col-xs-4">Nome</div><div class="col-xs-8">${properties.NAME}</div></div><div class="row"><div class="col-xs-4">Test</div><div class="col-xs-8">${properties.CFCC}</div></div>'
+                }
+            }
+        ],
+        "maxExtent": [
+            -20037508.34,
+            -20037508.34,
+            20037508.34,
+            20037508.34
+        ],
+        "maxResolution": 156543.03390625,
+        "projection": "EPSG:3857",
+        "units": "m",
+        "zoom": 11
+    },
+    "version": 2,
+    "widgetsConfig": {}
+}
+,
+        proxy: "http://localhost:8081/proxy/?url=",
         printingEnabled: true,
         localConfig: {
             translations: '',
-            printUrl: "pdf/info.json",
+            loadAfterTheme: true,
+            printUrl: "http://localhost:8000/gs/pdf/info.json",
             useAuthenticationRules: true,
             authenticationRules: [{
                 "urlPattern": ".*geostore.*",
@@ -105,12 +235,152 @@
             }],
             initialState: {
                 defaultState: {
-                    security: {
+                mode: "embedded",
+                mousePosition: {enabled: false},
+                controls: {
+                    print: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        active: null,
+                        expanded: false
+                    },
+                    drawer: {
+                        enabled: false,
+                        menu: "1"
+                    }
+                },
+                mapInfo: {enabled: true, infoFormat: "text/html" },
+                security: {
                         token: "z8OGZsBN1m8hRvkEYV0FMsQJwHF6zQ"
                     }
+            }
+            }
+          },
+          plugins: {
+        "desktop": [{
+            "name": "Map",
+            "cfg": {
+                "tools": ["locate", "measurement"],
+                "mapOptions": {
+                "openlayers": {
+                  "interactions": {
+                    "pinchRotate": false,
+                    "altShiftDragRotate": false
+                  }
+                },
+                "leaflet": {
+                    "attribution": {
+                      "container": "#mapstore-map-footer-container"
+                    }
+                  }
+              }
+            }
+        }, {
+          "name": "DrawerMenu"
+          }, {
+              "name": "BackgroundSelector",
+              "cfg": {
+                  "style": {"bottom": 0, "marginBottom": 30},
+                  "dimensions": {
+                  "side": 65,
+                  "sidePreview": 65,
+                  "frame": 3,
+                  "margin": 5,
+                  "label": false,
+                  "vertical": false
+                 }
+              }
+          },
+          {
+            "name": "Identify",
+            "cfg": {
+                "showFullscreen": false,
+                "dock": false,
+                "position": "bottom",
+                "size": 0.5,
+                "fluid": true,
+                "viewerOptions": {
+                    "container": "{context.ReactSwipe}"
+                }
+            },
+            "override": {
+                "Toolbar": {
+                  "position": 11,
+                  "alwaysVisible": false
+                }
+              }
+        }, {
+            "name": "ZoomAll",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": false
                 }
             }
-          }
+        }, {
+            "name": "TOC",
+            "cfg": {
+                "activateMapTitle": false,
+                "activateSettingsTool": false,
+                "activateMetedataTool": false,
+                "activateRemoveLayer": false
+            }
+
+        }, {
+            "name": "Settings",
+            "cfg": {
+                "wrap": true
+            }
+        }, {
+            "name": "Toolbar",
+            "id": "NavigationBar",
+            "cfg": {
+                "id": "navigationBar",
+                "layout": "horizontal"
+            }
+        }, {
+            "name": "MapLoading",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }, "Cookie",
+        "OmniBar", {
+            "name": "GoFull",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": false
+                }
+            }
+        },
+        "Expander", "ScaleBox", "Undo", "Redo",
+       {name: "FullScreen",
+       "override": {
+        "Toolbar": {
+            "alwaysVisible": false
+        }
+    }
+    }, "BurgerMenu", "MapFooter", "Print",
+        {
+            "name": "ZoomIn",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }, {
+            "name": "Measure"
+        }, {
+            "name": "ZoomOut",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }
+    ]
+    }
       });
 }
         </script>
