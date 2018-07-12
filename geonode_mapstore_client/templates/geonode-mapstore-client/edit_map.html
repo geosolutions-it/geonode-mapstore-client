@@ -1,61 +1,270 @@
 {% load geonode_mapstore_client_tags %}
-
 {% client_composer_js	%}
 
 <style>
 	body {
 		padding-top: 0px !important;
 	}
-	#content {
-		position: relative;
-	}
-	#client-composer-map {
+	#ms-container {
 		position: absolute;
 		top: 72px;
-		height: calc(100% - 72px);
-		width: 100%;
-	}
+		bottom: 0px;
+        width: 100%;
+        z-index: 1031;
+    }
+    ._ms2_init_center {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            overflow: show;
+            margin: auto;
+            display: flex;
+            align-items: center;
+    }
+    ._ms2_init_spinner {
+        height: 176px;
+        width: 176px;
+    }
+    ._ms2_init_spinner > div,
+    ._ms2_init_spinner > div:after {
+        border-radius: 50%;
+        width: 176px;
+        height: 176px;
+    }
+    ._ms2_init_spinner > div {
+        box-sizing: border-box;
+        text-indent: -9999em;
+        border: 16px solid rgba(119,119,119, 0.2);
+        border-left: 16px solid #777777;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation: _ms2_init_anim 1.1s infinite linear;
+        animation: _ms2_init_anim 1.1s infinite linear;
+    }
+    @-webkit-keyframes _ms2_init_anim {
+        0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        }
+        100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        }
+    }
+    @keyframes _ms2_init_anim {
+        0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        }
+        100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        }
+    }
+    ._ms2_init_text {
+        -webkit-animation: _ms2_init_text_anim 2s linear 0s infinite normal;
+        animation: _ms2_init_text_anim 2s linear 0s infinite normal;
+        color: #6F6F6f;
+        font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        height: 0.75em;
+        width:  6em;
+        text-align: center;
+        margin: auto;
+        z-index: 1000;
+    }
+    @keyframes _ms2_init_text_anim {
+        0%  {opacity: 0}
+        20% {opacity: 0}
+        50% {opacity: 1}
+        70% {opacity: .75}
+        100%{opacity: 0}
+    }
 </style>
-
+{% autoescape off %}
 <script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function () {
-    var defaultConfig = {
-        authStatus: {% if user.is_authenticated %} 200{% else %} 401{% endif %},
-        proxy: '{{ PROXY_URL }}',
-        {% if MAPFISH_PRINT_ENABLED %}
-        printService: "{{GEOSERVER_BASE_URL}}pdf/",
-        {% else %}
-        printService: "",
-        {% endif %}
-        /* The URL to a REST map configuration service.  This service
-         * provides listing and, with an authenticated user, saving of
-         * maps on the server for sharing and editing.
-         */
-        rest: "{% url "maps_browse" %}",
-        ajaxLoginUrl: "{% url "account_ajax_login" %}",
-        homeUrl: "{% url "home" %}",
-        portalItems: [{
-            xtype: "container",
-            layout: "fit",
-            height: 81,
-            region: "north"
-        }],
-        localGeoServerBaseUrl: "{{ GEOSERVER_BASE_URL }}",
-        localCSWBaseUrl: "{{ CATALOGUE_BASE_URL }}",
-        csrfToken: "{{ csrf_token }}",
-        tools: [{ptype: "gxp_getfeedfeatureinfo"}],
-    };
-		var config = Object.assign( defaultConfig, {{ config|safe }});
-		var options = {baseUrl: "{{ GEOSERVER_BASE_URL }}", sources: config.sources, server: "{{SITEURL}}", wmsServer: "{{ GEOSERVER_BASE_URL }}ows/", mapConfig: config, mapId: "{{mapId}}"};
-		if (config.proxy !== '') {
-			options.proxy = "{{PROXY_URL}}";
-		}
-		{% if user.is_authenticated %}
-		options.userLoggedIn = true;
-		{% endif %}
-		var composer = new window.Composer('client-composer-map', options);
-		composer.compose();
-	});
+document.addEventListener('DOMContentLoaded', function () {
+    MapStore2.create('ms-container', {
+        config: {{ ms2_config }},
+        initialState: {
+            defaultState: {
+                mode: "embedded",
+                mousePosition: {enabled: false},
+                controls: {
+                    print: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        active: null,
+                        expanded: false
+                    },
+                    drawer: {
+                        enabled: false,
+                        menu: "1"
+                    }
+                },
+                mapInfo: {enabled: true, infoFormat: "text/html" },
+                security: {
+                        token: "{{ ACCESS_TOKEN }}"
+                    }
+            }
+        },
+        proxy: "{{ SITEURL }}proxy/?url=",
+        printingEnabled: true,
+        localConfig: {
+            loadAfterTheme: true,
+            printUrl: "{{ SITEURL }}gs/pdf/info.json",
+            translations: '', 
+            useAuthenticationRules: true,
+            authenticationRules: [{
+                "urlPattern": ".*geostore.*",
+                "method": "bearer"
+            }, {
+                "urlPattern": ".*geoserver.*",
+                "authkeyParamName": "access_token",
+                "method": "authkey"
+            }]
+          },
+        plugins: {
+        "desktop": [{
+            "name": "Map",
+            "cfg": {
+                "tools": ["locate", "measurement"],
+                "mapOptions": {
+                "openlayers": {
+                  "interactions": {
+                    "pinchRotate": false,
+                    "altShiftDragRotate": false
+                  }
+                },
+                "leaflet": {
+                    "attribution": {
+                      "container": "#mapstore-map-footer-container"
+                    }
+                  }
+              }
+            }
+        }, {
+          "name": "DrawerMenu"
+          }, {
+              "name": "BackgroundSelector",
+              "cfg": {
+                  "style": {"bottom": 0, "marginBottom": 30},
+                  "dimensions": {
+                  "side": 65,
+                  "sidePreview": 65,
+                  "frame": 3,
+                  "margin": 5,
+                  "label": false,
+                  "vertical": false
+                 }
+              }
+          },
+          {
+            "name": "Identify",
+            "cfg": {
+                "showFullscreen": false,
+                "dock": false,
+                "position": "bottom",
+                "size": 0.5,
+                "fluid": true,
+                "viewerOptions": {
+                    "container": "{context.ReactSwipe}"
+                }
+            },
+            "override": {
+                "Toolbar": {
+                  "position": 11,
+                  "alwaysVisible": false
+                }
+              }
+        }, {
+            "name": "ZoomAll",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": false
+                }
+            }
+        }, {
+            "name": "TOC",
+            "cfg": {
+                "activateMapTitle": false,
+                "activateSettingsTool": false,
+                "activateMetedataTool": false,
+                "activateRemoveLayer": false
+            }
+
+        }, {
+            "name": "Settings",
+            "cfg": {
+                "wrap": true
+            }
+        }, {
+            "name": "Toolbar",
+            "id": "NavigationBar",
+            "cfg": {
+                "id": "navigationBar",
+                "layout": "horizontal"
+            }
+        }, {
+            "name": "MapLoading",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }, "Cookie",
+        "OmniBar", {
+            "name": "GoFull",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": false
+                }
+            }
+        },
+        "Expander", "ScaleBox", "Undo", "Redo",
+       {name: "FullScreen",
+       "override": {
+        "Toolbar": {
+            "alwaysVisible": false
+        }
+    }
+    }, "BurgerMenu", "MapFooter", {
+        "name": "Print",
+            "cfg": {
+                "useFixedScales": true
+            }},
+        {
+            "name": "ZoomIn",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }, {
+            "name": "Measure"
+        }, {
+            "name": "ZoomOut",
+            "override": {
+                "Toolbar": {
+                    "alwaysVisible": true
+                }
+            }
+        }
+    ]
+    }
+      });
+});
 </script>
-<div id="client-composer-map">
+{% endautoescape %}
+
+<div id="ms-container" class="ms2">
+    <div class="_ms2_init_spinner _ms2_init_center"><div></div></div>
+    <div class="_ms2_init_text _ms2_init_center">Loading MapStore</div>
+</div>
+
 </div>

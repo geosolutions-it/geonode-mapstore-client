@@ -5,7 +5,7 @@
 #embedded_map {
     position: relative;
     height: 400px;
-    z-index: 1029;
+    z-index: 1031;
     overflow: hidden;
 }
 #mapstore2-embedded {
@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#embedded_map').addClass('ms2');
     MapStore2.create('embedded_map', {
         config: {{ ms2_config }},
+        theme: {theme: "preview"},
         initialState: {
             defaultState: {
                 mode: "embedded",
@@ -162,7 +163,11 @@ document.addEventListener('DOMContentLoaded', function () {
             "alwaysVisible": false
         }
     }
-    }, "BurgerMenu", "MapFooter", "Print",
+    }, "BurgerMenu", "MapFooter", {
+        "name": "Print",
+            "cfg": {
+                "useFixedScales": true
+            }},
         {
             "name": "ZoomIn",
             "override": {
