@@ -1,8 +1,9 @@
 const path = require("path");
 
 const themeEntries = {
-    "themes/default": path.join(__dirname, "themes", "default", "theme.less")
-}
+    "themes/default": path.join(__dirname, "themes", "default", "theme.less"),
+    "themes/preview": path.join(__dirname, "themes", "preview", "theme.less")
+};
 const extractThemesPlugin = require('./MapStore2/themes.js').extractThemesPlugin;
 
 module.exports = require('./MapStore2/buildConfig')(

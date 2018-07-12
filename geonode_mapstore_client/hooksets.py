@@ -95,9 +95,9 @@ class MapStoreHookSet(GeoExtHookSet):
     #     self.initialize_context(context, callback=ms2_config_converter.convert)
     #     return 'geonode-mapstore-client/map_view.html'
     #
-    # def map_edit_template(self, context=None):
-    #     self.initialize_context(context, callback=ms2_config_converter.convert)
-    #     return 'geonode-mapstore-client/edit_map.html'
+    def map_edit_template(self, context=None):
+        self.initialize_context(context, callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/edit_map.html'
     #
     # def map_update_template(self, context=None):
     #     self.initialize_context(context, callback=ms2_config_converter.convert)
