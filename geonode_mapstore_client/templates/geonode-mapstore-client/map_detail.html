@@ -1,42 +1,4 @@
-{% load geonode_mapstore_client_tags %}
 
-{% client_viewer_js	%}
-<style>
-#embedded_map {
-    position: relative;
-    height: 400px;
-}
-#mapstore2-embedded {
+{% extends "./layer_map.html" %}
 
-}
-</style>
 
-{% autoescape off %}
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function () {
-    $('#embedded_map').addClass('ms2');
-    MapStore2.create('embedded_map',{
-        config: {{ ms2_config }},
-        localConfig: {
-            translations: '',
-            useAuthenticationRules: true,
-            authenticationRules: [{
-                "urlPattern": ".*geostore.*",
-                "method": "bearer"
-            }, {
-                "urlPattern": ".*geoserver.*",
-                "authkeyParamName": "access_token",
-                "method": "authkey"
-            }],
-            initialState: {
-                defaultState: {
-                    security: {
-                        token: "{{ ACCESS_TOKEN }}"
-                    }
-                }
-            }
-          }
-      });
-});
-</script>
-{% endautoescape %}
