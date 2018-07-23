@@ -106,10 +106,17 @@ var MS2_PLUGINS = {
 					"alwaysVisible": false
 				}
 			}
-		}, "BurgerMenu", "MapFooter", {
+		},
+        "BurgerMenu",
+        "MapFooter",
+        {
 			"name": "Print",
 			"cfg": {
-				"useFixedScales": true
+				"useFixedScales": true,
+                "mapPreviewOptions": {
+                    "enableScalebox": true,
+                    "enableRefresh": false
+                }
 			}
 		},
 		{
