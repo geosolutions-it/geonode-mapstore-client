@@ -10,7 +10,7 @@
 		top: 72px;
 		bottom: 0px;
         width: 100%;
-        z-index: 1031;
+        z-index: 1029;
         background-color: white;
 
     }
@@ -90,6 +90,26 @@
 {% autoescape off %}
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function () {
+    const userDetails = 
+    {
+        "User": {
+        "attribute": [
+            {"name": "email", "value": "info@geo-solutions.it"},
+            {"name": "notes", "value":"note"},
+            {"name": "company", "value": "GeoSolutions"}
+        ],
+        "enabled":true,
+        "groups":{"group":[ 
+            {"description": "description", "enabled": true, "groupName": "everyone", "id":479},
+            {"description": "Group for GeoSolutions' Staff", "enabled":true, "groupName":"geosolutions", "id":524}
+        ]},
+        "id": 3,
+        "name": "admin",
+        "role": "ADMIN"
+        },
+        "access_token": "{{ ACCESS_TOKEN }}"
+    };
+    
     MapStore2.create('ms-container', {
         config: {{ ms2_config }},
         initialState: {
@@ -97,16 +117,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 mode: "embedded",
                 mousePosition: {enabled: false},
                 controls: {
-                    print: {
-                        enabled: false
-                    },
                     toolbar: {
                         active: null,
                         expanded: false
-                    },
-                    drawer: {
-                        enabled: false,
-                        menu: "1"
                     }
                 },
                 mapInfo: {enabled: true, infoFormat: "text/html" },
@@ -118,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         proxy: "{{ SITEURL }}proxy/?url=",
         printingEnabled: true,
         localConfig: {
+
             loadAfterTheme: true,
             printUrl: "{{ SITEURL }}gs/pdf/info.json",
             translations: '', 
@@ -131,135 +145,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 "method": "authkey"
             }]
           },
-        plugins: {
-        "desktop": [{
-            "name": "Map",
-            "cfg": {
-                "tools": ["locate", "measurement"],
-                "mapOptions": {
-                "openlayers": {
-                  "interactions": {
-                    "pinchRotate": false,
-                    "altShiftDragRotate": false
-                  }
-                },
-                "leaflet": {
-                    "attribution": {
-                      "container": "#mapstore-map-footer-container"
-                    }
-                  }
-              }
-            }
-        }, {
-          "name": "DrawerMenu"
-          }, {
-              "name": "BackgroundSelector",
-              "cfg": {
-                  "style": {"bottom": 0, "marginBottom": 30},
-                  "dimensions": {
-                  "side": 65,
-                  "sidePreview": 65,
-                  "frame": 3,
-                  "margin": 5,
-                  "label": false,
-                  "vertical": false
-                 }
-              }
-          },
-          {
-            "name": "Identify",
-            "cfg": {
-                "showFullscreen": false,
-                "dock": false,
-                "position": "bottom",
-                "size": 0.5,
-                "fluid": true,
-                "viewerOptions": {
-                    "container": "{context.ReactSwipe}"
-                }
-            },
-            "override": {
-                "Toolbar": {
-                  "position": 11,
-                  "alwaysVisible": false
-                }
-              }
-        }, {
-            "name": "ZoomAll",
-            "override": {
-                "Toolbar": {
-                    "alwaysVisible": false
-                }
-            }
-        }, {
-            "name": "TOC",
-            "cfg": {
-                "activateMapTitle": false,
-                "activateSettingsTool": false,
-                "activateMetedataTool": false,
-                "activateRemoveLayer": false
-            }
-
-        }, {
-            "name": "Settings",
-            "cfg": {
-                "wrap": true
-            }
-        }, {
-            "name": "Toolbar",
-            "id": "NavigationBar",
-            "cfg": {
-                "id": "navigationBar",
-                "layout": "horizontal"
-            }
-        }, {
-            "name": "MapLoading",
-            "override": {
-                "Toolbar": {
-                    "alwaysVisible": true
-                }
-            }
-        }, "Cookie",
-        "OmniBar", {
-            "name": "GoFull",
-            "override": {
-                "Toolbar": {
-                    "alwaysVisible": false
-                }
-            }
-        },
-        "Expander", "ScaleBox", "Undo", "Redo",
-       {name: "FullScreen",
-       "override": {
-        "Toolbar": {
-            "alwaysVisible": false
-        }
-    }
-    }, "BurgerMenu", "MapFooter", {
-        "name": "Print",
-            "cfg": {
-                "useFixedScales": true
-            }},
-        {
-            "name": "ZoomIn",
-            "override": {
-                "Toolbar": {
-                    "alwaysVisible": true
-                }
-            }
-        }, {
-            "name": "Measure"
-        }, {
-            "name": "ZoomOut",
-            "override": {
-                "Toolbar": {
-                    "alwaysVisible": true
-                }
-            }
-        }
-    ]
-    }
+        plugins: MS2_PLUGINS
       });
+      MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
+
 });
 </script>
 {% endautoescape %}

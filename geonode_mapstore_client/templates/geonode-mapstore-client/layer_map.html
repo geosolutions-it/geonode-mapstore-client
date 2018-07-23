@@ -5,7 +5,7 @@
 #embedded_map {
     position: relative;
     height: 400px;
-    z-index: 1031;
+    z-index: 1029;
     overflow: hidden;
 }
 #mapstore2-embedded, #map, .fill {
@@ -99,16 +99,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 mode: "embedded",
                 mousePosition: {enabled: false},
                 controls: {
-                    print: {
-                        enabled: false
-                    },
                     toolbar: {
                         active: null,
                         expanded: false
-                    },
-                    drawer: {
-                        enabled: false,
-                        menu: "1"
                     }
                 },
                 mapInfo: {enabled: true, infoFormat: "text/html" },

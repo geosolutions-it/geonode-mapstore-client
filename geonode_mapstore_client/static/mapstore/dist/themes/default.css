@@ -8153,7 +8153,8 @@
   margin-top: 0;
 }
 .msgapi #mapstore-mouseposition {
-  position: static !important;
+  width: auto !important;
+  background-color: transparent !important;
 }
 .msgapi #mapstore-mouseposition span {
   font-size: 12px;
@@ -8245,6 +8246,12 @@
   padding: 4px;
   font-size: 12px !important;
   text-align: center;
+}
+.msgapi #mapstore-mouseposition .mouseposition-separator {
+  display: inline;
+}
+.msgapi #mapstore-map-footer #mapstore-mouseposition {
+  position: static !important;
 }
 /* navbar */
 .msgapi .navbar-dx ul,
@@ -8907,6 +8914,21 @@
 }
 .msgapi .feature-grid-container .ms2-border-layout-body {
   background-color: #fafafa;
+}
+.msgapi .feature-grid-container .ms2-border-layout-body .react-grid-HeaderRow .react-grid-HeaderCell .rw-datetimepicker.rw-widget input {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 0;
+}
+.msgapi select.feature-grid-container .ms2-border-layout-body .react-grid-HeaderRow .react-grid-HeaderCell .rw-datetimepicker.rw-widget input {
+  height: 30px;
+  line-height: 30px;
+}
+.msgapi textarea.feature-grid-container .ms2-border-layout-body .react-grid-HeaderRow .react-grid-HeaderCell .rw-datetimepicker.rw-widget input,
+.msgapi select[multiple].feature-grid-container .ms2-border-layout-body .react-grid-HeaderRow .react-grid-HeaderCell .rw-datetimepicker.rw-widget input {
+  height: auto;
 }
 .msgapi .rm-alert-padded {
   padding: 0px 15px;
@@ -12319,4 +12341,17 @@
 .msgapi .gfi-t {
   float: left;
   padding: 1px;
+}
+.msgapi .fill:not(:-webkit-full-screen) #mapstore-metadata-explorer {
+  padding-top: 72px;
+}
+.msgapi .fill:not(:-webkit-full-screen) #mapstore-metadata-explorer .panel-body {
+  height: calc(100% -103px);
+}
+.msgapi .catalog-panel > .panel-body form .form-group:first-child,
+.msgapi .catalog-panel > .panel-body form .form-group:first-child + .form-group {
+  display: none;
+}
+.msgapi .widgets-builder-header {
+  padding-top: 72px;
 }
