@@ -5,7 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
 module.exports = {
     plugins: {
         IdentifyPlugin: require('../MapStore2/web/client/plugins/Identify'),
@@ -28,7 +27,23 @@ module.exports = {
         MapFooterPlugin: require('../MapStore2/web/client/plugins/MapFooter'),
         PrintPlugin: require('../MapStore2/web/client/plugins/Print'),
         MeasurePlugin: require('../MapStore2/web/client/plugins/Measure'),
-        LoginPlugin: require('../MapStore2/web/client/plugins/Login')
+        TOCItemsSettingsPlugin: require('../MapStore2/web/client/plugins/TOCItemsSettings'),
+        WidgetsPlugin: require('../MapStore2/web/client/plugins/Widgets'),
+        WidgetsBuilderPlugin: require('../MapStore2/web/client/plugins/WidgetsBuilder'),
+        NotificationsPlugin: require('../MapStore2/web/client/plugins/Notifications'),
+        FeatureEditorPlugin: require('../MapStore2/web/client/plugins/FeatureEditor'),
+        QueryPanelPlugin: require('../MapStore2/web/client/plugins/QueryPanel'),
+        SavePlugin: require('../MapStore2/web/client/plugins/Save'),
+        SaveAsPlugin: require('../MapStore2/web/client/plugins/SaveAs'),
+        MetadataExplorerPlugin: require('../MapStore2/web/client/plugins/MetadataExplorer'),
+        GridContainerPlugin: require('../MapStore2/web/client/plugins/GridContainer'),
+        AddReducersAndEpics: {
+            reducers: {
+                security: require('../MapStore2/web/client/reducers/security'),
+                maps: require('../MapStore2/web/client/reducers/maps'),
+                currentMap: require('../MapStore2/web/client/reducers/currentMap')
+            }
+        }
     },
     requires: {
         ReactSwipe: require('react-swipeable-views').default,

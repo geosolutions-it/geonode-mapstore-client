@@ -12,3 +12,20 @@
     float: left; 
     padding: 1px
 }
+.fill:not(:-webkit-full-screen){
+    #mapstore-metadata-explorer{
+        padding-top: @geo-header-height;
+        .panel-body {
+            height: calc(100% -103px);
+        }
+    }
+}
+.catalog-panel > .panel-body form{
+     .form-group:first-child,
+     .form-group:first-child + .form-group {
+         display: none
+     }
+}
+.widgets-builder-header {
+    padding-top: @geo-header-height;
+}
