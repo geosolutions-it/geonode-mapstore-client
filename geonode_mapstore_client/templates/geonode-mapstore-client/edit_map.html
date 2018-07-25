@@ -109,9 +109,10 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         "access_token": "{{ ACCESS_TOKEN }}"
     };
-    
+    initMapstore2Api('edit', function(MapStore2) { 
     MapStore2.create('ms-container', {
         config: {{ ms2_config }},
+        mapId: 10,
         initialState: {
             defaultState: {
                 mode: "embedded",
@@ -148,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
         plugins: MS2_PLUGINS
       });
       MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
+    });
 
 });
 </script>
