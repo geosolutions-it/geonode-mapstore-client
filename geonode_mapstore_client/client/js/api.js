@@ -15,7 +15,12 @@ const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
  */
 //  ConfigUtils.setConfigProp('translationsPath', ['../MapStore2/web/client/translations', './translations'] );
 ConfigUtils.setConfigProp('themePrefix', 'msgapi');
-
+const GeoStoreApi = require("../MapStore2/web/client/api/GeoStoreDAO");
+const oldgetShortResource = GeoStoreApi.getShortResource;
+GeoStoreApi.createResource = function(metadata, data, category, options) {
+    // Example to rewrite GEoStoreApi methods
+    return oldgetShortResource(resourceId, options);
+};
 /**
  * Use a custom plugins configuration file with:
  *
@@ -46,9 +51,8 @@ ConfigUtils.setConfigProp('themePrefix', 'msgapi');
  * const plugins = require('./plugins');
  */
 // const plugins = require('../MapStore2/web/client/product/plugins');
-const plugins = require('./plugins');
+//const plugins = require('./plugins');
 
-// require('../MapStore2/web/client/product/main')(appConfig, plugins);
 
 const getScriptPath = function() {
     const scriptEl = document.getElementById('ms2-api');
@@ -60,19 +64,32 @@ const axios = require('../MapStore2/web/client/libs/ajax');
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.xsrfCookieName = "csrftoken";
 
-const MapStore2 = require('../MapStore2/web/client/jsapi/MapStore2').withPlugins(plugins, {
-    theme: {
-        path: getScriptPath() + '/themes'
-    },
-    noLocalConfig: true,
-    translations: getScriptPath() + '/../MapStore2/web/client/translations'
-});
-// window.MapStore2 = MapStore2;
-window.MapStore2 = assign({}, MapStore2, { create: function(container, opts) {
-    if (opts && opts.localConfig) {
-        Object.keys(opts.localConfig).map(function(c) {ConfigUtils.setConfigProp(c, opts.localConfig[c]); });
+const createMapStore2Api = function(plugins) {
+    const MapStore2 = require('../MapStore2/web/client/jsapi/MapStore2').withPlugins(plugins, {
+        theme: {
+            path: getScriptPath() + '/themes'
+        },
+        noLocalConfig: true,
+        translations: getScriptPath() + '/../MapStore2/web/client/translations'
+    });
+    // window.MapStore2 = MapStore2;
+    return assign({}, MapStore2, { create: function(container, opts) {
+        if (opts && opts.localConfig) {
+            Object.keys(opts.localConfig).map(function(c) {ConfigUtils.setConfigProp(c, opts.localConfig[c]); });
+        }
+        return MapStore2.create(container, opts);
     }
-    return MapStore2.create(container, opts);
-}
-});
+    });
+};
 
+window.initMapstore2Api = function(config, resolve) {
+    if (config === 'preview') {
+        require.ensure('./previewplugins', function() {
+            resolve(createMapStore2Api(require('./previewplugins')));
+        });
+    }else {
+        require.ensure('./plugins', function() {
+            resolve(createMapStore2Api(require('./plugins')));
+        });
+    }
+};
