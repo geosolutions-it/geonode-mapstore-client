@@ -27,7 +27,7 @@ Run `npm test` to run the full test suite with code coverage report.
 
 ## Deployment to GH-pages
 
-Automated deployment via travis is enabled for the master branch. 
+Automated deployment via travis is enabled for the master branch.
 
 If you want to deploy manually to gh-pages use `npm run deploy`
 
@@ -36,18 +36,126 @@ The deplyoment uses the `index-gh.html` please keep this file in sync with `inde
 
 ## Integrating into GeoNode/Django
 
-- Add `django-geonode-mapstore-client` to your requirements.txt
-- Add `geonode-mapstore-client` to your `INSTALLED_APPS`
+- Execute `pip install -r requirements.txt --upgrade --no-cache --no-cache-dir`
 
 ### For GeoNode
-Update your `settings.py` as follows:
+Update your `GeoNode` > `settings.py` as follows:
 
 ```
 # To enable the MapStore2 based Client enable those
 if 'geonode_mapstore_client' not in INSTALLED_APPS:
-    INSTALLED_APPS += ('geonode_mapstore_client', )
+    INSTALLED_APPS += (
+        'mapstore2_adapter',
+        'geonode_mapstore_client',)
+
 GEONODE_CLIENT_LAYER_PREVIEW_LIBRARY = 'mapstore'  # DEPRECATED use HOOKSET instead
 GEONODE_CLIENT_HOOKSET = "geonode_mapstore_client.hooksets.MapStoreHookSet"
+
+MAPSTORE_DEBUG = False
+
+def get_geonode_catalogue_service():
+    if PYCSW:
+        pycsw_config = PYCSW["CONFIGURATION"]
+        if pycsw_config:
+                pycsw_catalogue = {
+                    ("%s" % pycsw_config['metadata:main']['identification_title']): {
+                        "url": CATALOGUE['default']['URL'],
+                        "type": "csw",
+                        "title": pycsw_config['metadata:main']['identification_title'],
+                        "autoload": True
+                     }
+                }
+                return pycsw_catalogue
+    return None
+
+GEONODE_CATALOGUE_SERVICE = get_geonode_catalogue_service()
+
+MAPSTORE_CATALOGUE_SERVICES = {
+    "Demo WMS Service": {
+        "url": "https://demo.geo-solutions.it/geoserver/wms",
+        "type": "wms",
+        "title": "Demo WMS Service",
+        "autoload": False
+     },
+    "Demo WMTS Service": {
+        "url": "https://demo.geo-solutions.it/geoserver/gwc/service/wmts",
+        "type": "wmts",
+        "title": "Demo WMTS Service",
+        "autoload": False
+    }
+}
+
+MAPSTORE_CATALOGUE_SELECTED_SERVICE = "Demo WMS Service"
+
+if GEONODE_CATALOGUE_SERVICE:
+    MAPSTORE_CATALOGUE_SERVICES[GEONODE_CATALOGUE_SERVICE.keys()[0]] = GEONODE_CATALOGUE_SERVICE[GEONODE_CATALOGUE_SERVICE.keys()[0]]
+    MAPSTORE_CATALOGUE_SELECTED_SERVICE = GEONODE_CATALOGUE_SERVICE.keys()[0]
+
+DEFAULT_MS2_BACKGROUNDS = [{
+        "type": "osm",
+        "title": "Open Street Map",
+        "name": "mapnik",
+        "source": "osm",
+        "group": "background",
+        "visibility": True
+    },
+    {
+        "group": "background",
+        "name": "osm",
+        "source": "mapquest",
+        "title": "MapQuest OSM",
+        "type": "mapquest",
+        "visibility": False
+    },
+    {
+        "type": "wms",
+        "url": "https://demo.geo-solutions.it/geoserver/wms",
+        "visibility": False,
+        "title": "Natural Earth",
+        "name": "sde:NE2_HR_LC_SR_W_DR",
+        "group": "background",
+        "format": "image/png"
+    },
+    {
+        "type": "wms",
+        "url": "https://demo.geo-solutions.it/geoserver/wms",
+        "visibility": False,
+        "title": "Hypsometric",
+        "name": "sde:HYP_HR_SR_OB_DR",
+        "group": "background",
+        "format": "image/png"
+    },
+    {
+        "type": "wms",
+        "url": "https://demo.geo-solutions.it/geoserver/wms",
+        "visibility": False,
+        "title": "Gray Earth",
+        "name": "sde:GRAY_HR_SR_OB_DR",
+        "group": "background",
+        "format": "image/png"
+    }
+]
+
+MAPSTORE_BASELAYERS = DEFAULT_MS2_BACKGROUNDS
+```
+
+You might also want to update/change the `django-mapstore2-adapter` settings, which override the GeoNode GeoNodeSerializer
+
+Update your `django-mapstore2-adapter` > `settings.py` as follows:
+```
+settings.ROOT_URLCONF = '{}.urls'.format(PROJECT_NAME)
+
+try:
+    settings.TEMPLATES[0]['OPTIONS']['context_processors'] += ['mapstore2_adapter.context_processors.resource_urls',]
+except:
+    pass
+
+try:
+    settings.LOGGING["loggers"]["mapstore2_adapter"] = {"handlers": ["console"], "level": "INFO", }
+except:
+    pass
+
+settings.MAPSTORE2_ADAPTER_SERIALIZER = "mapstore2_adapter.plugins.serializers.GeoNodeSerializer"
 ```
 
 ### For Django
