@@ -139,7 +139,7 @@ DEFAULT_MS2_BACKGROUNDS = [{
 MAPSTORE_BASELAYERS = DEFAULT_MS2_BACKGROUNDS
 ```
 
-You might also want to update/change the `django-mapstore2-adapter` settings, which override the GeoNode GeoNodeSerializer
+You might also want to update/change the `django-mapstore2-adapter` settings, which override the GeoNode ones
 
 Update your `django-mapstore2-adapter` > `settings.py` as follows:
 ```
