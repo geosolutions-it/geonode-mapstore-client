@@ -8,6 +8,12 @@
 # LICENSE file in the root directory of this source tree.
 #
 #########################################################################
+
+try:
+    import json
+except ImportError:
+    from django.utils import simplejson as json
+
 from geonode.client.hooksets import GeoExtHookSet
 from mapstore2_adapter.plugins.geonode import GeoNodeMapStore2ConfigConverter
 
@@ -21,6 +27,19 @@ class MapStoreHookSet(GeoExtHookSet):
             return context['request']
         return None
 
+    def get_user(self, request):
+        user = {}
+        if request and request.user:
+            _u = request.user
+            user["name"] = _u.username
+            user["id"] = _u.id
+            user["role"] = [group.name for group in _u.groups.all()]
+            if _u.is_superuser:
+                user["role"] = "admin"
+            if _u.is_authenticated():
+                user["enabled"] = True
+        return json.dumps(user)
+
     def get_access_token(self, request):
         if request and 'access_token' in request.session:
             return request.session['access_token']
@@ -29,6 +48,7 @@ class MapStoreHookSet(GeoExtHookSet):
     def initialize_context(self, context, callback):
         if context:
             request = self.get_request(context)
+            context['USER'] = self.get_user(request)
             context['ACCESS_TOKEN'] = self.get_access_token(request)
             config = context['viewer'] if 'viewer' in context else None
 
