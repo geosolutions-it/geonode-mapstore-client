@@ -74,8 +74,8 @@ const createMapStore2Api = function(plugins) {
 // Can be used to define more compact plugins bundle
 window.initMapstore2Api = function(config, resolve) {
     if (config === 'preview') {
-        require.ensure('./previewplugins', function() {
-            resolve(createMapStore2Api(require('./previewplugins')));
+        require.ensure('./previewPlugins', function() {
+            resolve(createMapStore2Api(require('./previewPlugins')));
         });
     }else {
         require.ensure('./plugins', function() {
