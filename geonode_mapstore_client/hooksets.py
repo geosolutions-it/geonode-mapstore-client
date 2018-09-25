@@ -35,7 +35,7 @@ class MapStoreHookSet(GeoExtHookSet):
             user["id"] = _u.id
             user["role"] = [group.name for group in _u.groups.all()]
             if _u.is_superuser:
-                user["role"] = "admin"
+                user["role"] = "ADMIN"
             if _u.is_authenticated():
                 user["enabled"] = True
         return json.dumps(user)
@@ -44,30 +44,40 @@ class MapStoreHookSet(GeoExtHookSet):
         if request and 'access_token' in request.session:
             return request.session['access_token']
         return None
+    # return if we are editing a layer or creating a new map
+    def isEditLayer(self, context):
+        if context: 
+            req = self.get_request(context)
+            if req.GET.get("layer"):
+                return True
+        return False
 
     def initialize_context(self, context, callback):
         if context:
             request = self.get_request(context)
             context['USER'] = self.get_user(request)
             context['ACCESS_TOKEN'] = self.get_access_token(request)
-            config = context['viewer'] if 'viewer' in context else None
-
+            config = context['viewer'] if 'viewer' in context else None 
             if not config:
-                try:
-                    if len(context.dicts) > 0:
-                        for ctx in context.dicts:
-                            if 'preview' in ctx and (
-                                ctx['preview'] in ('geoext', 'mapstore', 'mapstore2', 'ms2') and 'config' in ctx):
-                                config = ctx['config']
-                except:
-                    pass
-
+                if 'config' in context and context['config']:
+                    config = context['config']
+                else:
+                    try:
+                        if len(context.dicts) > 0:
+                            for ctx in context.dicts:
+                                if 'preview' in ctx and (
+                                    ctx['preview'] in ('geoext', 'mapstore', 'mapstore2', 'ms2') and 'config' in ctx):
+                                    config = ctx['config']
+                    except:
+                        pass
             ms2_config = {}
             if config:
                 try:
                     ms2_config = callback(config, request)
                 except:
                     ms2_config = '{}'
+                    import traceback
+                    traceback.print_exc()
             context['ms2_config'] = ms2_config
 
     # Layers
@@ -86,7 +96,7 @@ class MapStoreHookSet(GeoExtHookSet):
     # -- Not implemented yet
     # def layer_edit_template(self, context=None):
     #     self.initialize_context(context, callback=ms2_config_converter.convert)
-    #     return 'geonode-mapstore-client/layer_map.html'
+    #     return 'geonode-mapstore-client/map_new.html'
 
     def layer_update_template(self, context=None):
         self.initialize_context(context, callback=ms2_config_converter.convert)
@@ -106,27 +116,27 @@ class MapStoreHookSet(GeoExtHookSet):
         self.initialize_context(context, callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/map_detail.html'
 
-    # -- Not implemented yet
-    # def map_new_template(self, context=None):
-    #     self.initialize_context(context, callback=ms2_config_converter.convert)
-    #     return 'geonode-mapstore-client/map_new.html'
-    #
-    # def map_view_template(self, context=None):
-    #     self.initialize_context(context, callback=ms2_config_converter.convert)
-    #     return 'geonode-mapstore-client/map_view.html'
+    def map_new_template(self, context=None):
+        self.initialize_context(context, callback=ms2_config_converter.convert)
+        if self.isEditLayer(context):
+            return 'geonode-mapstore-client/layer_edit.html'
+        else:
+            return 'geonode-mapstore-client/map_new.html'
+
+    def map_view_template(self, context=None):
+        self.initialize_context(context, callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/map_view.html'
     #
     def map_edit_template(self, context=None):
         self.initialize_context(context, callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/edit_map.html'
-    #
-    # def map_update_template(self, context=None):
-    #     self.initialize_context(context, callback=ms2_config_converter.convert)
-    #     return 'geonode-mapstore-client/edit_map.html'
-    #
-    # def map_embed_template(self, context=None):
-    #     self.initialize_context(context, callback=ms2_config_converter.convert)
-    #     return 'geonode-mapstore-client/map_view.html'
-    #
+    
+    # -- Not implemented yet
+    def map_embed_template(self, context=None):
+        print("********** EMBED ********")
+        self.initialize_context(context, callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/map_embed.html'
+    
     # def map_download_template(self, context=None):
     #     self.initialize_context(context, callback=ms2_config_converter.convert)
     #     return 'geonode-mapstore-client/map_view.html'

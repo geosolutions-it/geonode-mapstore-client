@@ -1,5 +1,5 @@
 {% extends "./base_ms.html" %}
-{% block plugins %}ms2_map_viewer_plugins.js{% endblock %}
+{% block plugins %}ms2_composer_plugins.js{% endblock %}
 {% block style %}
 <style>
 	body {
@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     toolbar: {
                         active: null,
                         expanded: false
+                    },
+                    fullscreen: {
+                        enabled: true
                     }
                 },
                 mapInfo: {enabled: true, infoFormat: "text/html" },

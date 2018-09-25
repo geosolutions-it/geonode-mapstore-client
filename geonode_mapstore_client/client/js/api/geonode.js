@@ -1,0 +1,91 @@
+/*
+ * Copyright 2018, GeoSolutions Sas.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+const Rx = require('rxjs');
+const axios = require('../../MapStore2/web/client/libs/ajax');
+const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils");
+
+
+const createAttributesFromMetadata = ({name, description}) => {
+    return [{
+        "type": "string",
+        "name": "title",
+        "value": name,
+        "label": "Title"
+    },
+    {
+        "type": "string",
+        "name": "abstract",
+        "value": description,
+        "label": "Abstract"
+    }];
+};
+const addThumbToAttributes = ({data}, attributes) => {
+    return [...attributes, {
+        "type": "string",
+        "name": "thumbnail",
+        "value": data,
+        "label": "Thumbnail"
+        }
+    ];
+};
+const patchResource = (id, resource) => {
+    const baseUrl = ConfigUtils.getConfigProp("genode_rest_api") || "./";
+    return axios.patch( `${baseUrl}resources/${id}/?full=true`, resource);
+};
+
+const postResource = (data, metadata, {thumbnail}) => {
+    const baseUrl = ConfigUtils.getConfigProp("genode_rest_api") || "./";
+    const attributes = thumbnail ? addThumbToAttributes(thumbnail, createAttributesFromMetadata(metadata)) : createAttributesFromMetadata(metadata);
+    return axios.post( `${baseUrl}resources/?full=true`, {data, attributes, name: metadata.name}, { timeout: 10000});
+};
+
+
+/**
+ * Retrieves a resource with data with all information about user's permission on that resource, attributes and data.
+ * @param {number} id the id of the resource to get
+ * @param {options} param1 `includeAttributes` and `withData` flags, both true by default
+ * @param {object} API the API to use
+ * @return and observable that emits the resource
+ */
+const getResource = () => Rx.Observable.empty();
+
+
+ /*
+ * @param {resource} param0 resource content
+ * @return an observable that emits the id of the resource
+ */
+const createResource = ({ data, metadata, linkedResources = {} }) =>
+    Rx.Observable.defer(() => postResource(data, metadata, linkedResources))
+        .pluck('data')
+        .do((res) => window.location.href = `${ConfigUtils.getConfigProp("geonode_url")}maps/${res.id}/edit`)
+        .filter(() => false );
+/**
+ * Patch a resource
+ * @param {resource} param0 the resource to update (must contain the id)
+ */
+const updateResource = ({id, data} = {}) =>
+    Rx.Observable.defer(
+                () => patchResource(id, {id, data}))
+            .switchMap(
+                res => Rx.Observable.of(res))
+            .pluck('data')
+            .map( res => res.id);
+/**
+ * Deletes a resource and the linked resources
+ * @param {object} resource the resource with the id
+ * @param {object} options options
+ * @param {object} API the API to use
+ */
+const deleteResource = () => Rx.Observable.empty();
+module.exports = {
+    getResource,
+    createResource,
+    updateResource,
+    deleteResource
+};

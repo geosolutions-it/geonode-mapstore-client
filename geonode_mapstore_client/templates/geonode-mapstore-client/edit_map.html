@@ -1,6 +1,6 @@
-{% load geonode_mapstore_client_tags %}
-{% client_composer_js %}
-
+{% extends "./base_ms.html" %}
+{% block plugins %}ms2_composer_plugins.js{% endblock %}
+{% block style %}
 <style>
 	body {
         padding-top: 0px !important; 
@@ -12,110 +12,36 @@
         width: 100%;
         z-index: 1029;
         background-color: white;
-
-    }
-    ._ms2_init_center {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            overflow: show;
-            margin: auto;
-            display: flex;
-            align-items: center;
-    }
-    ._ms2_init_spinner {
-        height: 176px;
-        width: 176px;
-    }
-    ._ms2_init_spinner > div,
-    ._ms2_init_spinner > div:after {
-        border-radius: 50%;
-        width: 176px;
-        height: 176px;
-    }
-    ._ms2_init_spinner > div {
-        box-sizing: border-box;
-        text-indent: -9999em;
-        border: 16px solid rgba(119,119,119, 0.2);
-        border-left: 16px solid #777777;
-        -webkit-transform: translateZ(0);
-        -ms-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-animation: _ms2_init_anim 1.1s infinite linear;
-        animation: _ms2_init_anim 1.1s infinite linear;
-    }
-    @-webkit-keyframes _ms2_init_anim {
-        0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-        }
-        100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-        }
-    }
-    @keyframes _ms2_init_anim {
-        0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-        }
-        100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-        }
-    }
-    ._ms2_init_text {
-        -webkit-animation: _ms2_init_text_anim 2s linear 0s infinite normal;
-        animation: _ms2_init_text_anim 2s linear 0s infinite normal;
-        color: #6F6F6f;
-        font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-        font-size: 20px;
-        font-weight: bold;
-        height: 0.75em;
-        width:  6em;
-        text-align: center;
-        margin: auto;
-        z-index: 1000;
-    }
-    @keyframes _ms2_init_text_anim {
-        0%  {opacity: 0}
-        20% {opacity: 0}
-        50% {opacity: 1}
-        70% {opacity: .75}
-        100%{opacity: 0}
     }
 </style>
+{% endblock %}
+{% block app_config %}
 {% autoescape off %}
 <script type="text/javascript">
+ const ms2_config = {{ ms2_config }};
+ const accessToken = "{{ ACCESS_TOKEN }}";
+ const user = {{ USER }};
+    
 document.addEventListener('DOMContentLoaded', function () {
-    const userDetails = 
-    {
-        "User": {
-        "attribute": [
-            {"name": "email", "value": "info@geo-solutions.it"},
-            {"name": "notes", "value":"note"},
-            {"name": "company", "value": "GeoSolutions"}
-        ],
-        "enabled":true,
-        "groups":{"group":[ 
-            {"description": "description", "enabled": true, "groupName": "everyone", "id":479},
-            {"description": "Group for GeoSolutions' Staff", "enabled":true, "groupName":"geosolutions", "id":524}
-        ]},
-        "id": 3,
-        "name": "admin",
-        "role": "ADMIN"
-        },
-        "access_token": "{{ ACCESS_TOKEN }}"
-    };
+    
+    const userDetails = {
+        "User": user,
+        "access_token": accessToken
+    }
     initMapstore2Api('edit', function(MapStore2) { 
+    
     MapStore2.create('ms-container', {
-        config: {{ ms2_config }},
-        mapId: 10,
+        config: ms2_config,
+        mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id,
         initialState: {
             defaultState: {
                 mode: "embedded",
+                maps : {
+                    enabled: false,
+                    showMapDetails: true,
+                    errors: [],
+                    searchText: "",
+                    results: ""},
                 mousePosition: {enabled: false},
                 controls: {
                     toolbar: {
@@ -132,7 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
         proxy: "{{ SITEURL }}proxy/?url=",
         printingEnabled: true,
         localConfig: {
-
+            geonode_url: "{{ SITEURL }}",
+            genode_rest_api: "{{ SITEURL }}mapstore/rest/",
             loadAfterTheme: true,
             printUrl: "{{ SITEURL }}gs/pdf/info.json",
             translations: '', 
@@ -148,16 +75,20 @@ document.addEventListener('DOMContentLoaded', function () {
           },
         plugins: MS2_PLUGINS
       });
-      MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
-    });
+        if (user && user.id) {
+            MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
+        }
+});
 
 });
 </script>
 {% endautoescape %}
-
+{% endblock %}
+{% block map_content %}
 <div id="ms-container" class="ms2">
-    <div class="_ms2_init_spinner _ms2_init_center"><div></div></div>
-    <div class="_ms2_init_text _ms2_init_center">Loading MapStore</div>
+        <div class="_ms2_init_spinner _ms2_init_center">
+            <div></div>
+        </div>
+        <div class="_ms2_init_text _ms2_init_center">Loading MapStore</div>
 </div>
-
-</div>
+{% endblock %}
