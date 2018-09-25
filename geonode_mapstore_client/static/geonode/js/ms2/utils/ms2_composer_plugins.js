@@ -164,6 +164,6 @@ var MS2_PLUGINS = {
 			}
 		}
 	},
-	"WidgetsBuilder", "Widgets"
+	"WidgetsBuilder", "Widgets", "Save", "SaveAs", "Notifications"
 	]
 }

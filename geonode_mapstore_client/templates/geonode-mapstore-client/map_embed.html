@@ -1,18 +1,11 @@
 {% extends "./base_ms.html" %}
-{% block plugins %}ms2_map_viewer_plugins.js{% endblock %}
+{% block plugins %}ms2_map_embed_plugins.js{% endblock %}
 {% block style %}
 <style>
 	body {
-        padding-top: 0px !important; 
+        padding: 0px !important;
+        margin: 0px !important; 
 	}
-	#ms-container {
-		position: absolute;
-		top: 72px;
-		bottom: 0px;
-        width: 100%;
-        z-index: 1029;
-        background-color: white;
-    }
 </style>
 {% endblock %}
 {% block app_config %}

@@ -5,6 +5,10 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+const {mapSaveMapResourceEpic} = require("../MapStore2/web/client/epics/maps");
+const Rx = require("rxjs");
+const clearWidgetsOnLocationChange = () => Rx.Observable.empty();
 module.exports = {
     plugins: {
         IdentifyPlugin: require('../MapStore2/web/client/plugins/Identify'),
@@ -42,6 +46,10 @@ module.exports = {
                 security: require('../MapStore2/web/client/reducers/security'),
                 maps: require('../MapStore2/web/client/reducers/maps'),
                 currentMap: require('../MapStore2/web/client/reducers/currentMap')
+            },
+            epics: {
+                mapSaveMapResourceEpic,
+                clearWidgetsOnLocationChange
             }
         }
     },

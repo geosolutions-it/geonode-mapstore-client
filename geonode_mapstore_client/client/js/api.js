@@ -15,12 +15,10 @@ const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
  */
 //  ConfigUtils.setConfigProp('translationsPath', ['../MapStore2/web/client/translations', './translations'] );
 ConfigUtils.setConfigProp('themePrefix', 'msgapi');
-const GeoStoreApi = require("../MapStore2/web/client/api/GeoStoreDAO");
-const oldgetShortResource = GeoStoreApi.getShortResource;
-GeoStoreApi.createResource = function(metadata, data, category, options) {
-    // Example to rewrite GEoStoreApi methods
-    return oldgetShortResource(resourceId, options);
-};
+const Persistence = require("../MapStore2/web/client/api/persistence");
+Persistence.addApi("geonode", require("./api/geonode"));
+Persistence.setApi("geonode");
+
 /**
  * Use a custom plugins configuration file with:
  *
@@ -44,14 +42,6 @@ GeoStoreApi.createResource = function(metadata, data, category, options) {
  * });
  */
 // const appConfig = require('../MapStore2/web/client/product/appConfig');
-
-/**
- * Define a custom list of plugins with:
- *
- * const plugins = require('./plugins');
- */
-// const plugins = require('../MapStore2/web/client/product/plugins');
-//const plugins = require('./plugins');
 
 
 const getScriptPath = function() {
@@ -81,7 +71,7 @@ const createMapStore2Api = function(plugins) {
     }
     });
 };
-
+// Can be used to define more compact plugins bundle
 window.initMapstore2Api = function(config, resolve) {
     if (config === 'preview') {
         require.ensure('./previewplugins', function() {
