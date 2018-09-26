@@ -5,10 +5,9 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
+// geonode specific epics
+const epics = require("./epics");
 
-const {mapSaveMapResourceEpic} = require("../MapStore2/web/client/epics/maps");
-const Rx = require("rxjs");
-const clearWidgetsOnLocationChange = () => Rx.Observable.empty();
 module.exports = {
     plugins: {
         IdentifyPlugin: require('../MapStore2/web/client/plugins/Identify'),
@@ -47,10 +46,7 @@ module.exports = {
                 maps: require('../MapStore2/web/client/reducers/maps'),
                 currentMap: require('../MapStore2/web/client/reducers/currentMap')
             },
-            epics: {
-                mapSaveMapResourceEpic,
-                clearWidgetsOnLocationChange
-            }
+            epics
         }
     },
     requires: {

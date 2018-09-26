@@ -44,7 +44,10 @@ const postResource = (data, metadata, {thumbnail}) => {
     const attributes = thumbnail ? addThumbToAttributes(thumbnail, createAttributesFromMetadata(metadata)) : createAttributesFromMetadata(metadata);
     return axios.post( `${baseUrl}resources/?full=true`, {data, attributes, name: metadata.name}, { timeout: 10000});
 };
-
+const getLayerEditPerimissions = (name) => {
+    const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
+    return axios.get( `${baseUrl}gs/${name}/edit-check`);
+};
 
 /**
  * Retrieves a resource with data with all information about user's permission on that resource, attributes and data.
@@ -83,9 +86,17 @@ const updateResource = ({id, data} = {}) =>
  * @param {object} API the API to use
  */
 const deleteResource = () => Rx.Observable.empty();
+/**
+ * Retrieve layer's edit permission from local gs otherwise are false
+ */
+const layerEditPermissions = (layer) =>
+    Rx.Observable.defer( () => getLayerEditPerimissions(layer.name))
+                .pluck("data")
+                .map(({authorized}) => ({canEdit: authorized}));
 module.exports = {
     getResource,
     createResource,
     updateResource,
-    deleteResource
+    deleteResource,
+    layerEditPermissions
 };
