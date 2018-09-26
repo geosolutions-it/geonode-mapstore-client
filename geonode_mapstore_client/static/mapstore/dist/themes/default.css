@@ -7003,6 +7003,12 @@
 .msgapi .tooltip-inner {
   word-wrap: break-word;
 }
+.msgapi .popover-title {
+  word-wrap: break-word;
+}
+.msgapi .popover-content {
+  word-wrap: break-word;
+}
 .msgapi .shadow {
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.24);
@@ -11393,7 +11399,8 @@
   position: absolute;
   font-size: 18px;
   color: #2c689c;
-  right: 20px;
+  right: 7px;
+  top: 10px;
 }
 .msgapi .widget-container .mapstore-widget-card .widget-menu {
   border: none;
@@ -11515,6 +11522,41 @@
 }
 .msgapi .m-padding-md {
   padding-bottom: 15px;
+}
+/* chart advance options  */
+.msgapi .shadow-soft-up {
+  -webkit-box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
+}
+.msgapi .mapstore-chart-advance-options {
+  z-index: 20;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+.msgapi .mapstore-chart-advance-options .ms2-border-layout-body {
+  background-color: #ffffff;
+}
+.msgapi .mapstore-chart-advance-options .ms2-border-layout-body {
+  padding: 0;
+}
+.msgapi .mapstore-chart-advance-options .ms2-border-layout-body .mapstore-switch-panel {
+  margin-bottom: 20px;
+  padding: 0 10px;
+  border: none;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+.msgapi .mapstore-chart-advance-options .ms2-border-layout-body .mapstore-switch-panel .panel-title {
+  font-weight: bold;
 }
 .msgapi .ms-wizard .form-horizontal .control-label {
   text-align: left;
@@ -12348,10 +12390,16 @@
 .msgapi .fill:not(:-webkit-full-screen) #mapstore-metadata-explorer .panel-body {
   height: calc(100% -103px);
 }
+.msgapi .fill:not(:-webkit-full-screen) .notifications-tc {
+  top: 63px !important;
+}
 .msgapi .catalog-panel > .panel-body form .form-group:first-child,
 .msgapi .catalog-panel > .panel-body form .form-group:first-child + .form-group {
   display: none;
 }
 .msgapi .widgets-builder-header {
   padding-top: 72px;
+}
+.msgapi .notifications-tc {
+  top: 0px !important;
 }
