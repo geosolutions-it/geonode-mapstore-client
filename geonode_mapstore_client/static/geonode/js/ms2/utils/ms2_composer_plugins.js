@@ -61,7 +61,8 @@ var MS2_PLUGINS = {
 	}, {
 		"name": "FeatureEditor",
 		"cfg": {
-			"canEdit": true
+			"editingAllowedRoles": "NONE",
+			"canEdit": false
 		}
 	},{
 		"name": "QueryPanel",
