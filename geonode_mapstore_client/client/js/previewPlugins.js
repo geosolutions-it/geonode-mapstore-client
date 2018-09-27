@@ -8,6 +8,7 @@
 module.exports = {
     plugins: {
         MapPlugin: require('../MapStore2/web/client/plugins/Map'),
+        IdentifyPlugin: require('../MapStore2/web/client/plugins/Identify'),
         ToolbarPlugin: require('../MapStore2/web/client/plugins/Toolbar'),
         ZoomAllPlugin: require('../MapStore2/web/client/plugins/ZoomAll'),
         MapLoadingPlugin: require('../MapStore2/web/client/plugins/MapLoading'),
@@ -30,5 +31,7 @@ module.exports = {
         }
     },
     requires: {
+        ReactSwipe: require('react-swipeable-views').default,
+        SwipeHeader: require('../MapStore2/web/client/components/data/identify/SwipeHeader')
     }
 };

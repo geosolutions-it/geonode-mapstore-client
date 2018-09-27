@@ -40,9 +40,9 @@ var MS2_PLUGINS = {
 			"name": "Identify",
 			"cfg": {
 				"showFullscreen": false,
-				"dock": false,
-				"position": "bottom",
-				"size": 0.5,
+				"dock": true,
+				"position": "left",
+				"size": 0.4,
 				"fluid": true,
 				"viewerOptions": {
 					"container": "{context.ReactSwipe}"
