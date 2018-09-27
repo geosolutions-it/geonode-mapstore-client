@@ -14,6 +14,7 @@ const {SELECT_NODE} = require("../../MapStore2/web/client/actions/layers");
 const {setPermission} = require("../../MapStore2/web/client/actions/featuregrid");
 const {layerEditPermissions} = require("../api/geonode");
 const {getSelectedLayer} = require("../../MapStore2/web/client/selectors/layers");
+const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils");
 // const {basicError} = require('../../MapStore2/web/client/utils/NotificationUtils');
 /**
  * We need to include missing epics. The plugins that normally include this epic is not used.
@@ -26,7 +27,7 @@ const {mapSaveMapResourceEpic} = require("../../MapStore2/web/client/epics/maps"
 const clearWidgetsOnLocationChange = () => Rx.Observable.empty();
 
 const _setFeatureEditPermission = (action$, {getState} = {}) =>
-    action$.ofType(SELECT_NODE).filter(({type}) => type !== "layer")
+    action$.ofType(SELECT_NODE).filter(({nodeType}) => nodeType === "layer" && !ConfigUtils.getConfigProp("disableCheckEditPermissions"))
         .switchMap(() => {
             const layer = getSelectedLayer(getState() || {});
             return layer ? layerEditPermissions(layer)

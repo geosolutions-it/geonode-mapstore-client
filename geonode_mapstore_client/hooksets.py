@@ -48,7 +48,7 @@ class MapStoreHookSet(GeoExtHookSet):
     def isEditLayer(self, context):
         if context: 
             req = self.get_request(context)
-            if req.GET.get("layer"):
+            if req.GET.get("layer") and req.GET.get("storeType"):
                 return True
         return False
 

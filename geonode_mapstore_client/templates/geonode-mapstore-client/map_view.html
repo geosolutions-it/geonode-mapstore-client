@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         proxy: "{{ SITEURL }}proxy/?url=",
         printingEnabled: true,
         localConfig: {
+            disableCheckEditPermissions: true,
             geonode_url: "{{ SITEURL }}",
             genode_rest_api: "{{ SITEURL }}mapstore/rest/",
             loadAfterTheme: true,
