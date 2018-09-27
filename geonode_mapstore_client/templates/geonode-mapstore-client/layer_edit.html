@@ -47,9 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     toolbar: {
                         active: null,
                         expanded: false
-                    },
-                    fullscreen: {
-                        enabled: true
                     }
                 },
                 mapInfo: {enabled: true, infoFormat: "text/html" },
@@ -78,8 +75,12 @@ document.addEventListener('DOMContentLoaded', function () {
           },
         plugins: MS2_PLUGINS
       });
-        if (user && user.id) {
-            MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
+        
+        if( ms2_config && ms2_config.map && ms2_config.map.layers && ms2_config.map.layers.length > 0) {
+            let layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
+            layer["id"] = `${layer.name}__${ms2_config.map.layers.length - 1}`;
+            MapStore2.triggerAction({ type: 'LAYERS:SELECT_NODE', id: layer.id, nodeType: 'layer',ctrlKey: false});
+            MapStore2.triggerAction({ type: 'LAYERS:BROWSE_DATA', layer});
         }
 });
 
