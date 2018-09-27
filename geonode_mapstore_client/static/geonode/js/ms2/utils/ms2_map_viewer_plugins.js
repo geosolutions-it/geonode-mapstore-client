@@ -133,7 +133,7 @@ var MS2_PLUGINS = {
 	},
 		"Expander", "ScaleBox", "Undo", "Redo",
 	{
-		name: "FullScreen",
+		"name": "FullScreen",
 		"override": {
 			"Toolbar": {
 				"alwaysVisible": false
