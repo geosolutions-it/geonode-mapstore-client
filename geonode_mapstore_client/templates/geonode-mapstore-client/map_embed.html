@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id,
         initialState: {
             defaultState: {
+                map: {},
                 mode: "embedded",
                 maps : {
                     enabled: false,
@@ -70,6 +71,14 @@ document.addEventListener('DOMContentLoaded', function () {
       });
         if (user && user.id) {
             MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
+        }
+        if (ms2_config) {
+            MapStore2.triggerAction({
+                type: "MAP_CONFIG_LOADED",
+                config: ms2_config,
+                legacy: !!ms2_config.map && ms2_config.map.info && ms2_config.map.info.id,
+                mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id
+            });
         }
 });
 

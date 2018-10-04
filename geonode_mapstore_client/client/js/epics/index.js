@@ -21,11 +21,8 @@ const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils");
  */
 const {mapSaveMapResourceEpic} = require("../../MapStore2/web/client/epics/maps");
 /**
- *  Geonode doesn't use mapstore routing system. Ms2 router emit the first route changed action
- *  after map config is already loaded, so we need to prevents widgets clear action.
+ * When a user selects a layer, the app checks for layer editing permission.
  */
-const clearWidgetsOnLocationChange = () => Rx.Observable.empty();
-
 const _setFeatureEditPermission = (action$, {getState} = {}) =>
     action$.ofType(SELECT_NODE).filter(({nodeType}) => nodeType === "layer" && !ConfigUtils.getConfigProp("disableCheckEditPermissions"))
         .switchMap(() => {
@@ -37,7 +34,6 @@ const _setFeatureEditPermission = (action$, {getState} = {}) =>
 
 module.exports = {
     mapSaveMapResourceEpic,
-    clearWidgetsOnLocationChange,
     _setFeatureEditPermission
 
 };
