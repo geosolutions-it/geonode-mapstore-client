@@ -101,7 +101,13 @@ var MS2_PLUGINS = {
 			]
 		}
 
-	}, "TOCItemsSettings", {
+	},{
+		"name": "TOCItemsSettings",
+		"cfg": {
+			"hideTitleTranslations": true,
+			"showFeatureInfoTab": false
+		}
+	}, {
 		"name": "Settings",
 		"cfg": {
 			"wrap": true

@@ -90,23 +90,8 @@ var MS2_PLUGINS = {
 				}
 			}
 		}, "Cookie",
-		"OmniBar", {
-			"name": "GoFull",
-			"override": {
-				"Toolbar": {
-					"alwaysVisible": false
-				}
-			}
-		},
+		"OmniBar",
 		"Expander", "ScaleBox", "Undo", "Redo",
-		{
-			"name": "FullScreen",
-			"override": {
-				"Toolbar": {
-					"alwaysVisible": false
-				}
-			}
-		},
         "BurgerMenu",
         "MapFooter",
         {
