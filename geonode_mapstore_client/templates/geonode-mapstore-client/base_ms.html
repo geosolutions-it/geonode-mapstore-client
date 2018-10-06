@@ -94,9 +94,15 @@
     }    
 </style>
 {% block style %}{% endblock %}
-<script>
-localStorage.setItem("showPopoverSync", false);
+
+{% autoescape off %}
+<script type="text/javascript">
+    localStorage.setItem("showPopoverSync", false);
+    const accessToken = "{{ ACCESS_TOKEN }}";
+    const user = {{ USER|default:"false" }};
 </script>
+{% endautoescape %}
 {% block app_config %}{% endblock %}
+
 {% block map_content %}
 {% endblock %}

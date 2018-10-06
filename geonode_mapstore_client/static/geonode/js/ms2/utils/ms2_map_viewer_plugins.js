@@ -61,7 +61,7 @@ var MS2_PLUGINS = {
 	}, {
 		"name": "FeatureEditor",
 		"cfg": {
-			"editingAllowedRoles": "NONE",
+			"editingAllowedRoles": ["NONE"],
 			"canEdit": false
 		}
 	},{
