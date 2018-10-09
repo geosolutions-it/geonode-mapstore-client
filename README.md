@@ -37,7 +37,7 @@ The deplyoment uses the `index-gh.html` please keep this file in sync with `inde
 ## Integrating into GeoNode/Django
 
 - Execute `pip install django-mapstore-adapter --upgrade`
-- Execute `pip install geonode-mapstore-client --upgrade`
+- Execute `pip install django-geonode-mapstore-client --upgrade`
 
 ### GeoNode settings update
 Update your `GeoNode` > `settings.py` as follows:
