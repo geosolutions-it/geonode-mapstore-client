@@ -36,9 +36,10 @@ The deplyoment uses the `index-gh.html` please keep this file in sync with `inde
 
 ## Integrating into GeoNode/Django
 
-- Execute `pip install -r requirements.txt --upgrade --no-cache --no-cache-dir`
+- Execute `pip install django-mapstore-adapter --upgrade`
+- Execute `pip install django-geonode-mapstore-client --upgrade`
 
-### For GeoNode
+### GeoNode settings update
 Update your `GeoNode` > `settings.py` as follows:
 
 ```
@@ -137,39 +138,20 @@ DEFAULT_MS2_BACKGROUNDS = [{
 ]
 
 MAPSTORE_BASELAYERS = DEFAULT_MS2_BACKGROUNDS
+
+if 'geonode.geoserver' in INSTALLED_APPS:
+    LOCAL_GEOSERVER = {
+        "type": "wms",
+        "url": OGC_SERVER['default']['PUBLIC_LOCATION'] + "wms",
+        "visibility": True,
+        "title": "Local GeoServer",
+        "group": "background",
+        "format": "image/png8",
+        "restUrl": "/gs/rest"
+    }
 ```
 
-You might also want to update/change the `django-mapstore2-adapter` settings, which override the GeoNode ones
+### Update migrations and static files
 
-Update your `django-mapstore2-adapter` > `settings.py` as follows:
-```
-settings.ROOT_URLCONF = '{}.urls'.format(PROJECT_NAME)
-
-try:
-    settings.TEMPLATES[0]['OPTIONS']['context_processors'] += ['mapstore2_adapter.context_processors.resource_urls',]
-except:
-    pass
-
-try:
-    settings.LOGGING["loggers"]["mapstore2_adapter"] = {"handlers": ["console"], "level": "INFO", }
-except:
-    pass
-
-settings.MAPSTORE2_ADAPTER_SERIALIZER = "mapstore2_adapter.plugins.serializers.GeoNodeSerializer"
-```
-
-### For Django
-We added templatetags you can use in your templates
-
-- Add `{% client_viewer_js %}` to include the viewer javasricpt
-- Add `{% client_composer_js %}` to include the composer javasricpt
-
-The following templates are available:
-
-`client_map_view_html` for the full map view
-
-`client_map_detail_view_html` for a smaller map view (as in the map preview)
-
-`client_map_new_html` create a new map with composer
-
-`client_layer_map_html` smaller map view for the layer preview
+- Execute `DJANGO_SETTINGS_MODULE=<your_geonode.settings> python manage.py migrate`
+- Execute `DJANGO_SETTINGS_MODULE=<your_geonode.settings> python manage.py collectstatic`
