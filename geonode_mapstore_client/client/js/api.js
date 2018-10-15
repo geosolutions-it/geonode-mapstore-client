@@ -73,6 +73,7 @@ const createMapStore2Api = function(plugins) {
 };
 // Can be used to define more compact plugins bundle
 window.initMapstore2Api = function(config, resolve) {
+    require(`./components/${maptype}/ArcGisMapServer`);// eslint-disable-line
     if (config === 'preview') {
         require.ensure('./previewPlugins', function() {
             resolve(createMapStore2Api(require('./previewPlugins')));
