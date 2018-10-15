@@ -1,12 +1,21 @@
 {% load static %}
+{% with MAP_TYPE="leaflet" %}
+{% if MAP_TYPE == "openlayers" %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.4/ol.css" />
+
+{% else %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css" />
+{% endif %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="shortcut icon" type="image/png" href="https://cdn.jslibs.mapstore2.geo-solutions.it/leaflet/favicon.ico" />
-
-<script src="https://maps.google.com/maps/api/js?v=3"></script>
+{% if MAP_TYPE == "openlayers" %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.4/ol.js"></script>
+{% else %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.2.3/esri-leaflet-mini.js"></script>
+{% endif %}
 
 {%  if MAP_DEBUG %}
 <script id="ms2-api" src="http://localhost:8081/dist/ms2-geonode-api.js"></script>
@@ -97,11 +106,14 @@
 
 {% autoescape off %}
 <script type="text/javascript">
+    const maptype = "{{ MAP_TYPE }}";
     localStorage.setItem("showPopoverSync", false);
     const accessToken = "{{ ACCESS_TOKEN }}";
     const user = {{ USER|default:"false" }};
 </script>
+
 {% endautoescape %}
+{% endwith %}
 {% block app_config %}{% endblock %}
 
 {% block map_content %}
