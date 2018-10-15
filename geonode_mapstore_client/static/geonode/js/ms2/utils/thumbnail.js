@@ -22,7 +22,6 @@ var createMapThumbnail = function(obj_id) {
     let styleMap = ($(".leaflet-map-pane").attr('style') || "" ).replace(/transform: translate3d\(([^,a-b]+)[^)] ([^,a-b]+)[^)]*\)/g,  (s, p1, p2) => {
         return `left: ${parseInt(p1) - xOffset}px; top: ${parseInt(p2)}px;`;
     } );
-    debugger;
     map.find('*').each(function(i) {
         e = $(this);
         if(e.css('display') === 'none' ||
