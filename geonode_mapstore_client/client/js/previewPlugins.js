@@ -5,6 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
+const {_setThumbnail} = require("./epics");
 module.exports = {
     plugins: {
         MapPlugin: require('../MapStore2/web/client/plugins/Map'),
@@ -27,6 +28,9 @@ module.exports = {
                 security: require('../MapStore2/web/client/reducers/security'),
                 maps: require('../MapStore2/web/client/reducers/maps'),
                 currentMap: require('../MapStore2/web/client/reducers/currentMap')
+            },
+            epics: {
+                _setThumbnail
             }
         }
     },
