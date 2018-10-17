@@ -50,7 +50,7 @@ const _setThumbnail = (action$, {getState} = {}) =>
             const state = getState();
             const layers = layersSelector(state);
             const map = mapSelector(state);
-            const isMap = type === "GEONODE:GEONODE:CREATE_MAP_THUMBNAIL";
+            const isMap = type === "GEONODE:CREATE_MAP_THUMBNAIL";
             const id = isMap ? get(map, "info.id") : (layers[layers.length - 1]).name;
             const endPoint = isMap ? "maps" : "layers";
             const {width, height} = map.size;
