@@ -49,6 +49,7 @@
                 proxy: "{{ SITEURL }}proxy/?url=",
                 printingEnabled: true,
                 localConfig: {
+                    geonode_url: "{{ SITEURL }}",
                     translations: '',
                     loadAfterTheme: true,
                     printUrl: "{{ SITEURL }}gs/pdf/info.json",
@@ -72,6 +73,10 @@
                     mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id
                 });
             }
+        let isMap = !!(ms2_config.map && ms2_config.map.info && ms2_config.map.info.id)
+        createMapThumbnail = () => MapStore2.triggerAction({
+            type: isMap && "GEONODE:CREATE_MAP_THUMBNAIL" || "GEONODE:CREATE_LAYER_THUMBNAIL"
+        });
         });
     });
 </script>

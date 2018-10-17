@@ -48,6 +48,10 @@ const getLayerEditPerimissions = (name) => {
     const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
     return axios.get( `${baseUrl}gs/${name}/edit-check`);
 };
+const postThumbnail = (endPoint, id, body = {}) => {
+    const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
+    return axios.post( `${baseUrl}${endPoint}/${id}/thumbnail`, body, {timeout: 10000});
+};
 
 /**
  * Retrieves a resource with data with all information about user's permission on that resource, attributes and data.
@@ -93,10 +97,14 @@ const layerEditPermissions = (layer) =>
     Rx.Observable.defer( () => getLayerEditPerimissions(layer.name))
                 .pluck("data")
                 .map(({authorized}) => ({canEdit: authorized}));
+const updateThumb = (endPoint, id, body) =>
+    Rx.Observable.defer( () => postThumbnail(endPoint, id, body));
+
 module.exports = {
     getResource,
     createResource,
     updateResource,
     deleteResource,
-    layerEditPermissions
+    layerEditPermissions,
+    updateThumb
 };
