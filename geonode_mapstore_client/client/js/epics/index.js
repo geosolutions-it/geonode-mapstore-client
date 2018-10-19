@@ -58,6 +58,8 @@ const _setThumbnail = (action$, {getState} = {}) =>
             const body = {
                     'bbox': [minx, maxx, miny, maxy],
                     'srid': map.bbox.crs,
+                    center: map.center,
+                    zoom: map.zoom,
                     width,
                     height,
                     'layers': layers.filter(l => l.group !== 'background' && l.visibility).map(({name}) => name).join(',')
