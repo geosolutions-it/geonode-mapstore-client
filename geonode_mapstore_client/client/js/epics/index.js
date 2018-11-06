@@ -12,7 +12,8 @@
 const Rx = require("rxjs");
 const {get} = require("lodash");
 const {SELECT_NODE} = require("../../MapStore2/web/client/actions/layers");
-const {setPermission} = require("../../MapStore2/web/client/actions/featuregrid");
+const {setPermission, SET_PERMISSION} = require("../../MapStore2/web/client/actions/featuregrid");
+const {setEditPermissionStyleEditor} = require("../../MapStore2/web/client/actions/styleeditor")
 const {layerEditPermissions, updateThumb} = require("../api/geonode");
 const {getSelectedLayer, layersSelector} = require("../../MapStore2/web/client/selectors/layers");
 const {mapSelector} = require("../../MapStore2/web/client/selectors/map");
@@ -34,6 +35,8 @@ const _setFeatureEditPermission = (action$, {getState} = {}) =>
                             .map(permissions => setPermission(permissions))
                             .startWith(setPermission({canEdit: false})).catch(() => Rx.Observable.empty()) : Rx.Observable.of(setPermission({canEdit: false}));
         });
+const _setStyleEditorPermission = action$ =>
+        action$.ofType(SET_PERMISSION).map(({permission = {}}) => setEditPermissionStyleEditor(permission.canEdit));
 /**
  * Update geonode thumbnail for layers or maps
  */
@@ -99,6 +102,7 @@ const _setThumbnail = (action$, {getState} = {}) =>
 module.exports = {
     mapSaveMapResourceEpic,
     _setFeatureEditPermission,
-    _setThumbnail
+    _setThumbnail,
+    _setStyleEditorPermission
 
 };
