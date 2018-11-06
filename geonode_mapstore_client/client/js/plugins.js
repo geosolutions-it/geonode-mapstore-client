@@ -40,6 +40,7 @@ module.exports = {
         SaveAsPlugin: require('../MapStore2/web/client/plugins/SaveAs'),
         MetadataExplorerPlugin: require('../MapStore2/web/client/plugins/MetadataExplorer'),
         GridContainerPlugin: require('../MapStore2/web/client/plugins/GridContainer'),
+        StyleEditorPlugin: require('../MapStore2/web/client/plugins/StyleEditor'),
         AddReducersAndEpics: {
             reducers: {
                 security: require('../MapStore2/web/client/reducers/security'),
