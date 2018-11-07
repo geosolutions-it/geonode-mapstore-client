@@ -18,6 +18,7 @@
 {% block app_config %}
 {% autoescape off %}
 <script type="text/javascript">
+    const geoserver = "{{ OGC_SERVER.default.PUBLIC_LOCATION|default:"" }}";
     const ms2_config = {{ ms2_config|default:"false" }};
     document.addEventListener('DOMContentLoaded', function () {
     
@@ -25,6 +26,21 @@
             "User": user,
             "access_token": accessToken
         }
+        const stylerCfg = { 
+                "name": "StyleEditor",
+                    "cfg": {
+                            "styleService": {
+                                "baseUrl": geoserver,
+                                    "formats": ['css','sld'],
+                            "availableUrls": [geoserver]
+                        }
+                    }
+                }
+            MS2_PLUGINS.desktop.push(stylerCfg);
+            MS2_PLUGINS.desktop = MS2_PLUGINS.desktop.filter(function(p) {
+                return !(p === "Save" || p === "SaveAs");
+            });
+
         initMapstore2Api('edit', function(MapStore2) { 
             MapStore2.create('ms-container', {
                 config: ms2_config,
@@ -80,6 +96,9 @@
                     legacy: !!ms2_config.map && ms2_config.map.info && ms2_config.map.info.id,
                     mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id
                 });
+            }
+            if (user && user.id) {
+                MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
             }
             if( ms2_config && ms2_config.map && ms2_config.map.layers && ms2_config.map.layers.length > 0) {
                 
