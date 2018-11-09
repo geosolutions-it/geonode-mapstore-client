@@ -46,7 +46,7 @@ class MapStoreHookSet(GeoExtHookSet):
         return None
     # return if we are editing a layer or creating a new map
     def isEditLayer(self, context):
-        if context: 
+        if context:
             req = self.get_request(context)
             if req.GET.get("layer") and req.GET.get("storeType"):
                 return True
@@ -57,7 +57,7 @@ class MapStoreHookSet(GeoExtHookSet):
             request = self.get_request(context)
             context['USER'] = self.get_user(request)
             context['ACCESS_TOKEN'] = self.get_access_token(request)
-            config = context['viewer'] if 'viewer' in context else None 
+            config = context['viewer'] if 'viewer' in context else None
             if not config:
                 if 'config' in context and context['config']:
                     config = context['config']
@@ -111,6 +111,10 @@ class MapStoreHookSet(GeoExtHookSet):
         self.initialize_context(context, callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/layer_map.html'
 
+    def layer_style_edit_template(self, context=None):
+        self.initialize_context(context, callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/layer_edit.html'
+
     # Maps
     def map_detail_template(self, context=None):
         self.initialize_context(context, callback=ms2_config_converter.convert)
@@ -130,13 +134,12 @@ class MapStoreHookSet(GeoExtHookSet):
     def map_edit_template(self, context=None):
         self.initialize_context(context, callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/edit_map.html'
-    
+
     # -- Not implemented yet
     def map_embed_template(self, context=None):
-        print("********** EMBED ********")
         self.initialize_context(context, callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/map_embed.html'
-    
+
     # def map_download_template(self, context=None):
     #     self.initialize_context(context, callback=ms2_config_converter.convert)
     #     return 'geonode-mapstore-client/map_view.html'

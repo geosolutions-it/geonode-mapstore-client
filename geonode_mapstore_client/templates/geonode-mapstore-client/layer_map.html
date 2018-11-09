@@ -24,7 +24,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         $('#embedded_map').addClass('ms2');
         $('#embedded_map').html('<div class="_ms2_init_spinner _ms2_init_center"><div></div> <div class="_ms2_init_text _ms2_init_center">Loading MapStore</div>');
-        initMapstore2Api('preview', function(MapStore2) { 
+        initMapstore2Api('preview', function(MapStore2) {
             MapStore2.create('embedded_map', {
                 config: ms2_config,
                 theme: {theme: "preview"},
