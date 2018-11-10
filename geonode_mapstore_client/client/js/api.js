@@ -8,6 +8,7 @@
 require('react-widgets/dist/css/react-widgets.css');
 const assign = require("object-assign");
 const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
+const {keyBy, values} = require('lodash');
 /**
  * Add custom (overriding) translations with:
  *
@@ -83,4 +84,18 @@ window.initMapstore2Api = function(config, resolve) {
             resolve(createMapStore2Api(require('./plugins')));
         });
     }
+};
+const createConfigObj = (cfg = []) => keyBy(cfg, (o) => o.name || o);
+
+window.squashMS2PlugCfg = function(...args) {
+    const config = args.reduce((cfg, arg) => {
+        return Object.keys(arg).reduce((c, k) => ({ ...c, [k]: assign({}, cfg[k], (createConfigObj(arg[k])) )}), {});
+    }, {});
+    return Object.keys(config).reduce((c, k) => ({...c, [k]: values(config[k])}), {});
+};
+window.excludeMS2Plugins = function(config, exclude = []) {
+    return Object.keys(config).reduce((c, k) => ({...c, [k]: config[k].filter((p) => {
+        const n = p.name || p;
+        return exclude.indexOf(n) === -1;
+    })}), {});
 };

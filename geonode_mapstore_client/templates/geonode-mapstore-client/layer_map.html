@@ -1,5 +1,7 @@
 {% extends "./base_ms.html" %}
-{% block plugins %}ms2_viewer_plugins.js{% endblock %}
+{% block plugins %}
+<script type="text/javascript" src="{{ STATIC_URL }}geonode/js/ms2/utils/ms2_base_plugins.js"></script>
+{% endblock %}
 {% block style %}
 <style>
 #embedded_map {
@@ -24,7 +26,9 @@
     document.addEventListener('DOMContentLoaded', function () {
         $('#embedded_map').addClass('ms2');
         $('#embedded_map').html('<div class="_ms2_init_spinner _ms2_init_center"><div></div> <div class="_ms2_init_text _ms2_init_center">Loading MapStore</div>');
-        initMapstore2Api('preview', function(MapStore2) {
+        MS2_PLUGINS = MS2_BASE_PLUGINS;
+        MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
+        initMapstore2Api('preview', function(MapStore2) { 
             MapStore2.create('embedded_map', {
                 config: ms2_config,
                 theme: {theme: "preview"},

@@ -45,7 +45,8 @@ module.exports = {
             reducers: {
                 security: require('../MapStore2/web/client/reducers/security'),
                 maps: require('../MapStore2/web/client/reducers/maps'),
-                currentMap: require('../MapStore2/web/client/reducers/currentMap')
+                currentMap: require('../MapStore2/web/client/reducers/currentMap'),
+                maplayout: require('../MapStore2/web/client/reducers/maplayout')
             },
             epics
         }

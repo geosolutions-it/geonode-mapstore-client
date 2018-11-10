@@ -1,38 +1,7 @@
-var MS2_PLUGINS = {
-	"desktop": [ {
-		"name": "Map",
-		"cfg": {
-			"tools": ["locate", "measurement", "draw"],
-			"mapOptions": {
-				"openlayers": {
-					"interactions": {
-						"pinchRotate": false,
-						"altShiftDragRotate": false
-					}
-				},
-				"leaflet": {
-					"attribution": {
-						"container": "#mapstore-map-footer-container"
-					}
-				}
-			}
-		}
-	}, {
-		"name": "DrawerMenu"
-	}, {
-		"name": "BackgroundSelector",
-		"cfg": {
-			"style": { "bottom": 0, "marginBottom": 30 },
-			"dimensions": {
-				"side": 65,
-				"sidePreview": 65,
-				"frame": 3,
-				"margin": 5,
-				"label": false,
-				"vertical": false
-			}
-		}
-    },
+// needs base_plugins.js
+var MS2_EMBED_PLUGINS = {
+	"desktop": [ 
+		// Map, BackgroundSelector, Identify from base
     {
 		"name": "TOC",
 		"cfg": {
@@ -57,68 +26,9 @@ var MS2_PLUGINS = {
 		}
 
 	},
-	{
-		"name": "Identify",
-		"cfg": {
-			"showFullscreen": false,
-			"dock": true,
-			"position": "right",
-			"size": 0.5,
-			"fluid": true,
-			"viewerOptions": {
-				"container": "{context.ReactSwipe}"
-			}
-		},
-		"override": {
-			"Toolbar": {
-				"position": 11,
-				"alwaysVisible": false
-			}
-		}
-	}, {
-		"name": "ZoomAll",
-		"override": {
-			"Toolbar": {
-				"alwaysVisible": false
-			}
-		}
-	}, {
-		"name": "Toolbar",
-		"id": "NavigationBar",
-		"cfg": {
-			"id": "navigationBar",
-			"layout": "horizontal"
-		}
-	}, {
-		"name": "MapLoading",
-		"override": {
-			"Toolbar": {
-				"alwaysVisible": true
-			}
-		}
-	}, "Cookie",
-		"OmniBar",
-		"Expander", "ScaleBox",
-	 "BurgerMenu", "MapFooter", {
-		"name": "Print",
-		"cfg": {
-			"useFixedScales": true
-		}
-	},
-	{
-		"name": "ZoomIn",
-		"override": {
-			"Toolbar": {
-				"alwaysVisible": true
-			}
-		}
-	}, {
-		"name": "ZoomOut",
-		"override": {
-			"Toolbar": {
-				"alwaysVisible": true
-			}
-		}
-	}, "Widgets", "Notifications"
+		// Setting, Toolbar, MapLoading, DrawerMenu, Cookie, OmniBar, Expander,
+		// ScaleBox, Undo, Redo, BurgerMenu, MapFooter, Measure, Print
+		// ZoomAll, ZoomIn, ZoomOut from base
+	"Widgets", "Notifications"
 	]
 }

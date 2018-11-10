@@ -1,5 +1,8 @@
 {% extends "./base_ms.html" %}
-{% block plugins %}ms2_map_embed_plugins.js{% endblock %}
+{% block plugins %}
+<script type="text/javascript" src="{{ STATIC_URL }}geonode/js/ms2/utils/ms2_base_plugins.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}geonode/js/ms2/utils/ms2_map_embed_plugins.js"></script>
+{% endblock %}
 {% block style %}
 <style>
 	body {
@@ -17,6 +20,8 @@
             "User": user,
             "access_token": accessToken
         }
+        MS2_PLUGINS = window.squashMS2PlugCfg(MS2_BASE_PLUGINS, MS2_EMBED_PLUGINS);
+        MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
         initMapstore2Api('edit', function(MapStore2) { 
             MapStore2.create('ms-container', {
                 config: ms2_config,
