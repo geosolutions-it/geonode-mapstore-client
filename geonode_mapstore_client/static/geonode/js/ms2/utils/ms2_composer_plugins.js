@@ -24,9 +24,9 @@ var MS2_EDIT_PLUGINS = {
 			}
 		},
 		// Setting, Toolbar, MapLoading, DrawerMenu, Cookie, OmniBar, Expander,
-		// ScaleBox, Undo, Redo, BurgerMenu, MapFooter, Measure, Print
+		// Undo, Redo, BurgerMenu, MapFooter, Measure, Print
 		// ZoomAll, ZoomIn, ZoomOut from base
-		// FeatureEditor, QueryPanel, MetadataExplorer, GoFull, FullScreen
+		// ScaleBox, FeatureEditor, QueryPanel, MetadataExplorer, GoFull, FullScreen
 		// 	Widgets, SaveAs, Notifications TOCItemSettings, from map_viewer_plugins
 		
 		"WidgetsBuilder",  "Save", 
