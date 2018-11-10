@@ -1,5 +1,9 @@
 {% extends "./base_ms.html" %}
-{% block plugins %}ms2_composer_plugins.js{% endblock %}
+{% block plugins %}
+<script type="text/javascript" src="{{ STATIC_URL }}geonode/js/ms2/utils/ms2_base_plugins.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}geonode/js/ms2/utils/ms2_map_viewer_plugins.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}geonode/js/ms2/utils/ms2_composer_plugins.js"></script>
+{% endblock %}
 {% block style %}
 <style>
 	body {
@@ -27,6 +31,7 @@
         }
         initMapstore2Api('edit', function(MapStore2) { 
             // you have to add the configuration for stylerplugin
+            MS2_PLUGINS = window.squashMS2PlugCfg(MS2_BASE_PLUGINS, MS2_MAP_PLUGINS, MS2_EDIT_PLUGINS);
             const stylerCfg = { 
                 "name": "StyleEditor",
                     "cfg": {
@@ -39,7 +44,7 @@
                     }
                 }
             MS2_PLUGINS.desktop.push(stylerCfg);
-
+            MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
             MapStore2.create('ms-container', {
                 config: ms2_config,
                 mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id,

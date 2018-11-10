@@ -1,5 +1,5 @@
 {% load static %}
-{% with MAP_TYPE="leaflet" %}
+{% with MAP_TYPE="openlayers" %}
 {% if MAP_TYPE == "openlayers" %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.4/ol.css" />
 
@@ -26,7 +26,10 @@
 <!-- script to generate Thumbnails from MapStore -->
 <script type="text/javascript" src="{{ STATIC_URL}}geonode/js/ms2/utils/thumbnail.js"></script>
 
-<script type="text/javascript" src="{{ STATIC_URL }}geonode/js/ms2/utils/{% block plugins %}{% endblock %}"></script>
+{% block plugins %}
+<!-- load plugins config-->
+{% endblock %}
+
 
 <style>
     ._ms2_init_center {
