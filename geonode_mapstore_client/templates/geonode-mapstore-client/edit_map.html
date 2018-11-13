@@ -22,7 +22,7 @@
 {% block app_config %}
 {% autoescape off %}
 <script type="text/javascript">
-    const geoserver = "{{ SITEURL }}gs/";
+    const geoserver = "{{ OGC_SERVER.default.PUBLIC_LOCATION|default:"" }}";
     const ms2_config = {{ ms2_config|default:"false" }};
     document.addEventListener('DOMContentLoaded', function () {
         const userDetails = {
@@ -36,8 +36,8 @@
                 "name": "StyleEditor",
                     "cfg": {
                             "styleService": {
-                                "baseUrl": "{{ SITEURL }}gs/",
-                                    "formats": ['css','sld'],
+                            "baseUrl": "{{ SITEURL }}gs/",
+                            "formats": ['css','sld'],
                             "availableUrls": [geoserver, "{{ SITEURL }}gs/"]
                         },
                         "editingAllowedRoles": null

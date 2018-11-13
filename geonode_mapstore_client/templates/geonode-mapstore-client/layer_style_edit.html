@@ -22,7 +22,7 @@
 {% block app_config %}
 {% autoescape off %}
 <script type="text/javascript">
-    const geoserver = "{{ SITEURL }}gs/";
+    const geoserver = "{{ OGC_SERVER.default.PUBLIC_LOCATION|default:"" }}";
     const ms2_config = {{ ms2_config|default:"false" }};
     document.addEventListener('DOMContentLoaded', function () {
 
@@ -36,7 +36,7 @@
                     "cfg": {
                             "styleService": {
                                 "baseUrl": "{{ SITEURL }}gs/",
-                                    "formats": ['css','sld'],
+                                "formats": ['css','sld'],
                                 "availableUrls": [geoserver, "{{ SITEURL }}gs/"]
                         },
                         "editingAllowedRoles": null
@@ -109,13 +109,13 @@
                 let layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
                 layer["id"] = `${layer.name}__${ms2_config.map.layers.length - 1}`;
                 MapStore2.triggerAction({type: 'TOGGLE_CONTROL', control: 'drawer', property: null});
-                
+
                 const listner = function(action) {
                     if(action.canEdit) {
                         MapStore2.offAction("STYLEEDITOR:SET_EDIT_PERMISSION",listner);
-                        MapStore2.triggerAction({ type: 'SHOW_SETTINGS', node: layer.id, nodeType: 'layers', options: {opacity: layer.opacity || 1}});
-                        MapStore2.triggerAction({ type: 'SET_CONTROL_PROPERTY', control: 'layersettings', property: 'activeTab', value: "style"});
-                        MapStore2.triggerAction({type: 'STYLEEDITOR:TOGGLE_STYLE_EDITOR',layer: null, enabled: true});
+                        MapStore2.triggerAction({type: 'SHOW_SETTINGS', node: layer.id, nodeType: 'layers', options: {opacity: layer.opacity || 1}});
+                        MapStore2.triggerAction({type: 'SET_CONTROL_PROPERTY', control: 'layersettings', property: 'activeTab', value: "style"});
+                        MapStore2.triggerAction({type: 'STYLEEDITOR:TOGGLE_STYLE_EDITOR', layer: null, enabled: true});
                     };
                 };
                 MapStore2.onAction("STYLEEDITOR:SET_EDIT_PERMISSION", listner);
