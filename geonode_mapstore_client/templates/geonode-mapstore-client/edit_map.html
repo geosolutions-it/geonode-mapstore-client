@@ -7,7 +7,7 @@
 {% block style %}
 <style>
 	body {
-        padding-top: 0px !important; 
+        padding-top: 0px !important;
 	}
 	#ms-container {
 		position: absolute;
@@ -22,17 +22,17 @@
 {% block app_config %}
 {% autoescape off %}
 <script type="text/javascript">
-    const geoserver = "{{ OGC_SERVER.default.PUBLIC_LOCATION|default:"" }}";
+    const geoserver = "{{ SITEURL }}gs/";
     const ms2_config = {{ ms2_config|default:"false" }};
     document.addEventListener('DOMContentLoaded', function () {
         const userDetails = {
             "User": user,
             "access_token": accessToken
         }
-        initMapstore2Api('edit', function(MapStore2) { 
+        initMapstore2Api('edit', function(MapStore2) {
             // you have to add the configuration for stylerplugin
             MS2_PLUGINS = window.squashMS2PlugCfg(MS2_BASE_PLUGINS, MS2_MAP_PLUGINS, MS2_EDIT_PLUGINS);
-            const stylerCfg = { 
+            const stylerCfg = {
                 "name": "StyleEditor",
                     "cfg": {
                             "styleService": {
@@ -79,7 +79,7 @@
                     genode_rest_api: "{{ SITEURL }}mapstore/rest/",
                     loadAfterTheme: true,
                     printUrl: "{{ SITEURL }}gs/pdf/info.json",
-                    translations: '', 
+                    translations: '',
                     useAuthenticationRules: true,
                     authenticationRules: [{
                         "urlPattern": ".*geostore.*",
