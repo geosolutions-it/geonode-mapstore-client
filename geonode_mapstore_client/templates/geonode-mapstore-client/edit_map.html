@@ -36,9 +36,9 @@
                 "name": "StyleEditor",
                     "cfg": {
                             "styleService": {
-                                "baseUrl": geoserver,
+                                "baseUrl": "{{ SITEURL }}gs/",
                                     "formats": ['css','sld'],
-                            "availableUrls": [geoserver]
+                            "availableUrls": [geoserver, "{{ SITEURL }}gs/"]
                         },
                         "editingAllowedRoles": null
                     }
