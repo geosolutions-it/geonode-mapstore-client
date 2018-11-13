@@ -13,13 +13,7 @@
     padding: 1px
 }
 .fill:not(:-webkit-full-screen){
-    #mapstore-metadata-explorer{
-        padding-top: @geo-header-height;
-        .panel-body {
-            height: calc(100% -103px);
-        }
-    }
-    .notifications-tc {
+    .notifications-tc, .notifications-tl, .notifications-tr {
         top: 63px !important;
     }
 }
@@ -29,9 +23,15 @@
          display: none
      }
 }
-.widgets-builder-header {
-    padding-top: @geo-header-height;
-}
-.notifications-tc {
+.notifications-tc, .notifications-tl, .notifications-tr {
     top: 0px !important;
+}
+
+.mapstore2-embedded {
+    .background-plugin-position {
+        position: @geo-bottom-tools-position;
+    }
+    .mapToolbar {
+        position: @geo-bottom-tools-position;
+    }
 }
