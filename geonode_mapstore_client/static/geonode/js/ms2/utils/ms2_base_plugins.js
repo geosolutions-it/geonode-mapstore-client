@@ -85,7 +85,7 @@ var MS2_BASE_PLUGINS = {
 				}
 			}
 		},
-		"DrawerMenu", "Cookie", "OmniBar", "Expander", "ScaleBox", "Undo", "Redo",
+		"DrawerMenu", "Cookie", "OmniBar", "Expander", "Undo", "Redo",
         "BurgerMenu", "MapFooter", "Measure",
         {
 			"name": "Print",

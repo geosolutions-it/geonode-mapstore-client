@@ -27,7 +27,7 @@ var MS2_EMBED_PLUGINS = {
 
 	},
 		// Setting, Toolbar, MapLoading, DrawerMenu, Cookie, OmniBar, Expander,
-		// ScaleBox, Undo, Redo, BurgerMenu, MapFooter, Measure, Print
+		// Undo, Redo, BurgerMenu, MapFooter, Measure, Print
 		// ZoomAll, ZoomIn, ZoomOut from base
 	"Widgets", "Notifications"
 	]
