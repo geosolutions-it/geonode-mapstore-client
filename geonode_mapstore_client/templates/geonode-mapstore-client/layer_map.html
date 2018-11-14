@@ -81,6 +81,21 @@
         createMapThumbnail = () => MapStore2.triggerAction({
             type: isMap && "GEONODE:CREATE_MAP_THUMBNAIL" || "GEONODE:CREATE_LAYER_THUMBNAIL"
         });
+        if(!isMap && ms2_config &&  ms2_config.map) {
+        let layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
+        let id = `${layer.name}__${ms2_config.map.layers.length - 1}`;
+            $("input[name='style']").click(function (ev) {
+                let src = $("#legend_icon").attr("src");
+                $("#legend_icon").attr("src", src.split("&STYLE")[0] + "&STYLE=" + ev.target.id);
+                MapStore2.triggerAction({ type: 'UPDATE_NODE',
+                node: id,
+                nodeType: 'layers',
+                options: {style: ev.target.id}
+                });
+                
+            });
+            
+        }
         });
     });
 </script>
