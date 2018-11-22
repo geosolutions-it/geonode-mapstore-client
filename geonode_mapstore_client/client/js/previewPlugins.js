@@ -5,7 +5,8 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const {_setThumbnail} = require("./epics");
+const Rx = require("rxjs");
+const {_setThumbnail, updateMapLayoutEpic} = require("./epics");
 module.exports = {
     plugins: {
         MapPlugin: require('../MapStore2/web/client/plugins/Map'),
@@ -23,14 +24,19 @@ module.exports = {
         ScaleBoxPlugin: require('../MapStore2/web/client/plugins/ScaleBox'),
         MapFooterPlugin: require('../MapStore2/web/client/plugins/MapFooter'),
         PrintPlugin: require('../MapStore2/web/client/plugins/Print'),
+        TimelinePlugin: require('../MapStore2/web/client/plugins/Timeline'),
+        PlaybackPlugin: require('../MapStore2/web/client/plugins/Playback'),
         AddReducersAndEpics: {
             reducers: {
                 security: require('../MapStore2/web/client/reducers/security'),
                 maps: require('../MapStore2/web/client/reducers/maps'),
-                currentMap: require('../MapStore2/web/client/reducers/currentMap')
+                currentMap: require('../MapStore2/web/client/reducers/currentMap'),
+                maplayout: require('../MapStore2/web/client/reducers/maplayout')
             },
             epics: {
-                _setThumbnail
+                _setThumbnail,
+                updateMapLayoutEpic,
+                zoomToVisibleAreaEpic: () => Rx.Observable.empty()
             }
         }
     },

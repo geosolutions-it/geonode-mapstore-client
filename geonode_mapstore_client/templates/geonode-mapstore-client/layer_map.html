@@ -30,13 +30,13 @@
         MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
         initMapstore2Api('preview', function(MapStore2) { 
             MapStore2.create('embedded_map', {
+                mode: "embedded",
                 config: ms2_config,
                 theme: {theme: "preview"},
                 initialState: {
                     defaultState: {
                         map: {center: {x: 13, y: 45, crs: "EPSG:4326"}},
                         maptype: {mapType: maptype},
-                        mode: "embedded",
                         mousePosition: {enabled: false},
                         controls: {
                             toolbar: {
@@ -53,6 +53,7 @@
                 proxy: "{{ SITEURL }}proxy/?url=",
                 printingEnabled: true,
                 localConfig: {
+                    mapLayout: {left: {sm: 300, md: 500, lg: 600}, right: {md: "41%"}, bottom: {sm: 0}},
                     geonode_url: "{{ SITEURL }}",
                     translations: '',
                     loadAfterTheme: true,

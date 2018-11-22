@@ -41,6 +41,8 @@ module.exports = {
         MetadataExplorerPlugin: require('../MapStore2/web/client/plugins/MetadataExplorer'),
         GridContainerPlugin: require('../MapStore2/web/client/plugins/GridContainer'),
         StyleEditorPlugin: require('../MapStore2/web/client/plugins/StyleEditor'),
+        TimelinePlugin: require('../MapStore2/web/client/plugins/Timeline'),
+        PlaybackPlugin: require('../MapStore2/web/client/plugins/Playback'),
         AddReducersAndEpics: {
             reducers: {
                 security: require('../MapStore2/web/client/reducers/security'),
