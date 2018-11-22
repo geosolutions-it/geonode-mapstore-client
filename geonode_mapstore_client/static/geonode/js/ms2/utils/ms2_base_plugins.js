@@ -25,7 +25,7 @@ var MS2_BASE_PLUGINS = {
 			"cfg": {
 				"style": {
 					"bottom": 0,
-					"marginBottom": 30
+					"marginBottom": 35
 				},
 				"dimensions": {
 					"side": 65,
@@ -37,12 +37,13 @@ var MS2_BASE_PLUGINS = {
 				}
 			}
 		},
+		
 		{
 			"name": "Identify",
 			"cfg": {
 				"showFullscreen": false,
 				"dock": true,
-				"position": "left",
+				"position": "right",
 				"size": 0.4,
 				"fluid": true,
 				"viewerOptions": {
@@ -116,6 +117,6 @@ var MS2_BASE_PLUGINS = {
 					"alwaysVisible": true
 				}
 			}
-		}
+		}, "Timeline", "Playback"
 	]
 }

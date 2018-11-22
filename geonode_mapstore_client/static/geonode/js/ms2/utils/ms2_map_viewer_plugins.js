@@ -96,6 +96,6 @@ var MS2_MAP_PLUGINS = {
 				"hideTitleTranslations": true,
 				"showFeatureInfoTab": false
 			}
-		}, "Widgets", "SaveAs", "Notifications"
+		}, "Widgets", "SaveAs", "Notifications", "Timeline", "Playback"
 	]
 }
