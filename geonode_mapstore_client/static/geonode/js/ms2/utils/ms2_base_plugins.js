@@ -25,7 +25,7 @@ var MS2_BASE_PLUGINS = {
 			"cfg": {
 				"style": {
 					"bottom": 0,
-					"marginBottom": 35
+					"marginBottom": 25
 				},
 				"dimensions": {
 					"side": 65,
@@ -33,7 +33,7 @@ var MS2_BASE_PLUGINS = {
 					"frame": 3,
 					"margin": 5,
 					"label": false,
-					"vertical": false
+					"vertical": true,
 				}
 			}
 		},
@@ -117,6 +117,16 @@ var MS2_BASE_PLUGINS = {
 					"alwaysVisible": true
 				}
 			}
-		}, "Timeline", "Playback"
+		}, {
+			"name":"Timeline",
+			"cfg": {
+				"style": {
+						"marginBottom": 30,
+						"marginLeft": 80,
+						"marginRight": 45
+					},
+					"compact": true
+				}
+		}, "Playback"
 	]
 }
