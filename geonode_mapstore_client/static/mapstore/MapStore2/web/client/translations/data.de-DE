@@ -288,6 +288,7 @@
             }
         },
         "map": {
+            "errorLoadingFont": "Die Schriftfamilie {family} ist nicht korrekt geladen. Einige Elemente (wie Symbole in Markern) können zu Darstellungsproblemen führen",
             "loading": "Wird geladen...",
             "loadingSpinner": "Karte wird geladen",
             "loadingerror": "Fehler während des Ladens",
@@ -1496,7 +1497,10 @@
                     "title": "Animations-Wut",
                     "zoomTooltip": "Zoom auf den aktuellen Animationsbereich",
                     "animationStart": "Animation beginnt",
-                    "animationEnd": "Ende der Animation"
+                    "animationEnd": "Ende der Animation",
+                    "zoomToCurrentPlayackRange": "Zoom auf den aktuellen Wiedergabebereich",
+                    "setToCurrentViewRange": "Auf aktuellen Ansichtsbereich setzen",
+                    "fitToSelectedLayerRange": "An den Bereich der ausgewählten Ebene anpassen"
                 },
                 "step": {
                     "fixed": "Feststehender Schritt",
@@ -1513,10 +1517,24 @@
                     "following": "Folgende",
                     "followingDescription": "Wenn die Animation aktiv ist, folgen Sie dem Cursor"
                 }
-            }
+            },
+            "backwardStep": "Schritt zurück",
+            "forwardStep" : "Schritt vorwärts",
+            "play": "abspielen",
+            "pause": "Pause",
+            "stop": "Stopp"
         },
         "timeline": {
-            "currentTime": "Aktuelle Uhrzeit"
+            "currentTime": "Aktuelle Uhrzeit",
+            "offsetTime" : "Versatzzeit",
+            "hideLayerName" : "Ebenennamen verbergen",
+            "showLayerName" : "Ebenennamen anzeigen",
+            "enableOffset": "Aktuelle Uhrzeit mit Offset aktivieren",
+            "disableOffset": "Aktuelle Uhrzeit mit Offset deaktivieren",
+            "enablePlayBack": "Aktivieren Sie die Wiedergabesteuerung",
+            "disablePlayBack": "Deaktivieren Sie die Wiedergabesteuerung",
+            "expand" : "Erweitern Sie den Zeitschieberegler",
+            "collapse" : "Schieberegler für die Zeitspanne reduzieren"
         },
         "rulesmanager": {
             "apply": "Anwenden",
@@ -1531,7 +1549,6 @@
                 "filter": "Suche...",
                 "role": "Nach Rollen suchen",
                 "user": "Benutzer suchen",
-                "ip": "Wählen Sie IP",
                 "service": "Suchdienste",
                 "request": "Type to serach Requests",
                 "workspace": "Suchanfragen",

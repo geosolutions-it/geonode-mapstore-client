@@ -288,6 +288,7 @@
             }
         },
         "map": {
+            "errorLoadingFont": "The font family {family} is not correctly loaded. Some elements (like symbols in markers) can have rendering problems",
             "loading": "Loading...",
             "loadingSpinner": "Loading Map",
             "loadingerror": "Error during loading",
@@ -1494,10 +1495,13 @@
                 "title": "Playback Settings",
                 "frameDuration": "Frame Duration",
                 "range": {
-                    "title": "Animation Rage",
+                    "title": "Animation Range",
                     "zoomTooltip": "Zoom to current animation range",
                     "animationStart": "Animation start",
-                    "animationEnd": "Animation end"
+                    "animationEnd": "Animation end",
+                    "zoomToCurrentPlayackRange": "Zoom to current playback range",
+                    "setToCurrentViewRange": "Set to current view range",
+                    "fitToSelectedLayerRange": "Fit to selected layer's range"
                 },
                 "step": {
                     "fixed": "Fixed step",
@@ -1514,10 +1518,24 @@
                     "following": "Following",
                     "followingDescription": "When the animation is active, follow the cursor"
                 }
-            }
+            },
+            "backwardStep": "Step backward",
+            "forwardStep" : "Step forward",
+            "play": "play",
+            "pause": "pause",
+            "stop": "stop"
         },
         "timeline": {
-            "currentTime": "Current Time"
+            "currentTime": "Current Time",
+            "offsetTime" : "Offset Time",
+            "hideLayerName" : "Hide layers name",
+            "showLayerName" : "Show layers name",
+            "enableOffset": "Enable current time with offset",
+            "disableOffset": "Disable current time with offset",
+            "enablePlayBack": "Enable playback controls",
+            "disablePlayBack": "Disable playback controls",
+            "expand" : "Expand time slider",
+            "collapse" : "Collapse time slider"
         },
         "rulesmanager": {
             "apply": "Apply",
@@ -1529,10 +1547,8 @@
             "clearbtn": "Clear All",
             "selectbtn": "Select All",
             "placeholders": {
-                "filter": "Search...",
                 "role": "Type to search Roles",
                 "user": "Type to search Users",
-                "ip": "Select IP",
                 "service": "Type to search Services",
                 "request": "Type to search Requests",
                 "workspace": "Type to search Workspaces",

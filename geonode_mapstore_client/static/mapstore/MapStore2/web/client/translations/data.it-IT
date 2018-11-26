@@ -288,6 +288,7 @@
             }
         },
         "map": {
+            "errorLoadingFont": "Il font {family} non è stato caricato correttamente. Alcuni elementi (i simboli nei marker) possono avere problemi di rendering",
             "loading": "In caricamento...",
             "loadingSpinner": "Caricamento Mappa",
             "loadingerror": "Errore di caricamento",
@@ -1496,7 +1497,10 @@
                     "title": "Intervallo di animazione",
                     "zoomTooltip": "Fai zoom all'intervallo di animazione corrente",
                     "animationStart": "Inizio animazione",
-                    "animationEnd": "Fine animazione"
+                    "animationEnd": "Fine animazione",
+                    "zoomToCurrentPlayackRange": "Zoom all'intervallo di riproduzione corrente",
+                    "setToCurrentViewRange": "Imposta sull'intervallo di visualizzazione corrente",
+                    "fitToSelectedLayerRange": "Adatta ai dati del livello selezionato"
                 },
                 "step": {
                     "fixed": "Passo fisso",
@@ -1513,10 +1517,24 @@
                     "following": "Inseguimento",
                     "followingDescription": "Durante l'animazione, insegui il cursore"
                 }
-            }
+            },
+            "backwardStep": "Indietro",
+            "forwardStep" : "Avanti",
+            "play": "Play",
+            "pause": "Pausa",
+            "stop": "stop"
         },
         "timeline": {
-            "currentTime": "Istante corrente"
+            "currentTime": "Istante corrente",
+            "offsetTime" : "Fine intervallo",
+            "hideLayerName" : "Nascondi il nome dei livelli",
+            "showLayerName" : "Mostra il nome dei livelli",
+            "enableOffset": "Attiva intervallo temporale",
+            "disableOffset": "Disattiva intervallo temporale",
+            "enablePlayBack": "Abilita i controlli di riproduzione",
+            "disablePlayBack": "Disabilita i controlli di riproduzione",
+            "expand" : "Espandi",
+            "collapse" : "Riduci"
         },
         "rulesmanager": {
             "apply": "Applica",
@@ -1531,7 +1549,6 @@
                 "filter": "Ricerca...",
                 "role": "Cerca Gruppo",
                 "user": "Cerca Utenti",
-                "ip": "Seleziona IP",
                 "service": "Cerca Servizi",
                 "request": "Cerca Richieste",
                 "workspace": "Cerca Workspacs",

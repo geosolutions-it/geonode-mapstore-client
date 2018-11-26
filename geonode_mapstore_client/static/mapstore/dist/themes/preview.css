@@ -13035,6 +13035,7 @@ Ported to CodeMirror by Peter Kroon
   z-index: 30;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-timeline .vis-panel.vis-left .vis-content {
+  margin-bottom: 30%;
   border-bottom: 1px solid #dddddd;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-timeline .vis-panel.vis-left .vis-content .vis-label:hover {
@@ -13097,6 +13098,8 @@ Ported to CodeMirror by Peter Kroon
   float: left;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-item.vis-background.ms-current-range {
+  cursor: grab;
+  z-index: 60;
   background-color: rgba(77, 77, 77, 0.2);
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-item.vis-background.ms-playback-range {
@@ -19185,6 +19188,7 @@ Ported to CodeMirror by Peter Kroon
   z-index: 30;
 }
 .msgapi .fill .timeline-plugin .vis-timeline .vis-panel.vis-left .vis-content {
+  margin-bottom: 30%;
   border-bottom: 1px solid #dddddd;
 }
 .msgapi .fill .timeline-plugin .vis-timeline .vis-panel.vis-left .vis-content .vis-label:hover {
@@ -19247,6 +19251,8 @@ Ported to CodeMirror by Peter Kroon
   float: left;
 }
 .msgapi .fill .timeline-plugin .vis-item.vis-background.ms-current-range {
+  cursor: grab;
+  z-index: 60;
   background-color: rgba(77, 77, 77, 0.2);
 }
 .msgapi .fill .timeline-plugin .vis-item.vis-background.ms-playback-range {

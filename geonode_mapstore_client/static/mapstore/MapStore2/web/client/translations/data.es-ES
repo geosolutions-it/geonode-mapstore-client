@@ -288,6 +288,7 @@
             }
         },
         "map": {
+            "errorLoadingFont": "La familia de fuentes {family} no está correctamente cargada. Algunos elementos (como los símbolos en los marcadores) pueden tener problemas de renderización",
             "loading": "Cargando...",
             "loadingSpinner": "Cargando mapa",
             "loadingerror": "Error en la carga",
@@ -1488,7 +1489,7 @@
             "updateStyleErrorMessage": "El estilo no se pudo actualizar en el servicio de estilo. Esto podría estar en formato de estilo no compatible o problema de conexión.",
             "genericValidationError": "El estilo no es válido y no se pudo aplicar."
         },
-         "playback": {
+        "playback": {
             "settings": {
                 "title": "Ajustes de reproducción",
                 "frameDuration": "Duración del marco",
@@ -1496,7 +1497,10 @@
                     "title": "Rabia de animacion",
                     "zoomTooltip": "Zoom al rango de animación actual",
                     "animationStart": "Inicio de animacion",
-                    "animationEnd": "Fin de la animacion"
+                    "animationEnd": "Fin de la animacion",
+                    "zoomToCurrentPlayackRange": "Zoom al rango de reproducción actual",
+                    "setToCurrentViewRange": "Establecer en el rango de vista actual",
+                    "fitToSelectedLayerRange": "Ajustar al rango de la capa seleccionada"
                 },
                 "step": {
                     "fixed": "Paso fijo",
@@ -1513,10 +1517,24 @@
                     "following": "Siguiendo",
                     "followingDescription": "Cuando la animación está activa, sigue el cursor."
                 }
-            }
+            },
+            "backwardStep": "Paso atrás",
+            "forwardStep" : "paso adelante",
+            "play": "jugar",
+            "pause": "pausa",
+            "stop": "parada"
         },
         "timeline": {
-            "currentTime": "Tiempo actual"
+            "currentTime": "Tiempo actual",
+            "offsetTime" : "Tiempo de compensación",
+            "hideLayerName" : "esconder el nombre de las capas",
+            "showLayerName" : "mostrar el nombre de las capas",
+            "enableOffset": "Habilitar el tiempo actual con offset",
+            "disableOffset": "Deshabilita la hora actual con offset",
+            "enablePlayBack": "Habilitar controles de reproducción",
+            "disablePlayBack": "Deshabilita los controles de reproducción",
+            "expand" : "Expandir el control deslizante de tiempo",
+            "collapse" : "colapsar el control deslizante de tiempo"
         },
         "rulesmanager": {
             "apply": "Aplicar",
@@ -1531,7 +1549,6 @@
                 "filter": "Buscar...",
                 "role": "Escriba para buscar Roles",
                 "user": "Escriba para buscar usuarios",
-                "ip": "Seleccionar IP",
                 "service": "Escriba para buscar Servicios",
                 "request": "Escriba para buscar Solicitudes",
                 "workspace": "Escriba para buscar espacios de trabajo",

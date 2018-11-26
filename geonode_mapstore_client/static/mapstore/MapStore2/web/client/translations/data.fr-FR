@@ -289,6 +289,7 @@
             }
         },
         "map": {
+            "errorLoadingFont": "La famille de polices {family} n'est pas correctement chargée. Certains éléments (comme les symboles dans les marqueurs) peuvent avoir des problèmes de rendu",
             "loading": "Chargement...",
             "loadingSpinner": "Carte de chargement",
             "loadingerror": "Erreur de chargement",
@@ -1497,7 +1498,10 @@
                     "title": "Animation rage",
                     "zoomTooltip": "Zoom sur la plage d'animation actuelle",
                     "animationStart": "Début de l'animation",
-                    "animationEnd": "Fin de l'animation"
+                    "animationEnd": "Fin de l'animation",
+                    "zoomToCurrentPlayackRange": "Zoom sur la plage de lecture actuelle",
+                    "setToCurrentViewRange": "Définir à la plage de vue actuelle",
+                    "fitToSelectedLayerRange": "Ajuster à la plage du calque sélectionné"
                 },
                 "step": {
                     "fixed": "Pas fixe",
@@ -1514,10 +1518,24 @@
                     "following": "Suivant",
                     "followingDescription": "Lorsque l'animation est active, suivez le curseur"
                 }
-            }
+            },
+            "backwardStep": "reculer",
+            "forwardStep" : "avancer",
+            "play": "jouer",
+            "pause": "pause",
+            "stop": "Arrêtez"
         },
         "timeline": {
-            "currentTime": "Heure actuelle"
+            "currentTime": "Heure actuelle",
+            "offsetTime" : "temps compensé",
+            "hideLayerName" : "cacher le nom de la couche",
+            "showLayerName" : "Afficher le nom de la couche",
+            "enableOffset": "Activer l'heure actuelle avec décalage",
+            "disableOffset": "Désactiver l'heure actuelle avec décalage",
+            "enablePlayBack": "Activer les contrôles de lecture",
+            "disablePlayBack": "Désactiver les contrôles de lecture",
+            "expand" : "Augmenter le curseur temporel",
+            "collapse" : "Réduire le curseur temporel"
         },
         "rulesmanager": {
             "apply": "Appliquer",
@@ -1532,7 +1550,6 @@
                 "filter": "Chercher...",
                 "role": "Tapez pour rechercher des rôles",
                 "user": "Tapez pour rechercher des utilisateurs",
-                "ip": "Sélectionnez IP",
                 "service": "Tapez pour rechercher des services",
                 "request": "Tapez pour rechercher des demandes",
                 "workspace": "Tapez pour rechercher des espaces de travail",
