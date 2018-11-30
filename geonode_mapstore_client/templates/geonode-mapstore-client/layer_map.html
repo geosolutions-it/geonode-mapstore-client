@@ -28,7 +28,7 @@
         $('#embedded_map').html('<div class="_ms2_init_spinner _ms2_init_center"><div></div> <div class="_ms2_init_text _ms2_init_center">Loading MapStore</div>');
         MS2_PLUGINS = MS2_BASE_PLUGINS;
         MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
-        initMapstore2Api('preview', function(MapStore2) { 
+        initMapstore2Api('preview', function(MapStore2) {
             MapStore2.create('embedded_map', {
                 mode: "embedded",
                 config: ms2_config,
@@ -86,6 +86,8 @@
         let layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
         let id = `${layer.name}__${ms2_config.map.layers.length - 1}`;
             $("input[name='style']").click(function (ev) {
+                let title = $("#legend_sld_title");
+                title.text(ev.target.value);
                 let src = $("#legend_icon").attr("src");
                 $("#legend_icon").attr("src", src.split("&STYLE")[0] + "&STYLE=" + ev.target.id);
                 MapStore2.triggerAction({ type: 'UPDATE_NODE',
@@ -93,9 +95,9 @@
                 nodeType: 'layers',
                 options: {style: ev.target.id}
                 });
-                
+
             });
-            
+
         }
         });
     });

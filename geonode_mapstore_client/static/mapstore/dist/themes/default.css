@@ -13208,3 +13208,6 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .mapstore2-embedded .mapToolbar {
   position: fixed;
 }
+.msgapi .timeline-plugin {
+  position: fixed !important;
+}

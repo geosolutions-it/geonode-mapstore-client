@@ -19380,10 +19380,19 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .mapstore2-embedded .mapToolbar {
   position: absolute;
 }
+.msgapi .timeline-plugin {
+  position: fixed !important;
+}
 .msgapi #map {
   bottom: 0px !important;
 }
 .msgapi .mapstore-map-footer {
   background-color: transparent !important;
   box-shadow: none !important;
+}
+.msgapi .timeline-plugin {
+  position: absolute !important;
+}
+.msgapi .fill .playback-plugin .ms-playback-settings {
+  bottom: 56px !important;
 }
