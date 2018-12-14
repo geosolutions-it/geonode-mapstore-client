@@ -1523,15 +1523,16 @@
             "play": "Play",
             "pause": "Pausa",
             "paused": "Play (in pausa)",
-            "stop": "stop"
+            "stop": "Stop"
         },
         "timeline": {
             "currentTime": "Istante corrente",
-            "offsetTime" : "Fine intervallo",
-            "hideLayerName" : "Nascondi il nome dei livelli",
-            "showLayerName" : "Mostra il nome dei livelli",
-            "enableOffset": "Attiva intervallo temporale",
-            "disableOffset": "Disattiva intervallo temporale",
+            "rangeStart": "Vai all'intervallo di tempo corrente",
+            "rangeEnd": "Vai all'intervallo di tempo corrente",
+            "hideLayerName": "Nascondi i nomi dei livelli",
+            "showLayerName": "Mostra i nomi dei livelli",
+            "enableRange": "Abilita intervallo",
+            "disableRange": "Disabilita intervallo",
             "enablePlayBack": "Abilita i controlli di riproduzione",
             "disablePlayBack": "Disabilita i controlli di riproduzione",
             "expand" : "Espandi",

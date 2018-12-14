@@ -12822,6 +12822,15 @@ Ported to CodeMirror by Peter Kroon
   font-size: 14px;
   font-weight: bold;
 }
+.msgapi .timeline-plugin .ms-timeline-expand {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-50%, -100%);
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  height: 20px;
+}
 .msgapi .timeline-plugin .vis-custom-time.currentTime,
 .msgapi .timeline-plugin .vis-custom-time.startPlaybackTime,
 .msgapi .timeline-plugin .vis-custom-time.endPlaybackTime,
@@ -12944,6 +12953,9 @@ Ported to CodeMirror by Peter Kroon
   -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
 }
+.msgapi .timeline-plugin .timeline-plugin-toolbar .timeline-plugin-btn-group {
+  display: flex;
+}
 .msgapi .timeline-plugin .timeline-plugin-toolbar h4 {
   margin-left: 8px;
   margin-right: 8px;
@@ -12954,6 +12966,23 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .timeline-plugin .timeline-plugin-toolbar .timeline-plugin-toolbar-right {
   margin-right: 2px;
   margin-left: auto;
+}
+.msgapi .timeline-plugin .timeline-plugin-toolbar.ms-collapsed {
+  flex-direction: column;
+}
+.msgapi .timeline-plugin .timeline-plugin-toolbar.ms-collapsed .ms-inline-datetime {
+  margin-right: 0;
+  padding-right: 8px;
+  border-right: none;
+  align-self: flex-start;
+}
+.msgapi .timeline-plugin .timeline-plugin-toolbar.ms-collapsed .ms-inline-datetime + .timeline-plugin-btn-group {
+  margin-top: 2px;
+  padding-top: 2px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #dddddd;
 }
 .msgapi .timeline-plugin .vis-timeline {
   background-color: rgba(255, 255, 255, 0.9);
@@ -13117,6 +13146,9 @@ Ported to CodeMirror by Peter Kroon
   padding-right: 8px;
   border-right: 1px solid #dddddd;
   background-color: #ffffff;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
 }
 .msgapi .ms-inline-datetime .form-group {
   display: flex;
@@ -13160,12 +13192,16 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .playback-plugin .ms-playback-settings {
   position: absolute;
-  bottom: 65px;
+  overflow: auto;
+  right: 40px;
+  top: 0;
+  transform: translateY(calc(-100% - 5px));
   padding: 8px;
   background-color: #ffffff;
-  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
-  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  min-width: 300px;
+  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 .msgapi .playback-plugin .ms-playback-settings h4 {
   font-size: 17px;
