@@ -79,9 +79,11 @@
                 });
             }
         let isMap = !!(ms2_config.map && ms2_config.map.info && ms2_config.map.info.id)
-        createMapThumbnail = () => MapStore2.triggerAction({
-            type: isMap && "GEONODE:CREATE_MAP_THUMBNAIL" || "GEONODE:CREATE_LAYER_THUMBNAIL"
-        });
+        createMapThumbnail = function() {
+            MapStore2.triggerAction({
+                type: isMap && "GEONODE:CREATE_MAP_THUMBNAIL" || "GEONODE:CREATE_LAYER_THUMBNAIL"
+            });
+        }
         if(!isMap && ms2_config &&  ms2_config.map) {
         let layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
         let id = `${layer.name}__${ms2_config.map.layers.length - 1}`;
