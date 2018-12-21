@@ -7,7 +7,7 @@
 {% block style %}
 <style>
 	body {
-        padding-top: 0px !important; 
+        padding-top: 0px !important;
 	}
 	#ms-container {
 		position: absolute;
@@ -25,7 +25,7 @@
     const geoserver = "{{ OGC_SERVER.default.PUBLIC_LOCATION|default:"" }}";
     const ms2_config = {{ ms2_config|default:"false" }};
     document.addEventListener('DOMContentLoaded', function () {
-    
+
         const userDetails = {
             "User": user,
             "access_token": accessToken
@@ -33,7 +33,7 @@
         MS2_PLUGINS = window.squashMS2PlugCfg(MS2_BASE_PLUGINS, MS2_MAP_PLUGINS, MS2_EDIT_PLUGINS);
         MS2_PLUGINS = window.excludeMS2Plugins(MS2_PLUGINS, ["Save", "SaveAs","WidgetsBuilder","Widgets"]);
         MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
-        initMapstore2Api('edit', function(MapStore2) { 
+        initMapstore2Api('edit', function(MapStore2) {
             MapStore2.create('ms-container', {
                 config: ms2_config,
                 mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id,
@@ -68,7 +68,7 @@
                     genode_rest_api: "{{ SITEURL }}mapstore/rest/",
                     loadAfterTheme: true,
                     printUrl: "{{ SITEURL }}gs/pdf/info.json",
-                    translations: '', 
+                    translations: '',
                     useAuthenticationRules: true,
                     authenticationRules: [{
                         "urlPattern": ".*geostore.*",
@@ -93,9 +93,9 @@
                 MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails: userDetails});
             }
             if( ms2_config && ms2_config.map && ms2_config.map.layers && ms2_config.map.layers.length > 0) {
-                
-                let layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
-                layer["id"] = `${layer.name}__${ms2_config.map.layers.length - 1}`;
+
+                var layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
+                layer["id"] = (layer && layer.name) + "__" + (ms2_config.map.layers.length - 1);
                 MapStore2.triggerAction({ type: 'LAYERS:SELECT_NODE', id: layer.id, nodeType: 'layer',ctrlKey: false});
                 MapStore2.triggerAction({ type: 'LAYERS:BROWSE_DATA', layer});
             }

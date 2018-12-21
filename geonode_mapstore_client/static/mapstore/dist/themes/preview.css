@@ -19466,5 +19466,5 @@ Ported to CodeMirror by Peter Kroon
   position: absolute !important;
 }
 .msgapi .fill .playback-plugin .ms-playback-settings {
-  bottom: 56px !important;
+  max-height: 190px;
 }

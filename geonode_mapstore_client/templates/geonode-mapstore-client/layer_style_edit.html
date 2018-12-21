@@ -106,8 +106,8 @@
             }
             if( ms2_config && ms2_config.map && ms2_config.map.layers && ms2_config.map.layers.length > 0) {
 
-                let layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
-                layer["id"] = `${layer.name}__${ms2_config.map.layers.length - 1}`;
+                var layer = ms2_config.map.layers[ms2_config.map.layers.length - 1];
+                layer["id"] = (layer && layer.name) + "__" + (ms2_config.map.layers.length - 1);
                 MapStore2.triggerAction({type: 'TOGGLE_CONTROL', control: 'drawer', property: null});
 
                 const listner = function(action) {
