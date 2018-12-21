@@ -51,7 +51,7 @@ class MapStoreHookSet(GeoExtHookSet):
             if req.GET.get("layer") and req.GET.get("storeType"):
                 return True
         return False
-    def isViewLayer(self, context): 
+    def isViewLayer(self, context):
         if context:
             req = self.get_request(context)
             if req.GET.get("layer") and req.GET.get("view"):
@@ -115,7 +115,7 @@ class MapStoreHookSet(GeoExtHookSet):
     def layer_download_template(self, context=None):
         self.initialize_context(context, callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/layer_map.html'
-    
+
     def layer_style_edit_template(self, context=None):
         self.initialize_context(context, callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/layer_style_edit.html'

@@ -71,7 +71,7 @@
                 plugins: MS2_PLUGINS
             });
             if (user && user.id) {
-                MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
+                MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails: userDetails});
             }
             if (ms2_config) {
                 MapStore2.triggerAction({

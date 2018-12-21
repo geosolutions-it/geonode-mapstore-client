@@ -102,7 +102,7 @@
                 });
             }
             if (user && user.id) {
-                MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails});
+                MapStore2.triggerAction({type: "LOGIN_SUCCESS", userDetails: userDetails});
             }
         });
     });
