@@ -7175,6 +7175,10 @@
   position: absolute;
   top: 0;
 }
+.msgapi .ms2-mask-container .ms2-mask.white-mask {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #333333;
+}
 .msgapi div#sync-popover.popover {
   top: auto !important;
   padding: 0;
@@ -13130,6 +13134,9 @@ Ported to CodeMirror by Peter Kroon
   z-index: 60;
   background-color: rgba(77, 77, 77, 0.2);
 }
+.msgapi .timeline-plugin .vis-item.vis-background.ms-current-range:active {
+  cursor: move;
+}
 .msgapi .timeline-plugin .vis-item.vis-background.ms-playback-range {
   background-color: rgba(72, 220, 90, 0.2);
 }
@@ -13194,19 +13201,27 @@ Ported to CodeMirror by Peter Kroon
   position: absolute;
   overflow: auto;
   right: 40px;
-  top: 0;
-  transform: translateY(calc(-100% - 5px));
+  top: -5px;
+  transform: translateY(-100%);
   padding: 8px;
   background-color: #ffffff;
+  max-width: 400px;
   min-width: 300px;
   -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
+.msgapi .playback-plugin .ms-playback-settings .mapstore-switch-panel {
+  padding-left: 5px;
+  padding-right: 5px;
+}
 .msgapi .playback-plugin .ms-playback-settings h4 {
-  font-size: 17px;
   margin-left: 0;
   border-bottom: 1px solid #dddddd;
+}
+.msgapi .playback-plugin .ms-playback-settings h4 span {
+  font-size: 13px;
+  font-style: italic;
 }
 /* mapstore2 variables */
 /* override bootstrap variables */
