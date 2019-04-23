@@ -7083,6 +7083,7 @@
   /* Vertical layout;
  *
  */
+  /* display correctly text overflow ellipsis in firefox */
   /*
 http://lesscss.org/ dark theme
 Ported to CodeMirror by Peter Kroon
@@ -10270,6 +10271,9 @@ Ported to CodeMirror by Peter Kroon
   -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
+.msgapi .fill:-webkit-full-screen .ms-square-card.ms-disabled {
+  opacity: 0.75;
+}
 .msgapi .fill:-webkit-full-screen #mapstore-shapefile-upload {
   min-width: 360px;
   z-index: 100;
@@ -10438,6 +10442,13 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill:-webkit-full-screen .ms-inline-widget-container button.close {
   right: 0;
+}
+.msgapi .fill:-webkit-full-screen .ms-style-editor-list > .ms2-border-layout-body {
+  position: relative;
+}
+.msgapi .fill:-webkit-full-screen .ms-style-editor-list > .ms2-border-layout-body > .ms2-border-layout-content {
+  position: absolute;
+  padding-bottom: 15px;
 }
 .msgapi .fill:-webkit-full-screen .cm-s-lesser-dark {
   line-height: 1.3em;
@@ -12816,9 +12827,11 @@ Ported to CodeMirror by Peter Kroon
   }
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin {
+  /* local mixin to highlight handlers on timeline, used on active and over */
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  /* read only section */
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin * {
   font-size: 12px;
@@ -12845,8 +12858,116 @@ Ported to CodeMirror by Peter Kroon
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
   background-color: #808080;
   width: 2px;
-  cursor: move;
-  z-index: 10;
+  z-index: 65;
+  cursor: ew-resize;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active {
+  /* chevron right icon */
+  /* chevron left icon */
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active::before {
+  display: flex;
+  font-size: 10px;
+  justify-content: flex-start;
+  content: "\E257";
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active::after {
+  display: flex;
+  font-size: 10px;
+  justify-content: flex-end;
+  content: "\E258";
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active {
+  /* common style between chevron left and right */
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime > div:active::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.offsetTime > div:active::after {
+  align-items: center;
+  box-sizing: border-box;
+  position: absolute;
+  pointer-events: none;
+  bottom: 12px;
+  width: 30px;
+  height: 20px;
+  font-family: "mapstore2";
+  left: 50%;
+  margin-left: 1px;
+  transform: translateX(-50%);
+  color: #666666;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:before,
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:before,
@@ -12870,9 +12991,11 @@ Ported to CodeMirror by Peter Kroon
   height: 0;
   box-sizing: border-box;
   position: absolute;
+  pointer-events: none;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime {
   background-color: #c90a00;
+  /* stop icon */
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:after,
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime::after {
@@ -12883,8 +13006,42 @@ Ported to CodeMirror by Peter Kroon
   font-family: "mapstore2";
   color: #c90a00;
 }
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:active {
+  /* mixin hightlight handler, change background and stop icon colors */
+  background-color: #af0900;
+  border-left: 1px solid #af0900;
+  box-sizing: unset;
+  border-right: 1px solid #af0900;
+  z-index: 67;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime:active::after {
+  border-top-color: 'transparent';
+  border-right-color: 'transparent';
+  border-bottom-color: 'transparent';
+  border-left-color: 'transparent';
+  color: #af0900;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::after {
+  color: #af0900;
+}
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime {
   background-color: #48dc5a;
+  /* play icon */
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:after,
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime::after {
@@ -12895,8 +13052,47 @@ Ported to CodeMirror by Peter Kroon
   font-size: 18px;
   color: #48dc5a;
 }
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:active {
+  /* mixin hightlight handler, change background and play icon colors */
+  background-color: #27ca3b;
+  border-left: 1px solid #27ca3b;
+  box-sizing: unset;
+  border-right: 1px solid #27ca3b;
+  z-index: 67;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime:active::after {
+  border-top-color: 'transparent';
+  border-right-color: 'transparent';
+  border-bottom-color: 'transparent';
+  border-left-color: 'transparent';
+  color: #27ca3b;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::after {
+  color: #27ca3b;
+}
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime {
   background-color: #808080;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  /* generate a triangle on top of the handler */
+  /* generate a triangle on bottom of the handler */
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:before,
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime::before,
@@ -12917,6 +13113,49 @@ Ported to CodeMirror by Peter Kroon
   left: -9px;
   border-bottom: 10px solid #808080;
 }
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:hover {
+  /* mixin hightlight handler, change background and triangles colors */
+  background-color: #666666;
+  border-left: 1px solid #666666;
+  box-sizing: unset;
+  border-right: 1px solid #666666;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:hover::after {
+  border-top-color: #666666;
+  border-right-color: 'transparent';
+  border-bottom-color: #666666;
+  border-left-color: 'transparent';
+  color: 'unset';
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  /* mixin hightlight handler, change background and triangles colors */
+  background-color: #666666;
+  border-left: 1px solid #666666;
+  box-sizing: unset;
+  border-right: 1px solid #666666;
+  z-index: 67;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-custom-time.currentTime:active::after {
+  border-top-color: #666666;
+  border-right-color: 'transparent';
+  border-bottom-color: #666666;
+  border-left-color: 'transparent';
+  color: 'unset';
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime {
+  cursor: ew-resize;
+  /* generate a smaller tiangle on bottom of the handler */
+  /* generate a smaller tiangle on top of the handler */
+}
 .msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:before,
 .msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime::before {
   top: 0;
@@ -12933,6 +13172,33 @@ Ported to CodeMirror by Peter Kroon
   border-left: 10px solid #808080;
   border-bottom: unset;
 }
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active {
+  /* mixin hightlight handler, change background and triangles colors */
+  background-color: #666666;
+  border-left: 1px solid #666666;
+  box-sizing: unset;
+  border-right: 1px solid #666666;
+  z-index: 67;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active::after {
+  border-top-color: 'transparent';
+  border-right-color: 'transparent';
+  border-bottom-color: 'transparent';
+  border-left-color: #666666;
+  color: 'unset';
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime {
+  /* generate a smaller tiangle on bottom of the handler */
+  /* generate a smaller tiangle on top of the handler */
+}
 .msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:before,
 .msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime::before {
   top: 0;
@@ -12946,6 +13212,29 @@ Ported to CodeMirror by Peter Kroon
   left: -9px;
   border-top: 10px solid transparent;
   border-right: 10px solid #808080;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active {
+  /* mixin hightlight handler, change background and triangles colors */
+  background-color: #666666;
+  border-left: 1px solid #666666;
+  box-sizing: unset;
+  border-right: 1px solid #666666;
+  z-index: 67;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active::after {
+  border-top-color: 'transparent';
+  border-right-color: #666666;
+  border-bottom-color: 'transparent';
+  border-left-color: 'transparent';
+  color: 'unset';
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .timeline-plugin-toolbar {
   display: flex;
@@ -13001,7 +13290,7 @@ Ported to CodeMirror by Peter Kroon
   background-color: #ffffff;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-timeline .vis-panel.vis-center .vis-group {
-  z-index: 10 ;
+  z-index: 10;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-timeline .vis-panel.vis-center .vis-group.selected {
   background-color: rgba(44, 104, 156, 0.05);
@@ -13034,6 +13323,9 @@ Ported to CodeMirror by Peter Kroon
   background: none;
   border: none;
   bottom: 0;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .vis-timeline .vis-panel.vis-center .vis-group .vis-item.vis-range.histogram-item.vis-item {
+  top: 0 !important;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-timeline .vis-panel.vis-center .vis-group .vis-item.vis-range.histogram-item .vis-item-overflow {
   bottom: 0;
@@ -13131,12 +13423,22 @@ Ported to CodeMirror by Peter Kroon
   float: left;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-item.vis-background.ms-current-range {
+  cursor: move;
   cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
   z-index: 60;
   background-color: rgba(77, 77, 77, 0.2);
+  border-left: 1px dashed #4d4d4d;
+  border-right: 1px dashed #4d4d4d;
+  box-sizing: border-box;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-item.vis-background.ms-current-range:active {
   cursor: move;
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  z-index: 70;
 }
 .msgapi .fill:-webkit-full-screen .timeline-plugin .vis-item.vis-background.ms-playback-range {
   background-color: rgba(72, 220, 90, 0.2);
@@ -13148,6 +13450,65 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .timeline-plugin.hide-layers-name .vis-panel.vis-left .vis-content .vis-label .vis-inner .timeline-layer-label-container .timeline-layer-title {
   display: none;
   margin: 0;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.currentTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime {
+  cursor: default;
+  border: none;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.currentTime > div:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime > div:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime > div:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime > div:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime > div:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime > div:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime > div:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime > div:before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.currentTime > div::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime > div::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime > div::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime > div::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime > div::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime > div::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime > div::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime > div::before,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.currentTime > div:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime > div:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime > div:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime > div:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime > div:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime > div:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime > div:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime > div:after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.currentTime > div::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime > div::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime > div::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime > div::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime > div::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime > div::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime > div::after,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime > div::after {
+  content: "";
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.currentTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime {
+  background-color: #808080;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime {
+  background-color: #af0900;
+}
+.msgapi .fill:-webkit-full-screen .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime,
+.msgapi .fill:-webkit-full-screen .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime {
+  background-color: #27ca3b;
 }
 .msgapi .fill:-webkit-full-screen .ms-inline-datetime {
   margin-right: 8px;
@@ -13201,7 +13562,6 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .playback-plugin .ms-playback-settings {
   position: absolute;
   overflow: auto;
-  right: 40px;
   top: -5px;
   transform: translateY(-100%);
   padding: 8px;
@@ -13287,6 +13647,7 @@ Ported to CodeMirror by Peter Kroon
   /* Vertical layout;
  *
  */
+  /* display correctly text overflow ellipsis in firefox */
   /*
 http://lesscss.org/ dark theme
 Ported to CodeMirror by Peter Kroon
@@ -16474,6 +16835,9 @@ Ported to CodeMirror by Peter Kroon
   -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
+.msgapi .fill .ms-square-card.ms-disabled {
+  opacity: 0.75;
+}
 .msgapi .fill #mapstore-shapefile-upload {
   min-width: 360px;
   z-index: 100;
@@ -16642,6 +17006,13 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill .ms-inline-widget-container button.close {
   right: 0;
+}
+.msgapi .fill .ms-style-editor-list > .ms2-border-layout-body {
+  position: relative;
+}
+.msgapi .fill .ms-style-editor-list > .ms2-border-layout-body > .ms2-border-layout-content {
+  position: absolute;
+  padding-bottom: 15px;
 }
 .msgapi .fill .cm-s-lesser-dark {
   line-height: 1.3em;
@@ -19020,9 +19391,11 @@ Ported to CodeMirror by Peter Kroon
   }
 }
 .msgapi .fill .timeline-plugin {
+  /* local mixin to highlight handlers on timeline, used on active and over */
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  /* read only section */
 }
 .msgapi .fill .timeline-plugin * {
   font-size: 12px;
@@ -19049,8 +19422,116 @@ Ported to CodeMirror by Peter Kroon
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
   background-color: #808080;
   width: 2px;
-  cursor: move;
-  z-index: 10;
+  z-index: 65;
+  cursor: ew-resize;
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active {
+  /* chevron right icon */
+  /* chevron left icon */
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active::before {
+  display: flex;
+  font-size: 10px;
+  justify-content: flex-start;
+  content: "\E257";
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active::after {
+  display: flex;
+  font-size: 10px;
+  justify-content: flex-end;
+  content: "\E258";
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active {
+  /* common style between chevron left and right */
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime > div:active::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.offsetTime > div:active::after {
+  align-items: center;
+  box-sizing: border-box;
+  position: absolute;
+  pointer-events: none;
+  bottom: 12px;
+  width: 30px;
+  height: 20px;
+  font-family: "mapstore2";
+  left: 50%;
+  margin-left: 1px;
+  transform: translateX(-50%);
+  color: #666666;
 }
 .msgapi .fill .timeline-plugin .vis-custom-time.currentTime:before,
 .msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:before,
@@ -19074,9 +19555,11 @@ Ported to CodeMirror by Peter Kroon
   height: 0;
   box-sizing: border-box;
   position: absolute;
+  pointer-events: none;
 }
 .msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime {
   background-color: #c90a00;
+  /* stop icon */
 }
 .msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:after,
 .msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime::after {
@@ -19087,8 +19570,42 @@ Ported to CodeMirror by Peter Kroon
   font-family: "mapstore2";
   color: #c90a00;
 }
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:active {
+  /* mixin hightlight handler, change background and stop icon colors */
+  background-color: #af0900;
+  border-left: 1px solid #af0900;
+  box-sizing: unset;
+  border-right: 1px solid #af0900;
+  z-index: 67;
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime:active::after {
+  border-top-color: 'transparent';
+  border-right-color: 'transparent';
+  border-bottom-color: 'transparent';
+  border-left-color: 'transparent';
+  color: #af0900;
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:active::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.endPlaybackTime > div:hover::after {
+  color: #af0900;
+}
 .msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime {
   background-color: #48dc5a;
+  /* play icon */
 }
 .msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:after,
 .msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime::after {
@@ -19099,8 +19616,47 @@ Ported to CodeMirror by Peter Kroon
   font-size: 18px;
   color: #48dc5a;
 }
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:hover,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:active {
+  /* mixin hightlight handler, change background and play icon colors */
+  background-color: #27ca3b;
+  border-left: 1px solid #27ca3b;
+  box-sizing: unset;
+  border-right: 1px solid #27ca3b;
+  z-index: 67;
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:hover::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime:active::after {
+  border-top-color: 'transparent';
+  border-right-color: 'transparent';
+  border-bottom-color: 'transparent';
+  border-left-color: 'transparent';
+  color: #27ca3b;
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:active::after,
+.msgapi .fill .timeline-plugin .vis-custom-time.startPlaybackTime > div:hover::after {
+  color: #27ca3b;
+}
 .msgapi .fill .timeline-plugin .vis-custom-time.currentTime {
   background-color: #808080;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  /* generate a triangle on top of the handler */
+  /* generate a triangle on bottom of the handler */
 }
 .msgapi .fill .timeline-plugin .vis-custom-time.currentTime:before,
 .msgapi .fill .timeline-plugin .vis-custom-time.currentTime::before,
@@ -19121,6 +19677,49 @@ Ported to CodeMirror by Peter Kroon
   left: -9px;
   border-bottom: 10px solid #808080;
 }
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:hover {
+  /* mixin hightlight handler, change background and triangles colors */
+  background-color: #666666;
+  border-left: 1px solid #666666;
+  box-sizing: unset;
+  border-right: 1px solid #666666;
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:hover:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:hover::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:hover:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:hover::after {
+  border-top-color: #666666;
+  border-right-color: 'transparent';
+  border-bottom-color: #666666;
+  border-left-color: 'transparent';
+  color: 'unset';
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  /* mixin hightlight handler, change background and triangles colors */
+  background-color: #666666;
+  border-left: 1px solid #666666;
+  box-sizing: unset;
+  border-right: 1px solid #666666;
+  z-index: 67;
+}
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:active:before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:active::before,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:active:after,
+.msgapi .fill .timeline-plugin .vis-custom-time.currentTime:active::after {
+  border-top-color: #666666;
+  border-right-color: 'transparent';
+  border-bottom-color: #666666;
+  border-left-color: 'transparent';
+  color: 'unset';
+}
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime {
+  cursor: ew-resize;
+  /* generate a smaller tiangle on bottom of the handler */
+  /* generate a smaller tiangle on top of the handler */
+}
 .msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:before,
 .msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime::before {
   top: 0;
@@ -19137,6 +19736,33 @@ Ported to CodeMirror by Peter Kroon
   border-left: 10px solid #808080;
   border-bottom: unset;
 }
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active {
+  /* mixin hightlight handler, change background and triangles colors */
+  background-color: #666666;
+  border-left: 1px solid #666666;
+  box-sizing: unset;
+  border-right: 1px solid #666666;
+  z-index: 67;
+}
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover:before,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active:before,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover::before,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active::before,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover:after,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active:after,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:hover::after,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.currentTime:active::after {
+  border-top-color: 'transparent';
+  border-right-color: 'transparent';
+  border-bottom-color: 'transparent';
+  border-left-color: #666666;
+  color: 'unset';
+}
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime {
+  /* generate a smaller tiangle on bottom of the handler */
+  /* generate a smaller tiangle on top of the handler */
+}
 .msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:before,
 .msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime::before {
   top: 0;
@@ -19150,6 +19776,29 @@ Ported to CodeMirror by Peter Kroon
   left: -9px;
   border-top: 10px solid transparent;
   border-right: 10px solid #808080;
+}
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active {
+  /* mixin hightlight handler, change background and triangles colors */
+  background-color: #666666;
+  border-left: 1px solid #666666;
+  box-sizing: unset;
+  border-right: 1px solid #666666;
+  z-index: 67;
+}
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover:before,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active:before,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover::before,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active::before,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover:after,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active:after,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:hover::after,
+.msgapi .fill .timeline-plugin.with-time-offset .vis-custom-time.offsetTime:active::after {
+  border-top-color: 'transparent';
+  border-right-color: #666666;
+  border-bottom-color: 'transparent';
+  border-left-color: 'transparent';
+  color: 'unset';
 }
 .msgapi .fill .timeline-plugin .timeline-plugin-toolbar {
   display: flex;
@@ -19205,7 +19854,7 @@ Ported to CodeMirror by Peter Kroon
   background-color: #ffffff;
 }
 .msgapi .fill .timeline-plugin .vis-timeline .vis-panel.vis-center .vis-group {
-  z-index: 10 ;
+  z-index: 10;
 }
 .msgapi .fill .timeline-plugin .vis-timeline .vis-panel.vis-center .vis-group.selected {
   background-color: rgba(44, 104, 156, 0.05);
@@ -19238,6 +19887,9 @@ Ported to CodeMirror by Peter Kroon
   background: none;
   border: none;
   bottom: 0;
+}
+.msgapi .fill .timeline-plugin .vis-timeline .vis-panel.vis-center .vis-group .vis-item.vis-range.histogram-item.vis-item {
+  top: 0 !important;
 }
 .msgapi .fill .timeline-plugin .vis-timeline .vis-panel.vis-center .vis-group .vis-item.vis-range.histogram-item .vis-item-overflow {
   bottom: 0;
@@ -19335,12 +19987,22 @@ Ported to CodeMirror by Peter Kroon
   float: left;
 }
 .msgapi .fill .timeline-plugin .vis-item.vis-background.ms-current-range {
+  cursor: move;
   cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
   z-index: 60;
   background-color: rgba(77, 77, 77, 0.2);
+  border-left: 1px dashed #4d4d4d;
+  border-right: 1px dashed #4d4d4d;
+  box-sizing: border-box;
 }
 .msgapi .fill .timeline-plugin .vis-item.vis-background.ms-current-range:active {
   cursor: move;
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  z-index: 70;
 }
 .msgapi .fill .timeline-plugin .vis-item.vis-background.ms-playback-range {
   background-color: rgba(72, 220, 90, 0.2);
@@ -19352,6 +20014,65 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .timeline-plugin.hide-layers-name .vis-panel.vis-left .vis-content .vis-label .vis-inner .timeline-layer-label-container .timeline-layer-title {
   display: none;
   margin: 0;
+}
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.currentTime,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime {
+  cursor: default;
+  border: none;
+}
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.currentTime > div:before,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime > div:before,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime > div:before,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime > div:before,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime > div:before,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime > div:before,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime > div:before,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime > div:before,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.currentTime > div::before,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime > div::before,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime > div::before,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime > div::before,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime > div::before,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime > div::before,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime > div::before,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime > div::before,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.currentTime > div:after,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime > div:after,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime > div:after,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime > div:after,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime > div:after,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime > div:after,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime > div:after,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime > div:after,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.currentTime > div::after,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime > div::after,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime > div::after,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime > div::after,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime > div::after,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime > div::after,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime > div::after,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime > div::after {
+  content: "";
+}
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.currentTime,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.currentTime,
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.offsetTime,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.offsetTime {
+  background-color: #808080;
+}
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.endPlaybackTime,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.endPlaybackTime {
+  background-color: #af0900;
+}
+.msgapi .fill .timeline-plugin .read-only-timeline .vis-custom-time.startPlaybackTime,
+.msgapi .fill .timeline-plugin.with-time-offset .read-only-timeline .vis-custom-time.startPlaybackTime {
+  background-color: #27ca3b;
 }
 .msgapi .fill .ms-inline-datetime {
   margin-right: 8px;
@@ -19405,7 +20126,6 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .playback-plugin .ms-playback-settings {
   position: absolute;
   overflow: auto;
-  right: 40px;
   top: -5px;
   transform: translateY(-100%);
   padding: 8px;
