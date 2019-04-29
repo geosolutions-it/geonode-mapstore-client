@@ -1,6 +1,6 @@
 // needs base_plugins
 var MS2_MAP_PLUGINS = {
-	"desktop": [ 
+	"desktop": [
 		// Map from base
 		"BackgroundSelector",
 		{
@@ -67,13 +67,29 @@ var MS2_MAP_PLUGINS = {
 					{"id": "Polygon", "name": "queryform.spatialfilter.methods.poly"}
 				]
 			}
-		}, 
+		},
 		{
 			"name": "MetadataExplorer",
 			"cfg": {
 				"wrap": true
 			}
 		},
+        {
+            "name": "MousePosition",
+            "cfg": {
+                "editCRS": true,
+                "showLabels": true,
+                "showToggle": true,
+                "filterAllowedCRS": [ "EPSG:4326", "EPSG:3857" ],
+                "additionalCRS": {}
+            }
+        },
+        {
+            "name": "Search",
+            "cfg": {
+                "withToggle": [ "max-width: 768px", "min-width: 768px" ]
+            }
+        },
 		{
 			"name": "GoFull",
 			"override": {

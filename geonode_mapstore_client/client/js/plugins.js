@@ -43,6 +43,8 @@ module.exports = {
         StyleEditorPlugin: require('../MapStore2/web/client/plugins/StyleEditor'),
         TimelinePlugin: require('../MapStore2/web/client/plugins/Timeline'),
         PlaybackPlugin: require('../MapStore2/web/client/plugins/Playback'),
+        MousePosition: require('../MapStore2/web/client/plugins/MousePosition'),
+        Search: require('../MapStore2/web/client/plugins/Search'),
         AddReducersAndEpics: {
             reducers: {
                 security: require('../MapStore2/web/client/reducers/security'),

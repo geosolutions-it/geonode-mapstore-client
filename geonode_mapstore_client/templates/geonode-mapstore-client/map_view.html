@@ -7,7 +7,7 @@
 {% block style %}
 <style>
 	body {
-        padding-top: 0px !important; 
+        padding-top: 0px !important;
 	}
 	#ms-container {
 		position: absolute;
@@ -31,7 +31,7 @@
         }
         MS2_PLUGINS = window.squashMS2PlugCfg(MS2_BASE_PLUGINS, MS2_MAP_PLUGINS);
         MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
-        initMapstore2Api('edit', function(MapStore2) { 
+        initMapstore2Api('edit', function(MapStore2) {
             MapStore2.create('ms-container', {
                 config: ms2_config,
                 mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id,
@@ -62,12 +62,12 @@
                 proxy: "{{ SITEURL }}proxy/?url=",
                 printingEnabled: true,
                 localConfig: {
-                    disableCheckEditPermissions: true,
+                    disableCheckEditPermissions: false,
                     geonode_url: "{{ SITEURL }}",
                     genode_rest_api: "{{ SITEURL }}mapstore/rest/",
                     loadAfterTheme: true,
                     printUrl: "{{ SITEURL }}gs/pdf/info.json",
-                    translations: '', 
+                    translations: '',
                     useAuthenticationRules: true,
                     authenticationRules: [{
                         "urlPattern": ".*geostore.*",

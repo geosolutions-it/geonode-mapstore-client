@@ -1,1 +1,1 @@
-django-mapstore-adapter>=0.1.0
+django-mapstore-adapter==1.0.0
