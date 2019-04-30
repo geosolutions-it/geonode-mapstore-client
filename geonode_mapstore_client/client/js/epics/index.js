@@ -12,9 +12,9 @@
 const Rx = require("rxjs");
 
 const {SELECT_NODE} = require("../../MapStore2/web/client/actions/layers");
-const {setPermission, SET_PERMISSION} = require("../../MapStore2/web/client/actions/featuregrid");
-const {setEditPermissionStyleEditor} = require("../../MapStore2/web/client/actions/styleeditor");
-const {layerEditPermissions, updateThumb} = require("../api/geonode");
+const {setPermission} = require("../../MapStore2/web/client/actions/featuregrid");
+const {setEditPermissionStyleEditor, INIT_STYLE_SERVICE} = require("../../MapStore2/web/client/actions/styleeditor");
+const {layerEditPermissions, styleEditPermissions, updateThumb} = require("../api/geonode");
 const {getSelectedLayer, layersSelector} = require("../../MapStore2/web/client/selectors/layers");
 const {mapSelector} = require("../../MapStore2/web/client/selectors/map");
 const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils");
@@ -48,10 +48,27 @@ const _setFeatureEditPermission = (action$, {getState} = {}) =>
             const layer = getSelectedLayer(getState() || {});
             return layer ? layerEditPermissions(layer)
                             .map(permissions => setPermission(permissions))
-                            .startWith(setPermission({canEdit: false})).catch(() => Rx.Observable.empty()) : Rx.Observable.of(setPermission({canEdit: false}));
+                            .startWith(setPermission({canEdit: false}))
+                            .catch(() => Rx.Observable.empty()) : Rx.Observable.of(setPermission({canEdit: false}));
         });
-const _setStyleEditorPermission = action$ =>
-        action$.ofType(SET_PERMISSION).map(({permission = {}}) => setEditPermissionStyleEditor(permission.canEdit));
+/**
+ * When a user selects a layer, the app checks for style editing permission.
+ * INIT_STYLE_SERVICE si needed for map editing, it ensures an user has permission to edit style of a specific layer retrieved from catalog
+ */
+const _setStyleEditorPermission = (action$, {getState} = {}) =>
+        action$.ofType(INIT_STYLE_SERVICE, SELECT_NODE)
+            .filter(({ nodeType }) =>
+                nodeType && nodeType === "layer" && !ConfigUtils.getConfigProp("disableCheckEditPermissions")
+                || !nodeType && !ConfigUtils.getConfigProp("disableCheckEditPermissions"))
+            .switchMap((action) => {
+                const layer = getSelectedLayer(getState() || {});
+                return layer
+                    ? styleEditPermissions(layer)
+                        .map(({ canEdit }) => setEditPermissionStyleEditor(canEdit))
+                        .startWith(setEditPermissionStyleEditor(action.canEdit))
+                        .catch(() => Rx.Observable.empty())
+                    : Rx.Observable.of(setEditPermissionStyleEditor(false));
+            });
 /**
  * Update geonode thumbnail for layers or maps
  */
