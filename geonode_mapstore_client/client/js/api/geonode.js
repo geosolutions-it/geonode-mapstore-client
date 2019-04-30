@@ -48,6 +48,10 @@ const getLayerEditPerimissions = (name) => {
     const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
     return axios.get( `${baseUrl}gs/${name}/edit-check`);
 };
+const getStyleEditPerimissions = (name) => {
+    const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
+    return axios.get( `${baseUrl}gs/${name}/style-check`);
+};
 const postThumbnail = (endPoint, id, body = {}) => {
     const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
     return axios.post( `${baseUrl}${endPoint}/${id}/thumbnail`, body, {timeout: 10000});
@@ -97,6 +101,10 @@ const layerEditPermissions = (layer) =>
     Rx.Observable.defer( () => getLayerEditPerimissions(layer.name))
                 .pluck("data")
                 .map(({authorized}) => ({canEdit: authorized}));
+const styleEditPermissions = (layer) =>
+    Rx.Observable.defer( () => getStyleEditPerimissions(layer.name))
+            .pluck("data")
+            .map(({authorized}) => ({canEdit: authorized}));
 const updateThumb = (endPoint, id, body) =>
     Rx.Observable.defer( () => postThumbnail(endPoint, id, body));
 
@@ -106,5 +114,6 @@ module.exports = {
     updateResource,
     deleteResource,
     layerEditPermissions,
+    styleEditPermissions,
     updateThumb
 };
