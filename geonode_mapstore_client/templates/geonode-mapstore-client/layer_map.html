@@ -30,7 +30,7 @@
         MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
         initMapstore2Api('preview', function(MapStore2, options) {
             if (options && options.setLocale) {
-                options.setLocale({{ locale }});
+                options.setLocale('{{ LANGUAGE_CODE }}');
             }
             MapStore2.create('embedded_map', {
                 mode: "embedded",

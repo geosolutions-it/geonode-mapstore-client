@@ -1,4 +1,6 @@
+{% load i18n %}
 {% load static %}
+{% get_current_language as LANGUAGE_CODE %}
 {% with MAP_TYPE="openlayers" %}
 {% if MAP_TYPE == "openlayers" %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.4/ol.css" />
@@ -103,7 +105,7 @@
         50% {opacity: 1}
         70% {opacity: .75}
         100%{opacity: 0}
-    }    
+    }
 </style>
 {% block style %}{% endblock %}
 

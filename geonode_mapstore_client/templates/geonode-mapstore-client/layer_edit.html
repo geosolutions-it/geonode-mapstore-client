@@ -35,7 +35,7 @@
         MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
         initMapstore2Api('edit', function(MapStore2, options) {
             if (options && options.setLocale) {
-                options.setLocale({{ locale }});
+                options.setLocale('{{ LANGUAGE_CODE }}');
             }
             MapStore2.create('ms-container', {
                 config: ms2_config,

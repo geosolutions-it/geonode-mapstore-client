@@ -33,7 +33,7 @@
             // you have to add the configuration for stylerplugin
             MS2_PLUGINS = window.squashMS2PlugCfg(MS2_BASE_PLUGINS, MS2_MAP_PLUGINS, MS2_EDIT_PLUGINS);
             if (options && options.setLocale) {
-                options.setLocale({{ locale }});
+                options.setLocale('{{ LANGUAGE_CODE }}');
             }
             const stylerCfg = {
                 "name": "StyleEditor",

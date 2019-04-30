@@ -44,6 +44,7 @@ class MapStoreHookSet(GeoExtHookSet):
         if request and 'access_token' in request.session:
             return request.session['access_token']
         return None
+
     # return if we are editing a layer or creating a new map
     def isEditLayer(self, context):
         if context:
@@ -51,12 +52,14 @@ class MapStoreHookSet(GeoExtHookSet):
             if req.GET.get("layer") and req.GET.get("storeType"):
                 return True
         return False
+
     def isViewLayer(self, context):
         if context:
             req = self.get_request(context)
             if req.GET.get("layer") and req.GET.get("view"):
                 return True
         return False
+
     def initialize_context(self, context, callback):
         if context:
             request = self.get_request(context)
