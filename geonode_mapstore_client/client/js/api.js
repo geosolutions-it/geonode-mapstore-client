@@ -8,6 +8,7 @@
 require('react-widgets/dist/css/react-widgets.css');
 const assign = require("object-assign");
 const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
+const LocaleUtils = require('../MapStore2/web/client/utils/LocaleUtils');
 const {keyBy, values} = require('lodash');
 /**
  * Add custom (overriding) translations with:
@@ -74,14 +75,24 @@ const createMapStore2Api = function(plugins) {
 };
 // Can be used to define more compact plugins bundle
 window.initMapstore2Api = function(config, resolve) {
+
+    // force supported locales to the selected one
+    const setLocale = (localeKey) => {
+        const supportedLocales = LocaleUtils.getSupportedLocales();
+        const locale = supportedLocales[localeKey]
+            ? { [localeKey]: supportedLocales[localeKey] }
+            : { en: supportedLocales.en };
+        LocaleUtils.setSupportedLocales(locale);
+    };
+
     require(`./components/${maptype}/ArcGisMapServer`);// eslint-disable-line
     if (config === 'preview') {
         require.ensure('./previewPlugins', function() {
-            resolve(createMapStore2Api(require('./previewPlugins')));
+            resolve(createMapStore2Api(require('./previewPlugins')), { setLocale });
         });
     }else {
         require.ensure('./plugins', function() {
-            resolve(createMapStore2Api(require('./plugins')));
+            resolve(createMapStore2Api(require('./plugins')), { setLocale });
         });
     }
 };
