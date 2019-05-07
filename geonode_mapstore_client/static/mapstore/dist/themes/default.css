@@ -10272,12 +10272,61 @@
   left: calc(50% - 150px);
   background-color: #ffffff;
 }
-.msgapi #share-panel-dialog .buttonCopy,
-.msgapi #share-panel-dialog .buttonCopyTextArea {
-  padding: 0;
+.msgapi .share-win {
+  border: none;
 }
-.msgapi #sharePanel-tabs {
-  border-top: none !important;
+@media (min-width: 768px) {
+  .msgapi .share-win {
+    width: 400px;
+  }
+}
+.msgapi .share-win .input-link .input-link-head {
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+}
+.msgapi .share-win .input-link .input-link-head > h4 {
+  flex: 1;
+  margin: 0;
+}
+.msgapi .share-win .input-link pre {
+  max-height: 150px;
+}
+.msgapi .share-win .input-link pre input {
+  width: 100%;
+  background-color: unset;
+  box-shadow: unset;
+  border: unset;
+  font-size: 12px;
+}
+.msgapi .share-win .input-link + .input-link {
+  border-top: 1px solid #dddddd;
+}
+.msgapi .share-win .social-links {
+  text-align: center;
+}
+.msgapi .share-win .social-links .social-links-list {
+  display: flex;
+}
+.msgapi .share-win .social-links .social-links-list .social-box {
+  margin: 0 8px;
+}
+.msgapi .share-win .social-links .social-links-list .social-box:first-child {
+  margin-left: auto;
+}
+.msgapi .share-win .social-links .social-links-list .social-box:last-child {
+  margin-right: auto;
+}
+.msgapi .share-win .qr-code {
+  text-align: center;
+}
+.msgapi .share-win .mapstore-switch-panel {
+  margin: 8px 0;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
 }
 .msgapi .ms-style-editor-container {
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
@@ -12797,6 +12846,11 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .toolbar-panel.portal-dialog .modal-body table tr td:nth-child(2) {
   word-break: break-word;
+}
+.msgapi .modal-dialog-container {
+  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 .msgapi .details-close {
   float: right;
