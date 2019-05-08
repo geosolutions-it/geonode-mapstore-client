@@ -7221,6 +7221,88 @@
   margin: auto;
   display: block;
 }
+/* Button with bottom border for collapsed items in list - see widgets tray */
+.msgapi .btn-tray {
+  color: #4d4d4d;
+  background-color: #ffffff;
+  border-color: #3782c3;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: 3px solid #3782c3;
+}
+.msgapi .btn-tray:focus,
+.msgapi .btn-tray.focus {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #1b4060;
+}
+.msgapi .btn-tray:hover {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #296294;
+}
+.msgapi .btn-tray:active,
+.msgapi .btn-tray.active,
+.msgapi .open > .dropdown-toggle.btn-tray {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #296294;
+}
+.msgapi .btn-tray:active:hover,
+.msgapi .btn-tray.active:hover,
+.msgapi .open > .dropdown-toggle.btn-tray:hover,
+.msgapi .btn-tray:active:focus,
+.msgapi .btn-tray.active:focus,
+.msgapi .open > .dropdown-toggle.btn-tray:focus,
+.msgapi .btn-tray:active.focus,
+.msgapi .btn-tray.active.focus,
+.msgapi .open > .dropdown-toggle.btn-tray.focus {
+  color: #4d4d4d;
+  background-color: #d4d4d4;
+  border-color: #1b4060;
+}
+.msgapi .btn-tray:active,
+.msgapi .btn-tray.active,
+.msgapi .open > .dropdown-toggle.btn-tray {
+  background-image: none;
+}
+.msgapi .btn-tray.disabled,
+.msgapi .btn-tray[disabled],
+.msgapi fieldset[disabled] .btn-tray,
+.msgapi .btn-tray.disabled:hover,
+.msgapi .btn-tray[disabled]:hover,
+.msgapi fieldset[disabled] .btn-tray:hover,
+.msgapi .btn-tray.disabled:focus,
+.msgapi .btn-tray[disabled]:focus,
+.msgapi fieldset[disabled] .btn-tray:focus,
+.msgapi .btn-tray.disabled.focus,
+.msgapi .btn-tray[disabled].focus,
+.msgapi fieldset[disabled] .btn-tray.focus,
+.msgapi .btn-tray.disabled:active,
+.msgapi .btn-tray[disabled]:active,
+.msgapi fieldset[disabled] .btn-tray:active,
+.msgapi .btn-tray.disabled.active,
+.msgapi .btn-tray[disabled].active,
+.msgapi fieldset[disabled] .btn-tray.active {
+  background-color: #ffffff;
+  border-color: #3782c3;
+}
+.msgapi .btn-tray .badge {
+  color: #ffffff;
+  background-color: #4d4d4d;
+}
+.msgapi .btn-tray:active,
+.msgapi .btn-tray.active {
+  color: #2c689c;
+  border-bottom: 3px solid #bfbfbf;
+}
+.msgapi .btn-tray:focus,
+.msgapi .btn-tray.focus {
+  background-color: #ffffff;
+  color: #4d4d4d;
+  border-bottom: 3px solid #3782c3;
+}
 .msgapi .ag-fresh .ag-header,
 .msgapi .ag-fresh .ag-tool-panel-container {
   background: #2c689c !important;
@@ -7622,6 +7704,9 @@
   margin-right: 15px;
   color: #2c689c;
   vertical-align: middle;
+}
+.msgapi .dropdown-menu .active .glyphicon {
+  color: #ffffff;
 }
 /* dropdown */
 .msgapi .navbar-dx .dropdown-menu .dropdown-header,
@@ -8691,6 +8776,13 @@
 .msgapi .ms-accordion.ms-fill-container .panel.ms-selected .panel-collapse .panel-body {
   flex: 1;
   overflow: auto;
+}
+.msgapi #mapstore-print-panel,
+.msgapi #measure-dialog,
+.msgapi #mapstore-about {
+  position: absolute;
+  top: 0%;
+  left: 20%;
 }
 .msgapi #mapstore-print-panel .panel-heading {
   background-color: #f2f2f2 !important;
@@ -11793,7 +11885,8 @@ Ported to CodeMirror by Peter Kroon
   cursor: -ms-grab;
   cursor: grab;
 }
-.msgapi .no-drag .draggableHandle {
+.msgapi .no-drag .draggableHandle,
+.msgapi .static .draggableHandle {
   cursor: inherit;
 }
 .msgapi .widget-container {
@@ -11863,8 +11956,40 @@ Ported to CodeMirror by Peter Kroon
   font-size: 14px;
   color: #2c689c;
 }
+.msgapi .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons {
+  text-align: left;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  height: 10px;
+}
+.msgapi .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group {
+  left: 0px;
+}
+.msgapi .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button {
+  background: transparent;
+  top: -8px;
+  position: relative;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.msgapi .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button .glyphicon.active::before {
+  color: #2c689c;
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.msgapi .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button .glyphicon:not(.active) {
+  opacity: .5;
+  color: grey;
+}
 .msgapi .widget-container .mapstore-widget-card .mapstore-widget-default-content {
   margin: 10px 5%;
+}
+.msgapi .widget-container .mapstore-widget-card .mapstore-widget-default-content.ql-editor {
+  height: auto;
+  padding: 0;
 }
 .msgapi .widget-container .mapstore-widget-card .mapstore-widget-description {
   text-align: center;
@@ -12004,6 +12129,22 @@ Ported to CodeMirror by Peter Kroon
   -webkit-box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
+}
+.msgapi .widgets-tray {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  background-color: #ffffff;
+  padding: 4px;
+  z-index: 1000;
+}
+.msgapi .widgets-tray .widgets-bar > span {
+  padding-right: 8px;
+  margin-right: 6px;
+  border-right: 1px solid #dddddd;
+}
+.msgapi .widgets-tray .widgets-bar > span button.btn + button.btn {
+  margin-left: 4px;
 }
 .msgapi .mapstore-chart-advance-options {
   z-index: 20;

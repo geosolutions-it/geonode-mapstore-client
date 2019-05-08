@@ -7031,6 +7031,7 @@
   word-wrap: break-word;
 }
 .msgapi .fill:-webkit-full-screen {
+  /* Button with bottom border for collapsed items in list - see widgets tray */
   /* drawer menu */
   /* dropdown-menu */
   /* dropdown */
@@ -7284,6 +7285,87 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .ms-svg-glyph > .glyphicon {
   margin: auto;
   display: block;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray {
+  color: #4d4d4d;
+  background-color: #ffffff;
+  border-color: #3782c3;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: 3px solid #3782c3;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray:focus,
+.msgapi .fill:-webkit-full-screen .btn-tray.focus {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #1b4060;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray:hover {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #296294;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray:active,
+.msgapi .fill:-webkit-full-screen .btn-tray.active,
+.msgapi .open > .dropdown-toggle.fill:-webkit-full-screen .btn-tray {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #296294;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray:active:hover,
+.msgapi .fill:-webkit-full-screen .btn-tray.active:hover,
+.msgapi .open > .dropdown-toggle.fill:-webkit-full-screen .btn-tray:hover,
+.msgapi .fill:-webkit-full-screen .btn-tray:active:focus,
+.msgapi .fill:-webkit-full-screen .btn-tray.active:focus,
+.msgapi .open > .dropdown-toggle.fill:-webkit-full-screen .btn-tray:focus,
+.msgapi .fill:-webkit-full-screen .btn-tray:active.focus,
+.msgapi .fill:-webkit-full-screen .btn-tray.active.focus,
+.msgapi .open > .dropdown-toggle.fill:-webkit-full-screen .btn-tray.focus {
+  color: #4d4d4d;
+  background-color: #d4d4d4;
+  border-color: #1b4060;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray:active,
+.msgapi .fill:-webkit-full-screen .btn-tray.active,
+.msgapi .open > .dropdown-toggle.fill:-webkit-full-screen .btn-tray {
+  background-image: none;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray.disabled,
+.msgapi .fill:-webkit-full-screen .btn-tray[disabled],
+.msgapi fieldset[disabled] .fill:-webkit-full-screen .btn-tray,
+.msgapi .fill:-webkit-full-screen .btn-tray.disabled:hover,
+.msgapi .fill:-webkit-full-screen .btn-tray[disabled]:hover,
+.msgapi fieldset[disabled] .fill:-webkit-full-screen .btn-tray:hover,
+.msgapi .fill:-webkit-full-screen .btn-tray.disabled:focus,
+.msgapi .fill:-webkit-full-screen .btn-tray[disabled]:focus,
+.msgapi fieldset[disabled] .fill:-webkit-full-screen .btn-tray:focus,
+.msgapi .fill:-webkit-full-screen .btn-tray.disabled.focus,
+.msgapi .fill:-webkit-full-screen .btn-tray[disabled].focus,
+.msgapi fieldset[disabled] .fill:-webkit-full-screen .btn-tray.focus,
+.msgapi .fill:-webkit-full-screen .btn-tray.disabled:active,
+.msgapi .fill:-webkit-full-screen .btn-tray[disabled]:active,
+.msgapi fieldset[disabled] .fill:-webkit-full-screen .btn-tray:active,
+.msgapi .fill:-webkit-full-screen .btn-tray.disabled.active,
+.msgapi .fill:-webkit-full-screen .btn-tray[disabled].active,
+.msgapi fieldset[disabled] .fill:-webkit-full-screen .btn-tray.active {
+  background-color: #ffffff;
+  border-color: #3782c3;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray .badge {
+  color: #ffffff;
+  background-color: #4d4d4d;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray:active,
+.msgapi .fill:-webkit-full-screen .btn-tray.active {
+  color: #2c689c;
+  border-bottom: 3px solid #bfbfbf;
+}
+.msgapi .fill:-webkit-full-screen .btn-tray:focus,
+.msgapi .fill:-webkit-full-screen .btn-tray.focus {
+  background-color: #ffffff;
+  color: #4d4d4d;
+  border-bottom: 3px solid #3782c3;
 }
 .msgapi .fill:-webkit-full-screen .ag-fresh .ag-header,
 .msgapi .fill:-webkit-full-screen .ag-fresh .ag-tool-panel-container {
@@ -7684,6 +7766,9 @@ Ported to CodeMirror by Peter Kroon
   margin-right: 15px;
   color: #2c689c;
   vertical-align: middle;
+}
+.msgapi .fill:-webkit-full-screen .dropdown-menu .active .glyphicon {
+  color: #ffffff;
 }
 .msgapi .fill:-webkit-full-screen .navbar-dx .dropdown-menu .dropdown-header,
 .msgapi .fill:-webkit-full-screen .navbar-home .dropdown-menu .dropdown-header {
@@ -8743,6 +8828,13 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .ms-accordion.ms-fill-container .panel.ms-selected .panel-collapse .panel-body {
   flex: 1;
   overflow: auto;
+}
+.msgapi .fill:-webkit-full-screen #mapstore-print-panel,
+.msgapi .fill:-webkit-full-screen #measure-dialog,
+.msgapi .fill:-webkit-full-screen #mapstore-about {
+  position: absolute;
+  top: 0%;
+  left: 20%;
 }
 .msgapi .fill:-webkit-full-screen #mapstore-print-panel .panel-heading {
   background-color: #f2f2f2 !important;
@@ -11796,7 +11888,8 @@ Ported to CodeMirror by Peter Kroon
   cursor: -ms-grab;
   cursor: grab;
 }
-.msgapi .fill:-webkit-full-screen .no-drag .draggableHandle {
+.msgapi .fill:-webkit-full-screen .no-drag .draggableHandle,
+.msgapi .fill:-webkit-full-screen .static .draggableHandle {
   cursor: inherit;
 }
 .msgapi .fill:-webkit-full-screen .widget-container {
@@ -11866,8 +11959,40 @@ Ported to CodeMirror by Peter Kroon
   font-size: 14px;
   color: #2c689c;
 }
+.msgapi .fill:-webkit-full-screen .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons {
+  text-align: left;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  height: 10px;
+}
+.msgapi .fill:-webkit-full-screen .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group {
+  left: 0px;
+}
+.msgapi .fill:-webkit-full-screen .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button {
+  background: transparent;
+  top: -8px;
+  position: relative;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.msgapi .fill:-webkit-full-screen .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button .glyphicon.active::before {
+  color: #2c689c;
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.msgapi .fill:-webkit-full-screen .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button .glyphicon:not(.active) {
+  opacity: .5;
+  color: grey;
+}
 .msgapi .fill:-webkit-full-screen .widget-container .mapstore-widget-card .mapstore-widget-default-content {
   margin: 10px 5%;
+}
+.msgapi .fill:-webkit-full-screen .widget-container .mapstore-widget-card .mapstore-widget-default-content.ql-editor {
+  height: auto;
+  padding: 0;
 }
 .msgapi .fill:-webkit-full-screen .widget-container .mapstore-widget-card .mapstore-widget-description {
   text-align: center;
@@ -12005,6 +12130,22 @@ Ported to CodeMirror by Peter Kroon
   -webkit-box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
+}
+.msgapi .fill:-webkit-full-screen .widgets-tray {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  background-color: #ffffff;
+  padding: 4px;
+  z-index: 1000;
+}
+.msgapi .fill:-webkit-full-screen .widgets-tray .widgets-bar > span {
+  padding-right: 8px;
+  margin-right: 6px;
+  border-right: 1px solid #dddddd;
+}
+.msgapi .fill:-webkit-full-screen .widgets-tray .widgets-bar > span button.btn + button.btn {
+  margin-left: 4px;
 }
 .msgapi .fill:-webkit-full-screen .mapstore-chart-advance-options {
   z-index: 20;
@@ -13649,6 +13790,7 @@ Ported to CodeMirror by Peter Kroon
 /* mapstore2 variables */
 /* override bootstrap variables */
 .msgapi .fill {
+  /* Button with bottom border for collapsed items in list - see widgets tray */
   /* drawer menu */
   /* dropdown-menu */
   /* dropdown */
@@ -13902,6 +14044,87 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .ms-svg-glyph > .glyphicon {
   margin: auto;
   display: block;
+}
+.msgapi .fill .btn-tray {
+  color: #4d4d4d;
+  background-color: #ffffff;
+  border-color: #3782c3;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: 3px solid #3782c3;
+}
+.msgapi .fill .btn-tray:focus,
+.msgapi .fill .btn-tray.focus {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #1b4060;
+}
+.msgapi .fill .btn-tray:hover {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #296294;
+}
+.msgapi .fill .btn-tray:active,
+.msgapi .fill .btn-tray.active,
+.msgapi .open > .dropdown-toggle.fill .btn-tray {
+  color: #4d4d4d;
+  background-color: #e6e6e6;
+  border-color: #296294;
+}
+.msgapi .fill .btn-tray:active:hover,
+.msgapi .fill .btn-tray.active:hover,
+.msgapi .open > .dropdown-toggle.fill .btn-tray:hover,
+.msgapi .fill .btn-tray:active:focus,
+.msgapi .fill .btn-tray.active:focus,
+.msgapi .open > .dropdown-toggle.fill .btn-tray:focus,
+.msgapi .fill .btn-tray:active.focus,
+.msgapi .fill .btn-tray.active.focus,
+.msgapi .open > .dropdown-toggle.fill .btn-tray.focus {
+  color: #4d4d4d;
+  background-color: #d4d4d4;
+  border-color: #1b4060;
+}
+.msgapi .fill .btn-tray:active,
+.msgapi .fill .btn-tray.active,
+.msgapi .open > .dropdown-toggle.fill .btn-tray {
+  background-image: none;
+}
+.msgapi .fill .btn-tray.disabled,
+.msgapi .fill .btn-tray[disabled],
+.msgapi fieldset[disabled] .fill .btn-tray,
+.msgapi .fill .btn-tray.disabled:hover,
+.msgapi .fill .btn-tray[disabled]:hover,
+.msgapi fieldset[disabled] .fill .btn-tray:hover,
+.msgapi .fill .btn-tray.disabled:focus,
+.msgapi .fill .btn-tray[disabled]:focus,
+.msgapi fieldset[disabled] .fill .btn-tray:focus,
+.msgapi .fill .btn-tray.disabled.focus,
+.msgapi .fill .btn-tray[disabled].focus,
+.msgapi fieldset[disabled] .fill .btn-tray.focus,
+.msgapi .fill .btn-tray.disabled:active,
+.msgapi .fill .btn-tray[disabled]:active,
+.msgapi fieldset[disabled] .fill .btn-tray:active,
+.msgapi .fill .btn-tray.disabled.active,
+.msgapi .fill .btn-tray[disabled].active,
+.msgapi fieldset[disabled] .fill .btn-tray.active {
+  background-color: #ffffff;
+  border-color: #3782c3;
+}
+.msgapi .fill .btn-tray .badge {
+  color: #ffffff;
+  background-color: #4d4d4d;
+}
+.msgapi .fill .btn-tray:active,
+.msgapi .fill .btn-tray.active {
+  color: #2c689c;
+  border-bottom: 3px solid #bfbfbf;
+}
+.msgapi .fill .btn-tray:focus,
+.msgapi .fill .btn-tray.focus {
+  background-color: #ffffff;
+  color: #4d4d4d;
+  border-bottom: 3px solid #3782c3;
 }
 .msgapi .fill .ag-fresh .ag-header,
 .msgapi .fill .ag-fresh .ag-tool-panel-container {
@@ -14302,6 +14525,9 @@ Ported to CodeMirror by Peter Kroon
   margin-right: 15px;
   color: #2c689c;
   vertical-align: middle;
+}
+.msgapi .fill .dropdown-menu .active .glyphicon {
+  color: #ffffff;
 }
 .msgapi .fill .navbar-dx .dropdown-menu .dropdown-header,
 .msgapi .fill .navbar-home .dropdown-menu .dropdown-header {
@@ -15361,6 +15587,13 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .ms-accordion.ms-fill-container .panel.ms-selected .panel-collapse .panel-body {
   flex: 1;
   overflow: auto;
+}
+.msgapi .fill #mapstore-print-panel,
+.msgapi .fill #measure-dialog,
+.msgapi .fill #mapstore-about {
+  position: absolute;
+  top: 0%;
+  left: 20%;
 }
 .msgapi .fill #mapstore-print-panel .panel-heading {
   background-color: #f2f2f2 !important;
@@ -18414,7 +18647,8 @@ Ported to CodeMirror by Peter Kroon
   cursor: -ms-grab;
   cursor: grab;
 }
-.msgapi .fill .no-drag .draggableHandle {
+.msgapi .fill .no-drag .draggableHandle,
+.msgapi .fill .static .draggableHandle {
   cursor: inherit;
 }
 .msgapi .fill .widget-container {
@@ -18484,8 +18718,40 @@ Ported to CodeMirror by Peter Kroon
   font-size: 14px;
   color: #2c689c;
 }
+.msgapi .fill .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons {
+  text-align: left;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  height: 10px;
+}
+.msgapi .fill .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group {
+  left: 0px;
+}
+.msgapi .fill .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button {
+  background: transparent;
+  top: -8px;
+  position: relative;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.msgapi .fill .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button .glyphicon.active::before {
+  color: #2c689c;
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.msgapi .fill .widget-container .mapstore-widget-card .mapstore-widget-header .widget-icons .btn-group button .glyphicon:not(.active) {
+  opacity: .5;
+  color: grey;
+}
 .msgapi .fill .widget-container .mapstore-widget-card .mapstore-widget-default-content {
   margin: 10px 5%;
+}
+.msgapi .fill .widget-container .mapstore-widget-card .mapstore-widget-default-content.ql-editor {
+  height: auto;
+  padding: 0;
 }
 .msgapi .fill .widget-container .mapstore-widget-card .mapstore-widget-description {
   text-align: center;
@@ -18623,6 +18889,22 @@ Ported to CodeMirror by Peter Kroon
   -webkit-box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
   box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.06), 0 -4px 8px rgba(0, 0, 0, 0.12);
+}
+.msgapi .fill .widgets-tray {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  background-color: #ffffff;
+  padding: 4px;
+  z-index: 1000;
+}
+.msgapi .fill .widgets-tray .widgets-bar > span {
+  padding-right: 8px;
+  margin-right: 6px;
+  border-right: 1px solid #dddddd;
+}
+.msgapi .fill .widgets-tray .widgets-bar > span button.btn + button.btn {
+  margin-left: 4px;
 }
 .msgapi .fill .mapstore-chart-advance-options {
   z-index: 20;

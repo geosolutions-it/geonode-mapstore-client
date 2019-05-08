@@ -1282,9 +1282,16 @@
                     "showChartData": "Mostra dati del grafico",
                     "edit": "Modifica",
                     "delete": "Elimina",
+                    "collapse": "Minimizza",
                     "confirmDelete": "Sei sicuro?",
                     "downloadData": "Scarica dati",
-                    "exportImage": "Esporta Immagine"
+                    "exportImage": "Esporta immagine",
+                    "pin": "Blocca",
+                    "unpin": "Sblocca",
+                    "hide": "Nascondi",
+                    "hideDescription": "Nascondi questo widget per altri utenti",
+                    "unhide": "Mostra",
+                    "unhideDescription": "Mostra il widget ad altri utenti"
                 }
             },
             "chartType": {
@@ -1375,6 +1382,20 @@
             "advancedOptions":{
                 "line": "Opzioni avanzate",
                 "bar": "Opzioni avanzate"
+            },
+            "tray": {
+                "title": "widget",
+                "expandTray": "Espandi il vassoio dei widget",
+                "collapseTray": "Minimizza vassoio dei widget",
+                "expandAll": "Espandi tutti i widget",
+                "collapseAll": "Minimizza tutti i widget",
+                "notifications": {
+                    "collapsed": {
+                        "message": "La timeline e i widget non possono essere visualizzati allo stesso tempo. Utilizzare il la barra degli widget per visualizzare uno o l'altro",
+                        "timelineTitle": "La timeline è stata minimizzata",
+                        "widgetsTitle": "I widget sono stati minimizzati"
+                    }
+                }
             }
         },
         "dashboard": {
@@ -1541,6 +1562,8 @@
                 "snapToGuideLayer": "Aggancia al livello guida",
                 "snapToGuideLayerTooltip": "Forza il cursore del tempo in modo che si agganci ai dati del livello selezionato. Disattiva questa opzione per sbloccare i cursori temporali e abilitare la personalizzazione del passo di animazione"
             },
+            "hide": "Nascondi timeline",
+            "show": "Mostra timeline",
             "currentTime": "Istante corrente",
             "rangeStart": "Vai all'intervallo di tempo corrente",
             "rangeEnd": "Vai all'intervallo di tempo corrente",
@@ -1552,6 +1575,10 @@
             "disablePlayBack": "Disabilita i controlli di riproduzione",
             "expand" : "Espandi",
             "collapse" : "Riduci",
+            "collapsed": {
+                "title": "La timeline è stata collassata",
+                "tooltip": "Clicca qui per espanderla di nuovo"
+            },
             "errors": {
                 "multidim_error_title": "Il servizio di backend non risponde",
                 "multidim_error_message": "I servizi richiesti per il supporto multidimensionale non rispondono. Si prega di riprovare più tardi o contattare l'amministratore."
