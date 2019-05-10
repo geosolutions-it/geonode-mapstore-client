@@ -9,6 +9,8 @@ require('react-widgets/dist/css/react-widgets.css');
 const assign = require("object-assign");
 const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
 const LocaleUtils = require('../MapStore2/web/client/utils/LocaleUtils');
+const LayersUtils = require('../MapStore2/web/client/utils/LayersUtils');
+LayersUtils.setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
 const {keyBy, values} = require('lodash');
 /**
  * Add custom (overriding) translations with:
