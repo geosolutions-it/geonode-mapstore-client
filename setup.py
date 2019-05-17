@@ -13,6 +13,7 @@ setup(
     url='https://github.com/GeoNode/geonode-mapstore-client',
     description="Use GeoNode client in your django projects",
     long_description=open(os.path.join(here, 'README.md')).read(),
+    long_description_content_type='text/markdown',
     license='BSD, see LICENSE file.',
     install_requires=[
         "django-mapstore-adapter >= 0.1.0",
