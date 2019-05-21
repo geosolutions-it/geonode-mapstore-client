@@ -554,7 +554,10 @@
             "s_wfs_opt_props_label" : "Propiedades opcionales",
             "s_result_props_label": "Resultados de la visualización de las propiedades",
             "s_priority_info": "Usado para ordenar los resultados de búsqueda, de mayor a menor. Les resultados Nominatim tienen prioridad = 5",
-            "serviceslistempty": "Ningún servicio personalizado definido"
+            "serviceslistempty": "Ningún servicio personalizado definido",
+            "service_missing": "el servicio {serviceType} no está configurado",
+            "generic_error": "Se ha producido un error durante la búsqueda. Error de detalles: {message}"
+
         },
         "drawLocal": {
             "draw": {
@@ -774,6 +777,7 @@
                 "targetLayer": "Capa objetivo",
                 "clear": "Eliminar filtro",
                 "operation": "Operación",
+                "placeholder": "Selecciona una capa",
                 "errors": {
                     "noCrossLayerAvailable": "El filtro de capa no está disponible para la capa seleccionada"
                 }
@@ -1512,6 +1516,7 @@
             "createStyleErrorMessage": "El estilo no se pudo guardar en el servicio de estilo. Esto podría estar en formato de estilo no compatible o problema de conexión.",
             "updateStyleErrorTitle": "Editar estilo",
             "updateStyleErrorMessage": "El estilo no se pudo actualizar en el servicio de estilo. Esto podría estar en formato de estilo no compatible o problema de conexión.",
+            "validationErrorTitle": "Error de validacion",
             "genericValidationError": "El estilo no es válido y no se pudo aplicar.",
             "setDefaultStyle": "Establecer el estilo seleccionado como predeterminado para la capa actual",
             "setDefaultStyleSuccessTitle": "Éxito en el estilo por defecto establecido",

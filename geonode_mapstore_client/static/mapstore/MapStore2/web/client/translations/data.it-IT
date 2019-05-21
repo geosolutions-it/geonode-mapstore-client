@@ -554,7 +554,9 @@
             "s_wfs_opt_props_label" : "Proprietà facoltative",
             "s_result_props_label": "Proprietà di visualizzazione dei risultati",
             "s_priority_info": "Usato per ordinare i risultati, i valori più alti vengono visualizzati per primi. Nominatim ha priorità = 5",
-            "serviceslistempty": "Nessun servizio definito"
+            "serviceslistempty": "Nessun servizio definito",
+            "service_missing": "Il servizio {serviceType} non è configurato",
+            "generic_error": "Un errore e' occorso durante la ricerca: Dettagli errore: {message}"
         },
         "drawLocal": {
             "draw": {
@@ -774,6 +776,7 @@
                 "targetLayer": "Livello Filtro",
                 "clear": "Pulisci Filtro",
                 "operation": "Operazione",
+                "placeholder": "Seleziona il livello",
                 "errors": {
                     "noCrossLayerAvailable": "L'operazione di filtraggio usando un livello non è supportata per il layer selezionato"
                 }
@@ -1512,6 +1515,7 @@
             "createStyleErrorMessage": "Lo stile non può essere salvato. Questo potrebbe essere dovuto al formato di stile non supportato o ad un problema di connessione.",
             "updateStyleErrorTitle": "Modifica stile",
             "updateStyleErrorMessage": "Lo stile non può essere aggiornato . Questo potrebbe essere dovuto ad un formato di stile non supportato o ad un problema di connessione.",
+            "validationErrorTitle": "Errore di validazione",
             "genericValidationError": "Lo stile non è valido e non è stato possibile applicarlo.",
             "setDefaultStyle": "Imposta lo stile selezionato come predefinito per il layer corrente",
             "setDefaultStyleSuccessTitle": "Stile predefinito aggiornamento",
