@@ -98,7 +98,9 @@
                 var title = $("#legend_sld_title");
                 title.text(ev.target.value);
                 var src = $("#legend_icon").attr("src");
-                $("#legend_icon").attr("src", src.split("&STYLE")[0] + "&STYLE=" + ev.target.id);
+                if (src != undefined) {
+                    $("#legend_icon").attr("src", src.split("&STYLE")[0] + "&STYLE=" + ev.target.id);
+                }
                 MapStore2.triggerAction({ type: 'UPDATE_NODE',
                 node: id,
                 nodeType: 'layers',
