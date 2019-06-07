@@ -76,27 +76,16 @@
                             }
                     }
                 },
-                proxy: "{{ SITEURL }}proxy/?url=",
-                printingEnabled: true,
+                proxy: defaultConfig.proxy,
+                printingEnabled: defaultConfig.printingEnabled,
                 localConfig: {
-                    geonode_url: "{{ SITEURL }}",
-                    genode_rest_api: "{{ SITEURL }}mapstore/rest/",
-                    loadAfterTheme: true,
-                    printUrl: "{{ SITEURL }}gs/pdf/info.json",
-                    translations: '',
-                    useAuthenticationRules: true,
-                    authenticationRules: [{
-                        "urlPattern": ".*geostore.*",
-                        "method": "bearer"
-                    }, {
-                        "urlPattern": ".*geoserver.*",
-                        "authkeyParamName": "access_token",
-                        "method": "authkey"
-                    }, {
-                        "urlPattern": ".*gs.*",
-                        "authkeyParamName": "access_token",
-                        "method": "authkey"
-                    }]
+                    geonode_url: defaultConfig.localConfig.geonode_url,
+                    genode_rest_api: defaultConfig.localConfig.genode_rest_api,
+                    loadAfterTheme: defaultConfig.localConfig.loadAfterTheme,
+                    printUrl: defaultConfig.localConfig.printUrl,
+                    translations: defaultConfig.localConfig.translations,
+                    useAuthenticationRules: defaultConfig.localConfig.useAuthenticationRules,
+                    authenticationRules: defaultConfig.localConfig.authenticationRules
                 },
                 plugins: MS2_PLUGINS
             });
