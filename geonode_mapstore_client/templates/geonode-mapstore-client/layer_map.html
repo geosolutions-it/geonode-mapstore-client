@@ -1,6 +1,7 @@
 {% extends "./base_ms.html" %}
+{% load static %}
 {% block plugins %}
-<script type="text/javascript" src="{{ STATIC_URL }}geonode/js/ms2/utils/ms2_base_plugins.js"></script>
+<script type="text/javascript" src="{% static 'geonode/js/ms2/utils/ms2_base_plugins.js' %}"></script>
 {% endblock %}
 {% block style %}
 <style>
@@ -53,27 +54,16 @@
                         }
                     }
                 },
-                proxy: "{{ SITEURL }}proxy/?url=",
-                printingEnabled: true,
+                proxy: defaultConfig.proxy,
+                printingEnabled: defaultConfig.printingEnabled,
                 localConfig: {
-                    mapLayout: {left: {sm: 300, md: 500, lg: 600}, right: {md: "41%"}, bottom: {sm: 0}},
-                    geonode_url: "{{ SITEURL }}",
-                    translations: '',
-                    loadAfterTheme: true,
-                    printUrl: "{{ SITEURL }}gs/pdf/info.json",
-                    useAuthenticationRules: true,
-                    authenticationRules: [{
-                        "urlPattern": ".*geostore.*",
-                        "method": "bearer"
-                    }, {
-                        "urlPattern": ".*geoserver.*",
-                        "authkeyParamName": "access_token",
-                        "method": "authkey"
-                    }, {
-                        "urlPattern": ".*gs.*",
-                        "authkeyParamName": "access_token",
-                        "method": "authkey"
-                    }]
+                    mapLayout: defaultConfig.localConfig.mapLayout,
+                    geonode_url: defaultConfig.localConfig.geonode_url,
+                    translations: defaultConfig.localConfig.translations,
+                    loadAfterTheme: defaultConfig.localConfig.loadAfterTheme,
+                    printUrl: defaultConfig.localConfig.printUrl,
+                    useAuthenticationRules: defaultConfig.localConfig.useAuthenticationRules,
+                    authenticationRules: defaultConfig.localConfig.authenticationRules
                 },
                 plugins: MS2_PLUGINS
             });
