@@ -26,7 +26,7 @@ const {SIZE_CHANGE, CLOSE_FEATURE_GRID, OPEN_FEATURE_GRID} = require('../../MapS
 const {CLOSE_IDENTIFY, ERROR_FEATURE_INFO, TOGGLE_MAPINFO_STATE, LOAD_FEATURE_INFO, EXCEPTIONS_FEATURE_INFO} = require('../../MapStore2/web/client/actions/mapInfo');
 const {SHOW_SETTINGS, HIDE_SETTINGS} = require('../../MapStore2/web/client/actions/layers');
 const {PURGE_MAPINFO_RESULTS} = require('../../MapStore2/web/client/actions/mapInfo');
-const {mapInfoRequestsSelector} = require('../../MapStore2/web/client/selectors/mapinfo');
+const {mapInfoRequestsSelector} = require('../../MapStore2/web/client/selectors/mapInfo');
 
 const {isFeatureGridOpen, getDockSize} = require('../../MapStore2/web/client/selectors/featuregrid');
 const {head, get} = require('lodash');

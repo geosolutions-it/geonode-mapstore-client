@@ -6,23 +6,27 @@
         "htmlTest": "{name} {surname}",
         "about_title": "关于这个程序...",
         "aboutLbl": "关于",
-        "about_p0-0": "MapStore2是一个使用标准映射库构建Web地图应用程序的框架，比如",
+        "about_p0-0": "MapStore是一个使用标准映射库构建Web地图应用程序的框架，比如",
         "about_p0-1": "和",
-        "about_p1": "MapStore2有几个应用实例：",
+        "about_p1": "MapStore有几个应用实例：",
         "about_ul0_li0": "MapViewer简单展现预先配置好的地图 (optionally stored in a database using GeoStore)",
         "about_ul0_li1": "MapPublisher开发的目的是以简单直观的方式创建，保存和共享地图和混搭，从Google Maps和OpenStreetMap等着名资源中选择内容，或者使用OGC WMS，WFS，WMTS等开放协议提供的服务。 TMS等。 有关更多信息，请查看",
         "about_h20": "许可",
-        "about_p3": "MapStore 2是免费和开放源代码软件，基于OpenLayers 3，Leaflet和ReactJS，并获得简化BSD许可。",
+        "about_p3": "MapStore是免费和开放源代码软件，基于OpenLayers 3，Leaflet和ReactJS，并获得简化BSD许可。",
         "about_p5-0": "欲了解更多信息，请查",
         "about_a0": "this",
         "about_p5-1": "页.",
         "about_h21": "Credits",
-        "about_p6": "MapStore2是由:",
+        "about_p6": "MapStore是由:",
         "enable": "启用",
         "layers": "图层",
         "warning": "警告",
+        "errorTitleDefault": "Error",
+        "errorDefault": "An error occurred",
         "pageInfoShowMore": "Results {count} of {total}",
         "showMore": "Show more...",
+        "collapse": "Collapse",
+        "expand": "Expand",
         "version": {
             "label": "版本"
         },
@@ -31,6 +35,14 @@
             "updating": "更新...",
             "layers": "图层"
         },
+        "localeErrors": {
+            "404": "Vertaalbestand niet gevonden"
+        },
+        "details": {
+            "title": "About this map"
+        },
+        "showEmptyMessageGFI": "Show empty results message in GetFeatureInfo panel",
+        "remove": "Delete",
         "layerProperties": {
             "windowTitle": "图层属性",
             "title": "标题",
@@ -58,8 +70,37 @@
             "groupProperties": "组属性",
             "featureInfo": "特征信息",
             "featureInfoFormatLbl": "确定响应格式",
-            "legenderror": "图例不可用"
+            "legenderror": "图例不可用",
+            "editCustomFormat": "Edit custom format",
+            "exampleOfResponse": "Example",
+            "changedSettings": "Changed Settings",
+            "changedSettingsAlert": "You are closing the settings panel without save your changes",
+            "textFormatTitle": "TEXT",
+            "textFormatDescription": "Shows feature info results as plain text",
+            "htmlFormatTitle": "HTML",
+            "htmlFormatDescription": "Shows feature info results as html",
+            "propertiesFormatTitle": "PROPERTIES",
+            "propertiesFormatDescription": "Shows feature info results as properties list",
+            "templateFormatTitle": "TEMPLATE",
+            "templateFormatDescription": "Customize feature info results format",
+            "templateFormatInfoAlert1": "Click on edit button to add a new template.",
+            "templateFormatInfoAlert2": "Use ${ attribute } to wrap the properties you need to display",
+            "templateFormatInfoAlertExample": "The id of the feature is ${ properties }",
+            "templatePreview": "Template preview",
+            "tooltip": {
+                "label": "Tooltip",
+                "title": "Title",
+                "description": "Description",
+                "both": "Title and Description",
+                "none": "No Tooltip",
+                "labelPlacement": "Placement",
+                "right": "Right",
+                "bottom": "Bottom",
+                "top": "Top"
+            }
         },
+        "longitude": "Longitude",
+        "latitude": "Latitude",
         "notification": {
             "update": "更新",
             "warning": "警告",
@@ -68,7 +109,9 @@
             "noBackgroundLayerSupported": "这种类型的地图没有受支持的背景层.",
             "updateOldMap": "这是一个旧的地图，因此并不是所有的功能都可以启用。 点击更新按钮为了更新地图或简单地关闭此通知，如果你不想更新它。",
             "warningSaveUpdatedMap": "某些图层尚未正确更新",
-            "saveUpdatedMap": "所有图层都已成功更新"
+            "saveUpdatedMap": "所有图层都已成功更新",
+            "incompatibleBackgroundAndProjection":"The Projection you selected is not compatible with background, switch to a compatible -or an empty- background, then select this projection!",
+            "incompatibleDataAndProjection":"the current layer and map projection are not completely compatible. Parts or all of the data might not appear in the map"
         },
         "dock": {
             "row": "{rowsSelected} row selected",
@@ -100,6 +143,7 @@
         "options": "选项",
         "settings": "设置",
         "help": "帮助",
+        "docs": "Docs",
         "gohome": "跳转首页",
         "back": "Back to the Importer",
         "printbutton": "打印",
@@ -111,6 +155,8 @@
         "elevation": "海拔",
         "close": "关闭",
         "cancel": "取消",
+        "no": "No",
+        "yes": "Yes",
         "confirm": "确认",
         "confirmTitle": "你确认吗?",
         "pageInfo": "{total, plural, =0 {No items} =1 {{total} Item of {total}} other {Items {start}-{end} of {total}}}",
@@ -124,6 +170,8 @@
                 "red": "{number, plural, =0 {Red} =1 {Red} other {Reds}}",
                 "blue": "{number, plural, =0 {Blue} =1 {Blue} other {Blues}}",
                 "green": "{number, plural, =0 {green} =1 {Green} other {Greens}}",
+                "gray": "{number, plural, =0 {Gray} =1 {Gray} other {Grays}}",
+                "jet": "{number, plural, =0 {Jet} =1 {Jet} other {Jet}}",
                 "brown": "{number, plural, =0 {Brown} =1 {Brown} other {Browns}}",
                 "purple": "{number, plural, =0 {Purple} =1 {Purple} other {Purples}}",
                 "random": "{number, plural, =0 {Random} =1 {Random} other {Random}}"
@@ -133,11 +181,12 @@
             "open": "打开",
             "shortDescription": "Modern webmapping with OpenLayers, Leaflet and React<br/><small>visit the <a href=\"https://mapstore.readthedocs.io/en/latest/\">documentation</a> page</small>",
             "forkMeOnGitHub": "Fork me on GitHub",
-            "description": "MapStore 2的开发旨在以简单直观的方式创建，保存和共享地图和混搭，这些地图和混搭创建的内容来自知名来源，如Google Maps和OpenStreetMap，或者由使用开放协议的组织提供的服务，如OGC WMS，WFS，WMTS 或TMS等等。<br/>有关更多详细信息，请访问<a href=\"https://mapstore.readthedocs.io/en/latest/\">主页</a>。",
+            "description": "MapStore的开发旨在以简单直观的方式创建，保存和共享地图和混搭，这些地图和混搭创建的内容来自知名来源，如Google Maps和OpenStreetMap，或者由使用开放协议的组织提供的服务，如OGC WMS，WFS，WMTS 或TMS等等。<br/>有关更多详细信息，请访问<a href=\"/mapstore/docs/\">主页</a>。",
             "Applications": "应用",
             "Examples": "例子",
             "LinkedinGroup": "Mapstore Linkedin Group",
             "scrollTop": "滚动到页面顶部",
+            "footerDescription": "<small>GeoSolutions S.a.s. | Via di Montramito 3/A, 55054 Massarosa (Lucca) - Italy info@geo-solutions.it | Tel: +39 0584 962313 | Fax: +39 0584 1660272</small>",
             "ml": {
                 "title": "Keep in touch and stay up-to-date with the mailing lists",
                 "subscribe_users": "Subscribe Users Mailing List",
@@ -178,7 +227,7 @@
                     "html":"<h3>Plugins</h3><p>Build your own application</p>"
                 },
                 "api":{
-                    "html":"<h3>API</h3><p>Use APIs to include a MapStore2 map in your application</p>"
+                    "html":"<h3>API</h3><p>Use APIs to include a MapStore map in your application</p>"
                 },
                 "rasterstyler":{
                     "html":"<h3>Raster Styler</h3><p>Style your raster layer</p>"
@@ -203,10 +252,63 @@
         },
         "newMap": "新地图",
 		"maps": {
-			"search": "搜索地图...",
+            "title": "Maps",
             "addToFeaturedMaps": "Add to featured maps",
-            "removeFromFeaturedMaps": "Remove from featured maps"
+            "removeFromFeaturedMaps": "Remove from featured maps",
+            "feedback": {
+                "noDetailsAvailable": "Details not available",
+                "successSavedMap": "The map has been created correctly",
+                "errorDeletingMap": "Error when deleting this map",
+                "errorDeletingThumbnailOfMap": "Error when deleting thumbnail for this map",
+                "errorDeletingDetailsOfMap": "Error when deleting details for this map",
+                "allResDeleted": "All resources associated with this map have been deleted successfully",
+                "errorFetchingDetailsOfMap": "Error when fetching details for this map",
+                "details": {
+                    "deletedSuccesfully": "The details have been removed correctly",
+                    "savedSuccesfully": "The details have been saved correctly",
+                    "updatedSuccesfully": "The details have been updated correctly"
+                },
+                "thumbnail": {
+                    "deletedSuccesfully": "The thumbnail have been removed correctly",
+                    "savedSuccesfully": "The thumbnail have been saved correctly",
+                    "updatedSuccesfully": "The thumbnail have been updated correctly"
+                },
+                "errorWhenSaving": "An error occurred during saving process",
+                "errorWhenUpdating": "An error occurred during updating process",
+                "errorWhenDeleting": "An error occurred during deleting process",
+                "errorSizeExceeded": "Please, reduce the size of the details or the quality of the images"
+            },
+			"search": "搜索地图..."
 		},
+        "resources": {
+            "deleteConfirmTitle": "Are you sure",
+            "deleteConfirmMessage": "Are you sure you want do delete this resource?",
+            "deleteConfirmButtonText": "Delete",
+            "deleteCancelButtonText": "Close",
+            "resource": {
+                "deleteResource": "Delete",
+                "editResource": "Edit properties",
+                "addToFeatured": "Add to featured",
+                "removeFromFeatured": "Remove from featured",
+                "showDetails": "Show details"
+            },
+            "contents": {
+                "title": "Contents"
+            },
+            "dashboards": {
+                "newDashboard": "New Dashboard",
+                "title": "Dashboards ({count})",
+                "titleNoCount": "Dashboards",
+                "create": "Create Dashboard",
+                "noDashboardAvailable": "No dashboard available",
+                "createANewOne": "Create a new one",
+                "deleteError": "There was an error deleting the resource",
+                "errorLoadingDashboards": "There was an error loading dashboards"
+            },
+            "maps": {
+                "title": "Maps ({count})"
+            }
+        },
         "map": {
             "errorLoadingFont": "The font family {family} is not correctly loaded. Some elements (like symbols in markers) can have rendering problems",
             "loading": "加载中...",
@@ -247,9 +349,11 @@
             },
             "errors": {
                 "loading": {
+                    "title": "Error loading map",
                     "notFound": "Map not found",
                     "notAccessible": "Map not accessible",
-                    "unknownError": "<p><small>One of the following reason could be the cause:</small> <ul><li>you don't have permission to access</li> <li>you are trying to access a map that doesn't exist</li> <li>the map has been removed</li></ul><p>"
+                    "unknownError": "<p><small>One of the following reason could be the cause:</small> <ul><li>you don't have permission to access</li> <li>you are trying to access a map that doesn't exist</li> <li>the map has been removed</li> <li>the projection of the map is not configured</li></ul><p>",
+                    "title" : "Map cannot be viewed"
                 }
             }
         },
@@ -270,6 +374,7 @@
             "toolTrashLayerTooltip": "删除选定的图层",
             "toolTrashLayersTooltip": "删除选定的图层",
             "toolFeaturesGridTooltip": "打开属性表",
+            "toolDownloadTooltip": "Export layer data",
             "noFilteredResults": "没有结果",
             "filterPlaceholder": "过滤图层",
             "clearFilter": "清除过滤器",
@@ -299,6 +404,54 @@
                 "search": "更新搜索选项",
                 "title": "更新标题",
                 "dimensions": "更新维度"
+            },
+            "layerMetadata": {
+                "identifier": "Identifier",
+                "title": "Title",
+                "abstract": "Abstract",
+                "subject": "Subject",
+                "type": "Type",
+                "creator": "Creator",
+                "toolLayerMetadataTooltip": "Show the selected layer's metadata",
+                "layerMetadataPanelTitle": "Layer metadata",
+                "notification": {
+                    "warnigGetMetadataRecordById": "Error in metadata search"
+                }
+            },
+            "thematic": {
+                "classification_field": "Classification Field:",
+                "classification_method": "Classification Method:",
+                "classification_aggregate": "Aggregate Function:",
+                "classification_colors": "Color Ramp:",
+                "classification_intervals": "Intervals:",
+                "preview": "Preview",
+                "remove_thematic": "Back to Simple Style",
+                "values": {
+                    "equalInterval": "Equal Intervals",
+                    "quantile": "Quantile",
+                    "jenks": "Natural Breaks",
+                    "sum": "Sum",
+                    "avg": "Average",
+                    "count": "Count",
+                    "min": "Min",
+                    "max": "Max"
+                },
+                "configuration": "Configuration",
+                "apply": "Apply classification",
+                "restore": "Reset customizations",
+                "go_to_cfg": "Configure...",
+                "go_to_thema": "Use this configuration",
+                "cfgError": "Error in configuration JSON",
+                "classify": "Classify",
+                "remove": "Remove classification",
+                "data_panel": "Data",
+                "classification_stroke": "Stroke",
+                "classification_error": "Error calling the classification service: {message}",
+                "fields_error": "Error loading fields list: {message}",
+                "interval_limit": "Intervals should be a number between {min} and {max}",
+                "invalid_object": "Invalid service response",
+                "invalid_geometry": "Geometry type is not valid, not a point, line or polygon",
+                "invalid_classes": "Max must be greater than min in every class"
             }
         },
         "print":{
@@ -342,6 +495,8 @@
         "identifyTitle": "特征信息",
         "identifyNoQueryableLayers": "没有有效的可查询层",
         "identifyRevGeocodeHeader": "坐标",
+        "identifyShowCoordinateEditor": "Show coordinate editor",
+        "identifyHideCoordinateEditor": "Hide coordinate editor",
         "identifyRevGeocodeModalTitle": "地址",
         "identifyRevGeocodeSubmitText": "更多信息",
         "identifyRevGeocodeCloseText": "关闭",
@@ -358,6 +513,11 @@
             "redoBtnTooltip": "前进"
         },
         "infoFormatLbl": "确定响应格式",
+        "measureSupport": {
+            "continueLine": "Click to continue drawing the line",
+            "continuePolygon": "Click to continue drawing the polygon",
+            "startDrawing": "Click to start drawing"
+        },
         "measureComponent": {
             "Measure": "测量",
             "MeasureLength": "测量距离",
@@ -370,10 +530,19 @@
             "resetButtonText": "重置",
             "lengthLabel": "长度",
             "areaLabel": "面积",
-            "bearingLabel": "方位角"
+            "bearingLabel": "方位角",
+            "formula": "Formula for distance calculation",
+            "showLabel": "Show measurement label",
+            "addAsAnnotation": "Add as annotation",
+            "newMeasure": "New annotation",
+            "selectTool": "Select a measurement tool"
         },
         "search":{
-            "placeholder": "按地点名称或坐标搜索 ...",
+            "decimal": "十进制",
+            "aeronautical": "航空",
+            "changeSearchInputField": "更改搜索工具",
+            "addressSearch": "按地点名称搜索",
+            "coordinatesSearch": "按坐标搜索",
             "searchservicesbutton": "配置搜索服务",
             "configpaneltitle": "创建/编辑搜索服务",
             "serviceslistlabel": "可用的服务",
@@ -399,6 +568,31 @@
             "s_result_props_label": "结果显示属性",
             "s_priority_info": "用于对搜索结果进行排序，先将较高的值排序 Nominatim结果优先权= 5",
             "serviceslistempty": "没有定义定制的服务"
+        },
+        "draw": {
+            "fill": "Fill",
+            "text": "Text",
+            "fontTitle": "Font",
+            "color": "Color",
+            "lineDash": "LineDash",
+            "stroke": "Stroke",
+            "opacity": "Opacity",
+            "width": "Width",
+            "font": {
+                "textColor": "Color",
+                "family": "Family",
+                "size": "Size",
+                "style": "Style",
+                "weight": "Weight",
+                "textAlign": "Align"
+            },
+            "marker": {
+                "layout": "Layout",
+                "shape": "Shape",
+                "size": "Size",
+                "type": "Type",
+                "icon": "Icon"
+            }
         },
         "drawLocal": {
             "draw": {
@@ -622,6 +816,80 @@
                 }
             }
         },
+        "annotations": {
+            "errorLoadingSymbols": "There was a problem loading the symbol list. Please, contact the administrator in order to check the configuration options",
+            "edit": "编辑",
+            "remove": "删除",
+            "save": "保存",
+            "cancel": "取消",
+            "back": "返回",
+            "applyStyle": "Apply Style",
+            "addMarker": "在地图上添加一个新点",
+            "styleGeometry": "为点选择不同的风格",
+            "deleteGeometry": "Remove all annotation geometries",
+            "removeannotation": "Do you want to remove the annotation with title: {title}?",
+            "removegeometry": "你想删除所有标注点吗？?",
+            "confirm": "确认",
+            "mandatory": "必填项",
+            "emptygeometry": "几何不能为空",
+            "add": "新加",
+            "filter": "过滤标注...",
+            "titleUndoGeom": "The geometry has changed",
+            "undoGeom": "Are you sure to exit without saving? (You will lose any changes)",
+            "confirmGeom": "Confirm",
+            "cancelModalGeom": "Cancel",
+            "deleteFeature": "Delete this feature",
+            "undoDeleteFeature": "Are you sure to delete this feature?",
+            "undo": "你确定要放弃注释编辑会话吗？",
+            "title": "标注",
+            "zoomTo": "Zoom",
+            "insertText": "Please insert the text annotation",
+            "downloadtooltip": "Download annotations",
+            "downloadcurrenttooltip": "Download current annotation",
+            "downloadError": "Export error",
+            "loadtooltip": "Import annotations",
+            "loadtitle": "Import Annotations",
+            "selectfiletext": "Drop your file here or click to select the Annotation File to import. (supported files: JSON)",
+            "loadoverride": "Replace annotations",
+            "loaderror": "Select one or more annotations files. (supported files: json)",
+            "defaulttitle": "Edit default title",
+            "field": {
+                "title": "标题",
+                "description": "描述"
+            },
+            "titles": {
+                "marker": " Marker",
+                "line": " Line",
+                "polygon": " Polygon",
+                "text": " Text",
+                "circle": " Circle"
+            },
+            "editor": {
+                "decimal": "Decimal",
+                "aeronautical": "Aeronautical",
+                "title": {
+                    "Polygon": "Polygon editor",
+                    "LineString": "LineString editor",
+                    "Bearing": "Bearing editor",
+                    "Circle": "Circle editor",
+                    "Point": "Marker editor",
+                    "MultiPoint": "LineString editor",
+                    "Text": "Text editor"
+                },
+                "center": "Center",
+                "add": "Add new coordinates",
+                "addByClick": "Add new coordinates by clicking the plus button or on the map",
+                "valid": "Geometry is valid",
+                "radius": "Radius",
+                "text": "Text",
+                "lat": "Latitude",
+                "lon": "Longitude",
+                "notValidMarker": "Insert a valid coordinate (+|- 90° lat, +|-180° lon)",
+                "notValidPolyline": "All coordinate must be valid (+|- 90° lat, +|-180° lon)",
+                "notValidText": "Insert a text value and a valid coordinate (+|- 90° lat, +|-180° lon)",
+                "notValidCircle": "Insert a radius value and a valid coordinate (+|- 90° lat, +|-180° lon)"
+            }
+        },
         "user":{
             "login": "登录",
             "logout": "登出",
@@ -636,6 +904,7 @@
             "passwordInvalid": "无效的密码",
             "username": "用户名",
             "password": "密码",
+            "passwordMessage": "Password must contain at least 6 characters",
             "passwordChanged": "密码已更改",
             "passwordError": "更改密码时出错",
             "signIn":"签到",
@@ -643,30 +912,13 @@
             "loginFailedStatusMessages": {
                 "usernamePwdInsert": "请插入用户名和密码",
                 "usernamePwdIncorrect":"用户名或密码不正确"
-            }
-        },
-        "annotations": {
-            "edit": "编辑",
-            "remove": "删除",
-            "save": "保存",
-            "cancel": "取消",
-            "back": "返回",
-            "addMarker": "在地图上添加一个新点",
-            "styleGeometry": "为点选择不同的风格",
-            "deleteGeometry": "删除现有的点",
-            "removeannotation": "你想删除标注?",
-            "removegeometry": "你想删除所有标注点吗？?",
-            "confirm": "确认",
-            "mandatory": "必填项",
-            "emptygeometry": "几何不能为空",
-            "add": "新加",
-            "filter": "过滤标注...",
-            "undo": "你确定要放弃注释编辑会话吗？",
-            "title": "标注",
-            "field": {
-                "title": "标题",
-                "description": "描述"
-            }
+            },
+            "detailsName": "Name",
+            "detailsRole": "Role",
+            "detailsGroups": "Groups",
+            "detailsEmail": "E-mail",
+            "detailsCompany": "Company",
+            "detailsNotes": "Notes"
         },
         "users": {
             "title": "Manage Accounts",
@@ -691,7 +943,8 @@
             "confirmDeleteUser": "Are you sure you want to delete this user?",
             "errorDelete": "There was an error deleting this user:",
             "errorSaving": "There was an error saving the user:",
-            "selectedGroups": "SELECTED GROUPS"
+            "selectedGroups": "SELECTED GROUPS",
+            "requiredFiedsMessage": "Fields marked with asterisk (*) are required"
         },
         "usergroups": {
           "searchGroups": "Search Groups...",
@@ -765,7 +1018,26 @@
             "cancel": "Cancel",
             "success": " correctly imported"
         },
+        "mapImport": {
+            "title": "Import",
+            "dropZone": {
+                "heading": "<p><h4>Drop your configuration or vector files here</h4><small>or</small></p>",
+                "selectFiles": "Select Files...",
+                "infoSupported": "<p><small>Supported configuration files: MapStore legacy format<br />Supported vector layer files: shapefiles (must be contained in zip archives), KML/KMZ, GeoJSON or GPX</small></p>",
+                "note": "<p><small><i><strong>note</strong>: current map will be overridden in case of configuration files</i></small></p>"
+            },
+            "errors": {
+                "fileNotSupported": "File not supported",
+                "unknownError": "there was an unknown error during import"
+            }
+        },
+        "mapExport": {
+            "title": "Export Map"
+        },
         "catalog": {
+            "start": "Start date ",
+            "end": "End date ",
+            "notAvailable": "Not Available",
             "title": "Catalog",
             "autoload": "Search on service selection",
             "clearValueText": "Clear selection",
@@ -798,6 +1070,11 @@
             "missingReference": "Missing OGC reference metadata",
             "showDescription": "Show full description",
             "hideDescription": "Hide full description",
+            "templateFormatDescriptionExample": "The description of layer is",
+            "showTemplate": "Show metadata template",
+            "showPreview": "Show preview",
+            "advancedSettings": "Advanced Settings",
+            "templateMetadataAvailable": "Metadata available from Dublin Core format: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri",
             "notification": {
                 "warningAddCatalogService": "Insert a valid url and title",
                 "addCatalogService": "Service added correctly",
@@ -999,7 +1276,7 @@
                 "downloadGridData": "Download grid data",
                 "hideShowColumns": "Hide/show columns",
                 "zoomAll": "Zoom to page extent",
-                "syncOnMap": "Sync map with fitler"
+                "syncOnMap": "Sync map with filter"
             }
         },
         "wfsdownload": {
@@ -1014,13 +1291,53 @@
             }
         },
         "widgets": {
+            "types": {
+                "map": {
+                    "title": "Map",
+                    "caption": "add a map"
+                },
+                "legend": {
+                    "title": "Legend",
+                    "caption": "add a legend"
+                },
+                "chart": {
+                    "title": "Chart",
+                    "caption": "add a chart"
+                },
+                "text": {
+                    "title": "Text",
+                    "caption": "add a text area"
+                },
+                "table": {
+                    "title": "Table",
+                    "caption": "add a table"
+                },
+                "counter": {
+                    "title": "Counter",
+                    "caption": "add a counter"
+                }
+            },
+            "selectWidgetType": "Select the widget type",
             "selectChartType": {
                 "title": "Select the widget type"
+            },
+            "selectMap": {
+                "TOC": {
+                    "noLayerTitle": "No Layers",
+                    "noLayerDescription": "There are no layers in the map. If you want to add a layer from the catalog click on the '+' button in the toolbar on top"
+                },
+                "emptyMap": {
+                    "title": "Empty Map",
+                    "description": "Start from an empty map"
+                }
             },
             "title": "Title",
             "description": "Description",
             "errors": {
+                "notext": "No text available",
                 "nodata": "No data available for the selected layer/filter",
+                "noLegend": "No legend items to show",
+                "noLegendDescription": "The connected map has no layers to show in legend",
                 "nodatainviewport": "No data in the current viewport",
                 "timeoutExpired": "The service took too much time to respond. Maybe the query is too complex or the server is busy",
                 "genericError": "There was an error during data retrival"
@@ -1030,16 +1347,42 @@
                     "title": "Widget"
                 },
                 "wizard": {
-                    "backToTypeSelection": "Back to type selection",
+                    "backToTypeSelection": "Back to chart type selection",
+                    "backToWidgetTypeSelection": "Back to widget type selection",
+                    "backToFeatureGrid": "Back to the feature grid",
+                    "backToLayerSelection": "Back to layer selection",
+                    "backToMapSelection": "Back to map selection",
+                    "backToPreview": "Back to Preview",
                     "backToChartOptions": "Back to chart options",
+                    "selectALayer": "Select a layer",
+                    "selectAMap": "Select a map",
                     "configureChartOptions": "Configure chart options",
                     "configureWidgetOptions": "Configure widget options",
+                    "backToTableOptions": "Back to table options",
+                    "configureTableOptions": "Configure table options",
+                    "resetColumnsSizes": "Reset all changes to the column sizes",
                     "updateWidget": "Update the widget",
-                    "addTheWidget": "Add the widget"
+                    "addTheWidget": "Add the widget",
+                    "titlePlaceholder": "Insert title...",
+                    "textPlaceholder": "Insert text...",
+                    "useThisMap": "Use this map",
+                    "configureMapOptions": "Configure map options",
+                    "preview": "Preview",
+                    "addLayer": "Add a layer to the map",
+                    "useTheSelectedLayer": "Use the selected layer",
+                    "connectToAMap": "Connect to a map",
+                    "connectToTheMap": "Connect to the map",
+                    "selectMapToConnect": "Select the map to connect",
+                    "clearConnection": "Clear connection"
                 },
                 "errors": {
-                    "noWidgetsAvailableTitle": "No Widgets available",
-                    "noWidgetsAvailableDescription": "<p>You can't create any widgets for the selected layer. This is probably because the layer is not suitable for the available widgets or the server doesn't expose all the needed services or information to generate widget. Possible causes are: <ul><li>The selected layer is a raster layer</li><li>WFS service is not available</li><li>gs:aggregate process is not available</li></ul> )<p>"
+                    "noAttributesTitle": "No attributes to show",
+                    "noAttributesDescription": "The selected layer has no attributes to show. Please select another widget type or layer",
+                    "noWidgetsAvailableTitle": "Can not create the widget for the selected layer",
+                    "noWidgetsAvailableDescription": "<p><strong>Please try to select another layer or widget type</strong></p><p>The server doesn't provide the needed services for the layer and the widget type selected</p><p>Possible causes are: <ul><li>The selected layer is a raster layer</li><li>WFS service is not available</li><li>The WPS process <code>gs:aggregate</code> is not available</li></ul></p>",
+                    "checkAtLeastOneAttribute": "You must select at least one column",
+                    "noMapAvailableForLegend": "No map available",
+                    "noMapAvailableForLegendDescription": "You need at least one map widget to create the legend"
                 },
                 "setupFilter": "Configure a filter for the widget data"
             },
@@ -1048,9 +1391,16 @@
                     "showChartData": "Show chart data",
                     "edit": "Edit",
                     "delete": "Delete",
+                    "collapse": "Collapse",
                     "confirmDelete": "Are you sure?",
                     "downloadData": "Download Data",
-                    "exportImage": "Export Image"
+                    "exportImage": "Export Image",
+                    "pin": "Pin",
+                    "unpin": "Unpin",
+                    "hide": "Hide",
+                    "hideDescription": "Hide this widget to other users",
+                    "unhide": "Unhide",
+                    "unhideDescription": "Unhide the widget to other users"
                 }
             },
             "chartType": {
@@ -1084,7 +1434,9 @@
                 "line": "X Attribute",
                 "pie": "Group By",
                 "bar": "X Attribute",
-                "gauge": "Group By"
+                "gauge": "Group By",
+                "counter": "Group By",
+                "default": "Group By"
             },
             "aggregationAttribute": {
                 "line": "Y Attribute",
@@ -1098,13 +1450,25 @@
                 "line": "Operation",
                 "pie": "Operation",
                 "bar": "Operation",
-                "gauge": "Operation"
+                "gauge": "Operation",
+                "counter": "Operation",
+                "default": "Operation"
             },
             "colorRamp": {
                 "line": "Color",
                 "pie": "Color Ramp",
                 "bar": "Color",
-                "gauge": "Color"
+                "gauge": "Color",
+                "counter": "Color",
+                "default": "Color"
+            },
+            "uom": {
+                "line": "Unit of measure",
+                "pie": "Unit of measure",
+                "bar": "Unit of measure",
+                "gauge": "Unit of measure",
+                "counter": "Unit of measure",
+                "default": "Unit of measure"
             },
             "mapSync": "Live Filter by viewport",
             "displayLegend": {
@@ -1116,7 +1480,12 @@
             "displayCartesian": {
                 "line": "Hide Grid",
                 "bar": "Hide Grid"
-            },"yAxis":{
+            },
+            "xAxisAngle":{
+                "line": "X Axis: Label rotation angle °",
+                "bar": "X Axis: Label rotation angle °"
+            },
+            "yAxis":{
                 "line": "Hide Y axis",
                 "bar": "Hide Y axis"
             },
@@ -1127,6 +1496,13 @@
             "advancedOptions":{
                 "line": "Advanced Options",
                 "bar": "Advanced Options"
+            },
+            "tray": {
+                "title": "Widgets",
+                "expandTray": "Expand widgets tray",
+                "collapseTray": "Collapse widgets tray",
+                "expandAll": "Expand all widgets",
+                "collapseAll": "Collapse all widgets"
             }
         },
         "dashboard": {
@@ -1311,13 +1687,54 @@
             }
         },
         "rulesmanager": {
+            "apply": "Apply",
+            "remove": "Remove geometry",
+            "resetconstraints": "Resets Constraints",
+            "constraintsmsg": "Changing grant, workspace or layer, the details will be deleted. Are you sure you want to do that?",
+            "defstyle": "Default Style",
+            "avstyle": "Available Styles",
+            "clearbtn": "Clear All",
+            "selectbtn": "Select All",
             "placeholders": {
-                "filter": "Search..."
+                "role": "Type to search Roles",
+                "user": "Type to search Users",
+                "service": "Type to search Services",
+                "request": "Type to search Requests",
+                "workspace": "Type to search Workspaces",
+                "layer": "Type to search Layers",
+                "access": "Type to search Access",
+                "ip": "###.###.###.###/##",
+                "priority": "Select Priority",
+                "filter": "Filter styles..."
             },
             "menutitle": "Manage GeoFence Rules",
+            "tooltip": {
+                "addT": "Add a rule",
+                "editT": "Edit selected rule",
+                "addBeT": "Add new rule before selected",
+                "addAfT": "Add new rule after selected",
+                "deleteT": "Remove selected rules",
+                "cacheT": "Clear cache",
+                "save": "Save current rule",
+                "close": "Exit from create rule"
+            },
+            "navItems": {
+                "main": "General Rule",
+                "style": "Style",
+                "filter": "Filters",
+                "attribute": "Attributes Rule"
+            },
+            "rule": "Rule",
+            "cachetitle": "Clear Cache",
+            "cachemsg": "Are you sure to clear the GeoFence cache?",
+            "deltitle": "Delete Rule",
+            "delmsg": "Do you really want to delete this rule?",
+            "invalidForm": "The form is invalid check fields values",
+            "ip": "IP",
             "title": "访问规则",
             "role": "角色",
             "user": "用户",
+            "priority": "Priority",
             "service": "服务",
             "request": "请求",
             "workspace": "工作空间",
@@ -1332,6 +1749,10 @@
             "close": "关闭",
             "previous": "上个",
             "next": "下一个",
+            "cacheCleaned": "Cache successfully cleaned",
+            "errorTitle": "Geofence",
+            "errorCQL": "Geometry not valid!",
+            "errorCleaningCache": "Error cleaning geofence cache.",
             "errorLoadingRoles": "加载角色时出错.",
             "errorLoadingUsers": "加载用户时出错.",
             "errorLoadingWorkspaces": "加载工作区时出错.",
@@ -1341,10 +1762,16 @@
             "errorDeletingRules": "删除规则时出错.",
             "errorAddingRule": "添加规则时出错.",
             "errorUpdatingRule": "更新规则时出错.",
+            "errorDuplicateRule": "Duplicated rule.",
+            "errorLoading": "Error loading",
             "deleteModal": "删除规则",
             "selectedRulesDelete": "删除选中的规则 ?",
             "deleteButton": "删除",
-            "cancelButton": "取消"
+            "cancelButton": "取消",
+            "cqlRead": "CQL Filter Read Rules",
+            "cqlWrite": "CQL Filter Write Rules",
+            "missingconfig": "Rules manager misses the configuration. Access denied!",
+            "selectworkspace": "You need to select the workspace to enable advanced options"
         },
         "tutorial": {
             "title": "教程",
@@ -1357,7 +1784,7 @@
             "checkbox": "不要再显示此消息",
             "error": "错误：未找到目标",
             "intro": {
-                "title": "欢迎使用MapStore2",
+                "title": "欢迎使用MapStore",
                 "text": "框架使用标准映射库（如OpenLayers 3和Leaflet）构建Web映射应用程序。"
             },
             "drawerMenu": {
@@ -1402,11 +1829,11 @@
             },
             "mapsGrid": {
                 "title": "Maps",
-                "text": "这里有一些MapStore2的例子。 点击图片试试演示。"
+                "text": "这里有一些MapStore的例子。 点击图片试试演示。"
             },
             "examples": {
                 "title": "Custom Application",
-                "text": "You can use components and plugins of MapStore2 to build custom applications"
+                "text": "You can use components and plugins of MapStore to build custom applications"
             },
             "introCesium": {
                 "title": "3D map instructions",
@@ -1445,7 +1872,7 @@
             },
             "dashboardContainer": {
                 "title": "Dashboard",
-                "text": "<p>A Dashboard in MapStore2 provides a set of information suitably collected to show aggregated data in one shot view. Geospatial data displayed in a map can be placed side by side to related attribute tables, charts and other, with the aim to connect different kind of information, show statistical details and textual descriptions relating to a specific context.</p><p> All users can visualize and interact with published dashboards but only users allowed to edit can add, arrange, resize or delete all the widgets inside a dashboard</p>"
+                "text": "<p>A Dashboard in MapStore provides a set of information suitably collected to show aggregated data in one shot view. Geospatial data displayed in a map can be placed side by side to related attribute tables, charts and other, with the aim to connect different kind of information, show statistical details and textual descriptions relating to a specific context.</p><p> All users can visualize and interact with published dashboards but only users allowed to edit can add, arrange, resize or delete all the widgets inside a dashboard</p>"
             },
             "dashboardAddWidget": {
                 "title": "Add Widget",

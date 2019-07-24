@@ -17,7 +17,7 @@
         "about_a0": "questa",
         "about_p5-1": "pagina.",
         "about_h21": "Crediti",
-        "about_p6": "MapStore2 è sviluppato da:",
+        "about_p6": "MapStore è sviluppato da:",
         "enable": "Abilita",
         "layers": "Livelli",
         "warning": "Attenzione",
@@ -25,6 +25,8 @@
         "errorDefault": "Si è verificato un errore",
         "pageInfoShowMore": "Elementi {count} di {total}",
         "showMore": "Mostra altri...",
+        "collapse": "Collassa",
+        "expand": "Espandi",
         "version": {
             "label": "Versione"
         },
@@ -39,6 +41,8 @@
         "details": {
             "title": "Info su questa mappa"
         },
+        "showEmptyMessageGFI": "Mostra il messaggio: Nessuna feature per gli altri layer",
+        "remove": "Rimuovi",
         "layerProperties": {
             "windowTitle": "Proprietà del livello",
             "title": "Titolo",
@@ -82,8 +86,21 @@
             "templateFormatInfoAlert1": "Click sul bottone di modifica per aggiungere un nuovo template.",
             "templateFormatInfoAlert2": "Usa ${ attribute } per aggiungere gli attributi da visualizzare",
             "templateFormatInfoAlertExample": "id della feature è ${ properties }",
-            "templatePreview": "Anteprima template"
+            "templatePreview": "Anteprima template",
+            "tooltip": {
+                "label": "Tooltip",
+                "title": "Titolo",
+                "description": "Descrizione",
+                "both": "Titolo e Descrizione",
+                "none": "Nessun Tooltip",
+                "labelPlacement": "Posizione",
+                "right": "Destra",
+                "bottom": "Sotto",
+                "top": "Sopra"
+            }
         },
+        "longitude": "Longitudine",
+        "latitude": "Latitudine",
         "notification": {
             "update": "Aggiorna",
             "warning": "Attenzione",
@@ -92,7 +109,9 @@
             "noBackgroundLayerSupported": "Non ci sono sfondi supportati per questo tipo di mappa.",
             "updateOldMap": "Questa è una vecchia mappa perciò non tutte le funzionalità sono abilitate. Clicca su Aggiorna per aggiornare la mappa o semplicemnte chiudi la notifica se non desideri aggiornarla",
             "warningSaveUpdatedMap": "Alcuni layer non sono stati aggiornati correttamente",
-            "saveUpdatedMap": "Tutti i layer sono stati aggiornati con successo"
+            "saveUpdatedMap": "Tutti i layer sono stati aggiornati con successo",
+            "incompatibleBackgroundAndProjection":"The Projection you selected is not compatible with background, switch to a compatible -or an empty- background, then select this projection!",
+            "incompatibleDataAndProjection":"Uno o più livelli non sono completamente compatibili con la proiezione selezionata. I dati potrebbero essere (tutti o in parte) non visibili in mappa"
         },
         "dock": {
             "row": "{rowsSelected} riga selezionata",
@@ -151,6 +170,8 @@
                 "red": "{number, plural, =0 {Rosso} =1 {Rosso} other {Rossi}}",
                 "blue": "{number, plural, =0 {Blu} =1 {Blu} other {Blu}}",
                 "green": "{number, plural, =0 {Verde} =1 {Verde} other {Verdi}}",
+                "gray": "{number, plural, =0 {Grigio} =1 {Grigio} other {Grigi}}",
+                "jet": "{number, plural, =0 {Jet} =1 {Jet} other {Jet}}",
                 "brown": "{number, plural, =0 {Marrone} =1 {Marrone} other {Marroni}}",
                 "purple": "{number, plural, =0 {Porpora} =1 {Porpora} other {Porpora}}",
                 "random": "{number, plural, =0 {Casuale} =1 {Casuale} other {Casuale}}"
@@ -165,6 +186,7 @@
             "Examples": "Esempi",
             "LinkedinGroup": "Gruppo Linkedin Mapstore",
             "scrollTop": "Torna all'inizio della pagina",
+            "footerDescription": "<small>GeoSolutions S.a.s. | Via di Montramito 3/A, 55054 Massarosa (Lucca) - Italy info@geo-solutions.it | Tel: +39 0584 962313 | Fax: +39 0584 1660272</small>",
             "ml": {
                 "title": "Resta in contatto e tieniti aggiornato con le mailing list",
                 "subscribe_users": "Sottoscrivi la mailing list degli utenti",
@@ -205,7 +227,7 @@
                     "html":"<h3>Plugins</h3><p>Costruisci la tua applicazione</p>"
                 },
                 "api":{
-                    "html":"<h3>API</h3><p>Usa le API per includere una mappa MapStore2 nella tua applicazione</p>"
+                    "html":"<h3>API</h3><p>Usa le API per includere una mappa MapStore nella tua applicazione</p>"
                 },
                 "rasterstyler":{
                     "html":"<h3>Raster Styler</h3><p>Crea stile per dati raster</p>"
@@ -347,9 +369,11 @@
             },
             "errors": {
                 "loading": {
+                    "title": "Errore di caricamento della mappa",
                     "notFound": "Mappa non trovata",
                     "notAccessible": "Mappa non accessibile",
-                    "unknownError": "<p> <small> Uno dei seguenti motivi potrebbe essere la causa: </small> <ul><li> non hai il permesso di accedere </li> <li> stai cercando di accedere a una mappa che non esiste </li> <li> la mappa è stata rimossa </li></ul> <p>"
+                    "unknownError": "<p> <small> Uno dei seguenti motivi potrebbe essere la causa: </small> <ul><li> non hai il permesso di accedere </li> <li> stai cercando di accedere a una mappa che non esiste </li> <li> la mappa è stata rimossa </li> <li>la proiezione della mappa non è configurata</li></ul> <p>",
+                    "title" : "La mappa non può essere visualizzata"
                 }
             }
         },
@@ -358,11 +382,19 @@
             "showLegend": "Mostra legenda",
             "hideLegend": "Nascondi legenda"
         },
+        "addgroup": {
+            "addbtn": "Aggiungi",
+            "groupName": "Nome del gruppo"
+        },
         "toc": {
             "toggleLayerVisibility": "Attiva o disattiva la visibilità del livello",
+            "toggleGroupVisibility": "Attiva o disattiva la visibilità del gruppo",
             "displayLegendAndTools": "Visualizza legenda e strumenti aggiuntivi",
             "zoomToLayerExtent": "Zoom all' estensione del livello",
             "addLayer": "Aggiungi Livello",
+            "addLayerToGroup": "Aggiungi livello al gruppo selezionato",
+            "addGroup": "Aggiungi Gruppo",
+            "addSubGroup": "Aggiungi sotto gruppo al gruppo selezionato",
             "toolZoomToLayerTooltip": "Zoom all' estensione del livello",
             "toolZoomToLayersTooltip": "Zoom all' estensione del livelli",
             "toolLayerSettingsTooltip": "Modifica proprietà del livello selezionato",
@@ -370,6 +402,7 @@
             "toolTrashLayerTooltip": "Rimuovi livello selezionato",
             "toolTrashLayersTooltip": "Rimuovi livelli selezionati",
             "toolFeaturesGridTooltip": "Apri tabella degli attributi",
+            "layerFilterTooltip": "Filtra il layer",
             "toolDownloadTooltip": "Esporta i dati del livello",
             "noFilteredResults": "Nessun risultato",
             "filterPlaceholder": "Filtra layers",
@@ -395,6 +428,8 @@
             "refreshMessage": "Ricarica la configurazione dei layer WMS dai rispettivi server",
             "refreshError": "Errore di aggiornamento sui layer: ",
             "epsgNotSupported": "CRS {epsg} non supportato per zoom al layer",
+            "filterIconEnabled": "Disattiva il filtro",
+            "filterIconDisabled": "Attiva il filtro",
             "refreshOptions": {
                 "bbox": "Aggiorna area di zoom",
                 "search": "Aggiorna opzioni di ricerca",
@@ -491,6 +526,11 @@
         "identifyTitle": "Informazioni Sulle Feature",
         "identifyNoQueryableLayers": "Nessun livello interrogabile attivo",
         "identifyRevGeocodeHeader": "Coordinate",
+        "identifyZoomToFeature": "Zoom alla feature",
+        "identifyStopHighlightingFeatures": "Non evidenziare le feature interrogate",
+        "identifyHighlightFeatures": "Evidenzia le features interrogate",
+        "identifyShowCoordinateEditor": "Mostra l'editor",
+        "identifyHideCoordinateEditor": "Nascondi l'editor",
         "identifyRevGeocodeModalTitle": "Indirizzo",
         "identifyRevGeocodeSubmitText": "Più informazioni",
         "identifyRevGeocodeCloseText": "Chiudi",
@@ -526,10 +566,17 @@
             "areaLabel": "Area",
             "bearingLabel": "Direzione",
             "formula": "Formula per il calcolo della distanza",
-            "showLabel": "Mostra etichetta di misurazione"
+            "showLabel": "Mostra etichetta di misurazione",
+            "addAsAnnotation": "Aggiungi come annotazione",
+            "newMeasure": "Nuova annotazione",
+            "selectTool": "Seleziona uno strumento di misura"
         },
         "search":{
-            "placeholder": "Cerca un indirizzo o inserisci coordinate...",
+            "decimal": "Decimali",
+            "aeronautical": "Aeronautiche",
+            "changeSearchInputField": "Cambia lo strumento di ricerca",
+            "addressSearch": "Cerca un indirizzo",
+            "coordinatesSearch": "Cerca per coordinate",
             "searchservicesbutton": "Configura servizi di ricerca",
             "configpaneltitle": "Aggiungi/modifica un servizio di ricerca",
             "serviceslistlabel": "Servizi disponibili",
@@ -557,6 +604,31 @@
             "serviceslistempty": "Nessun servizio definito",
             "service_missing": "Il servizio {serviceType} non è configurato",
             "generic_error": "Un errore e' occorso durante la ricerca: Dettagli errore: {message}"
+        },
+        "draw": {
+            "fill": "Riempimento",
+            "text": "Testo",
+            "fontTitle": "Font",
+            "color": "Colore",
+            "lineDash": "Tratteggio",
+            "stroke": "Linea",
+            "opacity": "Opacità",
+            "width": "Larghezza",
+            "font": {
+                "textColor": "Colore",
+                "family": "Famiglia",
+                "size": "Taglia",
+                "style": "Stile",
+                "weight": "Peso",
+                "textAlign": "Allineamento"
+            },
+            "marker": {
+                "layout": "Layout",
+                "shape": "Forma",
+                "size": "Grandezza",
+                "type": "Tipo",
+                "icon": "Icona"
+            }
         },
         "drawLocal": {
             "draw": {
@@ -693,7 +765,10 @@
         "queryform": {
             "title": "Ricerca Avanzata",
             "query": "Ricerca",
+            "apply": "Applica",
             "reset": "Reimposta",
+            "save": "Salva",
+            "discard": "Ripristina",
             "query_request_exception": "Errore nella richiesta",
             "config": {
                 "load_config_exception": "Errore Caricamento Configurazione"
@@ -780,6 +855,86 @@
                 "errors": {
                     "noCrossLayerAvailable": "L'operazione di filtraggio usando un livello non è supportata per il layer selezionato"
                 }
+            },
+            "changedFilter": "Filtero modificato",
+            "changedFilterAlert": "Ci sono modifiche non salvate. Vuoi salvare il filtro applicato ?",
+            "resetFilter": "Reset",
+            "confirmReset": "Conferma",
+            "loadingError": "Il filtro corrente ha causato un problema di rendering per il livello sulla mappa. Controlla la configurazione del layer sul server o correggi il filtro",
+            "changedFilterWithErrorAlert": "Il filtro sta causando un errore di rendering del livello, vuoi comunque salvarlo?"
+        },
+        "annotations": {
+            "errorLoadingSymbols": "Si è verificato un problema durante il caricamento dell'elenco dei simboli. Per favore, contatta l'amministratore per verificare le opzioni di configurazione",
+            "edit": "Modifica",
+            "remove": "Rimuovi",
+            "save": "Salva",
+            "cancel": "Annulla",
+            "back": "Indietro",
+            "applyStyle": "Applica stile",
+            "addMarker": "Aggiungi una geometria",
+            "styleGeometry": "Cambia stile",
+            "deleteGeometry": "Rimuovi tutte le feature",
+            "removeannotation": "Vuoi rimuovere l'annotazione con titolo: {title}?",
+            "removegeometry": "Vuoi rimuovere tutti i punti dell'annotazione?",
+            "confirm": "Conferma",
+            "mandatory": "Campo obbligatorio",
+            "emptygeometry": "La geometria non può essere vuota",
+            "add": "Nuova",
+            "filter": "Filtra le annotazioni...",
+            "titleUndoGeom": "La geometria è cambiata",
+            "undoGeom": "Sei sicuro di uscire senza salvare? (Perderai ogni modifica)",
+            "confirmGeom": "Conferma",
+            "deleteFeature": "Elimina questa feature",
+            "undoDeleteFeature": "Sei sicuro di eliminare questa feature?",
+            "cancelModalGeom": "Annulla",
+            "undo": "Sei sicuro di voler abbandonare la modifica in corso?",
+            "title": "Annotazioni",
+            "zoomTo": "Zoom",
+            "insertText": "Inserisci il testo dell'annotatzione",
+            "downloadtooltip": "Esporta annotazioni",
+            "downloadcurrenttooltip": "Esporta annotazione corrente",
+            "downloadError": "Errore di esportazione",
+            "loadtooltip": "Importa annotazioni",
+            "loadtitle": "Importa Annotazioni",
+            "selectfiletext": "Rilascia il file qui o fai clic per selezionare il file di annotazione da importare. (file supportati: JSON)",
+            "loadoverride": "Sostituisci annotazioni",
+            "loaderror": "Seleziona uno o più file di annotazioni. (formati supportati: json)",
+            "defaulttitle": "Edita il titolo",
+            "field": {
+                "title": "Titolo",
+                "description": "Descrizione"
+            },
+            "titles": {
+                "marker": " Marker",
+                "line": " Linea",
+                "polygon": " Poligono",
+                "text": " Testo",
+                "circle": " Cerchio"
+            },
+            "editor": {
+                "decimal": "Decimali",
+                "aeronautical": "Aeronautiche",
+                "title": {
+                    "Polygon": "Editor del poligono",
+                    "LineString": "Editor della linea",
+                    "Bearing": "Editor della direzione",
+                    "Circle": "Editor del cerchio",
+                    "Point": "Editor del marker",
+                    "MultiPoint": "Editor della linea",
+                    "Text": "Editor del testo"
+                },
+                "center": "Centro",
+                "add": "Aggiungi una nuova coordinata",
+                "addByClick": "Aggiungi nuove coordinate cliccando sul pulsante + o sulla mappa",
+                "valid": "La geometria è valida",
+                "radius": "Raggio",
+                "text": "Testo",
+                "lat": "Latitudine",
+                "lon": "Longitudine",
+                "notValidMarker": "Inserisci una coordinata valida (+|- 90° lat, +|-180° lon)",
+                "notValidPolyline": "Tutte le coordinate devono essere valide (+|- 90° lat, +|-180° lon)",
+                "notValidText": "Inserisci un testo ed una coordinata valida (+|- 90° lat, +|-180° lon)",
+                "notValidCircle": "Inserisci un raggio ed una coordinata valida (+|- 90° lat, +|-180° lon)"
             }
         },
         "user":{
@@ -796,6 +951,7 @@
             "passwordInvalid": "Password non valida",
             "username": "Username",
             "password": "Password",
+            "passwordMessage": "La password deve contenere almeno 6 caratteri",
             "passwordChanged": "La password è stata cambiata",
             "passwordError": "Errore nel cambio della password",
             "signIn":"Accedi",
@@ -810,30 +966,6 @@
             "detailsEmail": "E-mail",
             "detailsCompany": "Company",
             "detailsNotes": "Note"
-        },
-        "annotations": {
-            "edit": "Modifica",
-            "remove": "Rimuovi",
-            "save": "Salva",
-            "cancel": "Annulla",
-            "back": "Indietro",
-            "addMarker": "Aggiungi un punto sulla mappa",
-            "styleGeometry": "Scegli lo stile per il punto",
-            "deleteGeometry": "Rimuovi i punti esistenti",
-            "removeannotation": "Vuoi rimuovere l'annotazione?",
-            "removegeometry": "Vuoi rimuovere tutti i punti dell'annotazione?",
-            "confirm": "Conferma",
-            "mandatory": "Campo obbligatorio",
-            "emptygeometry": "La geometria non può essere vuota",
-            "add": "Nuova",
-            "filter": "Filtra le annotazioni...",
-            "undo": "Sei sicuro di voler abbandonare la modifica in corso?",
-            "title": "Annotazioni",
-            "zoomTo": "Zoom",
-            "field": {
-                "title": "Titolo",
-                "description": "Descrizione"
-            }
         },
         "users": {
             "title": "Gestione Account",
@@ -858,7 +990,8 @@
             "confirmDeleteUser": "Sei sicuro di voler cancellare questo utente?",
             "errorDelete": "Si è verificato un errore rimuovendo l'utente:",
             "errorSaving": "Si è verificato un errore salvando questo utente:",
-            "selectedGroups": "GRUPPI SELEZIONATI"
+            "selectedGroups": "GRUPPI SELEZIONATI",
+            "requiredFiedsMessage": "I campi contrassegnati con l'asterisco (*) sono obbligatori"
         },
         "usergroups": {
           "searchGroups": "Cerca gruppi...",
@@ -932,7 +1065,26 @@
             "cancel": "Annulla",
             "success": " correttamente importato"
         },
+        "mapImport": {
+            "title": "Importa",
+            "dropZone": {
+                "heading": "<p> <h4> Rilascia qui la configurazione o i file vettoriali </h4> <small> o </small> </p>",
+                "selectFiles": "Seleziona i file...",
+                "infoSupported": "<p> <small> File di configurazione supportati: formato legacy di MapStore<br /> File di livello vettoriale supportati: shapefile (devono essere contenuti in archivi zip), KML / KMZ, GPX o GeoJSON </small> </p>",
+                "note": "<p> <small> <i> <strong> nota </strong>: la mappa corrente verrà sovrascritta in caso di file di configurazione </i> </small> </p>"
+            },
+            "errors": {
+                "fileNotSupported": "File non supportato",
+                "unknownError": "si è verificato un errore sconosciuto durante l'importazione"
+            }
+        },
+        "mapExport": {
+            "title": "Esporta mappa"
+        },
         "catalog": {
+            "start": "Data d'inizio ",
+            "end": "Data di fine ",
+            "notAvailable": "Non disponibile",
             "title": "Catalogo",
             "autoload": "Ricerca alla selezione del servizio",
             "clearValueText": "Cancella selezione",
@@ -967,6 +1119,11 @@
             "missingReference": "Metadati di riferimento OGC mancanti",
             "showDescription": "Mostra descrizione completa",
             "hideDescription": "Nascondi descrizione completa",
+            "templateFormatDescriptionExample": "La descrizione del layer è",
+            "showTemplate": "Mostra il modello dei metadati",
+            "showPreview": "Mostra la preview",
+            "advancedSettings": "Impostazioni avanzante",
+            "templateMetadataAvailable": "Metadati disponibili del formato Dublin Core: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri",
             "notification": {
                 "warningAddCatalogService": "Inserisci un url e titolo validi.",
                 "addCatalogService": "Servizio aggiunto corretamente.",
@@ -1146,7 +1303,8 @@
                     "editMode": "La ricerca veloce non è disponibile in modalità editing",
                     "default": "Cerca...",
                     "string": "Digita il testo da cercare...",
-                    "number": "Digita un numero o una espressione. Esempi: 10, > 2, < 10"
+                    "number": "Digita un numero o una espressione. Esempi: 10, > 2, < 10",
+                    "date":"Digita una data o un'espressione. Utilizza {format} per la data"
                 }
             },
             "toolbar": {
@@ -1170,6 +1328,8 @@
                 "hideShowColumns": "Nascondi/mostra colonne",
                 "zoomAll": "Zoom all'estensione della pagina",
                 "syncOnMap": "Sincronizza la mappa con i filtri",
+                "enableTimeSync": "Sincronizza con l'istante o l'intervallo temporale selezionato",
+                "disableTimeSync": "Non sincronizzare con l'istante o l'intervallo temporale selezionato",
                 "createNewChart": "crea un grafico per il livello selezionato"
             }
         },
@@ -1374,7 +1534,12 @@
             "displayCartesian": {
                 "line": "Nascondi griglia",
                 "bar": "Nascondi griglia"
-            },"yAxis":{
+            },
+            "xAxisAngle":{
+                "line": "Asse X: Angolo di rotazione °",
+                "bar": "Asse X: Angolo di rotazione °"
+            },
+            "yAxis":{
                 "line": "Nascondi l'asse Y",
                 "bar": "Nascondi l'asse Y"
             },
@@ -1568,6 +1733,8 @@
             },
             "hide": "Nascondi timeline",
             "show": "Mostra timeline",
+            "mapSyncOn": "Mostra tutti i tempi, senza filtrare per zona di mappa visibile",
+            "mapSyncOff": "Mostra solo i tempi nella zona di mappa visibile",
             "currentTime": "Istante corrente",
             "rangeStart": "Vai all'intervallo di tempo corrente",
             "rangeEnd": "Vai all'intervallo di tempo corrente",
@@ -1609,7 +1776,7 @@
                 "ip": "###.###.###.###/##",
                 "priority": "Seleziona Priorità"
             },
-            "menutitle": "Configura GeoFence Rules",
+            "menutitle": "Configura Regole di Accesso",
             "tooltip": {
                 "addT": "Crea regola",
                 "editT": "Modifica regola selezionata",
@@ -1686,7 +1853,7 @@
                 "checkbox": "non mostrare più questo messaggio",
                 "error": "Errore: oggetto non trovato",
                 "intro": {
-                    "title": "Benvenuto su MapStore2",
+                    "title": "Benvenuto su MapStore",
                     "text": "framework per costruire applicazioni di web mapping usando librerie standard di mappatura, come OpenLayers 3 e Leaflet."
                 },
                 "drawerMenu": {
@@ -1731,11 +1898,11 @@
                 },
                 "mapsGrid": {
                     "title": "Mappe",
-                    "text": "Qui alcuni esempi di MapStore2. Fai click su un'immagine per provare la demo"
+                    "text": "Qui alcuni esempi di MapStore. Fai click su un'immagine per provare la demo"
                 },
                 "examples": {
                     "title": "Applicazioni personalizzate",
-                    "text": "Puoi utilizzare componenti e plugins di MapStore2 per costruire applicazioni personalizzate"
+                    "text": "Puoi utilizzare componenti e plugins di MapStore per costruire applicazioni personalizzate"
                 },
                 "introCesium": {
                     "title": "Istruzioni della mappa 3D",
@@ -1774,7 +1941,7 @@
                 },
                 "dashboardContainer": {
                     "title": "Cruscotto",
-                    "text": "<p> Una Dashboard in MapStore2 fornisce un insieme di informazioni raccolte in modo appropriato per mostrare i dati aggregati in un'unica visualizzazione. I dati geospaziali visualizzati in una mappa possono essere affiancati alle relative tabelle degli attributi, grafici ed altro, allo scopo di connettere diversi tipi di informazioni, mostrare dettagli statistici e descrizioni testuali relative ad un contesto specifico. </p> <p> Tutti gli utenti possono visualizzare e interagire con le dashboard pubblicate, ma solo gli utenti autorizzati a modificare possono aggiungere, organizzare, ridimensionare o eliminare tutti i widget all'interno di una dashboard </p>"
+                    "text": "<p> Una Dashboard in MapStore fornisce un insieme di informazioni raccolte in modo appropriato per mostrare i dati aggregati in un'unica visualizzazione. I dati geospaziali visualizzati in una mappa possono essere affiancati alle relative tabelle degli attributi, grafici ed altro, allo scopo di connettere diversi tipi di informazioni, mostrare dettagli statistici e descrizioni testuali relative ad un contesto specifico. </p> <p> Tutti gli utenti possono visualizzare e interagire con le dashboard pubblicate, ma solo gli utenti autorizzati a modificare possono aggiungere, organizzare, ridimensionare o eliminare tutti i widget all'interno di una dashboard </p>"
                 },
                 "dashboardAddWidget": {
                     "title": "Aggiungi widget",
