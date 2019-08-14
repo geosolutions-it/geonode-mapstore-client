@@ -16,7 +16,7 @@ setup(
     long_description_content_type='text/markdown',
     license='BSD, see LICENSE file.',
     install_requires=[
-        "django-mapstore-adapter >= 1.0.0",
+        "django-mapstore-adapter == 1.0.4",
     ],
 
     # adding packages
