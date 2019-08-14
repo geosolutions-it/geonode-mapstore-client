@@ -603,11 +603,7 @@
             "s_priority_info": "Usato per ordinare i risultati, i valori più alti vengono visualizzati per primi. Nominatim ha priorità = 5",
             "serviceslistempty": "Nessun servizio definito",
             "service_missing": "Il servizio {serviceType} non è configurato",
-            "generic_error": "Un errore e' occorso durante la ricerca: Dettagli errore: {message}",
-            "errors": {
-                "nonQueriableLayers": "Il layer indicato nell'url non è queriable o non è visibile in mappa",
-                "serverError": "Il server ha ritornato un errore durante la richiesta GetFeatureInfo. Controlla se i parametri sono corretti"
-            }
+            "generic_error": "Un errore e' occorso durante la ricerca: Dettagli errore: {message}"
         },
         "draw": {
             "fill": "Riempimento",
@@ -615,15 +611,15 @@
             "fontTitle": "Font",
             "color": "Colore",
             "lineDash": "Tratteggio",
-            "stroke": "Linea",
+            "stroke": "Bordo",
             "opacity": "Opacità",
             "width": "Larghezza",
             "font": {
                 "textColor": "Colore",
                 "family": "Famiglia",
-                "size": "Taglia",
+                "size": "Dimensione",
                 "style": "Stile",
-                "weight": "Peso",
+                "weight": "Spessore",
                 "textAlign": "Allineamento"
             },
             "marker": {

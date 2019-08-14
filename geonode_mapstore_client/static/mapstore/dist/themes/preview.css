@@ -7029,6 +7029,9 @@
     margin: auto;
     margin-top: 150px;
   }
+  .msgapi .modal-dialog-draggable {
+    margin-top: 0;
+  }
 }
 .msgapi .dropdown-menu {
   padding: 0;
@@ -9180,7 +9183,8 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill:-webkit-full-screen #mapstore-print-panel,
 .msgapi .fill:-webkit-full-screen #measure-dialog,
-.msgapi .fill:-webkit-full-screen #mapstore-about {
+.msgapi .fill:-webkit-full-screen #mapstore-about,
+.msgapi .fill:-webkit-full-screen #share-panel-dialog {
   position: absolute;
   top: 0%;
   left: 20%;
@@ -16606,7 +16610,8 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill #mapstore-print-panel,
 .msgapi .fill #measure-dialog,
-.msgapi .fill #mapstore-about {
+.msgapi .fill #mapstore-about,
+.msgapi .fill #share-panel-dialog {
   position: absolute;
   top: 0%;
   left: 20%;

@@ -7030,6 +7030,9 @@
     margin: auto;
     margin-top: 150px;
   }
+  .msgapi .modal-dialog-draggable {
+    margin-top: 0;
+  }
 }
 .msgapi .dropdown-menu {
   padding: 0;
@@ -9106,7 +9109,8 @@
 }
 .msgapi #mapstore-print-panel,
 .msgapi #measure-dialog,
-.msgapi #mapstore-about {
+.msgapi #mapstore-about,
+.msgapi #share-panel-dialog {
   position: absolute;
   top: 0%;
   left: 20%;
