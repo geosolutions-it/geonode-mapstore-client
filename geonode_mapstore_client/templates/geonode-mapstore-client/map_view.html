@@ -24,7 +24,7 @@
 {% autoescape off %}
 
 <script type="text/javascript">
-    const ms2_config = {{ ms2_config|default:"false" }};
+    const ms2_config = {{ ms2_config|default:"false"|safe }};
     document.addEventListener('DOMContentLoaded', function () {
         const userDetails = {
             "User": user,
