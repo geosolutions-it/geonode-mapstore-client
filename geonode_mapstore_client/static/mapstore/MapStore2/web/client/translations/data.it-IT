@@ -306,7 +306,9 @@
                 "errorLoadingDashboards": "C'è stato un errore caricando le dashboards"
             },
             "maps": {
-                "title": "Mappe ({count})"
+                "title": "Mappe ({count})",
+                "noMapAvailable": "Nessuna mappa disponibile",
+                "createNewOne": "Creane una nuova"
             }
         },
         "map": {
@@ -603,11 +605,7 @@
             "s_priority_info": "Usato per ordinare i risultati, i valori più alti vengono visualizzati per primi. Nominatim ha priorità = 5",
             "serviceslistempty": "Nessun servizio definito",
             "service_missing": "Il servizio {serviceType} non è configurato",
-            "generic_error": "Un errore e' occorso durante la ricerca: Dettagli errore: {message}",
-            "errors": {
-                "nonQueriableLayers": "Il layer indicato nell'url non è queriable o non è visibile in mappa",
-                "serverError": "Il server ha ritornato un errore durante la richiesta GetFeatureInfo. Controlla se i parametri sono corretti"
-            }
+            "generic_error": "Un errore e' occorso durante la ricerca: Dettagli errore: {message}"
         },
         "draw": {
             "fill": "Riempimento",
@@ -1129,6 +1127,8 @@
             "advancedSettings": "Impostazioni avanzante",
             "templateMetadataAvailable": "Metadati disponibili del formato Dublin Core: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri",
             "notification": {
+                "errorTitle": "Errore",
+                "errorSearchingRecords": "Alcuni record non sono stati trovati: {records} . Controlla la lista dei parametri nella barra degli indirizzi",
                 "warningAddCatalogService": "Inserisci un url e titolo validi.",
                 "addCatalogService": "Servizio aggiunto corretamente.",
                 "duplicatedServiceTitle": "Un servizio con quel titolo esiste già, Per favore cambia titolo",

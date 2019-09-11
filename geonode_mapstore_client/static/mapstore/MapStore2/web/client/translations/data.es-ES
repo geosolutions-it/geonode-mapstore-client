@@ -306,7 +306,9 @@
                     "errorLoadingDashboards": "Hubo un error al cargar los paneles de control"
             },
             "maps": {
-                "title": "Mapas ({count})"
+                "title": "Mapas ({count})",
+                "noMapAvailable": "No hay mapa disponible",
+                "createNewOne": "Crea uno nuevo"
             }
         },
         "map": {
@@ -603,11 +605,7 @@
             "s_priority_info": "Usado para ordenar los resultados de búsqueda, de mayor a menor. Los resultados Nominatim tienen prioridad = 5",
             "serviceslistempty": "No se ha definido ningún servicio personalizado",
             "service_missing": "el servicio {serviceType} no está configurado",
-            "generic_error": "Se ha producido un error durante la búsqueda. Error de detalles: {message}",
-            "errors": {
-                "nonQueriableLayers": "La capa proporcionada en la url no es intercambiable o no es visible en el mapa",
-                "serverError": "El servidor ha devuelto un error al realizar la solicitud GetFeatureInfo. Compruebe si los parámetros son correctos"
-            }
+            "generic_error": "Se ha producido un error durante la búsqueda. Error de detalles: {message}"
         },
         "draw": {
             "fill": "Relleno",
@@ -1129,6 +1127,8 @@
             "advancedSettings": "Ajustes avanzados",
             "templateMetadataAvailable": "Metadatos disponibles en formato Dublin Core: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri",
             "notification": {
+                "errorTitle": "Error",
+                "errorSearchingRecords": "No se han encontrado algunos registros: {records} . Por favor revise la consulta param url",
                 "warningAddCatalogService": "Introduzca una url y un título válidos",
                 "addCatalogService": "Servicio añadido correctamente",
                 "duplicatedServiceTitle": "Ya existe un servicio con ese título, Por favor, cambie el título",

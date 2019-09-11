@@ -1,1 +1,1 @@
-ms2-geonode-api-1.0.0
+ms2-geonode-api-1.4.1

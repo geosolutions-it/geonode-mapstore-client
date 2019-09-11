@@ -7,12 +7,10 @@ const themeEntries = {
 };
 const extractThemesPlugin = require('./MapStore2/build/themes.js').extractThemesPlugin;
 
-module.exports = assign({}, require('./MapStore2/build/buildConfig')(
-    {
+module.exports = assign({}, require('./MapStore2/build/buildConfig')({
         'ms2-geonode-api': path.join(__dirname, "js", "api")
     },
-    themeEntries,
-    {
+    themeEntries, {
         base: __dirname,
         dist: path.join(__dirname, "dist"),
         framework: path.join(__dirname, "MapStore2", "web", "client"),
@@ -24,7 +22,7 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     '.msgapi'
 ), {
     devServer: {
-        
+
         headers: {
             'Access-Control-Allow-Origin': '*'
         },
@@ -61,7 +59,9 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
             },
             '/docs': {
                 target: "http://localhost:8081",
-                pathRewrite: {'/docs': '/mapstore/docs'}
+                pathRewrite: {
+                    '/docs': '/mapstore/docs'
+                }
             }
         }
     }

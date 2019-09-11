@@ -89,19 +89,24 @@ var MS2_PLUGINS = {
 					"alwaysVisible": true
 				}
 			}
-		}, "Cookie",
+		},
+		"Cookie",
 		"OmniBar",
-		"Expander", "ScaleBox", "Undo", "Redo",
-        "BurgerMenu",
-        "MapFooter",
-        {
+		"Expander",
+		"ScaleBox",
+		"Undo",
+		"Redo",
+		"BurgerMenu",
+		"MapFooter",
+		"SearchServicesConfig",
+		{
 			"name": "Print",
 			"cfg": {
 				"useFixedScales": true,
-                "mapPreviewOptions": {
-                    "enableScalebox": true,
-                    "enableRefresh": false
-                }
+				"mapPreviewOptions": {
+					"enableScalebox": true,
+					"enableRefresh": false
+				}
 			}
 		},
 		{

@@ -11,10 +11,10 @@ var MS2_MAP_PLUGINS = {
 				}
 			},
 			"override": {
-			  "Toolbar": {
-				"position": 11,
-				"alwaysVisible": false
-			  }
+				"Toolbar": {
+					"position": 11,
+					"alwaysVisible": false
+				}
 			}
 		},
 		{
@@ -25,17 +25,39 @@ var MS2_MAP_PLUGINS = {
 				"activateMetedataTool": false,
 				"activateSettingsTool": false,
 				"activateRemoveLayer": false,
-				"spatialOperations": [
-					{ "id": "INTERSECTS", "name": "queryform.spatialfilter.operations.intersects" },
-					{ "id": "BBOX", "name": "queryform.spatialfilter.operations.bbox" },
-					{ "id": "CONTAINS", "name": "queryform.spatialfilter.operations.contains" },
-					{ "id": "WITHIN", "name": "queryform.spatialfilter.operations.within" }
+				"spatialOperations": [{
+						"id": "INTERSECTS",
+						"name": "queryform.spatialfilter.operations.intersects"
+					},
+					{
+						"id": "BBOX",
+						"name": "queryform.spatialfilter.operations.bbox"
+					},
+					{
+						"id": "CONTAINS",
+						"name": "queryform.spatialfilter.operations.contains"
+					},
+					{
+						"id": "WITHIN",
+						"name": "queryform.spatialfilter.operations.within"
+					}
 				],
-				"spatialMethodOptions": [
-					{ "id": "Viewport", "name": "queryform.spatialfilter.methods.viewport" },
-					{ "id": "BBOX", "name": "queryform.spatialfilter.methods.box" },
-					{ "id": "Circle", "name": "queryform.spatialfilter.methods.circle" },
-					{ "id": "Polygon", "name": "queryform.spatialfilter.methods.poly" }
+				"spatialMethodOptions": [{
+						"id": "Viewport",
+						"name": "queryform.spatialfilter.methods.viewport"
+					},
+					{
+						"id": "BBOX",
+						"name": "queryform.spatialfilter.methods.box"
+					},
+					{
+						"id": "Circle",
+						"name": "queryform.spatialfilter.methods.circle"
+					},
+					{
+						"id": "Polygon",
+						"name": "queryform.spatialfilter.methods.poly"
+					}
 				]
 			}
 		},
@@ -54,17 +76,39 @@ var MS2_MAP_PLUGINS = {
 			"name": "QueryPanel",
 			"cfg": {
 				"activateQueryTool": true,
-				"spatialOperations": [
-					{"id": "INTERSECTS", "name": "queryform.spatialfilter.operations.intersects"},
-					{"id": "BBOX", "name": "queryform.spatialfilter.operations.bbox"},
-					{"id": "CONTAINS", "name": "queryform.spatialfilter.operations.contains"},
-					{"id": "WITHIN", "name": "queryform.spatialfilter.operations.within"}
+				"spatialOperations": [{
+						"id": "INTERSECTS",
+						"name": "queryform.spatialfilter.operations.intersects"
+					},
+					{
+						"id": "BBOX",
+						"name": "queryform.spatialfilter.operations.bbox"
+					},
+					{
+						"id": "CONTAINS",
+						"name": "queryform.spatialfilter.operations.contains"
+					},
+					{
+						"id": "WITHIN",
+						"name": "queryform.spatialfilter.operations.within"
+					}
 				],
-				"spatialMethodOptions": [
-					{"id": "Viewport", "name": "queryform.spatialfilter.methods.viewport"},
-					{"id": "BBOX", "name": "queryform.spatialfilter.methods.box"},
-					{"id": "Circle", "name": "queryform.spatialfilter.methods.circle"},
-					{"id": "Polygon", "name": "queryform.spatialfilter.methods.poly"}
+				"spatialMethodOptions": [{
+						"id": "Viewport",
+						"name": "queryform.spatialfilter.methods.viewport"
+					},
+					{
+						"id": "BBOX",
+						"name": "queryform.spatialfilter.methods.box"
+					},
+					{
+						"id": "Circle",
+						"name": "queryform.spatialfilter.methods.circle"
+					},
+					{
+						"id": "Polygon",
+						"name": "queryform.spatialfilter.methods.poly"
+					}
 				]
 			}
 		},
@@ -74,22 +118,22 @@ var MS2_MAP_PLUGINS = {
 				"wrap": true
 			}
 		},
-        {
-            "name": "MousePosition",
-            "cfg": {
-                "editCRS": true,
-                "showLabels": true,
-                "showToggle": true,
-                "filterAllowedCRS": [ "EPSG:4326", "EPSG:3857" ],
-                "additionalCRS": {}
-            }
-        },
-        {
-            "name": "Search",
-            "cfg": {
-                "withToggle": [ "max-width: 768px", "min-width: 768px" ]
-            }
-        },
+		{
+			"name": "MousePosition",
+			"cfg": {
+				"editCRS": true,
+				"showLabels": true,
+				"showToggle": true,
+				"filterAllowedCRS": ["EPSG:4326", "EPSG:3857"],
+				"additionalCRS": {}
+			}
+		},
+		{
+			"name": "Search",
+			"cfg": {
+				"withToggle": ["max-width: 768px", "min-width: 768px"]
+			}
+		},
 		{
 			"name": "GoFull",
 			"override": {
@@ -112,6 +156,12 @@ var MS2_MAP_PLUGINS = {
 				"hideTitleTranslations": true,
 				"showFeatureInfoTab": false
 			}
-		}, "Widgets", "SaveAs", "Notifications", "Timeline", "Playback"
+		},
+		"Widgets",
+		"SaveAs",
+		"Notifications",
+		"Timeline",
+		"Playback",
+		"SearchServicesConfig"
 	]
 }

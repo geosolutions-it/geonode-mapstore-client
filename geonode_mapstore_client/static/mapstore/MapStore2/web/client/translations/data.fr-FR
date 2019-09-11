@@ -306,7 +306,9 @@
                 "errorLoadingDashboards": "Une erreur s'est produite lors du chargement des tableaux de bord"
             },
             "maps": {
-                "title": "Cartes ({count})"
+                "title": "Cartes ({count})",
+                "noMapAvailable": "Aucune carte disponible",
+                "createNewOne": "Créer un nouveau"
             }
         },
         "map": {
@@ -603,11 +605,7 @@
             "s_priority_info": "Utilisé pour trier les résultats de recherche, des valeurs plus élevées en premier. Les résultats Nominatim ont priorité = 5",
             "serviceslistempty": "Aucun service personnalisé n'a été défini",
             "service_missing": "Le service {serviceType} n'est pas configuré",
-            "generic_error": "Une erreur s'est produite lors de la recherche. Détails de l'erreur: {message}",
-            "errors": {
-                "nonQueriableLayers": "La couche fournie dans l'URL n'est ni interrogeable ni visible sur la carte",
-                "serverError": "Le serveur a renvoyé une erreur lors de l'exécution de la demande GetFeatureInfo. Vérifiez si les paramètres sont corrects"
-            }
+            "generic_error": "Une erreur s'est produite lors de la recherche. Détails de l'erreur: {message}"
         },
         "draw": {
             "fill": "Remplissage",
@@ -1129,6 +1127,8 @@
             "advancedSettings": "Réglages avancés",
             "templateMetadataAvailable": "Métadonnées disponibles au format Dublin Core: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri",
             "notification": {
+                "errorTitle": "Erreur",
+                "errorSearchingRecords": "Certains enregistrements n'ont pas été trouvés: {records} . S'il vous plaît vérifier la requête param url",
                 "warningAddCatalogService": "Insérer une URL et un titre valides",
                 "addCatalogService": "Service ajouté correctement",
                 "duplicatedServiceTitle": "Un service avec ce titre existe déjà, veuillez modifier le titre",

@@ -307,7 +307,9 @@
                 "errorLoadingDashboards": "Ocorreu um erro ao abrir os dashboards"
             },
             "maps": {
-                "title": "Mapas ({count})"
+                "title": "Mapas ({count})",
+                "noMapAvailable": "Nenhum mapa disponível",
+                "createNewOne": "Crie um novo"
             }
         },
         "map": {
@@ -588,13 +590,7 @@
             "s_wfs_opt_props_label" : "Optional props",
             "s_result_props_label": "Result display properties",
             "s_priority_info": "Used to sort search results, higher values first. Nominatim results have priority = 5",
-            "serviceslistempty": "No custom services defined",
-            "service_missing": "{serviceType} service is not configured",
-            "generic_error": "An error occurred during search. Error details: {message}",
-            "errors": {
-                "nonQueriableLayers": "The layer provided in the url is not queriable or not visible in map",
-                "serverError": "The server has return an error when performing the GetFeatureInfo request. Check if the params are correct"
-            }
+            "serviceslistempty": "No custom services defined"
         },
         "draw": {
             "fill": "Fill",
@@ -1106,6 +1102,8 @@
             "advancedSettings": "Advanced Settings",
             "templateMetadataAvailable": "Metadata available from Dublin Core format: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri",
             "notification": {
+                "errorTitle": "Error",
+                "errorSearchingRecords": "Some records have not been found: {records} Please check the query param url",
                 "warningAddCatalogService": "Insert a valid url and title",
                 "addCatalogService": "Service added correctly",
                 "duplicatedServiceTitle": "A service with that title already exists. Please, change title",

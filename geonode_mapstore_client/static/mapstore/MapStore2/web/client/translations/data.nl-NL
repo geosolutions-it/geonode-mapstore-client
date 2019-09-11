@@ -305,7 +305,9 @@
                 "errorLoadingDashboards": "There was an error loading dashboards"
             },
             "maps": {
-                "title": "Maps ({count})"
+                "title": "Maps ({count})",
+                "noMapAvailable": "Geen kaart beschikbaar",
+                "createNewOne": "Maak een nieuwe"
             }
         },
         "map": {
@@ -566,13 +568,7 @@
             "s_wfs_opt_props_label" : "Optionele supports",
             "s_result_props_label": "Eigenschappen van de weergave van de resultaten",
             "s_priority_info": "Gebruik eerst eerst hogere waarden om de zoekresultaten te sorteren. Nominatim-resultaten hebben prioriteit = 5",
-            "serviceslistempty": "Er is geen aangepaste service gedefinieerd",
-            "service_missing": "{serviceType} service is not configured",
-            "generic_error": "An error occurred during search. Error details: {message}",
-            "errors": {
-                "nonQueriableLayers": "The layer provided in the url is not queriable or not visible in map",
-                "serverError": "The server has return an error when performing the GetFeatureInfo request. Check if the params are correct"
-            }
+            "serviceslistempty": "Er is geen aangepaste service gedefinieerd"
         },
         "draw": {
             "fill": "Fill",
@@ -1053,7 +1049,16 @@
             "showTemplate": "Show metadata template",
             "showPreview": "Show preview",
             "advancedSettings": "Advanced Settings",
-            "templateMetadataAvailable": "Metadata available from Dublin Core format: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri"
+            "templateMetadataAvailable": "Metadata available from Dublin Core format: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri",
+            "notification": {
+                "errorTitle": "Error",
+                "errorSearchingRecords": "Some records have not been found: {records} Please check the query param url",
+                "warningAddCatalogService": "Insert a valid url and title",
+                "addCatalogService": "Service added correctly",
+                "duplicatedServiceTitle": "A service with that title already exists. Please, change title",
+                "serviceDeletedCorrectly": "The service was deleted correctly",
+                "errorServiceUrl": "Service not available. Please, check the provided url"
+            }
         },
         "uploader": {
             "filename": "File Name",

@@ -1,10 +1,9 @@
 /** Base configuration for map and layer preview These are maps are shown embedded in geonode */
 var MS2_BASE_PLUGINS = {
-	"desktop": [
-		{
+	"desktop": [{
 			"name": "Map",
 			"cfg": {
-				"tools": ["locate", "measurement","draw"],
+				"tools": ["locate", "measurement", "draw"],
 				"mapOptions": {
 					"openlayers": {
 						"interactions": {
@@ -37,7 +36,7 @@ var MS2_BASE_PLUGINS = {
 				}
 			}
 		},
-		
+
 		{
 			"name": "Identify",
 			"cfg": {
@@ -86,9 +85,16 @@ var MS2_BASE_PLUGINS = {
 				}
 			}
 		},
-		"DrawerMenu", "Cookie", "OmniBar", "Expander", "Undo", "Redo",
-        "BurgerMenu", "MapFooter", "Measure",
-        {
+		"DrawerMenu",
+		"Cookie",
+		"OmniBar",
+		"Expander",
+		"Undo",
+		"Redo",
+		"BurgerMenu",
+		"MapFooter",
+		"Measure",
+		{
 			"name": "Print",
 			"cfg": {
 				"useFixedScales": true
@@ -118,15 +124,15 @@ var MS2_BASE_PLUGINS = {
 				}
 			}
 		}, {
-			"name":"Timeline",
+			"name": "Timeline",
 			"cfg": {
 				"style": {
-						"marginBottom": 30,
-						"marginLeft": 80,
-						"marginRight": 45
-					},
-					"compact": true
-				}
+					"marginBottom": 30,
+					"marginLeft": 80,
+					"marginRight": 45
+				},
+				"compact": true
+			}
 		}, "Playback"
 	]
 }
