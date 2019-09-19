@@ -33,6 +33,7 @@ module.exports = {
         TOCItemsSettingsPlugin: require('../MapStore2/web/client/plugins/TOCItemsSettings'),
         WidgetsPlugin: require('../MapStore2/web/client/plugins/Widgets'),
         WidgetsBuilderPlugin: require('../MapStore2/web/client/plugins/WidgetsBuilder'),
+        WidgetsTrayPlugin: require('../MapStore2/web/client/plugins/WidgetsTray'),
         NotificationsPlugin: require('../MapStore2/web/client/plugins/Notifications'),
         FeatureEditorPlugin: require('../MapStore2/web/client/plugins/FeatureEditor'),
         QueryPanelPlugin: require('../MapStore2/web/client/plugins/QueryPanel'),
