@@ -1,5 +1,21 @@
 # Change Log
 
+## [1.4.2](https://github.com/GeoNode/geonode-mapstore-client/releases/tag/v1.4.2) (2019-09-19)
+
+### Main features
+
+- Install `pip install django-mapstore-adapter==1.0.8` instructions [Here](https://pypi.org/project/django-mapstore-adapter/1.0.8/)
+- Install `pip install django-geonode-mapstore-client==1.4.2` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/1.4.2/)
+- Based on [GeoNode MapStore Adapter v1.0.8](https://github.com/GeoNode/django-mapstore-adapter/releases/tag/v1.0.8)
+- Based on [MapStore2 - v2019.02.xx](https://github.com/GeoNode/MapStore2/tree/2019.02.xx)
+- [MapStore2 Main Features](https://github.com/GeoNode/MapStore2/releases/tag/v2019.02.00) included
+
+[GeoNode MapStore Client](https://github.com/GeoNode/geonode-mapstore-client/issues?q=is%3Aissue+is%3Aclosed+milestone%3A1.4.2) the list of issues solved.
+
+[MapStore2](https://github.com/geosolutions-it/MapStore2/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2019.02.01) the list of MapStore2 issues solved.
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/v1.4.1...v1.4.2)
+
 ## [1.4.1](https://github.com/GeoNode/geonode-mapstore-client/releases/tag/v1.4.1) (2019-09-11)
 
 ### Main features
@@ -12,9 +28,9 @@
 
 [GeoNode MapStore Client](https://github.com/GeoNode/geonode-mapstore-client/issues?q=is%3Aissue+is%3Aclosed+milestone%3A1.4.1) the list of issues solved.
 
-[MapStore2](https://github.com/GeoNode/MapStore2/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2019.02.01) the list of MapStore2 issues solved.
+[MapStore2](https://github.com/geosolutions-it/MapStore2/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2019.02.01) the list of MapStore2 issues solved.
 
-[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/1.4.0...1.4.1)
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/v1.4.0...v1.4.1)
 
 ## [1.4.0](https://github.com/GeoNode/geonode-mapstore-client/releases/tag/v1.4.0) (2019-08-14)
 
