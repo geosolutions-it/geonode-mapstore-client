@@ -49,7 +49,7 @@ var MS2_EDIT_PLUGINS = {
 		// Undo, Redo, BurgerMenu, MapFooter, Measure, Print
 		// ZoomAll, ZoomIn, ZoomOut from base
 		// ScaleBox, FeatureEditor, QueryPanel, MetadataExplorer, GoFull, FullScreen
-		// 	Widgets, SaveAs, Notifications TOCItemSettings, from map_viewer_plugins
+		// 	Widgets, WidgetsTray, SaveAs, Notifications TOCItemSettings, from map_viewer_plugins
 
 		"WidgetsBuilder",
 		"Save"

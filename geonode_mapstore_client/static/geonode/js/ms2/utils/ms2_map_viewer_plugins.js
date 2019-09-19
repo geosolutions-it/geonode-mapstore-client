@@ -158,6 +158,7 @@ var MS2_MAP_PLUGINS = {
 			}
 		},
 		"Widgets",
+		"WidgetsTray",
 		"SaveAs",
 		"Notifications",
 		"Timeline",

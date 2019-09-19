@@ -52,6 +52,7 @@ var MS2_EMBED_PLUGINS = {
 		// Undo, Redo, BurgerMenu, MapFooter, Measure, Print
 		// ZoomAll, ZoomIn, ZoomOut from base
 		"Widgets",
+		"WidgetsTray",
 		"Notifications",
 		"SearchServicesConfig"
 	]
