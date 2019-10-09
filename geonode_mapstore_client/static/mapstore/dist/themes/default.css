@@ -7563,7 +7563,17 @@
 .msgapi .catalog-panel .catalog-results .mapstore-side-card-title {
   text-align: justify;
 }
+.msgapi .catalog-panel .catalog-results.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.msgapi .catalog-panel .catalog-results.loading > * {
+  margin: auto;
+}
 .msgapi .catalog-panel .ms2-border-layout-body.catalog {
+  position: relative;
   display: block !important;
 }
 .msgapi .color-range-selector .color-ramp-item {

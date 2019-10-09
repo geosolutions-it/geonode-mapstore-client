@@ -7653,7 +7653,17 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .catalog-panel .catalog-results .mapstore-side-card-title {
   text-align: justify;
 }
+.msgapi .fill:-webkit-full-screen .catalog-panel .catalog-results.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.msgapi .fill:-webkit-full-screen .catalog-panel .catalog-results.loading > * {
+  margin: auto;
+}
 .msgapi .fill:-webkit-full-screen .catalog-panel .ms2-border-layout-body.catalog {
+  position: relative;
   display: block !important;
 }
 .msgapi .fill:-webkit-full-screen .color-range-selector .color-ramp-item {
@@ -15080,7 +15090,17 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .catalog-panel .catalog-results .mapstore-side-card-title {
   text-align: justify;
 }
+.msgapi .fill .catalog-panel .catalog-results.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.msgapi .fill .catalog-panel .catalog-results.loading > * {
+  margin: auto;
+}
 .msgapi .fill .catalog-panel .ms2-border-layout-body.catalog {
+  position: relative;
   display: block !important;
 }
 .msgapi .fill .color-range-selector .color-ramp-item {
