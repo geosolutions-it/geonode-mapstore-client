@@ -1,5 +1,22 @@
 # Change Log
 
+## [1.4.4](https://github.com/GeoNode/geonode-mapstore-client/releases/tag/1.4.4) (2019-10-09)
+
+### Main features
+
+- Install `pip install django-mapstore-adapter>=1.0.9` instructions [Here](https://pypi.org/project/django-mapstore-adapter/)
+- Install `pip install django-geonode-mapstore-client==1.4.4` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/1.4.4/)
+- Based on [GeoNode MapStore Adapter v1.0.9](https://github.com/GeoNode/django-mapstore-adapter/releases/tag/v1.0.9)
+- Based on [MapStore2 - v2019.02.xx](https://github.com/GeoNode/MapStore2/tree/2019.02.xx)
+- [MapStore2 Main Features](https://github.com/geosolutions-it/MapStore2/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2019.02.01+label%3Aenhancement)
+
+[GeoNode MapStore Client](https://github.com/GeoNode/geonode-mapstore-client/issues?q=is%3Aissue+is%3Aclosed+milestone%3A1.4.4) the list of issues solved.
+
+[MapStore2](https://github.com/geosolutions-it/MapStore2/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2019.02.01) the list of MapStore2 issues solved.
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/1.4.3...1.4.4)
+
+
 ## [1.4.3](https://github.com/GeoNode/geonode-mapstore-client/releases/tag/v1.4.3) (2019-10-07)
 
 ### Main features
