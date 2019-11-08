@@ -14,7 +14,7 @@
 
 [MapStore2](https://github.com/geosolutions-it/MapStore2/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2019.02.xx) the list of MapStore2 issues solved.
 
-[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/1.4.5...1.4.5)
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/1.4.4...1.4.5)
 
 ## [1.4.4](https://github.com/GeoNode/geonode-mapstore-client/releases/tag/1.4.4) (2019-10-09)
 
