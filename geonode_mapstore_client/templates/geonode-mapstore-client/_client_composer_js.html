@@ -9,12 +9,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
 
 {%  if MAP_DEBUG %}
-<script id="ms2-api" src="http://localhost:8081/dist/ms2-geonode-api.js"></script>
+<script id="ms2-api" src="http://localhost:8081/dist/ms2-geonode-api.js?v={{ VERSION }}"></script>
 {% else %}
-<script id="ms2-api" src="{% static 'mapstore/dist/ms2-geonode-api.js' %}"></script>
+<script id="ms2-api" src="{% static 'mapstore/dist/ms2-geonode-api.js' %}?v={{ VERSION }}"></script>
 {% endif %}
 
 <!-- script to generate Thumbnails from MapStore -->
-<script type="text/javascript" src="{% static 'geonode/js/ms2/utils/thumbnail.js' %}"></script>
-
-<script type="text/javascript" src="{% static 'geonode/js/ms2/utils/ms2_composer_plugins.js' %}"></script>
+<script type="text/javascript" src="{% static 'geonode/js/ms2/utils/thumbnail.js' %}?v={{ VERSION }}"></script>
+<script type="text/javascript" src="{% static 'geonode/js/ms2/utils/ms2_composer_plugins.js' %}?v={{ VERSION }}"></script>
