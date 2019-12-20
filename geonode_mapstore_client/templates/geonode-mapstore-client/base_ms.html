@@ -107,8 +107,16 @@
         100%{opacity: 0}
     }
     .msgapi #mapstore-print-panel.modal-dialog, #measure-dialog, #mapstore-about {
-        top: 150px;
-        position: fixed;
+        height: 400px;
+        width: 800px;
+        position: absolute;
+    }
+    .msgapi #mapstore-print-panel .modal-body {
+        max-height: calc(100vh - 190px);
+        overflow-y: auto;
+        position: relative;
+        width: 100%;
+        height: calc(100% - 52px);
     }
 </style>
 {% block style %}{% endblock %}
