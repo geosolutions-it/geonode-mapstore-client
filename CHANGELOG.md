@@ -1,5 +1,8 @@
 # Change Log
 
+## 2.0.0 [2020-01-16]
+<li> 2020-01-14: Python 3 / Django 2 Compatibility</li>
+
 ## [1.4.8](https://github.com/GeoNode/geonode-mapstore-client/releases/tag/1.4.8) (2019-12-20)
 
 ### Main features
