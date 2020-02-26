@@ -52,3 +52,22 @@
     width: 100%;
     height: ~"calc(100% - 52px)";
 }
+.print-map-preview #print_preview {
+    margin: auto;
+}
+
+@media (max-width: 991px) {
+    #mapstore-print-panel.modal-dialog,
+    #measure-dialog,
+    #mapstore-about {
+        width: 700px;
+    }
+}
+
+@media (max-width: 767px) {
+    #mapstore-print-panel.modal-dialog,
+    #measure-dialog,
+    #mapstore-about {
+        width: 98%;
+    }
+}
