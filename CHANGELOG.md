@@ -1,6 +1,28 @@
 # Change Log
 
+## 2.0.1 [2020-02-27]
+
+### Main features
+
+- Install `pip install django-mapstore-adapter==2.0.1` instructions [Here](https://pypi.org/project/django-mapstore-adapter/)
+- Install `pip install django-geonode-mapstore-client==2.0.1` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.0.1/)
+- Based on [GeoNode MapStore Adapter v2.0.1](https://github.com/GeoNode/django-mapstore-adapter/releases/tag/2.0.1)
+- Based on [MapStore2 - v2019.02.xx](https://github.com/GeoNode/MapStore2/tree/2019.02.xx)
+- [MapStore2 Main Features](https://github.com/geosolutions-it/MapStore2/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2019.02.xx+label%3Aenhancement)
+
+[GeoNode MapStore Client](https://github.com/GeoNode/geonode-mapstore-client/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2.0.1) the list of issues solved.
+
+[MapStore2](https://github.com/geosolutions-it/MapStore2/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2019.02.xx) the list of MapStore2 issues solved.
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/1.4.8...2.0.1)
+
+<li> 2020-02-26: allyoucanmap <a href="https://github.com/GeoNode/django-mapstore-adapter/commit/61082239d4d3f2ead699f07bc29444e646f6229e" target="blank"> change dev server host to develop without a local geonode</a></li> 
+<li> 2020-02-26: allyoucanmap <a href="https://github.com/GeoNode/django-mapstore-adapter/commit/7179aea25d82c57d67f9875625f52ff8b4d0fd95" target="blank"> remove duplicated style</a></li> 
+<li> 2020-02-26: allyoucanmap <a href="https://github.com/GeoNode/django-mapstore-adapter/commit/d9f3bc42d2ab4c8728d7b3905f674a049c30b7f0" target="blank"> add comment on style</a></li> 
+<li> 2020-02-26: allyoucanmap <a href="https://github.com/GeoNode/django-mapstore-adapter/commit/e26be9a64c14f11764726c99170322d6064b9237" target="blank"> fix position of print dialog inside map/layer preview</a></li> 
+
 ## 2.0.0 [2020-01-16]
+
 <li>2020-01-16: Python 3 / Django 2 Compatibility</li>
 
 ## [1.4.8](https://github.com/GeoNode/geonode-mapstore-client/releases/tag/1.4.8) (2019-12-20)
