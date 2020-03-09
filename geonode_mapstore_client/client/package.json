@@ -1,6 +1,6 @@
 {
   "name": "ms2-geonode-api",
-  "version": "1.4.1",
+  "version": "2.0.2",
   "description": "MapStore 2 Api bundle specific to geonode framework",
   "main": "api.js",
   "scripts": {
