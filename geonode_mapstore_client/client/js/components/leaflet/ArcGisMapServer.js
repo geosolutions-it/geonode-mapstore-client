@@ -14,5 +14,5 @@ Layers.registerType('arcgis', (options) => {
         url: options.url,
         opacity: options.opacity || 1,
         layers: [parseInt(options.name || 0, 10)]
-      });
+    });
 });

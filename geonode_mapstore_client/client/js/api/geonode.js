@@ -11,7 +11,7 @@ const axios = require('../../MapStore2/web/client/libs/ajax');
 const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils");
 
 
-const createAttributesFromMetadata = ({name, description}) => {
+const createAttributesFromMetadata = ({ name, description }) => {
     return [{
         "type": "string",
         "name": "title",
@@ -25,36 +25,36 @@ const createAttributesFromMetadata = ({name, description}) => {
         "label": "Abstract"
     }];
 };
-const addThumbToAttributes = ({data}, attributes) => {
+const addThumbToAttributes = ({ data }, attributes) => {
     return [...attributes, {
         "type": "string",
         "name": "thumbnail",
         "value": data,
         "label": "Thumbnail"
-        }
+    }
     ];
 };
 const patchResource = (id, resource) => {
     const baseUrl = ConfigUtils.getConfigProp("genode_rest_api") || "./";
-    return axios.patch( `${baseUrl}resources/${id}/?full=true`, resource);
+    return axios.patch(`${baseUrl}resources/${id}/?full=true`, resource);
 };
 
-const postResource = (data, metadata, {thumbnail}) => {
+const postResource = (data, metadata, { thumbnail }) => {
     const baseUrl = ConfigUtils.getConfigProp("genode_rest_api") || "./";
     const attributes = thumbnail ? addThumbToAttributes(thumbnail, createAttributesFromMetadata(metadata)) : createAttributesFromMetadata(metadata);
-    return axios.post( `${baseUrl}resources/?full=true`, {data, attributes, name: metadata.name}, { timeout: 10000});
+    return axios.post(`${baseUrl}resources/?full=true`, { data, attributes, name: metadata.name }, { timeout: 10000 });
 };
 const getLayerEditPerimissions = (name) => {
     const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
-    return axios.get( `${baseUrl}gs/${name}/edit-check`);
+    return axios.get(`${baseUrl}gs/${name}/edit-check`);
 };
 const getStyleEditPerimissions = (name) => {
     const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
-    return axios.get( `${baseUrl}gs/${name}/style-check`);
+    return axios.get(`${baseUrl}gs/${name}/style-check`);
 };
 const postThumbnail = (endPoint, id, body = {}) => {
     const baseUrl = ConfigUtils.getConfigProp("geonode_url") || "./";
-    return axios.post( `${baseUrl}${endPoint}/${id}/thumbnail`, body, {timeout: 10000});
+    return axios.post(`${baseUrl}${endPoint}/${id}/thumbnail`, body, { timeout: 10000 });
 };
 
 /**
@@ -67,26 +67,26 @@ const postThumbnail = (endPoint, id, body = {}) => {
 const getResource = () => Rx.Observable.empty();
 
 
- /*
- * @param {resource} param0 resource content
- * @return an observable that emits the id of the resource
- */
+/*
+* @param {resource} param0 resource content
+* @return an observable that emits the id of the resource
+*/
 const createResource = ({ data, metadata, linkedResources = {} }) =>
     Rx.Observable.defer(() => postResource(data, metadata, linkedResources))
         .pluck('data')
-        .do((res) => window.location.href = `${ConfigUtils.getConfigProp("geonode_url")}maps/${res.id}/edit`)
-        .filter(() => false );
+        .do((res) => window.location.href = `${ConfigUtils.getConfigProp("geonode_url")}maps/${res.id}/edit`) // eslint-disable-line no-return-assign
+        .filter(() => false);
 /**
  * Patch a resource
  * @param {resource} param0 the resource to update (must contain the id)
  */
-const updateResource = ({id, data} = {}) =>
+const updateResource = ({ id, data } = {}) =>
     Rx.Observable.defer(
-                () => patchResource(id, {id, data}))
-            .switchMap(
-                res => Rx.Observable.of(res))
-            .pluck('data')
-            .map( res => res.id);
+        () => patchResource(id, { id, data }))
+        .switchMap(
+            res => Rx.Observable.of(res))
+        .pluck('data')
+        .map(res => res.id);
 /**
  * Deletes a resource and the linked resources
  * @param {object} resource the resource with the id
@@ -98,15 +98,15 @@ const deleteResource = () => Rx.Observable.empty();
  * Retrieve layer's edit permission from local gs otherwise are false
  */
 const layerEditPermissions = (layer) =>
-    Rx.Observable.defer( () => getLayerEditPerimissions(layer.name))
-                .pluck("data")
-                .map(({authorized}) => ({canEdit: authorized}));
+    Rx.Observable.defer(() => getLayerEditPerimissions(layer.name))
+        .pluck("data")
+        .map(({ authorized }) => ({ canEdit: authorized }));
 const styleEditPermissions = (layer) =>
-    Rx.Observable.defer( () => getStyleEditPerimissions(layer.name))
-            .pluck("data")
-            .map(({authorized}) => ({canEdit: authorized}));
+    Rx.Observable.defer(() => getStyleEditPerimissions(layer.name))
+        .pluck("data")
+        .map(({ authorized }) => ({ canEdit: authorized }));
 const updateThumb = (endPoint, id, body) =>
-    Rx.Observable.defer( () => postThumbnail(endPoint, id, body));
+    Rx.Observable.defer(() => postThumbnail(endPoint, id, body));
 
 module.exports = {
     getResource,
