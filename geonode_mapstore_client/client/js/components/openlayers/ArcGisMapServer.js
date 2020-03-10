@@ -6,15 +6,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const Layers = require('../../../MapStore2/web/client/utils/openlayers/Layers');
-const ol = require('openlayers');
+import Layers from '../../../MapStore2/web/client/utils/openlayers/Layers';
+
+import TileLayer from 'ol/layer/Tile';
+import TileArcGISRest from 'ol/source/TileArcGISRest';
+
 Layers.registerType('arcgis', {
     create: (options) => {
-        return new ol.layer.Tile({
+        return new TileLayer({
             opacity: options.opacity !== undefined ? options.opacity : 1,
             visible: options.visibility !== false,
             zIndex: options.zIndex,
-            source: new ol.source.TileArcGISRest({
+            source: new TileArcGISRest({
             params: {LAYERS: `show:${parseInt(options.name || 0, 10)}`},
             url: options.url
             })
