@@ -92,7 +92,7 @@ window.initMapstore2Api = function(config, resolve) {
         require.ensure('./previewPlugins', function() {
             resolve(createMapStore2Api(require('./previewPlugins')), { setLocale });
         });
-    }else {
+    } else {
         require.ensure('./plugins', function() {
             resolve(createMapStore2Api(require('./plugins')), { setLocale });
         });

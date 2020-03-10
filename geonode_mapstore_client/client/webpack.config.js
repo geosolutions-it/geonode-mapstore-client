@@ -7,7 +7,9 @@ const themeEntries = {
 };
 const extractThemesPlugin = require('./MapStore2/build/themes.js').extractThemesPlugin;
 
-const DEV_SERVER_HOST = 'ERROR:INSERT_DEV_SERVER_HOST_IN_WEBPACK_CONFIG! eg: my-geonode-host.org';
+const envJson = require('./env.json');
+
+const DEV_SERVER_HOST = envJson.DEV_SERVER_HOST || 'ERROR:INSERT_DEV_SERVER_HOST_IN_ENV_JSON_CONFIG! eg: my-geonode-host.org';
 
 module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     {
@@ -26,6 +28,7 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     '.msgapi'
 ), {
     devServer: {
+        https: true,
         headers: {
             'Access-Control-Allow-Origin': '*'
         },
@@ -33,7 +36,7 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
             path.join(__dirname),
             path.join(__dirname, '..', 'static')
         ],
-        setup: function(app) {
+        before: function(app) {
             const hashRegex = /\.[a-zA-Z0-9]{1,}\.js/;
             app.use(function(req, res, next) {
                 // remove hash from requests to use the local js
@@ -57,10 +60,9 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
                     '!**/node_modules/**'
                 ],
                 target: `https://${DEV_SERVER_HOST}`,
-                secure: false,
-                changeOrigin: true,
                 headers: {
-                    host: DEV_SERVER_HOST
+                    Host: DEV_SERVER_HOST,
+                    Referer: `https://${DEV_SERVER_HOST}/`
                 }
             },
             {
@@ -68,7 +70,9 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
                     '/static/mapstore/MapStore2/web/client/translations/**',
                     '/static/geonode/js/ms2/utils/**'
                 ],
-                target: 'http://localhost:8081',
+                target: 'https://localhost:8081',
+                secure: false,
+                changeOrigin: true,
                 pathRewrite: {
                     '/static/mapstore/MapStore2/web/client/translations/': '/MapStore2/web/client/translations/',
                     '/static/geonode/js/ms2/utils/': '/geonode/js/ms2/utils/'
