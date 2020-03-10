@@ -1,5 +1,21 @@
 # Change Log
 
+## 2.0.2 [2020-03-09]
+
+### Main features
+
+- Install `pip install django-mapstore-adapter==2.0.2` instructions [Here](https://pypi.org/project/django-mapstore-adapter/)
+- Install `pip install django-geonode-mapstore-client==2.0.2` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.0.2/)
+- Based on [GeoNode MapStore Adapter v2.0.2](https://github.com/GeoNode/django-mapstore-adapter/releases/tag/2.0.2)
+- Based on [MapStore2 - v2020.01.00](https://github.com/geosolutions-it/MapStore2/releases/tag/v2020.01.00)
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/2.0.1...2.0.2)
+
+<li> 2020-03-10: allyoucanmap <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/b51ed3d4879224750c748b7a35ad93ae09fec1fe" target="blank"> update requires of plugins</a></li> 
+<li> 2020-03-10: allyoucanmap <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/f124e78cbf548a740cd869765ccc076af48dc210" target="blank"> format files</a></li> 
+<li> 2020-03-10: allyoucanmap <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/8b129431317b66b884a31b77c6f07c60be6fc5b1" target="blank"> update MapStore version to v2020.01.00</a></li> 
+<li> 2020-03-09: afabiani <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/e0e3424ee02fb4760931f060a6f94fdfbcceee32" target="blank"> ref. https://github.com/GeoNode/geonode/issues/5614 Remove Geo-EXT and Print custom GeoServer plugin wrapper from GeoNode</a></li> 
+
 ## 2.0.1 [2020-02-27]
 
 ### Main features

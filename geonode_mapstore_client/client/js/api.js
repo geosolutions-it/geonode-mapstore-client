@@ -17,7 +17,7 @@ const {keyBy, values} = require('lodash');
  *
  * ConfigUtils.setConfigProp('translationsPath', ['./MapStore2/web/client/translations', './translations']);
  */
-//  ConfigUtils.setConfigProp('translationsPath', ['../MapStore2/web/client/translations', './translations'] );
+ConfigUtils.setConfigProp('translationsPath', ['../MapStore2/web/client', './'] );
 ConfigUtils.setConfigProp('themePrefix', 'msgapi');
 const Persistence = require("../MapStore2/web/client/api/persistence");
 Persistence.addApi("geonode", require("./api/geonode"));
@@ -64,7 +64,7 @@ const createMapStore2Api = function(plugins) {
             path: getScriptPath() + '/themes'
         },
         noLocalConfig: true,
-        translations: getScriptPath() + '/../MapStore2/web/client/translations'
+        translations: getScriptPath() + '/../MapStore2/web/client'
     });
     // window.MapStore2 = MapStore2;
     return assign({}, MapStore2, { create: function(container, opts) {
