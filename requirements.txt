@@ -1,2 +1,0 @@
-# -e git+https://github.com/GeoNode/django-mapstore-adapter.git@master#egg=django-mapstore-adapter
-django-mapstore-adapter>=1.0.9

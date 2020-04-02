@@ -1,4 +1,0 @@
-include README.md
-include VERSION
-recursive-include geonode_mapstore_client/static *
-recursive-include geonode_mapstore_client/templates *
