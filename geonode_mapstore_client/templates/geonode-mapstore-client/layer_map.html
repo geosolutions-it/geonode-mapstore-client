@@ -29,6 +29,7 @@
         $('#embedded_map').html('<div class="_ms2_init_spinner _ms2_init_center"><div></div> <div class="_ms2_init_text _ms2_init_center">Loading MapStore</div>');
         MS2_PLUGINS = MS2_BASE_PLUGINS;
         MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
+        let localConfig = defaultConfig.localConfig;
         initMapstore2Api('preview', function(MapStore2, options) {
             if (options && options.setLocale) {
                 options.setLocale('{{ LANGUAGE_CODE }}');
@@ -56,15 +57,7 @@
                 },
                 proxy: defaultConfig.proxy,
                 printingEnabled: defaultConfig.printingEnabled,
-                localConfig: {
-                    mapLayout: defaultConfig.localConfig.mapLayout,
-                    geonode_url: defaultConfig.localConfig.geonode_url,
-                    translations: defaultConfig.localConfig.translations,
-                    loadAfterTheme: defaultConfig.localConfig.loadAfterTheme,
-                    printUrl: defaultConfig.localConfig.printUrl,
-                    useAuthenticationRules: defaultConfig.localConfig.useAuthenticationRules,
-                    authenticationRules: defaultConfig.localConfig.authenticationRules
-                },
+                localConfig: localConfig,
                 plugins: MS2_PLUGINS
             });
         if (ms2_config) {

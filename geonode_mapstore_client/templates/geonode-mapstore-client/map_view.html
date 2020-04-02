@@ -32,6 +32,8 @@
         }
         MS2_PLUGINS = window.squashMS2PlugCfg(MS2_BASE_PLUGINS, MS2_MAP_PLUGINS);
         MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
+        let localConfig = defaultConfig.localConfig;
+            localConfig.disableCheckEditPermissions = true;
         initMapstore2Api('edit', function(MapStore2) {
             MapStore2.create('ms-container', {
                 config: ms2_config,
@@ -62,16 +64,7 @@
                 },
                 proxy: defaultConfig.proxy,
                 printingEnabled: defaultConfig.printingEnabled,
-                localConfig: {
-                    disableCheckEditPermissions: true,
-                    geonode_url: defaultConfig.localConfig.geonode_url,
-                    genode_rest_api: defaultConfig.localConfig.genode_rest_api,
-                    loadAfterTheme: defaultConfig.localConfig.loadAfterTheme,
-                    printUrl: defaultConfig.localConfig.printUrl,
-                    translations: defaultConfig.localConfig.translations,
-                    useAuthenticationRules: defaultConfig.localConfig.useAuthenticationRules,
-                    authenticationRules: defaultConfig.localConfig.authenticationRules
-                },
+                localConfig: localConfig,
                 plugins: MS2_PLUGINS
             });
             if (user && user.id) {

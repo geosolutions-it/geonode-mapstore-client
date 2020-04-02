@@ -49,6 +49,7 @@
                 }
             MS2_PLUGINS.desktop.push(stylerCfg);
             MS2_PLUGINS["mobile"] = MS2_PLUGINS.desktop;
+            let localConfig = defaultConfig.localConfig;
             MapStore2.create('ms-container', {
                 config: ms2_config,
                 mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id,
@@ -78,15 +79,7 @@
                 },
                 proxy: defaultConfig.proxy,
                 printingEnabled: defaultConfig.printingEnabled,
-                localConfig: {
-                    geonode_url: defaultConfig.localConfig.geonode_url,
-                    genode_rest_api: defaultConfig.localConfig.genode_rest_api,
-                    loadAfterTheme: defaultConfig.localConfig.loadAfterTheme,
-                    printUrl: defaultConfig.localConfig.printUrl,
-                    translations: defaultConfig.localConfig.translations,
-                    useAuthenticationRules: defaultConfig.localConfig.useAuthenticationRules,
-                    authenticationRules: defaultConfig.localConfig.authenticationRules
-                },
+                localConfig: localConfig,
                 plugins: MS2_PLUGINS
             });
             if (user && user.id) {
