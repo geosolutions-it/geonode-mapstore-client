@@ -10,6 +10,7 @@ const epics = require("./epics");
 
 module.exports = {
     plugins: {
+        AddGroupPlugin: require('../MapStore2/web/client/plugins/AddGroup').default,
         IdentifyPlugin: require('../MapStore2/web/client/plugins/Identify'),
         TOCPlugin: require('../MapStore2/web/client/plugins/TOC'),
         MapPlugin: require('../MapStore2/web/client/plugins/Map'),
@@ -30,12 +31,13 @@ module.exports = {
         MapFooterPlugin: require('../MapStore2/web/client/plugins/MapFooter'),
         PrintPlugin: require('../MapStore2/web/client/plugins/Print'),
         MeasurePlugin: require('../MapStore2/web/client/plugins/Measure'),
-        TOCItemsSettingsPlugin: require('../MapStore2/web/client/plugins/TOCItemsSettings'),
-        WidgetsPlugin: require('../MapStore2/web/client/plugins/Widgets'),
-        WidgetsBuilderPlugin: require('../MapStore2/web/client/plugins/WidgetsBuilder'),
-        WidgetsTrayPlugin: require('../MapStore2/web/client/plugins/WidgetsTray'),
+        FilterLayerPlugin: require('../MapStore2/web/client/plugins/FilterLayer').default,
+        TOCItemsSettingsPlugin: require('../MapStore2/web/client/plugins/TOCItemsSettings').default,
+        WidgetsPlugin: require('../MapStore2/web/client/plugins/Widgets').default,
+        WidgetsBuilderPlugin: require('../MapStore2/web/client/plugins/WidgetsBuilder').default,
+        WidgetsTrayPlugin: require('../MapStore2/web/client/plugins/WidgetsTray').default,
         NotificationsPlugin: require('../MapStore2/web/client/plugins/Notifications'),
-        FeatureEditorPlugin: require('../MapStore2/web/client/plugins/FeatureEditor'),
+        FeatureEditorPlugin: require('../MapStore2/web/client/plugins/FeatureEditor').default,
         QueryPanelPlugin: require('../MapStore2/web/client/plugins/QueryPanel'),
         SavePlugin: require('../MapStore2/web/client/plugins/Save').default,
         SaveAsPlugin: require('../MapStore2/web/client/plugins/SaveAs').default,
