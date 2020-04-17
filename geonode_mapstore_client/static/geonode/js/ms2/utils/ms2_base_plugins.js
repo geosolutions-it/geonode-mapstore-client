@@ -60,12 +60,12 @@ var MS2_BASE_PLUGINS = {
 			"name": "TOC",
 			"cfg": {
 				"activateMapTitle": false,
-				"activateSettingsTool": false,
 				"activateMetedataTool": false,
 				"activateRemoveLayer": false
 			}
 
-		}, {
+		},
+		{
 			"name": "Settings",
 			"cfg": {
 				"wrap": true

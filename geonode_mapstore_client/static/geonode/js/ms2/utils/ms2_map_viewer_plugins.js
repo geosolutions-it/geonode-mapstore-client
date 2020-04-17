@@ -20,7 +20,6 @@ var MS2_MAP_PLUGINS = {
 		{
 			"name": "TOC",
 			"cfg": {
-				"activateQueryTool": true,
 				"activateAddLayerButton": true,
 				"activateMetedataTool": false,
 				"activateSettingsTool": false,
@@ -61,6 +60,8 @@ var MS2_MAP_PLUGINS = {
 				]
 			}
 		},
+		"AddLayer",
+		"FilterLayer",
 		"ScaleBox",
 		// Setting, Toolbar, MapLoading, DrawerMenu, Cookie, OmniBar, Expander,
 		// Undo, Redo, BurgerMenu, MapFooter, Measure, Print
@@ -159,7 +160,12 @@ var MS2_MAP_PLUGINS = {
 		},
 		"Widgets",
 		"WidgetsTray",
-		"SaveAs",
+		{
+			"name": "SaveAs",
+			"cfg": {
+				"disablePermission": true
+			}
+		},
 		"Notifications",
 		"Timeline",
 		"Playback",
