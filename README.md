@@ -52,8 +52,6 @@ if 'geonode_mapstore_client' not in INSTALLED_APPS:
 GEONODE_CLIENT_LAYER_PREVIEW_LIBRARY = 'mapstore'  # DEPRECATED use HOOKSET instead
 GEONODE_CLIENT_HOOKSET = "geonode_mapstore_client.hooksets.MapStoreHookSet"
 
-MAPSTORE_DEBUG = False
-
 def get_geonode_catalogue_service():
     if PYCSW:
         pycsw_config = PYCSW["CONFIGURATION"]

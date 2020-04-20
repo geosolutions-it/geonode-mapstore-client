@@ -6,8 +6,6 @@ var MS2_EDIT_PLUGINS = {
 		{
 			"name": "TOC",
 			"cfg": {
-				"activateQueryTool": true,
-				"activateAddLayerButton": true,
 				"activateMetedataTool": false,
 				"spatialOperations": [{
 						"id": "INTERSECTS",
@@ -50,8 +48,15 @@ var MS2_EDIT_PLUGINS = {
 		// ZoomAll, ZoomIn, ZoomOut from base
 		// ScaleBox, FeatureEditor, QueryPanel, MetadataExplorer, GoFull, FullScreen
 		// 	Widgets, WidgetsTray, SaveAs, Notifications TOCItemSettings, from map_viewer_plugins
-
+		"AddLayer",
+		"FilterLayer",
+		"FeatureEditor",
 		"WidgetsBuilder",
-		"Save"
+		{
+			"name": "Save",
+			"cfg": {
+				"disablePermission": true
+			}
+		}
 	]
 }

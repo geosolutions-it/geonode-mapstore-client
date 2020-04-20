@@ -10,6 +10,7 @@ const extractThemesPlugin = require('./MapStore2/build/themes.js').extractThemes
 const envJson = require('./env.json');
 
 const DEV_SERVER_HOST = envJson.DEV_SERVER_HOST || 'ERROR:INSERT_DEV_SERVER_HOST_IN_ENV_JSON_CONFIG! eg: my-geonode-host.org';
+const protocol = envJson.DEV_SERVER_HOST_PROTOCOL || 'http';
 
 module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     {
@@ -24,11 +25,11 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     },
     extractThemesPlugin,
     false,
-    '/static/mapstore/dist/',
+    `/static/mapstore/dist/`,
     '.msgapi'
 ), {
     devServer: {
-        https: true,
+        https: protocol === 'https' ? true : false,
         headers: {
             'Access-Control-Allow-Origin': '*'
         },
@@ -36,12 +37,12 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
             path.join(__dirname),
             path.join(__dirname, '..', 'static')
         ],
-        before: function(app) {
+        before: function (app) {
             const hashRegex = /\.[a-zA-Z0-9]{1,}\.js/;
-            app.use(function(req, res, next) {
+            app.use(function (req, res, next) {
                 // remove hash from requests to use the local js
                 if (req.url.indexOf('/static/geonode/js/ms2/utils/') !== -1
-                || req.url.indexOf('/ms2-geonode-api') !== -1) {
+                    || req.url.indexOf('/ms2-geonode-api') !== -1) {
                     req.url = req.url.replace(hashRegex, '.js');
                     req.path = req.path.replace(hashRegex, '.js');
                     req.originalUrl = req.originalUrl.replace(hashRegex, '.js');
@@ -59,22 +60,22 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
                     '!**/MapStore2/**',
                     '!**/node_modules/**'
                 ],
-                target: `https://${DEV_SERVER_HOST}`,
+                target: `${protocol}://${DEV_SERVER_HOST}`,
                 headers: {
                     Host: DEV_SERVER_HOST,
-                    Referer: `https://${DEV_SERVER_HOST}/`
+                    Referer: `${protocol}://${DEV_SERVER_HOST}/`
                 }
             },
             {
                 context: [
-                    '/static/mapstore/MapStore2/web/client/translations/**',
+                    '/static/mapstore/MapStore2/web/client/**',
                     '/static/geonode/js/ms2/utils/**'
                 ],
-                target: 'https://localhost:8081',
+                target: `${protocol}://localhost:8081`,
                 secure: false,
                 changeOrigin: true,
                 pathRewrite: {
-                    '/static/mapstore/MapStore2/web/client/translations/': '/MapStore2/web/client/translations/',
+                    '/static/mapstore/MapStore2/web/client/': '/MapStore2/web/client/translations/',
                     '/static/geonode/js/ms2/utils/': '/geonode/js/ms2/utils/'
                 }
             }
