@@ -6,14 +6,12 @@ var MS2_BASE_PLUGINS = {
 				"tools": ["locate", "measurement", "draw"],
 				"mapOptions": {
 					"openlayers": {
+						"attribution": {
+							"container": "#footer-attribution-container"
+						},
 						"interactions": {
 							"pinchRotate": false,
 							"altShiftDragRotate": false
-						}
-					},
-					"leaflet": {
-						"attribution": {
-							"container": "#mapstore-map-footer-container"
 						}
 					}
 				}
