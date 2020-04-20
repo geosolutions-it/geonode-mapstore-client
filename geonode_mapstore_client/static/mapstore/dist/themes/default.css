@@ -13862,6 +13862,16 @@ structure .glyphicon-{iconName}-content
 .msgapi #container .Select {
   position: relative;
 }
+.msgapi #container .Select input::-webkit-contacts-auto-fill-button,
+.msgapi #container .Select input::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+.msgapi #container .Select input::-ms-clear {
+  display: none !important;
+}
+.msgapi #container .Select input::-ms-reveal {
+  display: none !important;
+}
 .msgapi #container .Select,
 .msgapi #container .Select div,
 .msgapi #container .Select input,
@@ -13870,16 +13880,76 @@ structure .glyphicon-{iconName}-content
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.msgapi #container .Select.is-disabled .Select-arrow-zone {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.35;
+}
 .msgapi #container .Select.is-disabled > .Select-control {
   background-color: #f9f9f9;
 }
 .msgapi #container .Select.is-disabled > .Select-control:hover {
   box-shadow: none;
 }
-.msgapi #container .Select.is-disabled .Select-arrow-zone {
-  cursor: default;
-  pointer-events: none;
-  opacity: 0.35;
+.msgapi #container .Select.is-open > .Select-control {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: #ffffff;
+  border-color: #c4c4c4 #dddddd #eaeaea;
+}
+.msgapi #container .Select.is-open > .Select-control .Select-arrow {
+  top: -2px;
+  border-color: transparent transparent #999;
+  border-width: 0 5px 5px;
+}
+.msgapi #container .Select.is-searchable.is-open > .Select-control {
+  cursor: text;
+}
+.msgapi #container .Select.is-searchable.is-focused:not(.is-open) > .Select-control {
+  cursor: text;
+}
+.msgapi #container .Select.is-focused > .Select-control {
+  background: #ffffff;
+}
+.msgapi #container .Select.is-focused:not(.is-open) > .Select-control {
+  border-color: #3782c3;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(55, 130, 195, 0.1);
+  background: #ffffff;
+}
+.msgapi #container .Select.has-value.is-clearable.Select--single > .Select-control .Select-value {
+  padding-right: 41px;
+}
+.msgapi #container .Select.has-value.Select--single > .Select-control .Select-value .Select-value-label,
+.msgapi #container .Select.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+  color: #333333;
+}
+.msgapi #container .Select.has-value.Select--single > .Select-control .Select-value a.Select-value-label,
+.msgapi #container .Select.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label {
+  cursor: pointer;
+  text-decoration: none;
+}
+.msgapi #container .Select.has-value.Select--single > .Select-control .Select-value a.Select-value-label:hover,
+.msgapi #container .Select.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:hover,
+.msgapi #container .Select.has-value.Select--single > .Select-control .Select-value a.Select-value-label:focus,
+.msgapi #container .Select.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:focus {
+  color: #3782c3;
+  outline: none;
+  text-decoration: underline;
+}
+.msgapi #container .Select.has-value.Select--single > .Select-control .Select-value a.Select-value-label:focus,
+.msgapi #container .Select.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:focus {
+  background: #ffffff;
+}
+.msgapi #container .Select.has-value.is-pseudo-focused .Select-input {
+  opacity: 0;
+}
+.msgapi #container .Select.is-open .Select-arrow,
+.msgapi #container .Select .Select-arrow-zone:hover > .Select-arrow {
+  border-top-color: #666;
+}
+.msgapi #container .Select.Select--rtl {
+  direction: rtl;
+  text-align: right;
 }
 .msgapi #container .Select-control {
   background-color: #ffffff;
@@ -13902,27 +13972,7 @@ structure .glyphicon-{iconName}-content
 }
 .msgapi #container .Select-control .Select-input:focus {
   outline: none;
-}
-.msgapi #container .is-searchable.is-open > .Select-control {
-  cursor: text;
-}
-.msgapi #container .is-open > .Select-control {
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
   background: #ffffff;
-  border-color: #c4c4c4 #dddddd #eaeaea;
-}
-.msgapi #container .is-open > .Select-control .Select-arrow {
-  top: -2px;
-  border-color: transparent transparent #999;
-  border-width: 0 5px 5px;
-}
-.msgapi #container .is-searchable.is-focused:not(.is-open) > .Select-control {
-  cursor: text;
-}
-.msgapi #container .is-focused:not(.is-open) > .Select-control {
-  border-color: #3782c3;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(55, 130, 195, 0.1);
 }
 .msgapi #container .Select-placeholder,
 .msgapi #container .Select--single > .Select-control .Select-value {
@@ -13939,23 +13989,6 @@ structure .glyphicon-{iconName}-content
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.msgapi #container .has-value.Select--single > .Select-control .Select-value .Select-value-label,
-.msgapi #container .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
-  color: #333333;
-}
-.msgapi #container .has-value.Select--single > .Select-control .Select-value a.Select-value-label,
-.msgapi #container .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label {
-  cursor: pointer;
-  text-decoration: none;
-}
-.msgapi #container .has-value.Select--single > .Select-control .Select-value a.Select-value-label:hover,
-.msgapi #container .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:hover,
-.msgapi #container .has-value.Select--single > .Select-control .Select-value a.Select-value-label:focus,
-.msgapi #container .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:focus {
-  color: #3782c3;
-  outline: none;
-  text-decoration: underline;
 }
 .msgapi #container .Select-input {
   height: 32px;
@@ -13974,7 +14007,7 @@ structure .glyphicon-{iconName}-content
   font-size: inherit;
   margin: 0;
   outline: none;
-  line-height: 14px;
+  line-height: 17px;
   /* For IE 8 compatibility */
   padding: 7px 0 11px;
   /* For IE 8 compatibility */
@@ -14043,6 +14076,10 @@ structure .glyphicon-{iconName}-content
   width: 25px;
   padding-right: 5px;
 }
+.msgapi .Select--rtl #container .Select-arrow-zone {
+  padding-right: 0;
+  padding-left: 5px;
+}
 .msgapi #container .Select-arrow {
   border-color: #999 transparent transparent;
   border-style: solid;
@@ -14052,14 +14089,14 @@ structure .glyphicon-{iconName}-content
   width: 0;
   position: relative;
 }
-.msgapi #container .is-open .Select-arrow,
-.msgapi #container .Select-arrow-zone:hover > .Select-arrow {
-  border-top-color: #666;
+.msgapi #container .Select-control > *:last-child {
+  padding-right: 5px;
 }
 .msgapi #container .Select--multi .Select-multi-value-wrapper {
   display: inline-block;
 }
 .msgapi #container .Select .Select-aria-only {
+  position: absolute;
   display: inline-block;
   height: 1px;
   width: 1px;
@@ -14095,6 +14132,7 @@ structure .glyphicon-{iconName}-content
   margin-top: -1px;
   max-height: 200px;
   position: absolute;
+  left: 0;
   top: 100%;
   width: 100%;
   z-index: 1;
@@ -14143,6 +14181,10 @@ structure .glyphicon-{iconName}-content
   vertical-align: middle;
   margin-left: 10px;
   padding: 0;
+}
+.msgapi #container .Select--multi.Select--rtl .Select-input {
+  margin-left: 0;
+  margin-right: 10px;
 }
 .msgapi #container .Select--multi.has-value .Select-input {
   margin-left: 5px;
@@ -14202,6 +14244,16 @@ structure .glyphicon-{iconName}-content
   background-color: #ccdbe7;
   /* Fallback color for IE 8 */
   background-color: rgba(44, 104, 156, 0.24);
+}
+.msgapi #container .Select--multi.Select--rtl .Select-value {
+  margin-left: 0;
+  margin-right: 5px;
+}
+.msgapi #container .Select--multi.Select--rtl .Select-value-icon {
+  border-right: none;
+  border-left: 1px solid #ccdbe7;
+  /* Fallback color for IE 8 */
+  border-left: 1px solid rgba(44, 104, 156, 0.24);
 }
 .msgapi #container .Select--multi.is-disabled .Select-value {
   background-color: #fcfcfc;

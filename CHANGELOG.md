@@ -1,5 +1,28 @@
 # Change Log
 
+## 2.0.3 [2020-04-20]
+
+### Main features
+
+- Install `pip install django-mapstore-adapter>=2.0.2` instructions [Here](https://pypi.org/project/django-mapstore-adapter/)
+- Install `pip install django-geonode-mapstore-client==2.0.4` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.0.4/)
+- Based on [GeoNode MapStore Adapter v2.0.3](https://github.com/GeoNode/django-mapstore-adapter/releases/tag/2.0.3)
+- Based on [MapStore2 - v2020.02.00](https://github.com/geosolutions-it/MapStore2/releases/tag/v2020.02.00)
+
+[GeoNode MapStore Client](https://github.com/GeoNode/geonode-mapstore-client/issues?q=is%3Aissue+is%3Aclosed+milestone%3A2.0.4) the list of issues solved.
+
+[MapStore2](https://github.com/geosolutions-it/MapStore2/milestone/23?closed=1) the list of MapStore2 issues solved.
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/2.0.3...2.0.4)
+
+<li> 2020-04-17: Lorenzo Natali <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/84674d5f533268f8ff99e866df12a1e54a1301d1" target="blank"> fixed style of dialogs</a></li> 
+<li> 2020-04-17: Lorenzo Natali <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/f579244ee8b849074a73caec08aa78375c66cc3d" target="blank"> updated to latest master</a></li> 
+<li> 2020-04-17: Lorenzo Natali <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/9bd2608df6428f0ec9228a761cb71edfa66ac8ef" target="blank"> Updated Configurations for new plugins</a></li> 
+<li> 2020-04-17: Lorenzo Natali <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/78b2370ecd67b0f86136787dece3b9c975d3a838" target="blank"> Updated plugins</a></li> 
+<li> 2020-04-17: afabiani <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/53586daaf93ccddc93054bd147e4c4aaa0865fa6" target="blank"> Update MapStore2 to v. 2020.01.02</a></li> 
+<li> 2020-04-02: afabiani <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/c71cc9fe0790af2d20a0291eed47252b7a9af8bf" target="blank">  - Bump to version 2.0.3</a></li> 
+<li> 2020-04-02: afabiani <a href="http://github.com/GeoNode/geonode-mapstore-client/commit/ee05425320590750ab15c3dde55cebdf2afbf139" target="blank">  - Bump to version 2.0.3</a></li> 
+
 ## 2.0.3 [2020-04-02]
 
 ### Main features
