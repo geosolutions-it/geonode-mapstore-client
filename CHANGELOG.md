@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.0.5 [2020-05-05]
+
+ - Updated MapStore2 to <a href="https://github.com/geosolutions-it/MapStore2/commit/8d8f455e4e9c8fccba7f102d7c6bfbb9d2243be9">2020.02.00</a>
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/2.0.3...2.0.5)
+
 ## 2.0.3 [2020-04-20]
 
 ### Main features
