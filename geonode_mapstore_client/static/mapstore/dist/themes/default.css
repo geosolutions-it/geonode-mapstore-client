@@ -10199,6 +10199,38 @@ structure .glyphicon-{iconName}-content
 .msgapi .export-panel .export-panel-formats-container .btn-default.format-selected {
   border-color: #2c689c;
 }
+.msgapi .feature-grid-drag-handle-show .drag-handle {
+  display: inline;
+}
+.msgapi .feature-grid-drag-handle-hide .drag-handle {
+  display: none;
+}
+.msgapi .empty-row .react-grid-Cell {
+  background-color: "gray";
+  opacity: 0.5;
+}
+.msgapi .empty-row:hover .react-grid-Cell {
+  background-color: "gray";
+  opacity: 0.5;
+}
+.msgapi .empty-row .react-grid-Cell__value .glyphicon-exclamation-mark {
+  opacity: 0;
+}
+.msgapi .featuregrid-geometry-filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  cursor: pointer;
+}
+.msgapi .featuregrid-geometry-filter.filter-enabled {
+  color: #2c689c;
+}
+.msgapi .featuregrid-geometry-filter.filter-deactivated {
+  opacity: 0.7;
+  cursor: auto;
+}
 @media screen and (max-width: 660px) {
   .msgapi #identify-container .coordinateRow.coord-editor.aeronautical {
     display: block;
@@ -12815,6 +12847,12 @@ structure .glyphicon-{iconName}-content
 .msgapi .map-templates-formaticon .glyphicon {
   font-size: 22px;
   margin-right: 2px;
+}
+.msgapi .map-templates-formaticon.map-templates-favourite {
+  margin-top: 8px;
+}
+.msgapi .map-templates-formaticon.map-templates-favourite .glyphicon {
+  font-size: 22px;
 }
 .msgapi .map-templates-favourites {
   padding-bottom: 8px;
@@ -15672,6 +15710,9 @@ structure .glyphicon-{iconName}-content
 .msgapi .mapstore-side-card.ms-sm .mapstore-side-card-desc {
   margin-bottom: 0;
 }
+.msgapi .mapstore-side-card.ms-sm .mapstore-side-card-left-container {
+  flex-direction: row;
+}
 .msgapi .mapstore-side-card.ms-dragging {
   box-sizing: border-box;
   border: 1px dashed #dddddd;
@@ -17424,6 +17465,25 @@ Ported to CodeMirror by Peter Kroon
 .msgapi #mapstore-add-toc-group {
   padding: 15px;
 }
+.msgapi .legend-label {
+  margin-top: 15px;
+  padding: 0;
+}
+.msgapi .legend-options {
+  padding: 15px;
+}
+.msgapi .legend-preview {
+  padding: 5px;
+  background-color: #dddddd;
+}
+.msgapi .fluid-container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.msgapi .adjust-display {
+  position: absolute;
+  width: calc(95%);
+}
 .msgapi .joyride-tooltip__button--primary {
   background-color: #2c689c !important;
 }
@@ -17728,6 +17788,10 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .mapstore-chart-advance-options .ms2-border-layout-body .mapstore-switch-panel .panel-title {
   font-weight: bold;
+}
+.msgapi .ms-wizard {
+  position: absolute;
+  width: 100%;
 }
 .msgapi .ms-wizard .form-horizontal .control-label {
   text-align: left;

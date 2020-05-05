@@ -10305,6 +10305,38 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .export-panel .export-panel-formats-container .btn-default.format-selected {
   border-color: #2c689c;
 }
+.msgapi .fill:-webkit-full-screen .feature-grid-drag-handle-show .drag-handle {
+  display: inline;
+}
+.msgapi .fill:-webkit-full-screen .feature-grid-drag-handle-hide .drag-handle {
+  display: none;
+}
+.msgapi .fill:-webkit-full-screen .empty-row .react-grid-Cell {
+  background-color: "gray";
+  opacity: 0.5;
+}
+.msgapi .fill:-webkit-full-screen .empty-row:hover .react-grid-Cell {
+  background-color: "gray";
+  opacity: 0.5;
+}
+.msgapi .fill:-webkit-full-screen .empty-row .react-grid-Cell__value .glyphicon-exclamation-mark {
+  opacity: 0;
+}
+.msgapi .fill:-webkit-full-screen .featuregrid-geometry-filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  cursor: pointer;
+}
+.msgapi .fill:-webkit-full-screen .featuregrid-geometry-filter.filter-enabled {
+  color: #2c689c;
+}
+.msgapi .fill:-webkit-full-screen .featuregrid-geometry-filter.filter-deactivated {
+  opacity: 0.7;
+  cursor: auto;
+}
 @media screen and (max-width: 660px) {
   .msgapi .fill:-webkit-full-screen #identify-container .coordinateRow.coord-editor.aeronautical {
     display: block;
@@ -12910,6 +12942,12 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .map-templates-formaticon .glyphicon {
   font-size: 22px;
   margin-right: 2px;
+}
+.msgapi .fill:-webkit-full-screen .map-templates-formaticon.map-templates-favourite {
+  margin-top: 8px;
+}
+.msgapi .fill:-webkit-full-screen .map-templates-formaticon.map-templates-favourite .glyphicon {
+  font-size: 22px;
 }
 .msgapi .fill:-webkit-full-screen .map-templates-favourites {
   padding-bottom: 8px;
@@ -15706,6 +15744,9 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .mapstore-side-card.ms-sm .mapstore-side-card-desc {
   margin-bottom: 0;
 }
+.msgapi .fill:-webkit-full-screen .mapstore-side-card.ms-sm .mapstore-side-card-left-container {
+  flex-direction: row;
+}
 .msgapi .fill:-webkit-full-screen .mapstore-side-card.ms-dragging {
   box-sizing: border-box;
   border: 1px dashed #dddddd;
@@ -17449,6 +17490,25 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen #mapstore-add-toc-group {
   padding: 15px;
 }
+.msgapi .fill:-webkit-full-screen .legend-label {
+  margin-top: 15px;
+  padding: 0;
+}
+.msgapi .fill:-webkit-full-screen .legend-options {
+  padding: 15px;
+}
+.msgapi .fill:-webkit-full-screen .legend-preview {
+  padding: 5px;
+  background-color: #dddddd;
+}
+.msgapi .fill:-webkit-full-screen .fluid-container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.msgapi .fill:-webkit-full-screen .adjust-display {
+  position: absolute;
+  width: calc(95%);
+}
 .msgapi .fill:-webkit-full-screen .joyride-tooltip__button--primary {
   background-color: #2c689c !important;
 }
@@ -17751,6 +17811,10 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill:-webkit-full-screen .mapstore-chart-advance-options .ms2-border-layout-body .mapstore-switch-panel .panel-title {
   font-weight: bold;
+}
+.msgapi .fill:-webkit-full-screen .ms-wizard {
+  position: absolute;
+  width: 100%;
 }
 .msgapi .fill:-webkit-full-screen .ms-wizard .form-horizontal .control-label {
   text-align: left;
@@ -21197,6 +21261,38 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .export-panel .export-panel-formats-container .btn-default.format-selected {
   border-color: #2c689c;
 }
+.msgapi .fill .feature-grid-drag-handle-show .drag-handle {
+  display: inline;
+}
+.msgapi .fill .feature-grid-drag-handle-hide .drag-handle {
+  display: none;
+}
+.msgapi .fill .empty-row .react-grid-Cell {
+  background-color: "gray";
+  opacity: 0.5;
+}
+.msgapi .fill .empty-row:hover .react-grid-Cell {
+  background-color: "gray";
+  opacity: 0.5;
+}
+.msgapi .fill .empty-row .react-grid-Cell__value .glyphicon-exclamation-mark {
+  opacity: 0;
+}
+.msgapi .fill .featuregrid-geometry-filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  cursor: pointer;
+}
+.msgapi .fill .featuregrid-geometry-filter.filter-enabled {
+  color: #2c689c;
+}
+.msgapi .fill .featuregrid-geometry-filter.filter-deactivated {
+  opacity: 0.7;
+  cursor: auto;
+}
 @media screen and (max-width: 660px) {
   .msgapi .fill #identify-container .coordinateRow.coord-editor.aeronautical {
     display: block;
@@ -23802,6 +23898,12 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .map-templates-formaticon .glyphicon {
   font-size: 22px;
   margin-right: 2px;
+}
+.msgapi .fill .map-templates-formaticon.map-templates-favourite {
+  margin-top: 8px;
+}
+.msgapi .fill .map-templates-formaticon.map-templates-favourite .glyphicon {
+  font-size: 22px;
 }
 .msgapi .fill .map-templates-favourites {
   padding-bottom: 8px;
@@ -26598,6 +26700,9 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .mapstore-side-card.ms-sm .mapstore-side-card-desc {
   margin-bottom: 0;
 }
+.msgapi .fill .mapstore-side-card.ms-sm .mapstore-side-card-left-container {
+  flex-direction: row;
+}
 .msgapi .fill .mapstore-side-card.ms-dragging {
   box-sizing: border-box;
   border: 1px dashed #dddddd;
@@ -28341,6 +28446,25 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill #mapstore-add-toc-group {
   padding: 15px;
 }
+.msgapi .fill .legend-label {
+  margin-top: 15px;
+  padding: 0;
+}
+.msgapi .fill .legend-options {
+  padding: 15px;
+}
+.msgapi .fill .legend-preview {
+  padding: 5px;
+  background-color: #dddddd;
+}
+.msgapi .fill .fluid-container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.msgapi .fill .adjust-display {
+  position: absolute;
+  width: calc(95%);
+}
 .msgapi .fill .joyride-tooltip__button--primary {
   background-color: #2c689c !important;
 }
@@ -28643,6 +28767,10 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill .mapstore-chart-advance-options .ms2-border-layout-body .mapstore-switch-panel .panel-title {
   font-weight: bold;
+}
+.msgapi .fill .ms-wizard {
+  position: absolute;
+  width: 100%;
 }
 .msgapi .fill .ms-wizard .form-horizontal .control-label {
   text-align: left;
