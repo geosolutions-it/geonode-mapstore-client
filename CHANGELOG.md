@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.0.7 [2020-07-14]
+
+ - <a href="https://github.com/GeoNode/geonode-mapstore-client/issues/62">Print Button not showing up anymore with latest updates</a>
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/2.0.6...2.0.7)
+
 ## 2.0.6 [2020-07-10]
 
  - <a href="https://github.com/GeoNode/geonode-mapstore-client/issues/61">Visual style editor</a>
