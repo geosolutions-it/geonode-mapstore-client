@@ -2,21 +2,36 @@
 
 ## Development setup
 
-Start the development application locally:
+The development setup uses the webpack dev server to replace pages, files or bundles of a remote target instance of GeoNode.
+Steps to initialize the application locally:
 
-- create a `env.json` file in `geonode_mapstore_client/client` directory with needed variables
+check if the `env.json` file in `geonode_mapstore_client/client` directory is configured correctly.
+Available variables:
+- `DEV_SERVER_HOST` target hostname
+- `DEV_SERVER_HOST_PROTOCOL` target protocol `http` or `https`
+
+example of env.json file if the GeoNode instance is running locally
+
 ```js
-// env.json file
 {
-    "DEV_SERVER_HOST": "eg: my-geonode-host.org"
+    "DEV_SERVER_HOST": "localhost:8000",
+    "DEV_SERVER_HOST_PROTOCOL": "http"
 }
 ```
+ensure to have npm >= 6.9.0 because some packages are installed with aliases, then run:
+
 - `npm install`
 - `npm start`
 
-The application runs at `https://localhost:8081` afterwards.
+the application runs at `http://localhost:8081` or `https://localhost:8081` based on the protocol defined in `DEV_SERVER_HOST_PROTOCOL` variable.
 
-Note: localhost uses `https` protocol to connect a remote GeoNode instance
+## SPA client (development)
+
+The spa client proposal is currently in development and served by this two endpoints:
+
+- `http://localhost:8081/spa/` this page simulates the homepage spa application
+- `http://localhost:8081/spa/builder/` this page simulate a builder application suitable for map viewer, geostories and dashboards
+
 
 ## Compile bundle
 
