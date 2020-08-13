@@ -8,8 +8,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import MapStorePluginsContainer from '@js/plugins/MapStorePluginsContainer';
-import useLazyPlugins from '@js/hooks/useLazyPlugins';
+import MapStorePluginsContainer from 'mapstore-sdk/plugins/PluginsContainer';
+import useLazyPlugins from 'mapstore-sdk/plugins/hooks/useLazyPlugins';
 import BrandNavbar from '@js/components/BrandNavbar';
 import {
     FormControl,

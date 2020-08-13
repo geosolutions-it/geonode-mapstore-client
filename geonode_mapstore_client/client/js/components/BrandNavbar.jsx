@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap-v1';
+import { Navbar, Nav } from 'react-bootstrap-v1';
 
 function BrandNavbar() {
     return (
@@ -16,7 +16,9 @@ function BrandNavbar() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/spa/builder/">Builder (test link)</Nav.Link>
+                    <Nav.Link href="/spa/builder/#/view/map/id">Map (test link)</Nav.Link>
+                    <Nav.Link href="/spa/builder/#/view/geostory/id">GeoStory (test link)</Nav.Link>
+                    {/* <Nav.Link href="/spa/builder/#/view/dashboard/id">Dashboard (test link)</Nav.Link> */}
                     <Nav.Link href="/maps/">Maps</Nav.Link>
                 </Nav>
             </Navbar.Collapse>

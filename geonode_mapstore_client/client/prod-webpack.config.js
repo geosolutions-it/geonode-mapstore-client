@@ -7,11 +7,15 @@ module.exports = () => {
     const mapStoreConfig = require('./MapStore2/build/buildConfig')(
         {},
         {}, {
-        base: __dirname,
-        dist: path.join(__dirname, "../static/mapstore/dist"),
-        framework: path.join(__dirname, "MapStore2", "web", "client"),
-        code: [path.join(__dirname, "js"), path.join(__dirname, "MapStore2", "web", "client")]
-    },
+            base: __dirname,
+            dist: path.join(__dirname, "../static/mapstore/dist"),
+            framework: path.join(__dirname, "MapStore2", "web", "client"),
+            code: [
+                path.join(__dirname, "js"),
+                path.join(__dirname, "n_m"),
+                path.join(__dirname, "MapStore2", "web", "client")
+            ]
+        },
         extractThemesPlugin,
         true,
         "/static/mapstore/dist/",
@@ -31,9 +35,9 @@ module.exports = () => {
                 {
                     test: /\.s[ac]ss$/i,
                     use: [
-                      'style-loader',
-                      'css-loader',
-                      'sass-loader'
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
                     ]
                 }
             ]

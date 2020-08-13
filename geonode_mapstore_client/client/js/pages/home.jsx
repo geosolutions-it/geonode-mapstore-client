@@ -6,10 +6,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import main from '../main';
+import main from 'mapstore-sdk/app/main';
+import Router, { withRoutes } from 'mapstore-sdk/app/Router';
+
+// should we include utils under mapstore-sdk/base/utils/ConfigUtils
 import { setConfigProp } from '@mapstore/utils/ConfigUtils';
-import Router, { withRoutes } from '@js/Router';
+
 import Main from '@js/routes/Main';
+
+// TODO: we should compile .scss as .less file in MapStore
+// and add a link tag with the compiled css in the template
+// this will ensure more control on override or custom css
+import '../../themes/geonode/scss/geonode.scss';
 
 setConfigProp('translationsPath', [ '/static/mapstore/MapStore2/web/client/' ] );
 

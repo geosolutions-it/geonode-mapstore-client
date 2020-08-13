@@ -16,7 +16,11 @@ module.exports = () => {
             base: __dirname,
             dist: path.join(__dirname, 'dist'),
             framework: path.join(__dirname, 'MapStore2', 'web', 'client'),
-            code: [path.join(__dirname, 'js'), path.join(__dirname, 'MapStore2', 'web', 'client')]
+            code: [
+                path.join(__dirname, 'js'),
+                path.join(__dirname, 'n_m'),
+                path.join(__dirname, 'MapStore2', 'web', 'client')
+            ]
         },
         extractThemesPlugin,
         false,
@@ -37,9 +41,9 @@ module.exports = () => {
                 {
                     test: /\.s[ac]ss$/i,
                     use: [
-                      'style-loader',
-                      'css-loader',
-                      'sass-loader'
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
                     ]
                 }
             ]
@@ -68,9 +72,9 @@ module.exports = () => {
                     path.join(__dirname),
                     path.join(__dirname, '..', 'static')
                 ],
-                before: function (app) {
+                before: function(app) {
                     const hashRegex = /\.[a-zA-Z0-9]{1,}\.js/;
-                    app.use(function (req, res, next) {
+                    app.use(function(req, res, next) {
                         // remove hash from requests to use the local js
                         if (req.url.indexOf('/static/geonode/js/ms2/utils/') !== -1
                             || req.url.indexOf('/ms2-geonode-api') !== -1) {
@@ -86,6 +90,7 @@ module.exports = () => {
                         context: [
                             '**',
                             '!**/static/mapstore/**',
+                            '!**/mapstore/**',
                             '!**/static/geonode/js/ms2/utils/**',
                             '!**/geonode/js/ms2/utils/**',
                             '!**/MapStore2/**',

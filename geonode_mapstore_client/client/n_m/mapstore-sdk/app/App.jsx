@@ -31,7 +31,7 @@ class App extends React.Component {
         pluginsDef: PropTypes.object,
         storeOpts: PropTypes.object,
         initialActions: PropTypes.array,
-        appComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]) ,
+        appComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.object ]),
         printingEnabled: PropTypes.bool,
         onStoreInit: PropTypes.func,
         onInit: PropTypes.func,
@@ -118,11 +118,11 @@ class App extends React.Component {
     render() {
         const { plugins, requires } = this.props.pluginsDef;
         const { appStore, initialActions, appComponent, mode, ...other } = this.props;
-        const App = dragDropContext(html5Backend)(this.props.appComponent);
+        const AppComponent = dragDropContext(html5Backend)(this.props.appComponent);
         const Loader = this.props.appLoader;
         return this.state.initialized ?
             <Provider store={this.store}>
-                <App {...other} plugins={{ ...PluginsUtils.getPlugins({ ...plugins }), requires }} />
+                <AppComponent {...other} plugins={{ ...PluginsUtils.getPlugins({ ...plugins }), requires }} />
             </Provider>
             : (<Loader />);
     }

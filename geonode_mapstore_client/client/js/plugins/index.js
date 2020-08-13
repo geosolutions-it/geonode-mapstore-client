@@ -6,12 +6,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// should be this a utils of sdk?
 function toLazyPlugin(name, imp) {
     return imp.then((mod) => {
         const impl = mod.default;
-        const pluginName = name + 'Plugin'; 
+        const pluginName = name + 'Plugin';
         return {
-            default: {
+            'default': {
                 name,
                 component: impl[pluginName],
                 reducers: impl.reducers || {},
@@ -27,11 +28,11 @@ function toLazyPlugin(name, imp) {
 const plugins = {
     GeoStoryPlugin: () => toLazyPlugin(
         'GeoStory',
-        import(/* webpackChunkName: 'plugins/geostory-plugin' */ '@mapstore/plugins/GeoStory')
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore-sdk/plugins/GeoStory')
     ),
     MapPlugin: () => toLazyPlugin(
         'Map',
-        import(/* webpackChunkName: 'plugins/map-plugin' */ '@mapstore/plugins/Map')
+        import(/* webpackChunkName: 'plugins/map-plugin' */ 'mapstore-sdk/plugins/Map')
     ),
     TestPlugin: () => import(/* webpackChunkName: 'plugins/test-plugin' */ '@js/plugins/Test')
 };

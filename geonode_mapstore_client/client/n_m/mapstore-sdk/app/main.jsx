@@ -9,12 +9,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import LocaleUtils from '@mapstore/utils/LocaleUtils';
-import store from '@js/store';
-import App from '@js/App';
-// TODO: we should compile .scss as .less file in MapStore
-// and add a link tag with the compiled css in the template
-// this will ensure more control on override or custom css
-import '../themes/geonode/scss/geonode.scss';
+import store from './store';
+import App from './App';
 
 const main = (config = {}) => {
 

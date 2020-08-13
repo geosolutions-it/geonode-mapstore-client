@@ -6,48 +6,35 @@
  * LICENSE file in the root directory of this source tree.
 */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import MapStorePluginsContainer from '@js/plugins/MapStorePluginsContainer';
-import useLazyPlugins from '@js/hooks/useLazyPlugins';
-import pluginsEntries from '@js/plugins/index';
 import BrandNavbar from '@js/components/BrandNavbar';
-import { setCurrentStory } from '@mapstore/actions/geostory';
 
-// test GeoStory
-import sampleStory from '@mapstore/configs/sampleStory.json';
+import builders from './builders';
 
+// test using layout manager plugin
 function Builder({
-    dispatch,
-    pluginsConfig
+    pluginsConfig,
+    ...props
 }) {
-
-    const { plugins, pending } = useLazyPlugins({
-        pluginsEntries,
-        pluginsConfig
-    });
-
-    const pluginsName = Object.keys(plugins);
-
-    useEffect(() => {
-        if (!pending && pluginsName.length > 0) {
-            dispatch(
-                setCurrentStory(sampleStory)
-            );
-        }
-    }, [pending, pluginsName.length]);
-
+    const { type } = props.match?.params || {};
+    const Content = builders[type];
+    if (Content) {
+        // get plugins configuration from an object
+        // where each key represent the selected builder type
+        const config = pluginsConfig[type];
+        return (
+            <>
+                <BrandNavbar />
+                <Content
+                    { ...props }
+                    pluginsConfig={config}
+                />
+            </>
+        );
+    }
     return (
-        <>
-            <BrandNavbar />
-            <MapStorePluginsContainer
-                key="plugins-container-viewer"
-                id="plugins-container-viewer"
-                className="plugins-container plugins-container-viewer msgapi"
-                plugins={plugins}
-                pluginsConfig={pluginsConfig}
-            />
-        </>
+        <div></div>
     );
 }
 

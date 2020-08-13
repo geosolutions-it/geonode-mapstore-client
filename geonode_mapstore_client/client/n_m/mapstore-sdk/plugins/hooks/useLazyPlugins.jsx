@@ -66,8 +66,7 @@ function useLazyPlugins({
                 )
             );
             setPending(false);
-        }).catch((error) => {
-            console.error(error);
+        }).catch(() => {
             setPlugins({});
             setPending(false);
         });
