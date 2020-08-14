@@ -12,6 +12,9 @@ import { createEpicMiddleware } from 'redux-observable';
 import ListenerEnhancer from '@carnesen/redux-add-action-listener-enhancer';
 import { routerMiddleware, connectRouter } from 'connected-react-router';
 import { persistMiddleware, persistEpic } from '@mapstore/utils/StateUtils';
+import localConfig from '@mapstore/reducers/localConfig';
+import locale from '@mapstore/reducers/locale';
+import browser from '@mapstore/reducers/browser';
 
 const standardEpics = {};
 
@@ -29,6 +32,10 @@ const appStore = (
     const history = storeOpts.noRouter ? null : require('@mapstore/stores/History').default;
     const allReducers = combineReducers(plugins, {
         ...appReducers,
+        localConfig,
+        locale,
+        locales: () => null,
+        browser,
         // TODO: missing locale default reducer
         router: storeOpts.noRouter ? undefined : connectRouter(history)
     });
