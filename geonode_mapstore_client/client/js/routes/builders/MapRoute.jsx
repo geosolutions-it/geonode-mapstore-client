@@ -31,7 +31,7 @@ function MapRoute({
     useEffect(() => {
         if (!pending && pluginsName.length > 0) {
             dispatch(
-                loadMapConfig('/static/mapstore/map.json', 'map')
+                loadMapConfig('/mock-data/map.json', 'map')
             );
         }
     }, [pending, pluginsName.length]);

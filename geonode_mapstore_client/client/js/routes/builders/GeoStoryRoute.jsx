@@ -13,7 +13,7 @@ import useLazyPlugins from 'mapstore-sdk/plugins/hooks/useLazyPlugins';
 
 import pluginsEntries from '@js/plugins/index';
 
-import sampleStory from '../../../../static/mapstore/geostory.json';
+import sampleStory from '../../../mock-data/geostory.json';
 
 // which path of sdk should include the actions
 import { setCurrentStory } from '@mapstore/actions/geostory';
