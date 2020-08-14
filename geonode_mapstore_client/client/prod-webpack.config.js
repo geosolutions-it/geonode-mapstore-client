@@ -18,7 +18,7 @@ module.exports = () => {
         },
         extractThemesPlugin,
         true,
-        "/static/mapstore/dist/",
+        '/static/mapstore/dist/', // use for homepage mockup 'dist/',
         '.msgapi',
         [],
         {
@@ -45,6 +45,9 @@ module.exports = () => {
     );
 
     return assign(mapStoreConfig, {
+        // to speed up the build for homepage mock
+        // we could build only geonode-home and themes/geonode
+        // and comment the others
         entry: {
             'ms2-geonode-api': path.join(__dirname, "js", "api"),
             'geonode-home': path.join(__dirname, 'js', 'pages', 'home'),

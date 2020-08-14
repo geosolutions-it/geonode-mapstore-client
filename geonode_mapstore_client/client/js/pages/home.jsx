@@ -19,7 +19,10 @@ import Main from '@js/routes/Main';
 // this will ensure more control on override or custom css
 import '../../themes/geonode/scss/geonode.scss';
 
-setConfigProp('translationsPath', [ '/static/mapstore/MapStore2/web/client/' ] );
+// translations path
+// dev use '/static/mapstore/MapStore2/web/client'
+// mock use 'translations'
+setConfigProp('translationsPath', [ '/static/mapstore/MapStore2/web/client' ] );
 
 // this is an example of routes for the homepage
 const routes = [
