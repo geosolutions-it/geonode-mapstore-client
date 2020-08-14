@@ -6,10 +6,11 @@
  * LICENSE file in the root directory of this source tree.
 */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MapStorePluginsContainer from 'mapstore-sdk/plugins/PluginsContainer';
 import useLazyPlugins from 'mapstore-sdk/plugins/hooks/useLazyPlugins';
+import Map from 'mapstore-sdk/components/Map';
 import BrandNavbar from '@js/components/BrandNavbar';
 import {
     FormControl,
@@ -25,14 +26,79 @@ import {
 
 import pluginsEntries from '@js/plugins/index';
 
+// these actions should be included in the sdk
+import {
+    addLayer,
+    removeLayer
+} from '@mapstore/actions/layers';
+
+// se mapstore doc for others layer configuration
+// https://mapstore.readthedocs.io/en/latest/developer-guide/maps-configuration/
+const mockLayersForMapComponent = [
+    {
+        id: 'osm-1',
+        type: 'osm',
+        title: 'Open Street Map',
+        name: 'mapnik',
+        source: 'osm',
+        group: 'background',
+        visibility: true
+    }
+];
+
+const mockLayersForMapPlugin = [
+    {
+        id: 'layer-1',
+        format: 'image/jpeg',
+        group: 'background',
+        name: 's2cloudless:s2cloudless',
+        opacity: 1,
+        title: 'Sentinel 2 Cloudless',
+        thumbURL: '',
+        type: 'wms',
+        url: [
+            'https://maps1.geosolutionsgroup.com/geoserver/wms',
+            'https://maps2.geosolutionsgroup.com/geoserver/wms',
+            'https://maps3.geosolutionsgroup.com/geoserver/wms',
+            'https://maps4.geosolutionsgroup.com/geoserver/wms',
+            'https://maps5.geosolutionsgroup.com/geoserver/wms',
+            'https://maps6.geosolutionsgroup.com/geoserver/wms'
+        ],
+        source: 's2cloudless',
+        visibility: true,
+        singleTile: false,
+        credits: {
+            title: '<a class=\"a-light\" xmlns:dct=\"http://purl.org/dc/terms/\" href=\"https://s2maps.eu\" property=\"dct:title\">Sentinel-2 cloudless 2016</a> by <a class=\"a-light\" xmlns:cc=\"http://creativecommons.org/ns#\" href=\"https://eox.at\" property=\"cc:attributionName\" rel=\"cc:attributionURL\">EOX IT Services GmbH</a>'
+        }
+    }
+];
+
 function Main({
-    pluginsConfig
+    pluginsConfig,
+    dispatch
 }) {
 
-    const { plugins } = useLazyPlugins({
+    const { plugins, pending } = useLazyPlugins({
         pluginsEntries,
         pluginsConfig
     });
+
+    useEffect(() => {
+        // layer can be added or removed to the map in the plugin container
+        // using actions
+        if (!pending) { // wait loading of all plugin
+            dispatch(
+                addLayer(mockLayersForMapPlugin[0])
+            );
+        }
+        return () => {
+            if (!pending) {
+                dispatch(
+                    removeLayer(mockLayersForMapPlugin[0].id)
+                );
+            }
+        };
+    }, [pending]);
 
     return (
         <>
@@ -55,6 +121,22 @@ function Main({
             <Container fluid>
                 <Row>
                     <Col>
+                        <div>Map can be imported as single component</div>
+                        <Map
+                            layers={mockLayersForMapComponent}
+                            map={{
+                                zoom: 3,
+                                center: { x: 13, y: 45, crs: 'EPSG:4326' }
+                            }}
+                            styleMap={{
+                                width: '100%',
+                                height: 500
+                            }}
+                        />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
                         <CardColumns>
                             <Card className="p-3">
                                 <blockquote className="blockquote mb-0 card-body">
@@ -74,6 +156,7 @@ function Main({
                         </CardColumns>
                     </Col>
                     <Col>
+                        <div>Map can be used inside the mapstore plugin container</div>
                         <MapStorePluginsContainer
                             key="plugins-container-main"
                             id="plugins-container-main"
