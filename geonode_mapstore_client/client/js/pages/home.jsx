@@ -47,6 +47,12 @@ const routes = [
 main({
     appComponent: withRoutes(routes)(Router),
     pluginsConfig: [
+        // using useLazyPlugin there are some issue with the order of configuration
+        // this is due to override of same reducers
+        // if ZoomIn or ZoomOut are mounted after Map
+        // the base map reducer is override and the map reducers does not work
+        { name: 'ZoomIn' },
+        { name: 'ZoomOut' },
         { name: 'Map' }
     ]
 });

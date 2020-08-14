@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
 */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MapStorePluginsContainer from 'mapstore-sdk/plugins/PluginsContainer';
 import useLazyPlugins from 'mapstore-sdk/plugins/hooks/useLazyPlugins';
@@ -83,22 +83,27 @@ function Main({
         pluginsConfig
     });
 
+    const [pluginsCount, setPluginsCount ] = useState(0);
+
+    const pluginsLength = Object.keys(plugins).length;
+    const loading = pluginsLength === pluginsCount;
+
     useEffect(() => {
         // layer can be added or removed to the map in the plugin container
         // using actions
-        if (!pending) { // wait loading of all plugin
+        if (!pending && !loading) { // wait loading of all plugin
             dispatch(
                 addLayer(mockLayersForMapPlugin[0])
             );
         }
         return () => {
-            if (!pending) {
+            if (!pending && !loading) {
                 dispatch(
                     removeLayer(mockLayersForMapPlugin[0].id)
                 );
             }
         };
-    }, [pending]);
+    }, [pending, loading]);
 
     return (
         <>
@@ -163,6 +168,11 @@ function Main({
                             className="plugins-container plugins-container-main msgapi"
                             plugins={plugins}
                             pluginsConfig={pluginsConfig}
+                            onPluginLoaded={() => {
+                                // improve this simple count
+                                // we should compare by plugin name
+                                setPluginsCount(pluginsCount + 1);
+                            }}
                         />
                     </Col>
                 </Row>

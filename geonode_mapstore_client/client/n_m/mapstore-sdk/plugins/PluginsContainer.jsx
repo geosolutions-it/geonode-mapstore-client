@@ -9,7 +9,7 @@
 import { connect } from 'react-redux';
 import { getMonitoredState } from '@mapstore/utils/PluginsUtils';
 import { getConfigProp } from '@mapstore/utils/ConfigUtils';
-import PluginsContainerComponent from '@mapstore/components/plugins/PluginsContainer';
+import PluginsContainerComponent from '@js/overrides/PluginsContainer';
 
 // this is the MapStore plugin container
 // we could use it as main context to create viewer, editors and previews

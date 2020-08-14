@@ -34,6 +34,15 @@ const plugins = {
         'Map',
         import(/* webpackChunkName: 'plugins/map-plugin' */ 'mapstore-sdk/plugins/Map')
     ),
+    ZoomInPlugin: () => toLazyPlugin(
+        'ZoomIn',
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore-sdk/plugins/ZoomIn')
+    ),
+    ZoomOutPlugin: () => toLazyPlugin(
+        'ZoomOut',
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore-sdk/plugins/ZoomOut')
+    ),
+
     TestPlugin: () => import(/* webpackChunkName: 'plugins/test-plugin' */ '@js/plugins/Test')
 };
 
