@@ -59,7 +59,9 @@ module.exports = () => {
                 'geonode-builder': path.join(__dirname, 'js', 'pages', 'builder'),
                 'themes/default': path.join(__dirname, 'themes', 'default', 'theme.less'),
                 'themes/preview': path.join(__dirname, 'themes', 'preview', 'theme.less'),
-                'themes/geonode': path.join(__dirname, 'themes', 'geonode', 'theme.less')
+                'themes/geonode': path.join(__dirname, 'themes', 'geonode', 'theme.less'),
+                // only to check the theme
+                'geonode-bootstrap-theme': path.join(__dirname, 'js', 'pages', 'bootstrap-theme.js')
             },
             module: module,
             devServer: {
@@ -97,7 +99,9 @@ module.exports = () => {
                             '!**/node_modules/**',
                             '!**/home.html',
                             '!**/builder.html',
-                            '!**/spa/**'
+                            '!**/bootstrap-theme.html',
+                            '!**/spa/**',
+                            '!**/mock-data/**'
                         ],
                         target: `${protocol}://${DEV_SERVER_HOST}`,
                         headers: {
@@ -119,6 +123,7 @@ module.exports = () => {
                             '/static/mapstore/MapStore2/web/client/': '/MapStore2/web/client/translations/',
                             '/static/geonode/js/ms2/utils/': '/geonode/js/ms2/utils/',
                             '/static/mapstore/': '/mapstore/',
+                            '/spa/bootstrap-theme/': '/bootstrap-theme.html',
                             '/spa/builder/': '/builder.html',
                             '/spa/': '/home.html'
                         }
