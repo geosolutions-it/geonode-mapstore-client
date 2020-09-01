@@ -83,10 +83,7 @@ function Main({
         pluginsConfig
     });
 
-    const [pluginsCount, setPluginsCount ] = useState(0);
-
-    const pluginsLength = Object.keys(plugins).length;
-    const loading = pluginsLength === pluginsCount;
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // layer can be added or removed to the map in the plugin container
@@ -168,11 +165,7 @@ function Main({
                             className="plugins-container plugins-container-main msgapi"
                             plugins={plugins}
                             pluginsConfig={pluginsConfig}
-                            onPluginLoaded={() => {
-                                // improve this simple count
-                                // we should compare by plugin name
-                                setPluginsCount(pluginsCount + 1);
-                            }}
+                            onPluginsLoaded={() => setLoading(false)}
                         />
                     </Col>
                 </Row>

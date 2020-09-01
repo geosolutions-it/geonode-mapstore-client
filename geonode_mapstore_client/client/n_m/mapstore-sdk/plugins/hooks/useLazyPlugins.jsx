@@ -41,7 +41,30 @@ function useLazyPlugins({
             pluginsKeys.map(pluginName => {
                 return pluginsEntries[pluginName]().then((mod) => {
                     const impl = mod.default;
-                    augmentStore({ reducers: impl.reducers || {}, epics: impl.epics || {} });
+                    return impl;
+                });
+            })
+        )
+            .then((impls) => {
+                const { reducers, epics } = pluginsKeys.reduce((acc, pluginName, idx) => {
+                    const impl = impls[idx];
+                    return {
+                        reducers: {
+                            ...acc.reducers,
+                            ...impl.reducers
+                        },
+                        epics: {
+                            ...acc.epics,
+                            ...impl.epics
+                        }
+                    };
+                }, {
+                    reducers: {},
+                    epics: {}
+                });
+                augmentStore({ reducers, epics });
+                return pluginsKeys.map((pluginName, idx) => {
+                    const impl = impls[idx];
                     const pluginDef = {
                         [pluginName]: {
                             [pluginName]: {
@@ -54,22 +77,23 @@ function useLazyPlugins({
                     return { plugin: pluginDef };
                 });
             })
-        ).then((loaded) => {
-            setPlugins(
-                getPlugins(
-                    {
-                        ...filterRemoved(
-                            loaded.reduce((previous, current) => ({ ...previous, ...current.plugin }), {}),
-                            removed
-                        )
-                    }
-                )
-            );
-            setPending(false);
-        }).catch(() => {
-            setPlugins({});
-            setPending(false);
-        });
+            .then((loaded) => {
+                setPlugins(
+                    getPlugins(
+                        {
+                            ...filterRemoved(
+                                loaded.reduce((previous, current) => ({ ...previous, ...current.plugin }), {}),
+                                removed
+                            )
+                        }
+                    )
+                );
+                setPending(false);
+            })
+            .catch(() => {
+                setPlugins({});
+                setPending(false);
+            });
     }, [ pluginsString ]);
 
     return { plugins, pending };
