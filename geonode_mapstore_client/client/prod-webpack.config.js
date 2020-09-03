@@ -1,19 +1,19 @@
-const path = require("path");
+const path = require('path');
 const assign = require('object-assign');
-const extractThemesPlugin = require('./MapStore2/build/themes.js').extractThemesPlugin;
+const extractThemesPlugin = require('./node_modules/mapstore/build/themes.js').extractThemesPlugin;
 
 module.exports = () => {
 
-    const mapStoreConfig = require('./MapStore2/build/buildConfig')(
+    const mapStoreConfig = require('./node_modules/mapstore/build/buildConfig')(
         {},
         {}, {
             base: __dirname,
-            dist: path.join(__dirname, "../static/mapstore/dist"),
-            framework: path.join(__dirname, "MapStore2", "web", "client"),
+            dist: path.join(__dirname, '../static/mapstore/dist'),
+            framework: path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
             code: [
-                path.join(__dirname, "js"),
-                path.join(__dirname, "n_m"),
-                path.join(__dirname, "MapStore2", "web", "client")
+                path.join(__dirname, 'js'),
+                path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
+                path.join(__dirname, 'node_modules', 'mapstore', 'sdk')
             ]
         },
         extractThemesPlugin,
@@ -22,8 +22,7 @@ module.exports = () => {
         '.msgapi',
         [],
         {
-            "@mapstore": path.resolve(__dirname, "MapStore2", "web", "client"),
-            "@js": path.resolve(__dirname, "js")
+            '@js': path.resolve(__dirname, 'js')
         }
     );
 
@@ -49,7 +48,7 @@ module.exports = () => {
         // we could build only geonode-home and themes/geonode
         // and comment the others
         entry: {
-            'ms2-geonode-api': path.join(__dirname, "js", "api"),
+            'ms2-geonode-api': path.join(__dirname, 'js', 'api'),
             'geonode-home': path.join(__dirname, 'js', 'pages', 'home'),
             'geonode-builder': path.join(__dirname, 'js', 'pages', 'builder'),
             'themes/default': path.join(__dirname, 'themes', 'default', 'theme.less'),

@@ -11,33 +11,33 @@
  */
 const Rx = require("rxjs");
 
-const { SELECT_NODE } = require("../../MapStore2/web/client/actions/layers");
-const { setPermission } = require("../../MapStore2/web/client/actions/featuregrid");
-const { setEditPermissionStyleEditor, INIT_STYLE_SERVICE } = require("../../MapStore2/web/client/actions/styleeditor");
+const { SELECT_NODE } = require("mapstore/web/client/actions/layers");
+const { setPermission } = require("mapstore/web/client/actions/featuregrid");
+const { setEditPermissionStyleEditor, INIT_STYLE_SERVICE } = require("mapstore/web/client/actions/styleeditor");
 const { layerEditPermissions, styleEditPermissions, updateThumb } = require("../api/geonode");
-const { getSelectedLayer, layersSelector } = require("../../MapStore2/web/client/selectors/layers");
-const { mapSelector } = require("../../MapStore2/web/client/selectors/map");
-const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils");
+const { getSelectedLayer, layersSelector } = require("mapstore/web/client/selectors/layers");
+const { mapSelector } = require("mapstore/web/client/selectors/map");
+const ConfigUtils = require("mapstore/web/client/utils/ConfigUtils");
 
-const { updateMapLayout } = require('../../MapStore2/web/client/actions/maplayout');
-const { TOGGLE_CONTROL, SET_CONTROL_PROPERTY, SET_CONTROL_PROPERTIES } = require('../../MapStore2/web/client/actions/controls');
-const { MAP_CONFIG_LOADED } = require('../../MapStore2/web/client/actions/config');
-const { SIZE_CHANGE, CLOSE_FEATURE_GRID, OPEN_FEATURE_GRID } = require('../../MapStore2/web/client/actions/featuregrid');
-const { CLOSE_IDENTIFY, ERROR_FEATURE_INFO, TOGGLE_MAPINFO_STATE, LOAD_FEATURE_INFO, EXCEPTIONS_FEATURE_INFO, NO_QUERYABLE_LAYER } = require('../../MapStore2/web/client/actions/mapInfo');
-const { SHOW_SETTINGS, HIDE_SETTINGS } = require('../../MapStore2/web/client/actions/layers');
-const { PURGE_MAPINFO_RESULTS } = require('../../MapStore2/web/client/actions/mapInfo');
-const { isMapInfoOpen } = require('../../MapStore2/web/client/selectors/mapInfo');
+const { updateMapLayout } = require('mapstore/web/client/actions/maplayout');
+const { TOGGLE_CONTROL, SET_CONTROL_PROPERTY, SET_CONTROL_PROPERTIES } = require('mapstore/web/client/actions/controls');
+const { MAP_CONFIG_LOADED } = require('mapstore/web/client/actions/config');
+const { SIZE_CHANGE, CLOSE_FEATURE_GRID, OPEN_FEATURE_GRID } = require('mapstore/web/client/actions/featuregrid');
+const { CLOSE_IDENTIFY, ERROR_FEATURE_INFO, TOGGLE_MAPINFO_STATE, LOAD_FEATURE_INFO, EXCEPTIONS_FEATURE_INFO, NO_QUERYABLE_LAYER } = require('mapstore/web/client/actions/mapInfo');
+const { SHOW_SETTINGS, HIDE_SETTINGS } = require('mapstore/web/client/actions/layers');
+const { PURGE_MAPINFO_RESULTS } = require('mapstore/web/client/actions/mapInfo');
+const { isMapInfoOpen } = require('mapstore/web/client/selectors/mapInfo');
 
-const { isFeatureGridOpen, getDockSize } = require('../../MapStore2/web/client/selectors/featuregrid');
+const { isFeatureGridOpen, getDockSize } = require('mapstore/web/client/selectors/featuregrid');
 const { head, get } = require('lodash');
-// const {updateMapLayoutEpic} = require('../../MapStore2/web/client/epics/maplayout');
+// const {updateMapLayoutEpic} = require('mapstore/web/client/epics/maplayout');
 
-// const {basicError} = require('../../MapStore2/web/client/utils/NotificationUtils');
+// const {basicError} = require('mapstore/web/client/utils/NotificationUtils');
 /**
  * We need to include missing epics. The plugins that normally include this epic is not used.
  */
-const { mapSaveMapResourceEpic } = require("../../MapStore2/web/client/epics/maps");
-const { showCoordinateEditorSelector } = require('../../MapStore2/web/client/selectors/controls');
+const { mapSaveMapResourceEpic } = require("mapstore/web/client/epics/maps");
+const { showCoordinateEditorSelector } = require('mapstore/web/client/selectors/controls');
 
 
 /**

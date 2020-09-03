@@ -8,9 +8,9 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import MapStorePluginsContainer from 'mapstore-sdk/plugins/PluginsContainer';
-import useLazyPlugins from 'mapstore-sdk/plugins/hooks/useLazyPlugins';
-import Map from 'mapstore-sdk/components/Map';
+import MapStorePluginsContainer from 'mapstore/sdk/framework/plugins/PluginsContainer';
+import useLazyPlugins from 'mapstore/sdk/framework/plugins/hooks/useLazyPlugins';
+import Map from 'mapstore/sdk/library/components/Map';
 import BrandNavbar from '@js/components/BrandNavbar';
 import {
     FormControl,
@@ -30,7 +30,7 @@ import pluginsEntries from '@js/plugins/index';
 import {
     addLayer,
     removeLayer
-} from '@mapstore/actions/layers';
+} from 'mapstore/web/client/actions/layers';
 
 // se mapstore doc for others layer configuration
 // https://mapstore.readthedocs.io/en/latest/developer-guide/maps-configuration/

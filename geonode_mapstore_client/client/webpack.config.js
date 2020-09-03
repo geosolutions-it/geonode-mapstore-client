@@ -1,12 +1,12 @@
 const path = require('path');
 const assign = require('object-assign');
 
-const extractThemesPlugin = require('./MapStore2/build/themes.js').extractThemesPlugin;
+const extractThemesPlugin = require('./node_modules/mapstore/build/themes.js').extractThemesPlugin;
 const envJson = require('./env.json');
 
 const DEV_SERVER_HOST = envJson.DEV_SERVER_HOST || 'ERROR:INSERT_DEV_SERVER_HOST_IN_ENV_JSON_CONFIG! eg: my-geonode-host.org';
 const protocol = envJson.DEV_SERVER_HOST_PROTOCOL || 'http';
-const buildConfig = require('./MapStore2/build/buildConfig');
+const buildConfig = require('./node_modules/mapstore/build/buildConfig');
 
 module.exports = () => {
     const mapStoreConfig = buildConfig(
@@ -15,11 +15,11 @@ module.exports = () => {
         {
             base: __dirname,
             dist: path.join(__dirname, 'dist'),
-            framework: path.join(__dirname, 'MapStore2', 'web', 'client'),
+            framework: path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
             code: [
                 path.join(__dirname, 'js'),
-                path.join(__dirname, 'n_m'),
-                path.join(__dirname, 'MapStore2', 'web', 'client')
+                path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
+                path.join(__dirname, 'node_modules', 'mapstore', 'sdk')
             ]
         },
         extractThemesPlugin,
@@ -28,8 +28,7 @@ module.exports = () => {
         '.msgapi',
         [],
         {
-            "@mapstore": path.resolve(__dirname, "MapStore2", "web", "client"),
-            "@js": path.resolve(__dirname, "js")
+            '@js': path.resolve(__dirname, 'js')
         }
     );
 
@@ -95,7 +94,6 @@ module.exports = () => {
                             '!**/mapstore/**',
                             '!**/static/geonode/js/ms2/utils/**',
                             '!**/geonode/js/ms2/utils/**',
-                            '!**/MapStore2/**',
                             '!**/node_modules/**',
                             '!**/home.html',
                             '!**/builder.html',
@@ -120,7 +118,7 @@ module.exports = () => {
                         secure: false,
                         changeOrigin: true,
                         pathRewrite: {
-                            '/static/mapstore/MapStore2/web/client/': '/MapStore2/web/client/translations/',
+                            '/static/mapstore/MapStore2/web/client/': '/node_modules/mapstore/web/client/translations/',
                             '/static/geonode/js/ms2/utils/': '/geonode/js/ms2/utils/',
                             '/static/mapstore/': '/mapstore/',
                             '/spa/bootstrap-theme/': '/bootstrap-theme.html',

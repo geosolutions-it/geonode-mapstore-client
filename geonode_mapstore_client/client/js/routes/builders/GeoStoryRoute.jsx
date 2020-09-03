@@ -8,15 +8,15 @@
 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import MapStorePluginsContainer from 'mapstore-sdk/plugins/PluginsContainer';
-import useLazyPlugins from 'mapstore-sdk/plugins/hooks/useLazyPlugins';
+import MapStorePluginsContainer from 'mapstore/sdk/framework/plugins/PluginsContainer';
+import useLazyPlugins from 'mapstore/sdk/framework/plugins/hooks/useLazyPlugins';
 
 import pluginsEntries from '@js/plugins/index';
 
 import sampleStory from '../../../mock-data/geostory.json';
 
 // which path of sdk should include the actions
-import { setCurrentStory } from '@mapstore/actions/geostory';
+import { setCurrentStory } from 'mapstore/web/client/actions/geostory';
 
 function GeoStoryRoute({
     dispatch,

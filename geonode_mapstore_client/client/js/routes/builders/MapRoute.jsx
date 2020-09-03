@@ -8,13 +8,13 @@
 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import MapStorePluginsContainer from 'mapstore-sdk/plugins/PluginsContainer';
-import useLazyPlugins from 'mapstore-sdk/plugins/hooks/useLazyPlugins';
+import MapStorePluginsContainer from 'mapstore/sdk/framework/plugins/PluginsContainer';
+import useLazyPlugins from 'mapstore/sdk/framework/plugins/hooks/useLazyPlugins';
 
 import pluginsEntries from '@js/plugins/index';
 
 // which path of sdk should include the actions
-import { loadMapConfig } from '@mapstore/actions/config';
+import { loadMapConfig } from 'mapstore/web/client/actions/config';
 
 function MapRoute({
     dispatch,
