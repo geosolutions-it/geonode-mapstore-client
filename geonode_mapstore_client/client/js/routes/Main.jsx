@@ -8,9 +8,10 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import MapStorePluginsContainer from 'mapstore/sdk/framework/plugins/PluginsContainer';
-import useLazyPlugins from 'mapstore/sdk/framework/plugins/hooks/useLazyPlugins';
-import Map from 'mapstore/sdk/library/components/Map';
+import MapStorePluginsContainer from 'mapstore/framework/components/plugins/PluginsContainer';
+import useLazyPlugins from 'mapstore/framework/hooks/useLazyPlugins';
+import BaseMap from 'mapstore/framework/components/map/BaseMap';
+import mapType from 'mapstore/framework/components/map/enhancers/mapType';
 import BrandNavbar from '@js/components/BrandNavbar';
 import {
     FormControl,
@@ -26,11 +27,16 @@ import {
 
 import pluginsEntries from '@js/plugins/index';
 
-// these actions should be included in the sdk
 import {
     addLayer,
     removeLayer
-} from 'mapstore/web/client/actions/layers';
+} from 'mapstore/framework/actions/layers';
+
+const Map = mapType(BaseMap);
+
+Map.defaultProps = {
+    mapType: 'leaflet'
+};
 
 // se mapstore doc for others layer configuration
 // https://mapstore.readthedocs.io/en/latest/developer-guide/maps-configuration/

@@ -6,18 +6,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import main from 'mapstore/sdk/framework/app/main';
-import Router, { withRoutes } from 'mapstore/sdk/framework/app/Router';
+import main from 'mapstore/framework/components/app/main';
+import Router, { withRoutes } from 'mapstore/framework/components/app/Router';
 
-// should we include utils under mapstore-sdk/base/utils/ConfigUtils
-import { setConfigProp } from 'mapstore/web/client/utils/ConfigUtils';
+import { setConfigProp } from 'mapstore/framework/utils/ConfigUtils';
 
 // this import should be provided directly by the Map plugin
-import * as config from 'mapstore/web/client/epics/config';
-import mapConfig from 'mapstore/web/client/reducers/config';
-import map from 'mapstore/web/client/reducers/map';
-import layers from 'mapstore/web/client/reducers/layers';
-import { splitMapAndLayers } from 'mapstore/web/client/utils/LayersUtils';
+import * as config from 'mapstore/framework/epics/config';
+import mapConfig from 'mapstore/framework/reducers/config';
+import map from 'mapstore/framework/reducers/map';
+import layers from 'mapstore/framework/reducers/layers';
+import { splitMapAndLayers } from 'mapstore/framework/utils/LayersUtils';
 
 // TODO: we should compile .scss as .less file in MapStore
 // and add a link tag with the compiled css in the template

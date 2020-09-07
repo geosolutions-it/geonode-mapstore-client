@@ -7,9 +7,9 @@
  */
 require('react-widgets/dist/css/react-widgets.css');
 const assign = require("object-assign");
-const ConfigUtils = require('mapstore/web/client/utils/ConfigUtils');
-const LocaleUtils = require('mapstore/web/client/utils/LocaleUtils');
-const LayersUtils = require('mapstore/web/client/utils/LayersUtils');
+const ConfigUtils = require('mapstore/framework/utils/ConfigUtils');
+const LocaleUtils = require('mapstore/framework/utils/LocaleUtils');
+const LayersUtils = require('mapstore/framework/utils/LayersUtils');
 LayersUtils.setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
 const {keyBy, values} = require('lodash');
 /**
@@ -19,7 +19,7 @@ const {keyBy, values} = require('lodash');
  */
 ConfigUtils.setConfigProp('translationsPath', ['../MapStore2/web/client', './'] );
 ConfigUtils.setConfigProp('themePrefix', 'msgapi');
-const Persistence = require("mapstore/web/client/api/persistence");
+const Persistence = require("mapstore/framework/api/persistence");
 Persistence.addApi("geonode", require("./api/geonode"));
 Persistence.setApi("geonode");
 
@@ -37,15 +37,15 @@ Persistence.setApi("geonode");
  *
  * Or override the application configuration file with (e.g. only one page with a mapviewer):
  *
- * const appConfig = assign({}, require('mapstore/web/client/product/appConfig'), {
+ * const appConfig = assign({}, require('mapstore/framework/product/appConfig'), {
  *     pages: [{
  *         name: "mapviewer",
  *         path: "/",
- *         component: require('mapstore/web/client/product/pages/MapViewer')
+ *         component: require('mapstore/framework/product/pages/MapViewer')
  *     }]
  * });
  */
-// const appConfig = require('mapstore/web/client/product/appConfig');
+// const appConfig = require('mapstore/framework/product/appConfig');
 
 
 const getScriptPath = function() {
@@ -54,12 +54,12 @@ const getScriptPath = function() {
 };
 
 // Set X-CSRFToken in axios;
-const axios = require('mapstore/web/client/libs/ajax');
+const axios = require('mapstore/framework/libs/ajax');
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.xsrfCookieName = "csrftoken";
 
 const createMapStore2Api = function(plugins) {
-    const MapStore2 = require('mapstore/web/client/jsapi/MapStore2').withPlugins(plugins, {
+    const MapStore2 = require('mapstore/framework/jsapi/MapStore2').withPlugins(plugins, {
         theme: {
             path: getScriptPath() + '/themes'
         },

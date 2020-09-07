@@ -6,11 +6,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import main from 'mapstore/sdk/framework/app/main';
-import Router, { withRoutes } from 'mapstore/sdk/framework/app/Router';
+import main from 'mapstore/framework/components/app/main';
+import Router, { withRoutes } from 'mapstore/framework/components/app/Router';
 
-// should we include utils under mapstore-sdk/base/utils/ConfigUtils
-import { setConfigProp } from 'mapstore/web/client/utils/ConfigUtils';
+import { setConfigProp } from 'mapstore/framework/utils/ConfigUtils';
 
 import Main from '@js/routes/Main';
 

@@ -15,11 +15,10 @@ module.exports = () => {
         {
             base: __dirname,
             dist: path.join(__dirname, 'dist'),
-            framework: path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
+            framework: path.join(__dirname, 'node_modules', 'mapstore', 'framework'),
             code: [
                 path.join(__dirname, 'js'),
-                path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
-                path.join(__dirname, 'node_modules', 'mapstore', 'sdk')
+                path.join(__dirname, 'node_modules', 'mapstore', 'framework')
             ]
         },
         extractThemesPlugin,
@@ -118,7 +117,7 @@ module.exports = () => {
                         secure: false,
                         changeOrigin: true,
                         pathRewrite: {
-                            '/static/mapstore/MapStore2/web/client/': '/node_modules/mapstore/web/client/translations/',
+                            '/static/mapstore/MapStore2/web/client/': '/node_modules/mapstore/framework/translations/',
                             '/static/geonode/js/ms2/utils/': '/geonode/js/ms2/utils/',
                             '/static/mapstore/': '/mapstore/',
                             '/spa/bootstrap-theme/': '/bootstrap-theme.html',

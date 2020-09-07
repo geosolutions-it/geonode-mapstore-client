@@ -9,11 +9,10 @@ module.exports = () => {
         {}, {
             base: __dirname,
             dist: path.join(__dirname, '../static/mapstore/dist'),
-            framework: path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
+            framework: path.join(__dirname, 'node_modules', 'mapstore', 'framework'),
             code: [
                 path.join(__dirname, 'js'),
-                path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
-                path.join(__dirname, 'node_modules', 'mapstore', 'sdk')
+                path.join(__dirname, 'node_modules', 'mapstore', 'framework')
             ]
         },
         extractThemesPlugin,

@@ -6,7 +6,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// should be this a utils of sdk?
 function toLazyPlugin(name, imp) {
     return imp.then((mod) => {
         const impl = mod.default;
@@ -28,19 +27,19 @@ function toLazyPlugin(name, imp) {
 const plugins = {
     GeoStoryPlugin: () => toLazyPlugin(
         'GeoStory',
-        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/sdk/framework/plugins/GeoStory')
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/framework/plugins/GeoStory')
     ),
     MapPlugin: () => toLazyPlugin(
         'Map',
-        import(/* webpackChunkName: 'plugins/map-plugin' */ 'mapstore/sdk/framework/plugins/Map')
+        import(/* webpackChunkName: 'plugins/map-plugin' */ 'mapstore/framework/plugins/Map')
     ),
     ZoomInPlugin: () => toLazyPlugin(
         'ZoomIn',
-        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/sdk/framework/plugins/ZoomIn')
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/framework/plugins/ZoomIn')
     ),
     ZoomOutPlugin: () => toLazyPlugin(
         'ZoomOut',
-        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/sdk/framework/plugins/ZoomOut')
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/framework/plugins/ZoomOut')
     ),
 
     TestPlugin: () => import(/* webpackChunkName: 'plugins/test-plugin' */ '@js/plugins/Test')
