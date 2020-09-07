@@ -3,3 +3,113 @@
 'custom',
 'bootstrap-variables',
 '~bootstrap-v4/scss/bootstrap';
+
+// if we are not going to use color per resource type
+// we should better remove this variables and rules
+// $gn-color-map: #29B015;
+// $gn-color-geostory: #CF7238;
+// $gn-color-layer: #392BFC;
+// $gn-color-document: #835BB5;
+// $gn-color-dashboard: #45A8A7;
+
+// .gn-bg-map{ background: $gn-color-map; }
+// .gn-bg-geostory{ background: $gn-color-geostory; }
+// .gn-bg-layer{ background: $gn-color-layer; }
+// .gn-bg-document{ background: $gn-color-document; }
+// .gn-bg-dashboard{ background: $gn-color-dashboard; }
+
+// .gn-text-map{ color: lighten($gn-color-map,  25%); }
+// .gn-text-geostory{ color: lighten($gn-color-geostory, 25%); }
+// .gn-text-layer{ color: lighten($gn-color-layer, 25%); }
+// .gn-text-document{ color: lighten($gn-color-document, 25%); }
+// .gn-text-dashboard{ color: lighten($gn-color-dashboard, 25%); }
+
+// .gn-border-map{ border: solid 1px $gn-color-map; }
+// .gn-border-geostory{ border: solid 1px $gn-color-geostory; }
+// .gn-border-layer{ border: solid 1px $gn-color-layer; }
+// .gn-border-document{ border: solid 1px $gn-color-document; }
+// .gn-border-dashboard{ border: solid 1px $gn-color-dashboard; }
+
+.gn-search-container{
+    height: 100vh;
+}
+
+.gn-featured-item{
+    width: 150px;
+    height: 120px;
+    background: #fff3;
+}
+
+.gn-tile{
+    width: 270px;
+    height: 270px;
+}
+
+.gn-panel-shown{
+    display: block;
+    top: 0;
+    right: 0;
+    width: 22%;
+    height: 100%;
+    z-index: 1000000;
+    overflow: hidden;
+}
+
+.gn-tile-image-container {
+    height: 180px;
+}
+
+.gn-panel-shown-container{
+    width: 78%;
+}
+
+.gn-panel-hidden-container{
+    width: 100%
+}
+
+.gn-detail-panel-image{
+    height: 270px;
+}
+
+@media screen and (max-width: 1440px) {
+    .gn-panel-shown-container{ width: 65%; }
+    .gn-panel-shown{ width: 35% }
+
+    .gn-tile{
+        width: 210px;
+        height: 210px;
+    }
+    .gn-tile-image-container {
+        height: 120px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .gn-panel-shown{
+        bottom: 0;
+        top: auto;
+        width: 100%;
+        height: 50%;
+        max-width: none;
+        overflow: auto;
+    }
+
+    .gn-panel-shown-container{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .gn-tile{
+        width: 150px;
+        height: 140px;
+    }
+    .gn-tile-image-container {
+        height: 70px;
+    }
+
+    .gn-detail-panel-image{
+        height: 150px;
+    }
+}
