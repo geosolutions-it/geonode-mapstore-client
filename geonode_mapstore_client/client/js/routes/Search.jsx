@@ -6,26 +6,26 @@
  * LICENSE file in the root directory of this source tree.
 */
 
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import castArray from 'lodash/castArray';
 import { createSelector } from 'reselect';
+import castArray from 'lodash/castArray';
 import SearchBar from '@js/components/SearchBar';
 import BrandNavbar from '@js/components/BrandNavbar';
-import BackgroundHero from '@js/components/BackgroundHero';
 import Navbar from '@js/components/Navbar';
+import DetailPanel from '@js/components/DetailPanel';
+import { hashLocationToHref } from '@js/utils/GNSearchUtils';
 import CardGrid from '@js/components/CardGrid';
 import { Container, Row, Col, Button, Dropdown } from 'react-bootstrap-v1';
 import {
     fetchSuggestions,
-    searchResources
+    searchResources,
+    requestResource
 } from '@js/actions/geonodesearch';
-import imageTest from '../../mock-data/kevin-quezada-Z8Ybwv9_v8M-unsplash.jpg';
-import geonodeLogo from '../../mock-data/geonode-logo.svg';
-import { hashLocationToHref } from '@js/utils/GNSearchUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTimes } from '@fortawesome/free-solid-svg-icons';
+import geonodeLogo from '../../mock-data/geonode-logo.svg';
 
 const DEFAULT_SUGGESTIONS = [];
 const DEFAULT_RESOURCES = [];
@@ -57,14 +57,14 @@ const ConnectedCardGrid = connect(
 
 import url from 'url';
 
-function Main({
+function Search({
     location,
     params,
-    onSearch
+    onSearch,
+    onSelect,
+    selectedResource,
+    match
 }) {
-
-    const [isBackgroundVisible, setIsBackgroundVisible] = useState(true);
-    const [isBackgroundContentVisible, setIsBackgroundContentVisible] = useState(true);
 
     function handleUpdate(newParams, pathname) {
         const { query } = url.parse(location.search, true);
@@ -75,41 +75,26 @@ function Main({
         }, pathname);
     }
 
-    function handleVisibility(type, visibility) {
-        if (type === 'background') {
-            setIsBackgroundVisible(visibility);
-        }
-        if (type === 'content') {
-            setIsBackgroundContentVisible(visibility);
-        }
-    }
-
-    const searchBoxTop = 200;
     const navbarHeight = 50;
 
-    const search = (
-        <ConnectedSearchBar
-            key="search"
-            value={params.q || ''}
-            style={{
-                width: '100%',
-                maxWidth: 550
-            }}
-            onChange={(value) =>
-                handleUpdate({
-                    q: value
-                }, '/search/')}
-        />
-    );
+    const detailsWidth = selectedResource ? 30 : 0;
+    const mainWidth = 100 - detailsWidth;
 
     const { query } = url.parse(location.search, true);
     const filters = Object.keys(query).reduce((acc, key) => key.indexOf('filter') === 0
         ? [...acc, ...castArray(query[key]).map((value) => ({ key, value })) ]
         : acc, []);
 
+    const pk = match.params.pk;
+    useEffect(() => {
+        onSelect(pk);
+    }, [ pk ]);
 
     return (
         <>
+        <div style={{
+            width: `${mainWidth}%`
+        }}>
             <BrandNavbar
                 links={[
                     {
@@ -119,32 +104,28 @@ function Main({
                 ]}
                 style={{
                     height: navbarHeight,
-                    backgroundColor: !isBackgroundVisible ? undefined : 'transparent'
+                    width: `${mainWidth}%`
                 }}
             >
-                {!isBackgroundContentVisible && search}
-            </BrandNavbar>
-            <BackgroundHero
-                src={imageTest}
-                contentTop={searchBoxTop}
-                offset={navbarHeight}
-                onChangeVisibility={handleVisibility}
-            >
-                {isBackgroundContentVisible && <div
+                <ConnectedSearchBar
+                    key="search"
+                    value={params.q || ''}
                     style={{
-                        position: 'absolute',
-                        top: searchBoxTop,
                         width: '100%',
-                        height: navbarHeight,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 20
-                    }}>
-                    {search}
-                </div>}
-            </BackgroundHero>
-            <Navbar style={{ top: navbarHeight }} />
+                        maxWidth: 550,
+                        backgroundColor: '#ffffff'
+                    }}
+                    onChange={(value) =>
+                        handleUpdate({
+                            q: value
+                        }, '/search/')}
+                />
+            </BrandNavbar>
+            <Navbar
+                style={{
+                    top: navbarHeight
+                }}
+            />
             <div
                 style={{
                     backgroundColor: 'white',
@@ -152,8 +133,11 @@ function Main({
                     minHeight: '100vh'
                 }}>
                 <Container>
-                <div style={{ position: 'sticky', top: navbarHeight * 2, zIndex: 10 }}>
-                        <Row>
+                    <div style={{ position: 'sticky', top: navbarHeight * 2, zIndex: 10 }}>
+                        <Row
+                            
+                            
+                        >
                             <Col className="bg-primary text-white p-2">
                                 <div >
                                     <Button className="mr-3"><FontAwesomeIcon icon={faFilter}/></Button>
@@ -177,8 +161,8 @@ function Main({
                             <Col>
                                 <h4>Resources</h4>
                             </Col>
-                            <Col style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                                <Dropdown alignRight>
+                            <Col  style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                                <Dropdown >
                                     <Dropdown.Toggle id="dropdown-basic" variant="outline-primary">
                                         Order
                                     </Dropdown.Toggle>
@@ -229,6 +213,10 @@ function Main({
                             </Col>
                         </Row>
                     </div>
+                    
+                        
+                    
+
                     <ConnectedCardGrid
                         location={location}
                         page={params.page ? parseFloat(params.page) : 1}
@@ -237,71 +225,37 @@ function Main({
                                 page: value
                             });
                         }}
+                        selected={selectedResource}
+                        style={{
+                            minHeight: '50vh',
+                            paddingTop: navbarHeight * 1
+                        }}
                     />
                 </Container>
             </div>
+        </div>
+        {selectedResource && <div
+            className="bg-light p-4 shadow"
+            style={{
+                position: 'fixed',
+                right: 0,
+                top: 0,
+                width: `${detailsWidth}%`,
+                height: '100vh',
+                zIndex: 999999,
+                wordBreak: 'break-word'
+            }}>
+            <DetailPanel
+                resource={selectedResource}
+                location={location}
+                filters={filters}
+            />
+        </div>}
         </>
     );
 }
 
-/* <>
-            <div className={className}>
-
-                { <BrandNavbar panelShown={detailsPanelShown} /> }
-                <div
-                    style={{
-                        position: 'absolute',
-                        width: '100%',
-                        minHeight: '100vh',
-                        backgroundColor: 'aliceblue'
-                    }}>
-
-                </div>
-                <Container
-                    style={{
-                        minHeight: '100vh'
-                    }}
-                >
-                    { <Search
-                        panelShown={detailsPanelShown}
-                        onFetchSuggestions={text => dispatch(fetchSuggestions(text))}
-                    /> }
-                    { <Row
-                        style={{
-                            position: 'sticky',
-                            top: 0,
-                            zIndex: 2,
-                            backgroundColor: 'white'
-                        }}
-                    >
-                        <Col>
-
-                        </Col>
-                    </Row>}
-
-                    <ConnectedSearch />
-                    
-                    <ConnectedCardGrid />
-                </Container>
-                { <FeaturedItems
-                    panelShown={detailsPanelShown}
-                    data={featuredItemsData}>
-                </FeaturedItems>
-                <CardGrid
-                    className="bg-light"
-                    data={tileData}
-                    onTileClick={onTileClick}
-                    detailsShown={detailsPanelShown} 
-                    selected={selectedItem}>
-                </CardGrid>}
-            </div>
-            {<DetailPanel
-                onClose={onDetailsPanelClose}
-                selected={selectedItem}
-                isShown={detailsPanelShown}>
-            </DetailPanel>
-        </>*/
-Main.propTypes = {
+Search.propTypes = {
     dispatch: PropTypes.func,
     history: PropTypes.object,
     location: PropTypes.object,
@@ -312,16 +266,18 @@ Main.propTypes = {
 
 const DEFAULT_PARAMS = {};
 
-const ConnectedMain = connect(
+const ConnectedSearch = connect(
     createSelector([
-        state => state?.geoNodeSearch?.params || DEFAULT_PARAMS
-    ], (params) => ({
-        params
+        state => state?.geoNodeSearch?.params || DEFAULT_PARAMS,
+        state => state?.geoNodeSearch?.selectedResource || null
+    ], (params, selectedResource) => ({
+        params,
+        selectedResource
     })),
     {
-        onSearch: searchResources
+        onSearch: searchResources,
+        onSelect: requestResource
     }
-)(Main);
+)(Search);
 
-
-export default ConnectedMain;
+export default ConnectedSearch;

@@ -1,8 +1,14 @@
 // theme for GeoNode SPA client
+
+
 @import
-'custom',
 'bootstrap-variables',
-'~bootstrap-v4/scss/bootstrap';
+'~bootstrap-v4/scss/bootstrap',
+'custom';
+
+:root {
+    font-size: 14px;
+}
 
 // if we are not going to use color per resource type
 // we should better remove this variables and rules

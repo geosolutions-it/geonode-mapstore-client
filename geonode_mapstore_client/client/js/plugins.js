@@ -53,7 +53,6 @@ module.exports = {
             reducers: {
                 security: require('mapstore/framework/reducers/security'),
                 maps: require('mapstore/framework/reducers/maps'),
-                currentMap: require('mapstore/framework/reducers/currentMap'),
                 maplayout: require('mapstore/framework/reducers/maplayout')
             },
             epics

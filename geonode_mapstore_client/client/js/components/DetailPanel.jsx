@@ -7,72 +7,93 @@
  */
 
 import React from 'react';
-import { Row, Col, Button, ButtonGroup } from 'react-bootstrap-v1';
+import { Button, Badge } from 'react-bootstrap-v1';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { hashLocationToHref } from '@js/utils/GNSearchUtils';
+import UserSign from '@js/components/UserSign';
 
-function DetailPanel(props) {
-
-    let className = "position-fixed shadow-lg m-0";
-    if (props.isShown)
-        className += " gn-panel-shown"
-    else
-        className += " d-none";
-
-    const onCloseClick = ()=> {
-        props.onClose();
-    }
-
-    if (!props.selected)
-        return (<></>)
-
+function DetailPanel({
+    resource,
+    onClose,
+    filters,
+    location
+}) {
     return (
-        <div
-            style={{border:"solid 1px #ccc", background:"#f1f2f4"}}
-            className={className}>
-            <div className="w-100 h-100 px-4 pt-2">
-                <Row>
-                    <Col xs={9}>
-                        <div className="mt-1 text-truncate">{props.selected.title}</div>
-                    </Col>
-                    <Col xs={3}>
-                        <ButtonGroup className="float-right">
-                            <Button
-                                variant="outline-secondary"
-                                size="sm">
-                                <FontAwesomeIcon icon={faShareAlt}></FontAwesomeIcon>
-                            </Button>
-                            <Button
-                                onClick={onCloseClick}
-                                variant="outline-secondary"
-                                size="sm">
-                                <FontAwesomeIcon icon={faTimes}></FontAwesomeIcon>
-                            </Button> 
-                        </ButtonGroup>
-                    </Col>
-                </Row>
-                <hr className="my-2"></hr>
-                <div style={{overflowX: "hidden", overflowY:"auto", height: "calc(100% - 60px)"}}>
-                <Row>
-                    <Col xs={12} sm={6} md={12}>
-                        <img 
-                            style={{objectFit: "cover"}}
-                            className="w-100 gn-detail-panel-image"
-                            src={props.selected.img}>
-                        </img>
-                    </Col>
-                    <Col xs={12} sm={6} md={12}>
-                        <h4 className="d-none d-sm-block text-truncate mt-2">{props.selected.title}</h4>
-                        <div className="mt-2 mb-4">{props.selected.description}</div>
-                        <div><b>Region</b>: {props.selected.region}</div>
-                        <div><b>License</b>: {props.selected.license}</div>
-                        <div><b>Language</b>: {props.selected.language}</div>
-                    </Col>
-                </Row>
-                </div>
-            </div>
-        </div>
+        <section>
+            <Button
+                onClick={onClose}
+                variant="outline-secondary"
+                href={hashLocationToHref({
+                    location,
+                    pathname: '/search/'
+                })}
+                size="sm">
+                <FontAwesomeIcon icon={faTimes}/>
+            </Button>
+            {resource.thumbnail_url && <div style={{
+                position: 'relative',
+                paddingTop: '56.25%'
+            }}>
+                <div style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: 0,
+                    backgroundImage: 'url(' + resource.thumbnail_url + ')',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat'
+                }}></div>
+            </div>}
+            <div><small>{resource.polymorphic_ctype}</small></div>
+            <h1>{resource.title}</h1>
+            <p>
+                <div><small>{resource.date_type} : {resource.date}</small></div>
+                <div><small>last update : {resource.last_updated}</small></div>
+            </p>
+            <p>
+                <div>category: {resource.category?.identifier}</div>
+                <div>keywords: {resource.keywords?.map(({ name }) =>
+                    <Badge
+                        variant={filters.find(({ key, value }) => key === 'filter{keywords.name.in}' && value === name) ? "primary" : "outline-primary"}
+                        as="a"
+                        className="mr-1"
+                        href={hashLocationToHref({
+                            location,
+                            query: {
+                                'filter{keywords.name.in}': name
+                            }
+                        })}
+                    >
+                        {name}
+                    </Badge>)}</div>
+                <div>regions: {resource.regions?.map(({ name }) =>
+                    <Badge variant={filters.find(({ key, value }) => key === 'filter{regions.name.in}' && value === name) ? "primary" : "outline-primary"}
+                        as="a"
+                        className="mr-1"
+                        href={hashLocationToHref({
+                            location,
+                            query: {
+                                'filter{regions.name.in}': name
+                            }
+                        })}>
+                        {name}
+                    </Badge>)}</div>
+            </p>
+            <p>{resource.abstract}</p>
+            <p>
+                <div>owner: <UserSign data={resource.owner} /></div>
+                <div>metadata author: <UserSign data={resource.metadata_author} /></div>
+                <div>poc: <UserSign data={resource.poc} /></div>
+            </p>
+        </section>
     );
 }
+
+DetailPanel.defaultProps = {
+    onClose: () => {}
+};
 
 export default DetailPanel;
