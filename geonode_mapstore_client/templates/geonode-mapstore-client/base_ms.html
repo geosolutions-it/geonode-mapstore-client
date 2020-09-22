@@ -19,7 +19,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.2.3/esri-leaflet.js"></script>
 {% endif %}
 
+{% block ms_jsapi %}
 <script id="ms2-api" src="{% static 'mapstore/dist/ms2-geonode-api.js' %}"></script>
+{% endblock %}
 
 <!-- script to generate Thumbnails from MapStore -->
 <script type="text/javascript" src="{% static 'geonode/js/ms2/utils/thumbnail.js' %}"></script>

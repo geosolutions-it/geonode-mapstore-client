@@ -14,7 +14,8 @@ const protocol = envJson.DEV_SERVER_HOST_PROTOCOL || 'http';
 
 module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     {
-        'ms2-geonode-api': path.join(__dirname, 'js', 'api')
+        'ms2-geonode-api': path.join(__dirname, 'js', 'api'),
+        'ms-geostory': path.join(__dirname, 'js', 'apps', 'geostory')
     },
     themeEntries,
     {
@@ -26,7 +27,13 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     extractThemesPlugin,
     false,
     `/static/mapstore/dist/`,
-    '.msgapi'
+    '.msgapi',
+    [],
+    {
+        'mapstore/framework': path.resolve(__dirname, 'MapStore2', 'web', 'client'),
+        'react-draft-wysiwyg/dist': path.resolve(__dirname, 'MapStore2', 'node_modules', 'react-draft-wysiwyg', 'dist'),
+        '@js': path.resolve(__dirname, 'js')
+    }
 ), {
     devServer: {
         https: protocol === 'https' ? true : false,
@@ -37,9 +44,9 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
             path.join(__dirname),
             path.join(__dirname, '..', 'static')
         ],
-        before: function (app) {
+        before: function(app) {
             const hashRegex = /\.[a-zA-Z0-9]{1,}\.js/;
-            app.use(function (req, res, next) {
+            app.use(function(req, res, next) {
                 // remove hash from requests to use the local js
                 if (req.url.indexOf('/static/geonode/js/ms2/utils/') !== -1
                     || req.url.indexOf('/ms2-geonode-api') !== -1) {

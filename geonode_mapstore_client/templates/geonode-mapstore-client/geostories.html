@@ -1,0 +1,134 @@
+{% extends "./base_ms.html" %}
+{% load static %}
+{% block ms_jsapi %}
+<!-- remove current api js -->
+{% endblock %}
+{% block plugins %}
+<!-- remove current plugins -->
+{% endblock %}
+{% block style %}
+<style>
+    body {
+        padding-top: 0px !important;
+    }
+    #ms-container {
+        position: absolute;
+        top: 72px;
+        bottom: 0px;
+        width: 100%;
+        z-index: 1029;
+        background-color: white;
+        transform: translate(0, 0);
+    }
+</style>
+{% endblock %}
+{% block app_config %}
+{% autoescape off %}
+<script type="text/javascript">
+
+    const geoStoryExample = {
+        "type": "cascade",
+        "resources": [],
+        "settings": {
+            "theme": {
+                "general": {
+                    "color": "#333333",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#e6e6e6"
+                },
+                "overlay": {
+                    "backgroundColor": "rgba(255, 255, 255, 0.75)",
+                    "borderColor": "#dddddd",
+                    "boxShadow": "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)",
+                    "color": "#333333"
+                }
+            }
+        },
+        "sections": [
+            {
+                "type": "title",
+                "id": "title_section_id1",
+                "title": "Abstract",
+                "cover": true,
+                "contents": [
+                    {
+                        "id": "title_content_id1",
+                        "type": "text",
+                        "size": "large",
+                        "align": "center",
+                        "theme": "",
+                        "html": "<h1>GeoStory</h1>",
+                        "background": {
+                            "fit": "cover",
+                            "size": "full",
+                            "align": "center"
+                        }
+                    }
+                ]
+            }
+        ]
+    };
+
+    const plugins = [
+        {
+            "name": "OmniBar",
+            "cfg": {
+                "containerPosition": "header",
+                "className": "navbar shadow navbar-home"
+            }
+        },
+        "BurgerMenu",
+        "GeoStory",
+        "GeoStorySave",
+        "GeoStorySaveAs",
+        "MapEditor",
+        "MediaEditor",
+        {
+            "name": "GeoStoryEditor",
+            "cfg": {
+                "disablePluginIf": "{!!(state('browser') && state('browser').mobile)}",
+                "containerPosition": "columns"
+            }
+        },
+        {
+            "name": "GeoStoryNavigation",
+            "cfg": {
+                "containerPosition": "header"
+            }
+        },
+        "Notifications"
+    ];
+
+    const userDetails = user && user.id !== null
+        && accessToken && accessToken !== 'None'
+        && {
+            user: user,
+            token: accessToken
+        };
+
+    window.geoNodeMSConfig = {
+        language: '{{ LANGUAGE_CODE }}',
+        maptype: '{{ MAP_TYPE }}',
+        userDetails: userDetails,
+        defaultConfig,
+        plugins,
+        geostory: {
+            currentStory: geoStoryExample, // <- story configuration
+            mode: 'view', // <- starting mode 'view' or 'edit'
+            resource: {
+                canEdit: userDetails ? true : false
+            }
+        }
+    };
+</script>
+<script id="ms2-api" src="{% static 'mapstore/dist/ms-geostory.js' %}"></script>
+{% endautoescape %}
+{% endblock %}
+{% block map_content %}
+<div id="ms-container" class="ms2">
+    <div class="_ms2_init_spinner _ms2_init_center">
+        <div></div>
+    </div>
+    <div class="_ms2_init_text _ms2_init_center">Loading MapStore</div>
+</div>
+{% endblock %}
