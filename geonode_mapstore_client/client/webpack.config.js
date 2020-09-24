@@ -31,7 +31,6 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     [],
     {
         'mapstore/framework': path.resolve(__dirname, 'MapStore2', 'web', 'client'),
-        'react-draft-wysiwyg/dist': path.resolve(__dirname, 'MapStore2', 'node_modules', 'react-draft-wysiwyg', 'dist'),
         '@js': path.resolve(__dirname, 'js')
     }
 ), {
