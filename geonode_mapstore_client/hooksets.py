@@ -175,7 +175,7 @@ class MapStoreHookSet(BaseHookSet):
         self.initialize_context(
             context,
             callback=ms2_config_converter.convert)
-        return 'geonode-mapstore-client/map_embed.html'
+        return 'geonode-mapstore-client/geostories.html'
 
     # def map_download_template(self, context=None):
     #    self.initialize_context(
