@@ -1,0 +1,9 @@
+{
+	"locale": "en-US",
+	"messages": {
+		"meteoblue": {
+			"title": "Meteoblue Charts",
+			"mapClickButton": "Toggle this button and click on the map to view meteo charts for the position"
+		}
+	}
+}

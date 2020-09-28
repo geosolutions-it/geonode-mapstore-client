@@ -20665,4 +20665,27 @@ Ported to CodeMirror by Peter Kroon
     width: 98%;
   }
 }
+.msgapi .ms-meteoblue-panel {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.msgapi .ms-meteoblue-panel .ms-meteoblue-button-container {
+  padding-bottom: 8px;
+  font-size: 18px;
+}
+.msgapi .ms-meteoblue-panel .ms-meteoblue-button-container button {
+  margin-right: 0.4em;
+  font-weight: bold;
+}
+.msgapi .ms-meteoblue-panel .ms-meteoblue-button-container .glyphicon {
+  font-size: 32px;
+}
+.msgapi .ms-meteoblue-panel .ms-meteoblue-child-container {
+  flex-grow: 1;
+}
+.msgapi .ms-meteoblue-panel .ms-meteoblue-child-container .ms-meteoblue-child {
+  border: 1px solid;
+}
 
