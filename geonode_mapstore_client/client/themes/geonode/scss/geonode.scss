@@ -1,8 +1,18 @@
 // theme for GeoNode SPA client
+
+
 @import
-'custom',
 'bootstrap-variables',
-'~bootstrap-v4/scss/bootstrap';
+'~bootstrap-v4/scss/bootstrap',
+'bootstrap-geonode-theme',
+'custom',
+'main';
+
+@import '~react-select/dist/react-select.css';
+
+:root {
+    font-size: 14px;
+}
 
 // if we are not going to use color per resource type
 // we should better remove this variables and rules

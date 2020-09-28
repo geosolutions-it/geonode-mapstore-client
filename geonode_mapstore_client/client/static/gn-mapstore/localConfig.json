@@ -1,0 +1,85 @@
+{
+    "proxyUrl": {
+        "url": "proxy/?url=",
+        "useCORS": [
+            "https://dev.geonode.geo-solutions.it/api/v2",
+            "https://dev.geonode.geo-solutions.it/base/autocomplete_response"
+        ]
+    },
+    "translationsPath": [ "/static/mapstore/MapStore2/web/client" ],
+    "geoNodeApi": {
+        "autocomplete": "https://dev.geonode.geo-solutions.it/base/autocomplete_response",
+        "endpointV1": "https://dev.geonode.geo-solutions.it/api/",
+        "endpointV2": "https://dev.geonode.geo-solutions.it/api/v2"
+    },
+    "geoNodeConfiguration": {
+        "logo": [{
+            "src": "/static/gn-mapstore/img/geonode-logo.svg",
+            "href": "#/"
+        }],
+        "background": {
+            "src": "/static/gn-mapstore/img/bg.jpg",
+            "credits": "Image by USGS - Byrd Glacier, Antarctica"
+        },
+        "jumbotron": {
+            "title": "GeoNode",
+            "description": "open source platform for sharing geospatial data and maps"
+        },
+        "theme": {
+            "variant": "light",
+            "base": "#2c689c",
+            "primary": {
+                "color": "#ffffff"
+            }
+        },
+        "navigation": [
+            {
+                "label": "Data",
+                "type": "dropdown",
+                "links": [
+                    {
+                        "type": "link",
+                        "href": "#/",
+                        "label": "Layers"
+                    },
+                    {
+                        "type": "link",
+                        "href": "#/",
+                        "label": "Documents"
+                    },
+                    {
+                        "type": "link",
+                        "href": "#/",
+                        "label": "Remote Services"
+                    }
+                ]
+            },
+            {
+                "label": "Maps",
+                "type": "link",
+                "href": "#/"
+            },
+            {
+                "label": "About",
+                "type": "dropdown",
+                "links": [
+                    {
+                        "type": "link",
+                        "href": "#/",
+                        "label": "People"
+                    },
+                    {
+                        "type": "link",
+                        "href": "#/",
+                        "label": "Groups"
+                    },
+                    {
+                        "type": "link",
+                        "href": "#/",
+                        "label": "Groups Categories"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -27,19 +27,19 @@ function toLazyPlugin(name, imp) {
 const plugins = {
     GeoStoryPlugin: () => toLazyPlugin(
         'GeoStory',
-        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/framework/plugins/GeoStory')
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ '@mapstore/framework/plugins/GeoStory')
     ),
     MapPlugin: () => toLazyPlugin(
         'Map',
-        import(/* webpackChunkName: 'plugins/map-plugin' */ 'mapstore/framework/plugins/Map')
+        import(/* webpackChunkName: 'plugins/map-plugin' */ '@mapstore/framework/plugins/Map')
     ),
     ZoomInPlugin: () => toLazyPlugin(
         'ZoomIn',
-        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/framework/plugins/ZoomIn')
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ '@mapstore/framework/plugins/ZoomIn')
     ),
     ZoomOutPlugin: () => toLazyPlugin(
         'ZoomOut',
-        import(/* webpackChunkName: 'plugins/geostory-plugin' */ 'mapstore/framework/plugins/ZoomOut')
+        import(/* webpackChunkName: 'plugins/geostory-plugin' */ '@mapstore/framework/plugins/ZoomOut')
     ),
 
     TestPlugin: () => import(/* webpackChunkName: 'plugins/test-plugin' */ '@js/plugins/Test')

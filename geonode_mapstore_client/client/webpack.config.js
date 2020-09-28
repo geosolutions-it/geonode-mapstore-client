@@ -15,10 +15,10 @@ module.exports = () => {
         {
             base: __dirname,
             dist: path.join(__dirname, 'dist'),
-            framework: path.join(__dirname, 'node_modules', 'mapstore', 'framework'),
+            framework: path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client'),
             code: [
                 path.join(__dirname, 'js'),
-                path.join(__dirname, 'node_modules', 'mapstore', 'framework')
+                path.join(__dirname, 'node_modules', 'mapstore', 'web', 'client')
             ]
         },
         extractThemesPlugin,
@@ -27,7 +27,8 @@ module.exports = () => {
         '.msgapi',
         [],
         {
-            '@js': path.resolve(__dirname, 'js')
+            '@js': path.resolve(__dirname, 'js'),
+            '@mapstore/framework': path.resolve(__dirname, 'node_modules', 'mapstore', 'web', 'client')
         }
     );
 
@@ -53,13 +54,12 @@ module.exports = () => {
         {
             entry: {
                 'ms2-geonode-api': path.join(__dirname, 'js', 'api'),
-                'geonode-home': path.join(__dirname, 'js', 'pages', 'home'),
-                'geonode-builder': path.join(__dirname, 'js', 'pages', 'builder'),
+                'geonode-home': path.join(__dirname, 'js', 'apps', 'home'),
                 'themes/default': path.join(__dirname, 'themes', 'default', 'theme.less'),
                 'themes/preview': path.join(__dirname, 'themes', 'preview', 'theme.less'),
                 'themes/geonode': path.join(__dirname, 'themes', 'geonode', 'theme.less'),
                 // only to check the theme
-                'geonode-bootstrap-theme': path.join(__dirname, 'js', 'pages', 'bootstrap-theme.js')
+                'geonode-bootstrap-theme': path.join(__dirname, 'js', 'apps', 'bootstrap-theme.js')
             },
             module: module,
             devServer: {
@@ -90,6 +90,7 @@ module.exports = () => {
                         context: [
                             '**',
                             '!**/static/mapstore/**',
+                            '!**/static/gn-mapstore/**',
                             '!**/mapstore/**',
                             '!**/static/geonode/js/ms2/utils/**',
                             '!**/geonode/js/ms2/utils/**',
@@ -117,7 +118,7 @@ module.exports = () => {
                         secure: false,
                         changeOrigin: true,
                         pathRewrite: {
-                            '/static/mapstore/MapStore2/web/client/': '/node_modules/mapstore/framework/translations/',
+                            '/static/mapstore/MapStore2/web/client/': '/node_modules/mapstore/web/client/translations/',
                             '/static/geonode/js/ms2/utils/': '/geonode/js/ms2/utils/',
                             '/static/mapstore/': '/mapstore/',
                             '/spa/bootstrap-theme/': '/bootstrap-theme.html',
