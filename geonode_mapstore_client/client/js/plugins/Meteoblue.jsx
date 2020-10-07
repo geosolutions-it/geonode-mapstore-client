@@ -13,13 +13,16 @@ import ContainerDimensions from 'react-container-dimensions';
 import { Glyphicon } from 'react-bootstrap';
 
 import Meteoblue from '../components/meteoblue/Meteoblue';
+import ChartContainer from '../components/meteoblue/ChartContainer';
 import DockPanel from '../../MapStore2/web/client/components/misc/panels/DockPanel';
 import Message from '../../MapStore2/web/client/components/I18N/Message';
 
 import {
     controlPanelEnabledSelector,
     mapClickEnabledSelector,
-    dockSizeSelector
+    dockSizeSelector,
+    chartsSelector,
+    loadingSelector
 } from '../selectors/meteoblue';
 import {
     isFeatureGridOpen,
@@ -28,7 +31,9 @@ import {
 
 import {
     setMapClick,
-    setDockSize
+    setDockSize,
+    setChart,
+    updateChart
 } from '../actions/meteoblue';
 import {
     setControlProperty
@@ -49,10 +54,14 @@ const MeteoblueComponent = ({
     dockStyle,
     dockSize,
     mapClickEnabled,
+    charts = {},
+    loadingNew,
     onEnableMapClick = () => {},
     onDisableMapClick = () => {},
     onClose = () => {},
-    onDockResize = () => {}
+    onDockResize = () => {},
+    onChartInitialized = () => {},
+    onChartUpdate = () => {}
 }) => {
     React.useEffect(() => {
         onDockResize(pluginWidth / width > 1 ? width : pluginWidth);
@@ -73,7 +82,13 @@ const MeteoblueComponent = ({
                 mapClickEnabled={mapClickEnabled}
                 featureGridIsOpen={featureGridIsOpen}
                 featureGridDockSize={featureGridDockSize}
-                onToggleMapClick={() => mapClickEnabled ? onDisableMapClick() : onEnableMapClick()}/>
+                onToggleMapClick={() => mapClickEnabled ? onDisableMapClick() : onEnableMapClick()}>
+                <ChartContainer
+                    loading={loadingNew}
+                    charts={charts}
+                    onChartInitialized={onChartInitialized}
+                    onChartUpdate={onChartUpdate}/>
+            </Meteoblue>
         </DockPanel>
     );
 };
@@ -86,12 +101,16 @@ export default createPlugin('Meteoblue', {
         mapClickEnabled: mapClickEnabledSelector,
         featureGridIsOpen: isFeatureGridOpen,
         featureGridDockSize: featureGridDockSizeSelector,
-        dockSize: dockSizeSelector
+        dockSize: dockSizeSelector,
+        charts: chartsSelector,
+        loadingNew: loadingSelector
     }), {
         onEnableMapClick: setMapClick.bind(null, true),
         onDisableMapClick: setMapClick.bind(null, false),
         onClose: setControlProperty.bind(null, 'meteoblue', 'enabled', false),
-        onDockResize: setDockSize
+        onDockResize: setDockSize,
+        onChartInitialized: setChart,
+        onChartUpdate: updateChart
     })(MeteobluePlugin),
     containers: {
         BurgerMenu: {

@@ -7,10 +7,11 @@
  */
 
 import React from 'react';
+import Rx from 'rxjs';
 import { Button, Glyphicon } from 'react-bootstrap';
+import ContainerDimensions from 'react-container-dimensions';
 
 import Message from '../../../MapStore2/web/client/components/I18N/Message';
-import ConfigUtils from '../../../MapStore2/web/client/utils/ConfigUtils';
 
 export default ({
     mapClickEnabled,
@@ -23,18 +24,25 @@ export default ({
 }) => {
     const meteoblueChildContainerRef = React.useRef();
     const [meteoblueChildHeight, setMeteoblueChildHeight] = React.useState(100);
+    const [viewportHeight, setViewportHeight] = React.useState(document.documentElement.clientHeight);
+
+    React.useEffect(() => {
+        const sub = Rx.Observable.fromEvent(window, 'resize').debounceTime(150).subscribe(() => {
+            setViewportHeight(document.documentElement.clientHeight);
+        });
+        return () => sub.unsubscribe();
+    }, []);
 
     React.useEffect(() => {
         if (featureGridIsOpen && meteoblueChildContainerRef.current) {
-            const vh = document.documentElement.clientHeight;
-            const dockHeight = vh * featureGridDockSize;
+            const dockHeight = viewportHeight * featureGridDockSize;
             const childContainerHeight = meteoblueChildContainerRef.current.clientHeight;
 
             setMeteoblueChildHeight((1 - dockHeight / childContainerHeight) * 100);
         } else {
             setMeteoblueChildHeight(100);
         }
-    }, [featureGridDockSize, featureGridIsOpen, setMeteoblueChildHeight]);
+    }, [viewportHeight, featureGridDockSize, featureGridIsOpen]);
 
     return (
         <div className="ms-meteoblue-panel">
@@ -46,7 +54,9 @@ export default ({
             </div>
             <div ref={meteoblueChildContainerRef} className="ms-meteoblue-child-container">
                 <div style={{height: `${meteoblueChildHeight}%`}} className="ms-meteoblue-child">
-                    {children}
+                    <ContainerDimensions>
+                        {children}
+                    </ContainerDimensions>
                 </div>
             </div>
         </div>

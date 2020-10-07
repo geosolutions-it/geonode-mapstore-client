@@ -20,9 +20,14 @@
 
     .ms-meteoblue-child-container {
         flex-grow: 1;
+        overflow-y: auto;
 
         .ms-meteoblue-child {
             border: 1px solid;
+
+            .ms-plotly-chart-container .js-plotly-plot {
+                width: 98%;
+            }
         }
     }
 }

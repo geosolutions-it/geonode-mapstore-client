@@ -7,5 +7,7 @@
  */
 
 export const controlPanelEnabledSelector = state => state?.controls?.meteoblue?.enabled;
+export const loadingSelector = state => state?.meteoblue?.loading;
 export const mapClickEnabledSelector = state => state?.meteoblue?.mapClickEnabled;
 export const dockSizeSelector = state => state?.meteoblue?.dockSize;
+export const chartsSelector = state => state?.meteoblue?.charts;
