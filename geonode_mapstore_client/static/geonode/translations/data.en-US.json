@@ -3,7 +3,23 @@
 	"messages": {
 		"meteoblue": {
 			"title": "Meteoblue Charts",
-			"mapClickButton": "Toggle this button and click on the map to view meteo charts for the position"
+			"mapClickButton": "Toggle this button and click on the map to view meteo charts for the position",
+			"timeWindows": {
+				"oneDay": "1 day",
+				"sevenDays": "7 days",
+				"oneWeek": "1 week",
+				"oneMonth": "1 month",
+				"oneYear": "1 year",
+				"twoYears": "2 years",
+				"fiveYears": "5 years"
+			},
+			"forecast": {
+				"title": "Forecast Data"
+			},
+			"historical": {
+				"title": "Historical Data"
+			},
+			"tocsv": "Export to csv"
 		}
 	}
 }
