@@ -1,0 +1,9 @@
+{
+	"locale": "fr-FR",
+	"messages": {
+		"meteoblue": {
+			"title": "Cartes Meteoblue",
+			"mapClickButton": "Activez ce bouton et cliquez sur la carte pour afficher les graphiques météo de la position"
+		}
+	}
+}

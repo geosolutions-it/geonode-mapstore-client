@@ -57,7 +57,8 @@ module.exports = {
                 maplayout: require('../MapStore2/web/client/reducers/maplayout')
             },
             epics
-        }
+        },
+        MeteobluePlugin: require('./plugins/Meteoblue').default
     },
     requires: {
         ReactSwipe: require('react-swipeable-views').default,

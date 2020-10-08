@@ -1,0 +1,33 @@
+.ms-meteoblue-panel {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .ms-meteoblue-button-container {
+        padding-bottom: 8px;
+        font-size: 18px;
+
+        button {
+            margin-right: 0.4em;
+            font-weight: bold;
+        }
+
+        .glyphicon {
+            font-size: 32px;
+        }
+    }
+
+    .ms-meteoblue-child-container {
+        flex-grow: 1;
+        overflow-y: auto;
+
+        .ms-meteoblue-child {
+            border: 1px solid;
+
+            .ms-plotly-chart-container .js-plotly-plot {
+                width: 98%;
+            }
+        }
+    }
+}

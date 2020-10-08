@@ -1,0 +1,9 @@
+{
+	"locale": "de-DE",
+	"messages": {
+		"meteoblue": {
+			"title": "Meteoblue-Diagramme",
+			"mapClickButton": "Schalten Sie diese Schaltfläche um und klicken Sie auf die Karte, um Meteodiagramme für die Position anzuzeigen"
+		}
+	}
+}

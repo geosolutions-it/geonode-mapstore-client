@@ -39,6 +39,10 @@ const { head, get } = require('lodash');
 const { mapSaveMapResourceEpic } = require("../../MapStore2/web/client/epics/maps");
 const { showCoordinateEditorSelector } = require('../../MapStore2/web/client/selectors/controls');
 
+const {
+    controlPanelEnabledSelector: meteoblueControlPanelEnabledSelector,
+    dockSizeSelector: meteoblueDockSizeSelector
+} = require('../selectors/meteoblue');
 
 /**
  * When a user selects a layer, the app checks for layer editing permission.
@@ -178,7 +182,8 @@ const updateMapLayoutEpic = (action$, store) =>
                 get(state, "controls.annotations.enabled") && { right: mapLayout.right.md } || null,
                 get(state, "controls.metadataexplorer.enabled") && { right: mapLayout.right.md } || null,
                 get(state, "controls.measure.enabled") && showCoordinateEditorSelector(state) && { right: mapLayout.right.md } || null,
-                get(state, "mapInfo.enabled") && isMapInfoOpen(state) && { right: mapLayout.right.md } || null
+                get(state, "mapInfo.enabled") && isMapInfoOpen(state) && { right: mapLayout.right.md } || null,
+                meteoblueControlPanelEnabledSelector(state) && { right: meteoblueDockSizeSelector(state) || mapLayout.right.md } || null
             ].filter(panel => panel)) || { right: 0 };
 
             const dockSize = getDockSize(state) * 100;
