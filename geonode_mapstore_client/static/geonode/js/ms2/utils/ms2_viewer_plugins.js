@@ -126,6 +126,7 @@ var MS2_PLUGINS = {
 					"alwaysVisible": true
 				}
 			}
-		}
+		},
+		"Meteoblue"
 	]
 }

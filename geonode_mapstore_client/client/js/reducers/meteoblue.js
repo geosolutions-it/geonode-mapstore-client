@@ -10,6 +10,7 @@ import { isNil, find } from 'lodash';
 
 import {
     SET_MAP_CLICK,
+    METEOBLUE_CONFIG_LOADED,
     SET_DOCK_SIZE,
     SET_CHART,
     UPDATE_CHART,
@@ -17,16 +18,23 @@ import {
     LOADING
 } from '../actions/meteoblue';
 
-import { getBaseConfig } from '../utils/ChartUtils';
 import { set } from '../../MapStore2/web/client/utils/ImmutableUtils';
 
 export default (state = {}, action) => {
     switch(action.type) {
-    case SET_MAP_CLICK:
+    case SET_MAP_CLICK: {
         return {
             ...state,
             mapClickEnabled: action.enable
         };
+    }
+    case METEOBLUE_CONFIG_LOADED: {
+        return {
+            ...state,
+            config: action.config,
+            configLoaded: true
+        };
+    }
     case SET_DOCK_SIZE: {
         return {
             ...state,
@@ -44,27 +52,27 @@ export default (state = {}, action) => {
     }
     case UPDATE_CHART: {
         const oldChart = state.charts?.[action.chartName];
-        const newChart = isNil(action.updateObj) ? oldChart : {...(oldChart || {}), ...action.updateObj};
+        const newChart = isNil(action.updateObj) ?
+            oldChart : {
+                ...(oldChart || {}),
+                ...action.updateObj,
+                figure: {
+                    ...(oldChart?.figure || {}),
+                    ...(action.updateObj.figure || {})
+                }
+            };
         const timeWindow = !isNil(newChart?.timeWindows) && !isNil(newChart?.currentTimeWindow) ?
             find(newChart.timeWindows, { name: newChart.currentTimeWindow }) :
             null;
         const newChartWithNewTW = !isNil(newChart?.currentTimeWindow) && !isNil(oldChart?.currentTimeWindow) && !isNil(timeWindow) && newChart?.currentTimeWindow !== oldChart?.currentTimeWindow ?
             set('figure.layout.xaxis.autorange', false, set('figure.layout.xaxis.range', [timeWindow.start, timeWindow.end], newChart)) :
             newChart;
-        const oldTimeRange = oldChart?.figure?.layout?.xaxis?.range;
-        const timeRange = newChartWithNewTW?.figure?.layout?.xaxis?.range;
-        const newChartWithNewConfig = !isNil(timeRange) && (isNil(oldTimeRange) || timeRange[0] !== oldTimeRange[0] || timeRange[1] !== oldTimeRange[1]) ?
-            set('figure.config', {
-                ...newChartWithNewTW.figure.config,
-                ...getBaseConfig([...timeRange], newChartWithNewTW.figure.data)
-            }, newChartWithNewTW) :
-            newChartWithNewTW;
 
         return {
             ...state,
             charts: {
                 ...(state.charts || {}),
-                [action.chartName]: newChartWithNewConfig
+                [action.chartName]: newChartWithNewTW
             }
         };
     }

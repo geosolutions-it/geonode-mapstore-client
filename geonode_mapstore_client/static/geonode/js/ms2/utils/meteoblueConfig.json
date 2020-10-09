@@ -1,0 +1,105 @@
+{
+    "parameters": {
+        "precipitation": {
+            "units": "mm"
+        },
+        "convective_precipitation": {
+            "units": "mm"
+        },
+        "windspeed": {
+            "units": "ms-1"
+        },
+        "relativehumidity": {
+            "units": "%"
+        },
+        "precipitation_probability": {
+            "units": "%"
+        },
+        "temperature": {
+            "units": "C°",
+            "traceOptions": {
+                "mode": "lines"
+            }
+        },
+        "temperature_max": {
+            "units": "C°"
+        },
+        "temperature_min": {
+            "units": "C°"
+        },
+        "temperature_mean": {
+            "units": "C°"
+        },
+        "windspeed_max": {
+            "units": "ms-1"
+        },
+        "windspeed_min": {
+            "units": "ms-1"
+        },
+        "windspeed_mean": {
+            "units": "ms-1"
+        },
+        "relativehumidity_max": {
+            "units": "%"
+        },
+        "relativehumidity_min": {
+            "units": "%"
+        },
+        "relativehumidity_mean": {
+            "units": "%"
+        }
+    },
+    "units": {
+        "mm": {
+            "index": 2,
+            "axisOptions": {
+                "title": {
+                    "text": "mm",
+                    "standoff": 4
+                },
+                "overlaying": "y",
+                "side": "right",
+                "anchor": "free",
+                "position": 0.90
+            }
+        },
+        "ms-1": {
+            "index": 3,
+            "axisOptions": {
+                "title": {
+                    "text": "ms-1",
+                    "standoff": 4
+                },
+                "overlaying": "y",
+                "side": "right",
+                "anchor": "free",
+                "position": 0.95
+            }
+        },
+        "%": {
+            "index": 4,
+            "axisOptions": {
+                "title": {
+                    "text": "%",
+                    "standoff": 4
+                },
+                "overlaying": "y",
+                "side": "right",
+                "anchor": "free",
+                "position": 1
+            }
+        },
+        "C°": {
+            "index": 1,
+            "axisOptions": {
+                "title": {
+                    "text": "C°"
+                },
+                "side": "left"
+            }
+        }
+    },
+    "xAxisOptions": {
+        "domain": [0, 0.90]
+    }
+}

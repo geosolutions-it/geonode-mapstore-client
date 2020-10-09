@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { find, keys, zipWith, isArray } from 'lodash';
+import { find, keys, zipWith, values } from 'lodash';
 import Plotly from 'plotly.js/lib/core';
 
 import { addTimeOffset } from '../utils/TimeUtils';
@@ -15,28 +15,29 @@ import { getMessageById } from '../../MapStore2/web/client/utils/LocaleUtils';
 import { rangeToDates } from '../utils/TimeUtils';
 import FileUtils from '../../MapStore2/web/client/utils/FileUtils';
 
-const makeLayout = (title, yAxisTitle, startDate, endDate) => ({
-    title: {
-        text: title
-    },
-    hovermode: 'closest',
-    font: {
-        size: 10
-    },
-    xaxis: {
-        range: [startDate, endDate],
-        type: 'date'
-    },
-    yaxis: {
-        autorange: true,
-        type: 'linear',
-        ...(yAxisTitle ? {
-            title: {
-                text: yAxisTitle
-            }
-        } : {})
-    }
-});
+const makeLayout = (title, yAxes = [], startDate, endDate, xAxisOptions = {}) => {
+    const yAxesReduced = yAxes.reduce((result, cur) => ({...result, [`yaxis${!cur.index || cur.index === 1 ? '' : cur.index}`]: cur.axisOptions}), {});
+
+    return ({
+        title: {
+            text: title
+        },
+        hovermode: 'x unified',
+        font: {
+            size: 10
+        },
+        legend: {
+            orientation: 'h'
+        },
+        xaxis: {
+            range: [startDate, endDate],
+            type: 'date',
+            spikemode: 'across',
+            ...xAxisOptions
+        },
+        ...yAxesReduced
+    })
+};
 
 export const setFigureSize = (width, height, figure = {}) => ({
     ...figure,
@@ -47,21 +48,21 @@ export const setFigureSize = (width, height, figure = {}) => ({
     }
 });
 
-export const getBaseConfig = (range, data) => ({
+export const baseConfig = ({
     modeBarButtonsToAdd: [{
         name: 'meteoblue.tocsv',
         icon: Plotly.Icons.pencil,
-        click: () => {
-            const dateRange = rangeToDates(isArray(range) ? {start: range[0], end: range[1]} : range);
+        click: (gd) => {
+            const dateRange = rangeToDates(gd.layout?.xaxis?.range);
+            const data = gd.data || [];
 
-            console.log('range', range);
             const csvData = [
-                data.map(({traceId}) => traceId).toString(),
+                ['time', ...data.map(({traceId}) => traceId)].toString(),
                 ...zipWith(...data.map(({x, y}) =>
                     zipWith(x, y, (xv, yv) => [new Date(xv), yv])
                         .sort((a, b) => a[0] < b[0] ? -1 : 1)
-                        .filter(([time, _]) => time >= dateRange.start && time <= dateRange.end)
-                ), (data0, ...otherDatas) => [data0[0].toISOString(), ...otherDatas.map(d => d[1])].toString())
+                        .filter(([time, _]) => time >= dateRange[0] && time <= dateRange[1])
+                ), (data0, ...otherDatas) => [data0[0].toISOString(), ...[data0, ...otherDatas].map(d => d[1])].toString())
             ].join('\n');
 
             FileUtils.download(csvData, 'plot.csv', 'text/csv');
@@ -112,7 +113,7 @@ export const localizeChart = (messages, chart = {}) => ({
     }
 });
 
-export const makeChart = ({title, timeWindows, startTimeWindow, loadedRange, maxRange, latlng, data}) => {
+export const makeChart = ({title, timeWindows, startTimeWindow, loadedRange, maxRange, latlng, data, unitsConfig, xAxisOptions}) => {
     const currentTimeWindow = find(timeWindows, { name: startTimeWindow });
 
     return {
@@ -123,8 +124,8 @@ export const makeChart = ({title, timeWindows, startTimeWindow, loadedRange, max
         latlng,
         figure: {
             data,
-            config: getBaseConfig(loadedRange, data),
-            layout: makeLayout(title, false, currentTimeWindow.start, currentTimeWindow.end)
+            config: baseConfig,
+            layout: makeLayout(title, values(unitsConfig), currentTimeWindow.start, currentTimeWindow.end, xAxisOptions)
         }
     };
 };
@@ -150,15 +151,21 @@ export const unitsMap = {
     relativehumidity_mean: '%',
 };
 
-export const processChartData = data => {
+export const processChartData = (data, config = {}) => {
     const dataPointToTrace = (time, dataPoint) => {
+        const unitsConfig = config.units || {};
+        const unitIndex = unitsConfig[dataPoint.units]?.index || 1;
+        const unitsName = unitsConfig[dataPoint.units]?.name || dataPoint.units;
+
         return {
             x: time,
             y: dataPoint.values,
             traceId: dataPoint.name,
-            name: `${dataPoint.name}${dataPoint.units ? `, ${dataPoint.units}` : ''}`,
+            name: `${dataPoint.name}${unitsName ? `, ${unitsName}` : ''}`,
             mode: 'lines+markers',
-            type: 'scatter'
+            type: 'scatter',
+            ...(dataPoint.traceOptions || {}),
+            yaxis: `y${unitIndex === 1 ? '' : unitIndex}`
         };
     };
 
@@ -167,7 +174,8 @@ export const processChartData = data => {
     const extractTime = (results = []) => extractValues(results, 'time');
     const makeDataPoints = (results = []) => valueKeys(results).map(key => ({
         values: extractValues(results, key),
-        units: unitsMap[key],
+        units: config.parameters?.[key]?.units,
+        traceOptions: config.parameters?.[key]?.traceOptions,
         name: key
     }));
     const makeTraces = (results = []) => makeDataPoints(results).map(dataPoint => dataPointToTrace(extractTime(results), dataPoint));

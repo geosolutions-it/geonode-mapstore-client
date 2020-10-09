@@ -6,6 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import axios from 'axios';
 import { Observable } from 'rxjs';
 import { findIndex, last, head } from 'lodash';
 
@@ -14,7 +15,8 @@ import {
     UPDATE_CHART,
     setChart,
     updateChart,
-    loading
+    loading,
+    meteoblueConfigLoaded
 } from '../actions/meteoblue';
 import {
     changeMapInfoState
@@ -25,7 +27,9 @@ import {
 
 import {
     mapClickEnabledSelector,
-    chartsSelector
+    chartsSelector,
+    configSelector,
+    configLoadedSelector
 } from '../selectors/meteoblue';
 import {
     currentMessagesSelector
@@ -46,6 +50,9 @@ import {
 import {
     rangeToDates
 } from '../utils/TimeUtils';
+import {
+    basicError
+} from '../../MapStore2/web/client/utils/NotificationUtils';
 
 export const manageIdentifyOnSetMapClick = (action$) => action$
     .ofType(SET_MAP_CLICK)
@@ -71,12 +78,19 @@ export const getDataOnMapClick = (action$, store) => action$
         const historicalEndDate = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
         const historicalMaxDate = `${fiveYearsPast.getFullYear()}-${pad(fiveYearsPast.getMonth() + 1)}-${pad(fiveYearsPast.getDate())}`;
 
+        const configLoaded = configLoadedSelector(store.getState())
+        const meteoblueConfigState = configSelector(store.getState()) ;
+
+        const loadConfigFlow = configLoaded ? Observable.of(meteoblueConfigState) : Observable.defer(() => axios.get('/static/geonode/js/ms2/utils/meteoblueConfig.json'))
+            .switchMap((response = {}) => Observable.of(response.data))
+            .catch((e) => Observable.of({error: e}));
         const requestsFlow = Observable.forkJoin(
             Observable.defer(() => getForecastData(point.latlng.lat, point.latlng.lng, forecastStartDate, forecastEndDate)).catch(e => ({error: e})),
-            Observable.defer(() => getHistoricalData(point.latlng.lat, point.latlng.lng, historicalStartDate, historicalEndDate)).catch(e => ({error: e}))
+            Observable.defer(() => getHistoricalData(point.latlng.lat, point.latlng.lng, historicalStartDate, historicalEndDate)).catch(e => ({error: e})),
+            loadConfigFlow
         );
 
-        return requestsFlow.switchMap(([forecastData, historicalData]) => {
+        return requestsFlow.switchMap(([forecastData, historicalData, meteoblueConfig]) => {
             let forecastChart;
             let historicalChart
 
@@ -91,7 +105,7 @@ export const getDataOnMapClick = (action$, store) => action$
             const pickTimeWindows = (timeWindows, ...pickNames) => timeWindows.filter(({name}) => findIndex(pickNames, pickName => pickName === name) > -1);
 
             if (!forecastData.error) {
-                const forecastTraces = processChartData(forecastData.results);
+                const forecastTraces = processChartData(forecastData.results, meteoblueConfig);
                 forecastChart = localizeChart(currentMessages, makeChart({
                     title: 'meteoblue.forecast.title',
                     timeWindows: pickTimeWindows(makeTimeWindows(head(forecastData.results).date), 'oneDay', 'sevenDays'),
@@ -99,12 +113,14 @@ export const getDataOnMapClick = (action$, store) => action$
                     loadedRange: {start: forecastStartDate, end: forecastEndDate},
                     latlng: {...point.latlng},
                     startTimeWindow: 'oneDay',
-                    data: forecastTraces
+                    data: forecastTraces,
+                    unitsConfig: meteoblueConfig?.units,
+                    xAxisOptions: meteoblueConfig?.xAxisOptions
                 }));
             }
 
             if (!historicalData.error) {
-                const historicalTraces = processChartData(historicalData.results);
+                const historicalTraces = processChartData(historicalData.results, meteoblueConfig);
                 historicalChart = localizeChart(currentMessages, makeChart({
                     title: 'meteoblue.historical.title',
                     timeWindows: pickTimeWindows(makeTimeWindows(last(historicalData.results)?.date, '-'), 'oneWeek', 'oneMonth', 'oneYear', 'twoYears', 'fiveYears'),
@@ -112,11 +128,23 @@ export const getDataOnMapClick = (action$, store) => action$
                     loadedRange: {start: historicalStartDate, end: historicalEndDate},
                     latlng: {...point.latlng},
                     startTimeWindow: 'oneYear',
-                    data: historicalTraces
+                    data: historicalTraces,
+                    unitsConfig: meteoblueConfig?.units,
+                    xAxisOptions: meteoblueConfig?.xAxisOptions
                 }));
             }
 
-            return Observable.of(setChart('forecast', forecastChart), setChart('historical', historicalChart), loading(false));
+            return Observable.of(
+                setChart('forecast', forecastChart),
+                setChart('historical', historicalChart),
+                ...(!configLoaded ? [meteoblueConfigLoaded(meteoblueConfig)] : []),
+                ...(meteoblueConfig?.error ? [basicError({
+                    title: 'meteoblue.configLoadError.title',
+                    message: 'meteoblue.configLoadError.message',
+                    autoDismiss: 5
+                })] : []),
+                loading(false)
+            );
         }).startWith(loading(true));
     });
 
@@ -130,6 +158,8 @@ export const loadDataOnRangeChange = (action$, store) => action$
         const loadedRange = rangeToDates(chart?.loadedRange);
         const maxRange = rangeToDates(chart?.maxRange);
 
+        const meteoblueConfig = configSelector(store.getState());
+
         if (updateObj.figure && chart && curRange && maxRange && latlng && curRange[0] < loadedRange.start && loadedRange.start > maxRange.start) {
             const apiRequest = chartName === 'forecast' ? getForecastData : getHistoricalData;
             const startDate = chart.figure.layout.xaxis.range[0];
@@ -137,14 +167,14 @@ export const loadDataOnRangeChange = (action$, store) => action$
 
             return Observable.defer(() => apiRequest(latlng.lat, latlng.lng, startDate, endDate))
                 .switchMap(data => {
-                    const traces = processChartData(data.results);
+                    const traces = processChartData(data.results, meteoblueConfig);
 
                     const figureData = chart.figure.data;
                     const newFigureData = mergeFigureData(traces, figureData);
 
                     return Observable.of(updateChart(chartName, {
                         loadedRange: {start: startDate, end: endDate},
-                        figure: {...chart.figure, data: newFigureData},
+                        figure: {data: newFigureData},
                         loading: false
                     }));
                 })
