@@ -23,6 +23,7 @@ const PlotlyChart = loadingState()(PlotlyChartBase);
 const Chart = ({
     className = "ms-plotly-chart-container",
     availableHeight,
+    minChartHeight = 420,
     currentTimeWindow,
     timeWindows = [],
     figure = {},
@@ -34,12 +35,14 @@ const Chart = ({
 
     React.useEffect(() => {
         if (headerRef.current) {
-            const newHeight = !isNil(availableHeight) ? availableHeight - headerRef.current.clientHeight : figure.layout?.height;
+            let newHeight = !isNil(availableHeight) ? availableHeight - headerRef.current.clientHeight : figure.layout?.height;
+            newHeight = newHeight < minChartHeight ? minChartHeight : newHeight;
+
             if (newHeight !== figure.layout?.height) {
-                onUpdate({figure: setFigureSize(figure.layout?.width, newHeight, figure)});
+                onUpdate({figure: setFigureSize(headerRef.current.clientWidth - 10, newHeight, figure)});
             }
         }
-    }, [availableHeight, figure]);
+    }, [availableHeight, minChartHeight, figure]);
 
     return (
         <div className={className}>

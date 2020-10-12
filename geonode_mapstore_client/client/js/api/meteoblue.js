@@ -44,7 +44,6 @@ export const getHistoricalData = (lat, lon, startDate, endDate) => new Promise(r
         const startIndex = parseInt(startYear, 10) - 2015;
         const endIndex = parseInt(endYear, 10) - 2015;
 
-        console.log('startYear', startYear, 'endYear', endYear, 'startIndex', startIndex, 'endIndex', endIndex);
         const dataKeys = ['temperature_max', 'temperature_min', 'temperature_mean', 'precipitation', 'windspeed_max', 'windspeed_min', 'windspeed_mean', 'relativehumidity_max', 'relativehumidity_min', 'relativehumidity_mean'];
         let result = {
             results: []

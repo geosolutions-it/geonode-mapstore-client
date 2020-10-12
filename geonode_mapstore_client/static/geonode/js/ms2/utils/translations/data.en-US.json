@@ -19,7 +19,11 @@
 			"historical": {
 				"title": "Historical Data"
 			},
-			"tocsv": "Export to csv"
+			"tocsv": "Export to csv",
+			"configLoadError": {
+				"title": "Meteoblue error",
+				"message": "Parameter config failed to load"
+			}
 		}
 	}
 }

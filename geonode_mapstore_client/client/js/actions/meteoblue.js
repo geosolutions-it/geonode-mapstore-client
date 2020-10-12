@@ -7,6 +7,7 @@
  */
 
 export const SET_MAP_CLICK = 'METEOBLUE:SET_MAP_CLICK';
+export const METEOBLUE_CONFIG_LOADED = 'METEOBLUE:METEOBLUE_CONFIG_LOADED';
 export const SET_DOCK_SIZE = 'METEOBLUE:SET_DOCK_SIZE';
 export const SET_CHART = 'METEOBLUE:SET_CHART';
 export const UPDATE_CHART = 'METEOBLUE:UPDATE_CHART';
@@ -16,6 +17,11 @@ export const LOADING = 'METEOBLUE:LOADING';
 export const setMapClick = enable => ({
     type: SET_MAP_CLICK,
     enable
+});
+
+export const meteoblueConfigLoaded = config => ({
+    type: METEOBLUE_CONFIG_LOADED,
+    config
 });
 
 export const setDockSize = size => ({
@@ -35,7 +41,7 @@ export const updateChart = (chartName, updateObj) => ({
     updateObj
 });
 
-export const setChartProperty = (propName, chartName, propValue) => ({
+export const setChartProperty = (chartName, propName, propValue) => ({
     type: SET_CHART_PROPERTY,
     propName,
     chartName,

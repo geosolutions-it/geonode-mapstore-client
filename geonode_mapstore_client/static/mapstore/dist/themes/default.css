@@ -20688,8 +20688,9 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .ms-meteoblue-panel .ms-meteoblue-child-container .ms-meteoblue-child {
   border: 1px solid;
+  overflow-y: auto;
 }
 .msgapi .ms-meteoblue-panel .ms-meteoblue-child-container .ms-meteoblue-child .ms-plotly-chart-container .js-plotly-plot {
-  width: 98%;
+  width: 100%;
 }
 

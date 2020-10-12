@@ -64,7 +64,7 @@ const createMapStore2Api = function(plugins) {
             path: getScriptPath() + '/themes'
         },
         noLocalConfig: true,
-        translations: [getScriptPath() + '/../MapStore2/web/client', getScriptPath() + '/../../geonode/translations']
+        translations: [getScriptPath() + '/../MapStore2/web/client', getScriptPath() + '/../../geonode/js/ms2/utils/translations']
     });
     // window.MapStore2 = MapStore2;
     return assign({}, MapStore2, { create: function(container, opts) {
