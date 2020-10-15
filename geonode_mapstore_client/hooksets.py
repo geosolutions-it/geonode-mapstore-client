@@ -183,6 +183,13 @@ class MapStoreHookSet(BaseHookSet):
     #        callback=ms2_config_converter.convert)
     #    return 'geonode-mapstore-client/map_view.html'
 
+    # GeoApps
+    def geoapp_new_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/app_new.html'
+
     # Map Persisting
     def viewer_json(self, conf, context=None):
         context['viewer'] = conf
