@@ -184,6 +184,9 @@ class MapStoreHookSet(BaseHookSet):
     #    return 'geonode-mapstore-client/map_view.html'
 
     # GeoApps
+    def geoapp_list_template(self, context=None):
+        return 'geonode-mapstore-client/app_list.html'
+
     def geoapp_new_template(self, context=None):
         self.initialize_context(
             context,
