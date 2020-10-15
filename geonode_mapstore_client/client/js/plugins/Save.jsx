@@ -72,9 +72,8 @@ export default createPlugin('Save', {
             action: toggleControl.bind(null, 'save', null),
             selector: createSelector(
                 isLoggedIn,
-                mapInfoSelector,
-                (loggedIn, { canEdit, id } = {}) => ({
-                    style: loggedIn && id && canEdit ? {} : { display: 'none' }
+                (loggedIn) => ({
+                    style: loggedIn ? {} : { display: 'none' }
                 })
             )
         }

@@ -49,12 +49,15 @@ module.exports = {
         MousePositionPlugin: require('../MapStore2/web/client/plugins/MousePosition'),
         SearchPlugin: require('../MapStore2/web/client/plugins/Search'),
         SearchServicesConfigPlugin: require('../MapStore2/web/client/plugins/SearchServicesConfig'),
+        GeoStoryPlugin: require('../MapStore2/web/client/plugins/GeoStory').default,
+        GeoStoryEditorPlugin: require('../MapStore2/web/client/plugins/GeoStoryEditor').default,
+        GeoStoryNavigationPlugin: require('../MapStore2/web/client/plugins/GeoStoryNavigation').default,
+        MediaEditorPlugin: require('../MapStore2/web/client/plugins/MediaEditor').default,
         AddReducersAndEpics: {
             reducers: {
-                security: require('../MapStore2/web/client/reducers/security'),
-                maps: require('../MapStore2/web/client/reducers/maps'),
-                currentMap: require('../MapStore2/web/client/reducers/currentMap'),
-                maplayout: require('../MapStore2/web/client/reducers/maplayout')
+                security: require('../MapStore2/web/client/reducers/security').default,
+                maps: require('../MapStore2/web/client/reducers/maps').default,
+                maplayout: require('../MapStore2/web/client/reducers/maplayout').default
             },
             epics
         }

@@ -35,6 +35,18 @@ export const updateMapStoreMap = (id, body = {}) => {
         .then(({ data }) => data);
 };
 
+export const getMapStoreMapById = (id) => {
+    const baseUrl = getConfigProp('genode_rest_api') || '/mapstore/rest/';
+    return axios.get(parseDevHostname(`${baseUrl}resources/${id}/`),
+        {
+            params: {
+                full: true
+            }
+        })
+        .then(({ data }) => data);
+};
+
 export default {
-    creatMapStoreMap
+    creatMapStoreMap,
+    getMapStoreMapById
 };

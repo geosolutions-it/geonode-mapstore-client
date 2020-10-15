@@ -8,7 +8,8 @@ const extractThemesPlugin = require('./MapStore2/build/themes.js').extractThemes
 
 module.exports = require('./MapStore2/build/buildConfig')(
     {
-        'ms2-geonode-api': path.join(__dirname, "js", "api")
+        'ms2-geonode-api': path.join(__dirname, "js", "api"),
+        'ms-geostory': path.join(__dirname, 'js', 'apps', 'geostory')
     },
     themeEntries,
     {

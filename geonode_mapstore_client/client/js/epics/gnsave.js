@@ -14,6 +14,8 @@ import { mapOptionsToSaveSelector } from '@mapstore/framework/selectors/mapsave'
 import { textSearchConfigSelector, bookmarkSearchConfigSelector } from '@mapstore/framework/selectors/searchconfig';
 import { saveMapConfiguration } from '@mapstore/framework/utils/MapUtils';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
+import { currentStorySelector } from '@mapstore/framework/selectors/geostory';
+import { userSelector } from '@mapstore/framework/selectors/security';
 import {
     creatMapStoreMap,
     updateMapStoreMap
@@ -31,7 +33,12 @@ import {
     resourceError,
     updateResourceProperties
 } from '@js/actions/gnresource';
-import { getResourceByPk } from '@js/api/geonode/v2';
+import {
+    getResourceByPk,
+    createGeoStory,
+    updateGeoStory
+} from '@js/api/geonode/v2';
+import uuid from 'uuid';
 
 const SaveAPI = {
     map: (state, metadata, id) => {
@@ -86,6 +93,26 @@ const SaveAPI = {
                     window.location.href = `${getConfigProp('geonode_url')}maps/${response.id}/edit`;
                     return response.data;
                 });
+    },
+    geostory: (state, metadata, id) => {
+        const story = currentStorySelector(state);
+        const user = userSelector(state);
+        const body = {
+            'title': metadata.name,
+            'abstract': metadata.description,
+            'data': JSON.stringify(story),
+            'thumbnail_url': metadata.thumbnail
+        };
+        return id
+            ? updateGeoStory(id, body)
+            : createGeoStory({
+                'name': metadata.name + ' ' + uuid(),
+                'owner': user.name,
+                ...body
+            }).then((response) => {
+                // window.location.href = `${getConfigProp('geonode_url')}geostories/${response.id}/edit`;
+                return response.data;
+            });
     }
 };
 

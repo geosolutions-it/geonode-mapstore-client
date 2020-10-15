@@ -28,10 +28,9 @@ module.exports = {
         PlaybackPlugin: require('../MapStore2/web/client/plugins/Playback'),
         AddReducersAndEpics: {
             reducers: {
-                security: require('../MapStore2/web/client/reducers/security'),
-                maps: require('../MapStore2/web/client/reducers/maps'),
-                currentMap: require('../MapStore2/web/client/reducers/currentMap'),
-                maplayout: require('../MapStore2/web/client/reducers/maplayout')
+                security: require('../MapStore2/web/client/reducers/security').default,
+                maps: require('../MapStore2/web/client/reducers/maps').default,
+                maplayout: require('../MapStore2/web/client/reducers/maplayout').default
             },
             epics: {
                 _setThumbnail,

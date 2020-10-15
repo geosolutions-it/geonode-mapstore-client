@@ -14,7 +14,8 @@ const protocol = envJson.DEV_SERVER_HOST_PROTOCOL || 'http';
 
 module.exports = assign({}, require('./MapStore2/build/buildConfig')(
     {
-        'ms2-geonode-api': path.join(__dirname, 'js', 'api')
+        'ms2-geonode-api': path.join(__dirname, 'js', 'api'),
+        'ms-geostory': path.join(__dirname, 'js', 'apps', 'geostory')
     },
     themeEntries,
     {

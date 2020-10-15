@@ -9,7 +9,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import indexOf from 'lodash/indexOf';
 import { createPlugin } from '@mapstore/framework/utils/PluginsUtils';
 import {toggleControl} from '@mapstore/framework/actions/controls';
 import Message from '@mapstore/framework/components/I18N/Message';
@@ -71,15 +70,12 @@ export default createPlugin('SaveAs', {
             text: <Message msgId="saveAs"/>,
             icon: <Glyphicon glyph="floppy-open"/>,
             action: toggleControl.bind(null, 'saveAs', null),
-            selector: (state) => {
-                if (state?.controls?.saveAs?.allowedRoles) {
-                    return indexOf(
-                        state.controls.saveAs.allowedRoles,
-                        state && state.security && state.security.user && state.security.user.role) !== -1
-                        ? {} : { style: { display: 'none' } };
-                }
-                return { style: isLoggedIn(state) ? {} : { display: 'none' } };
-            }
+            selector: createSelector(
+                isLoggedIn,
+                (loggedIn) => ({
+                    style: loggedIn ? {} : { display: 'none' }
+                })
+            )
         }
     },
     epics: {

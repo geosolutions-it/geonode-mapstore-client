@@ -10,7 +10,8 @@ import {
     RESOURCE_LOADING,
     SET_RESOURCE,
     RESOURCE_ERROR,
-    UPDATE_RESOURCE_PROPERTIES
+    UPDATE_RESOURCE_PROPERTIES,
+    SET_RESOURCE_TYPE
 } from '@js/actions/gnresource';
 
 function gnresource(state = {}, action) {
@@ -44,6 +45,12 @@ function gnresource(state = {}, action) {
                 ...state.data,
                 ...action.properties
             }
+        };
+    }
+    case SET_RESOURCE_TYPE: {
+        return {
+            ...state,
+            type: action.resourceType
         };
     }
     default:
