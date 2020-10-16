@@ -94,6 +94,8 @@
                     mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id
                 });
             }
+            {% block additional_ms_actions %}
+            {% endblock %}
         });
     });
 </script>

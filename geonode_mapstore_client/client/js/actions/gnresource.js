@@ -11,6 +11,7 @@ export const SET_RESOURCE = 'GEONODE:SET_RESOURCE';
 export const RESOURCE_ERROR = 'GEONODE:RESOURCE_ERROR';
 export const UPDATE_RESOURCE_PROPERTIES = 'GEONODE:UPDATE_RESOURCE_PROPERTIES';
 export const SET_RESOURCE_TYPE = 'GEONODE:SET_RESOURCE_TYPE';
+export const SET_NEW_RESOURCE = 'GEONODE:SET_NEW_RESOURCE';
 
 export function resourceLoading() {
     return {
@@ -44,5 +45,11 @@ export function updateResourceProperties(properties) {
     return {
         type: UPDATE_RESOURCE_PROPERTIES,
         properties
+    };
+}
+
+export function setNewResource() {
+    return {
+        type: SET_NEW_RESOURCE
     };
 }

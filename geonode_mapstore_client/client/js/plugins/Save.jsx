@@ -46,7 +46,7 @@ const SavePlugin = connect(
         state => state?.gnsave?.success
     ], (enabled, mapInfo, resource, loading, saving, error, success) => ({
         enabled,
-        contentId: mapInfo?.id,
+        contentId: resource?.pk || mapInfo?.id,
         resource,
         loading,
         saving,
@@ -72,8 +72,9 @@ export default createPlugin('Save', {
             action: toggleControl.bind(null, 'save', null),
             selector: createSelector(
                 isLoggedIn,
-                (loggedIn) => ({
-                    style: loggedIn ? {} : { display: 'none' }
+                state => state?.gnresource?.isNew,
+                (loggedIn, isNew) => ({
+                    style: loggedIn && !isNew ? {} : { display: 'none' }
                 })
             )
         }

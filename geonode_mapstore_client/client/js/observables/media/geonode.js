@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { getMaps } from '@js/api/geonode/v2';
 import { getMapStoreMapById } from '@js/api/geonode/adapter';
 import { currentResourcesSelector } from '@mapstore/framework/selectors/mediaEditor';
+import { excludeGoogleBackground, extractTileMatrixFromSources } from '@mapstore/framework/utils/LayersUtils';
+import { convertFromLegacy, normalizeConfig } from '@mapstore/framework/utils/ConfigUtils';
 import uuid from 'uuid';
 
 export const save = () => Observable.empty();
@@ -60,13 +62,37 @@ export const getData = (store, { selectedItem }) => {
     if (selectedItem.type === 'map' && selectedItem.data.id) {
         return Observable.defer(() => getMapStoreMapById(selectedItem.data.id)
             .then(({ data, attributes, user, id }) => {
-                // TODO: check geostory map configuration parsing
                 const metadata = attributes.reduce((acc, attribute) => ({
                     ...acc,
                     [attribute.name]: attribute.value
                 }), { });
+
+                const config = data;
+                const mapState = !config.version
+                    ? convertFromLegacy(config)
+                    : normalizeConfig(config.map);
+
+                const layers = excludeGoogleBackground(mapState.layers.map(layer => {
+                    if (layer.group === 'background' && (layer.type === 'ol' || layer.type === 'OpenLayers.Layer')) {
+                        layer.type = 'empty';
+                    }
+                    return layer;
+                }));
+
+                const map = {
+                    ...(mapState && mapState.map || {}),
+                    id,
+                    groups: mapState && mapState.groups || [],
+                    layers: mapState?.map?.sources
+                        ? layers.map(layer => {
+                            const tileMatrix = extractTileMatrixFromSources(mapState.map.sources, layer);
+                            return { ...layer, ...tileMatrix };
+                        })
+                        : layers
+                };
+
                 return {
-                    ...data.map,
+                    ...map,
                     id,
                     owner: user,
                     canCopy: true,
@@ -74,7 +100,8 @@ export const getData = (store, { selectedItem }) => {
                     canEdit: true,
                     name: metadata.title,
                     description: metadata.abstract,
-                    thumbnail: metadata.thumbnail
+                    thumbnail: metadata.thumbnail,
+                    type: 'map'
                 };
             }));
     }

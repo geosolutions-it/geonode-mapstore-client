@@ -46,7 +46,7 @@ const SaveAsPlugin = connect(
         state => state?.gnsave?.success
     ], (enabled, mapInfo, resource, loading, saving, error, success) => ({
         enabled,
-        contentId: mapInfo?.id,
+        contentId: resource?.pk || mapInfo?.id,
         resource,
         loading,
         saving,

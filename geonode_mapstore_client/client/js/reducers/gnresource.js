@@ -11,7 +11,8 @@ import {
     SET_RESOURCE,
     RESOURCE_ERROR,
     UPDATE_RESOURCE_PROPERTIES,
-    SET_RESOURCE_TYPE
+    SET_RESOURCE_TYPE,
+    SET_NEW_RESOURCE
 } from '@js/actions/gnresource';
 
 function gnresource(state = {}, action) {
@@ -51,6 +52,12 @@ function gnresource(state = {}, action) {
         return {
             ...state,
             type: action.resourceType
+        };
+    }
+    case SET_NEW_RESOURCE: {
+        return {
+            ...state,
+            isNew: true
         };
     }
     default:

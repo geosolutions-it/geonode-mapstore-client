@@ -18,7 +18,7 @@ import security from '@mapstore/framework/reducers/security';
 import { registerMediaAPI } from '@mapstore/framework/api/media';
 import * as geoNodeMediaApi from '@js/observables/media/geonode';
 import { getEndpoints } from '@js/api/geonode/v2';
-import { setResourceType } from '@js/actions/gnresource';
+import { setResourceType, setNewResource } from '@js/actions/gnresource';
 
 registerMediaAPI('geonode', geoNodeMediaApi);
 
@@ -60,7 +60,8 @@ function initMapStore() {
                 userDetails,
                 defaultConfig,
                 geostory = {},
-                plugins = []
+                plugins = [],
+                isNewResource
             } = window.geoNodeMSConfig || {};
             setLocalConfigurationFile('');
             setLocale(language);
@@ -95,7 +96,8 @@ function initMapStore() {
                         security
                     },
                     initialActions: [
-                        setResourceType.bind(null, 'geostory')
+                        setResourceType.bind(null, 'geostory'),
+                        ...(isNewResource ? [setNewResource] : [])
                     ],
                     initialState: {
                         defaultState: {
