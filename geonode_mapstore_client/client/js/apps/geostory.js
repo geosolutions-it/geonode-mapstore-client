@@ -18,7 +18,7 @@ import security from '@mapstore/framework/reducers/security';
 import { registerMediaAPI } from '@mapstore/framework/api/media';
 import * as geoNodeMediaApi from '@js/observables/media/geonode';
 import { getEndpoints } from '@js/api/geonode/v2';
-import { setResourceType, setNewResource } from '@js/actions/gnresource';
+import { setResourceType, setNewResource, setResourceId } from '@js/actions/gnresource';
 
 registerMediaAPI('geonode', geoNodeMediaApi);
 
@@ -61,7 +61,8 @@ function initMapStore() {
                 defaultConfig,
                 geostory = {},
                 plugins = [],
-                isNewResource
+                isNewResource,
+                appId
             } = window.geoNodeMSConfig || {};
             setLocalConfigurationFile('');
             setLocale(language);
@@ -97,29 +98,13 @@ function initMapStore() {
                     },
                     initialActions: [
                         setResourceType.bind(null, 'geostory'),
+                        ...(appId ? [setResourceId.bind(null, appId)] : []),
                         ...(isNewResource ? [setNewResource] : [])
                     ],
                     initialState: {
                         defaultState: {
-                            map: {
-                                center: {
-                                    x: 0,
-                                    y: 0,
-                                    crs: 'EPSG:4326'
-                                }
-                            },
                             maptype: {
-                                mapType: 'openlayers'
-                            },
-                            controls: {
-                                toolbar: {
-                                    active: null,
-                                    expanded: false
-                                }
-                            },
-                            mapInfo: {
-                                enabled: true,
-                                infoFormat: 'text/html'
+                                mapType: "openlayers"
                             },
                             security: userDetails,
                             geostory: {

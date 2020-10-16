@@ -110,7 +110,7 @@ const SaveAPI = {
                 'owner': user.name,
                 ...body
             }).then((response) => {
-                // window.location.href = `${getConfigProp('geonode_url')}geostories/${response.id}/edit`;
+                window.location.href = `${getConfigProp('geonode_url')}apps/${response.pk}/edit`;
                 return response.data;
             });
     }

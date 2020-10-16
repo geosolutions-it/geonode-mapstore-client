@@ -12,7 +12,8 @@ import {
     RESOURCE_ERROR,
     UPDATE_RESOURCE_PROPERTIES,
     SET_RESOURCE_TYPE,
-    SET_NEW_RESOURCE
+    SET_NEW_RESOURCE,
+    SET_RESOURCE_ID
 } from '@js/actions/gnresource';
 
 function gnresource(state = {}, action) {
@@ -58,6 +59,12 @@ function gnresource(state = {}, action) {
         return {
             ...state,
             isNew: true
+        };
+    }
+    case SET_RESOURCE_ID: {
+        return {
+            ...state,
+            id: action.id
         };
     }
     default:

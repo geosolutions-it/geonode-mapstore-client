@@ -43,10 +43,11 @@ const SavePlugin = connect(
         state => state?.gnresource?.loading,
         state => state?.gnsave?.saving,
         state => state?.gnsave?.error,
-        state => state?.gnsave?.success
-    ], (enabled, mapInfo, resource, loading, saving, error, success) => ({
+        state => state?.gnsave?.success,
+        state => state?.gnresource?.id
+    ], (enabled, mapInfo, resource, loading, saving, error, success, contentId) => ({
         enabled,
-        contentId: resource?.pk || mapInfo?.id,
+        contentId: contentId || mapInfo?.id,
         resource,
         loading,
         saving,
