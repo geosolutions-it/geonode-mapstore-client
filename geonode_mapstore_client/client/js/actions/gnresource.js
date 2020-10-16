@@ -13,6 +13,7 @@ export const UPDATE_RESOURCE_PROPERTIES = 'GEONODE:UPDATE_RESOURCE_PROPERTIES';
 export const SET_RESOURCE_TYPE = 'GEONODE:SET_RESOURCE_TYPE';
 export const SET_NEW_RESOURCE = 'GEONODE:SET_NEW_RESOURCE';
 export const SET_RESOURCE_ID = 'GEONODE:SET_RESOURCE_ID';
+export const SET_RESOURCE_PERMISSIONS = 'GEONODE:SET_RESOURCE_PERMISSIONS';
 
 export function resourceLoading() {
     return {
@@ -59,5 +60,12 @@ export function setResourceId(id) {
     return {
         type: SET_RESOURCE_ID,
         id
+    };
+}
+
+export function setResourcePermissions(permissions) {
+    return {
+        type: SET_RESOURCE_PERMISSIONS,
+        permissions
     };
 }

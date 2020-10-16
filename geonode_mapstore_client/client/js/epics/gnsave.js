@@ -38,6 +38,7 @@ import {
     createGeoStory,
     updateGeoStory
 } from '@js/api/geonode/v2';
+import { parseDevHostname } from '@js/utils/APIUtils';
 import uuid from 'uuid';
 
 const SaveAPI = {
@@ -90,7 +91,7 @@ const SaveAPI = {
             ? updateMapStoreMap(id, { ...body, id })
             : creatMapStoreMap(body)
                 .then((response) => {
-                    window.location.href = `${getConfigProp('geonode_url')}maps/${response.id}/edit`;
+                    window.location.href = parseDevHostname(`${getConfigProp('geonode_url')}maps/${response.id}/edit`);
                     return response.data;
                 });
     },
@@ -110,7 +111,7 @@ const SaveAPI = {
                 'owner': user.name,
                 ...body
             }).then((response) => {
-                window.location.href = `${getConfigProp('geonode_url')}apps/${response.pk}/edit`;
+                window.location.href = parseDevHostname(`${getConfigProp('geonode_url')}apps/${response.pk}/edit`);
                 return response.data;
             });
     }

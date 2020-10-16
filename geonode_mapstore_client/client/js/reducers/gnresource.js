@@ -13,7 +13,8 @@ import {
     UPDATE_RESOURCE_PROPERTIES,
     SET_RESOURCE_TYPE,
     SET_NEW_RESOURCE,
-    SET_RESOURCE_ID
+    SET_RESOURCE_ID,
+    SET_RESOURCE_PERMISSIONS
 } from '@js/actions/gnresource';
 
 function gnresource(state = {}, action) {
@@ -65,6 +66,12 @@ function gnresource(state = {}, action) {
         return {
             ...state,
             id: action.id
+        };
+    }
+    case SET_RESOURCE_PERMISSIONS: {
+        return {
+            ...state,
+            permissions: action.permissions
         };
     }
     default:

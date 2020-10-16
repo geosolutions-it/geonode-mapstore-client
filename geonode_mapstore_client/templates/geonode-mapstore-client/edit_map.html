@@ -95,6 +95,13 @@
                 });
             }
             {% block additional_ms_actions %}
+            MapStore2.triggerAction({
+                type: "GEONODE:SET_RESOURCE_PERMISSIONS",
+                permissions: {
+                    canEdit: canEdit,
+                    canView: canView
+                }
+            });
             {% endblock %}
         });
     });

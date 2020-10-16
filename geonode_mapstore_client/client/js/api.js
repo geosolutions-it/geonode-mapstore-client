@@ -12,6 +12,7 @@ const LocaleUtils = require('../MapStore2/web/client/utils/LocaleUtils');
 const LayersUtils = require('../MapStore2/web/client/utils/LayersUtils');
 LayersUtils.setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
 const {keyBy, values} = require('lodash');
+require('react-select/dist/react-select.css');
 /**
  * Add custom (overriding) translations with:
  *

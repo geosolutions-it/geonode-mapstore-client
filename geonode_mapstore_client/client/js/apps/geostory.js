@@ -18,7 +18,12 @@ import security from '@mapstore/framework/reducers/security';
 import { registerMediaAPI } from '@mapstore/framework/api/media';
 import * as geoNodeMediaApi from '@js/observables/media/geonode';
 import { getEndpoints } from '@js/api/geonode/v2';
-import { setResourceType, setNewResource, setResourceId } from '@js/actions/gnresource';
+import {
+    setResourceType,
+    setNewResource,
+    setResourceId,
+    setResourcePermissions
+} from '@js/actions/gnresource';
 
 registerMediaAPI('geonode', geoNodeMediaApi);
 
@@ -50,12 +55,13 @@ const setLocale = (localeKey) => {
     LocaleUtils.setSupportedLocales(locale);
 };
 
-function initMapStore() {
+window.initMapStore = function initMapStore(geoNodeMSConfig) {
     // get all v2 api endpoints
     getEndpoints()
         .then(() => {
 
             const {
+                permissions,
                 language,
                 userDetails,
                 defaultConfig,
@@ -63,7 +69,7 @@ function initMapStore() {
                 plugins = [],
                 isNewResource,
                 appId
-            } = window.geoNodeMSConfig || {};
+            } = geoNodeMSConfig || {};
             setLocalConfigurationFile('');
             setLocale(language);
             setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
@@ -98,6 +104,7 @@ function initMapStore() {
                     },
                     initialActions: [
                         setResourceType.bind(null, 'geostory'),
+                        setResourcePermissions.bind(null, permissions),
                         ...(appId ? [setResourceId.bind(null, appId)] : []),
                         ...(isNewResource ? [setNewResource] : [])
                     ],
@@ -123,6 +130,4 @@ function initMapStore() {
                 });
             });
         });
-}
-
-document.addEventListener('DOMContentLoaded', initMapStore);
+};

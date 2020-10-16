@@ -4,4 +4,11 @@
 MapStore2.triggerAction({
     type: "GEONODE:SET_NEW_RESOURCE"
 });
+MapStore2.triggerAction({
+    type: "GEONODE:SET_RESOURCE_PERMISSIONS",
+    permissions: {
+        canEdit: true,
+        canView: true
+    }
+});
 {% endblock %}

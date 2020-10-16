@@ -74,8 +74,12 @@ export default createPlugin('Save', {
             selector: createSelector(
                 isLoggedIn,
                 state => state?.gnresource?.isNew,
-                (loggedIn, isNew) => ({
-                    style: loggedIn && !isNew ? {} : { display: 'none' }
+                state => state?.gnresource?.permissions?.canEdit,
+                state => state?.gnresource?.permissions?.type,
+                (loggedIn, isNew, canEdit, resourceType) => ({
+                    // we should add permList to map pages too
+                    // no resource type means map page
+                    style: loggedIn && !isNew && (canEdit || !resourceType) ? {} : { display: 'none' }
                 })
             )
         }
