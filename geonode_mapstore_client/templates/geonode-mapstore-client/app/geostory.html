@@ -147,7 +147,9 @@
                 geostory: {
                     currentStory: geoStoryConfig,
                     mode: canEdit ? 'edit' : 'view',
-                    resource: {}
+                    resource: {
+                        canEdit
+                    }
                 }
             });
         })();
