@@ -1,0 +1,10 @@
+{
+    "locale": "de-DE",
+    "messages": {
+        "mediaEditor": {
+            "mapList": {
+                "emptyList": "Wählen Sie oben rechts einen anderen Kartendienst aus."
+            }
+        }
+    }
+}

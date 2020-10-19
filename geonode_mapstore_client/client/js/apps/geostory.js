@@ -39,7 +39,7 @@ const ConnectedRouter = connect((state) => ({
 
 const getScriptPath = function() {
     const scriptEl = document.getElementById('ms2-api');
-    return scriptEl && scriptEl.src && scriptEl.src.substring(0, scriptEl.src.lastIndexOf('/')) || 'https://dev.mapstore2.geo-solutions.it/mapstore/dist';
+    return scriptEl && scriptEl.src && scriptEl.src.substring(0, scriptEl.src.lastIndexOf('/')) || '';
 };
 
 const routes = [{
@@ -74,7 +74,10 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
             setLocalConfigurationFile('');
             setLocale(language);
             setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
-            setConfigProp('translationsPath', [getScriptPath() + '/../MapStore2/web/client']);
+            setConfigProp('translationsPath', [
+                getScriptPath() + '/../MapStore2/web/client',
+                getScriptPath() + '/../translations'
+            ]);
             setConfigProp('loadAfterTheme', true);
             setConfigProp('themePrefix', 'msgapi');
             setConfigProp('plugins', plugins);

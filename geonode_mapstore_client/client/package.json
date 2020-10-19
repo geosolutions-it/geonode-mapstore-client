@@ -11,7 +11,7 @@
     "lint": "eslint js --ext .jsx,.js",
     "analyze": "webpack --json | webpack-bundle-size-analyzer",
     "postinstall": "rimraf node_modules/leaflet-simple-graticule/node_modules && rimraf node_modules/react-sortable-items/node_modules/react-dom && rimraf node_modules/mocha && ncp node_modules/@geosolutions/mocha node_modules/mocha",
-    "postcompile": "mkdirp ../static/mapstore/MapStore2/web/client/ && ncp ./MapStore2/web/client/translations ../static/mapstore/MapStore2/web/client/."
+    "postcompile": "mkdirp ../static/mapstore/MapStore2/web/client/ && ncp ./MapStore2/web/client/translations ../static/mapstore/MapStore2/web/client/. && ncp ./static/mapstore/translations ../static/mapstore/translations/."
   },
   "author": "GeoSolutions",
   "license": "BSD-2-Clause",
