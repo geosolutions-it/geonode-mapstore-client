@@ -16,7 +16,7 @@ export const save = () => Observable.empty();
 export const edit = () => Observable.empty();
 export const remove = () => Observable.empty();
 
-function parseMapConfig({ data, attributes, user, id }) {
+function parseMapConfig({ data, attributes, user, id }, resource) {
     const metadata = attributes.reduce((acc, attribute) => ({
         ...acc,
         [attribute.name]: attribute.value
@@ -55,7 +55,7 @@ function parseMapConfig({ data, attributes, user, id }) {
         canEdit: true,
         name: metadata.title,
         description: metadata.abstract,
-        thumbnail: metadata.thumbnail,
+        thumbnail: metadata.thumbnail || resource?.data?.thumbnail,
         type: 'map'
     };
 }
@@ -101,7 +101,7 @@ export const load = (store, { params }) => {
                         resources: resources.map((resource) => selectedId && resource.id === selectedId
                             ? {
                                 ...resource,
-                                data: parseMapConfig(mapResponse)
+                                data: parseMapConfig(mapResponse, resource)
                             }
                             : resource),
                         totalCount
@@ -125,7 +125,7 @@ export const getData = (store, { selectedItem }) => {
     if (selectedItem && selectedItem.type === 'map' && selectedItem.data && selectedItem.data.id) {
         return Observable.defer(() => getMapStoreMapById(selectedItem.data.id)
             .then((response) => {
-                return parseMapConfig(response);
+                return parseMapConfig(response, selectedItem);
             }));
     }
 
