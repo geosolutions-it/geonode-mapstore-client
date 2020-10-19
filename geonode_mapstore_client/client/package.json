@@ -5,13 +5,13 @@
   "main": "api.js",
   "scripts": {
     "clean": "rimraf ../static/mapstore",
-    "compile": "npm run clean && mkdirp ../static/mapstore/dist && webpack --progress --config prod-webpack.config.js",
+    "compile": "node ./writeVersion.js npm run clean && mkdirp ../static/mapstore/dist && webpack --progress --config prod-webpack.config.js",
     "start": "webpack-dev-server --progress --colors --port 8081 --hot --inline",
     "startprod": "webpack-dev-server --progress --colors --port 8081 --hot --inline --content-base .  --config prod-webpack.config.js",
     "lint": "eslint js --ext .jsx,.js",
     "analyze": "webpack --json | webpack-bundle-size-analyzer",
     "postinstall": "rimraf node_modules/leaflet-simple-graticule/node_modules && rimraf node_modules/react-sortable-items/node_modules/react-dom && rimraf node_modules/mocha && ncp node_modules/@geosolutions/mocha node_modules/mocha",
-    "postcompile": "mkdirp ../static/mapstore/MapStore2/web/client/ && ncp ./MapStore2/web/client/translations ../static/mapstore/MapStore2/web/client/. && ncp ./static/mapstore/translations ../static/mapstore/translations/."
+    "postcompile": "mkdirp ../static/mapstore/MapStore2/web/client/ && ncp ./MapStore2/web/client/translations ../static/mapstore/MapStore2/web/client/. && ncp ./static/mapstore/translations ../static/mapstore/translations/. && ncp ./version.txt ../static/mapstore/version.txt"
   },
   "author": "GeoSolutions",
   "license": "BSD-2-Clause",

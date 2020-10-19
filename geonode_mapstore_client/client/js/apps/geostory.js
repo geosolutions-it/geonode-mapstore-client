@@ -56,6 +56,13 @@ const setLocale = (localeKey) => {
     LocaleUtils.setSupportedLocales(locale);
 };
 
+const getVersion = () => {
+    if (!__DEVTOOLS__) {
+        return __GEONODE_PROJECT_CONFIG__.version;
+    }
+    return 'dev';
+};
+
 window.initMapStore = function initMapStore(geoNodeMSConfig) {
     // get all v2 api endpoints
     getEndpoints()
@@ -123,7 +130,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                     themeCfg: {
                         path: getScriptPath() + '/themes',
                         prefixContainer: '#ms-container',
-                        version: '1'
+                        version: getVersion()
                     },
                     appReducers: {
                         security
