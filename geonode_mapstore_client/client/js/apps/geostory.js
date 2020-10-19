@@ -24,6 +24,7 @@ import {
     setResourceId,
     setResourcePermissions
 } from '@js/actions/gnresource';
+import isMobile from 'ismobilejs';
 
 registerMediaAPI('geonode', geoNodeMediaApi);
 
@@ -65,7 +66,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                 language,
                 userDetails,
                 defaultConfig,
-                geostory = {},
+                geoStoryConfig = {},
                 plugins = [],
                 isNewResource,
                 appId
@@ -88,6 +89,28 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                 setConfigProp('proxy', defaultConfig.proxy);
             }
 
+            setConfigProp('initialState', {
+                defaultState: {
+                    maptype: {
+                        mapType: "{context.mode === 'desktop' ? 'openlayers' : 'leaflet'}"
+                    },
+                    security: userDetails,
+                    geostory: {
+                        isCollapsed: false,
+                        focusedContent: {},
+                        currentPage: {},
+                        settings: {},
+                        oldSettings: {},
+                        updateUrlOnScroll: false,
+                        currentStory: geoStoryConfig,
+                        mode: isMobile.any || !permissions.canEdit ? 'view' : 'edit',
+                        resource: {
+                            canEdit: permissions.canEdit
+                        }
+                    }
+                }
+            });
+
             import('@js/plugins').then((pluginsModule) => {
                 const pluginsDef = pluginsModule.default;
                 main({
@@ -107,26 +130,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                         setResourcePermissions.bind(null, permissions),
                         ...(appId ? [setResourceId.bind(null, appId)] : []),
                         ...(isNewResource ? [setNewResource] : [])
-                    ],
-                    initialState: {
-                        defaultState: {
-                            maptype: {
-                                mapType: "openlayers"
-                            },
-                            security: userDetails,
-                            geostory: {
-                                currentStory: {},
-                                mode: 'view',
-                                isCollapsed: false,
-                                focusedContent: {},
-                                currentPage: {},
-                                settings: {},
-                                oldSettings: {},
-                                updateUrlOnScroll: false,
-                                ...geostory
-                            }
-                        }
-                    }
+                    ]
                 });
             });
         });

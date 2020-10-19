@@ -144,13 +144,7 @@
                 defaultConfig: defaultConfig, // see _config.html template
                 plugins,
                 isNewResource: isNewResource,
-                geostory: {
-                    currentStory: geoStoryConfig,
-                    mode: canEdit ? 'edit' : 'view',
-                    resource: {
-                        canEdit
-                    }
-                }
+                geoStoryConfig: geoStoryConfig
             });
         })();
     });
