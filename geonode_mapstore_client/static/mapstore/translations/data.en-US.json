@@ -1,0 +1,10 @@
+{
+    "locale": "en-US",
+    "messages": {
+        "mediaEditor": {
+            "mapList": {
+                "emptyList": "Select a different map service from the top right select input."
+            }
+        }
+    }
+}

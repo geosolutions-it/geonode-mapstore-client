@@ -1,0 +1,10 @@
+    {
+    "locale": "it-IT",
+    "messages": {
+        "mediaEditor": {
+            "mapList": {
+                "emptyList": "Selezione un servizio di mappe tra le opzioni disponibili nella select in alto a destra."
+            }
+        }
+    }
+}
