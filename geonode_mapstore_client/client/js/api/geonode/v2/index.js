@@ -10,6 +10,7 @@ import axios from '@mapstore/framework/libs/ajax';
 import { parseDevHostname } from '@js/utils/APIUtils';
 import { setRequestOptions, getRequestOptions } from '@js/utils/GNSearchUtils';
 import isArray from 'lodash/isArray';
+import castArray from 'lodash/castArray';
 
 let endpoints = {
     // default values
@@ -86,6 +87,26 @@ export const getResources = ({
         }));
 };
 
+// some fields such as search_fields does not support the array notation `key[]=value1&key[]=value2`
+// this function will parse all values included array in the `key=value1&key=value2` format
+function addQueryString(requestUrl, params) {
+    if (!params) {
+        return requestUrl;
+    }
+    const queryString = Object.keys(params)
+        .reduce((str, key, idx) => {
+            const start = idx === 0 ? '?' : '&';
+            const values = castArray(params[key]);
+            if (values.length > 1) {
+                return str + values.reduce((valStr, value, jdx) => {
+                    return valStr + (jdx === 0 ? start : '&') + key + '=' + value;
+                }, '');
+            }
+            return str + start + key + '=' + values[0];
+        }, '');
+    return `${requestUrl}${queryString}`;
+}
+
 export const getMaps = ({
     q,
     pageSize = 20,
@@ -93,18 +114,22 @@ export const getMaps = ({
     sort,
     ...params
 }) => {
-    return requestOptions(MAPS, () => axios.get(parseDevHostname(endpoints[MAPS]), {
-        params: {
-            ...params,
-            ...(sort && { sort: isArray(sort) ? sort : [ sort ]}),
-            ...(q && {
-                search: q,
-                search_fields: ['title', 'abstract']
-            }),
-            page,
-            page_size: pageSize
-        }
-    })
+    return requestOptions(MAPS, () => axios
+        .get(
+            parseDevHostname(
+                addQueryString(endpoints[MAPS], q && {
+                    search: q,
+                    search_fields: ['title', 'abstract']
+                })
+            ), {
+                // axios will format query params array to `key[]=value1&key[]=value2`
+                params: {
+                    ...params,
+                    ...(sort && { sort: isArray(sort) ? sort : [ sort ]}),
+                    page,
+                    page_size: pageSize
+                }
+            })
         .then(({ data }) => {
             return {
                 totalCount: data.total,
