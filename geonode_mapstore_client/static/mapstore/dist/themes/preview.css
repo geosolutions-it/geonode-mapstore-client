@@ -33933,6 +33933,10 @@ Ported to CodeMirror by Peter Kroon
     width: 98%;
   }
 }
+.msgapi .background-preview-button > .btn-group,
+.msgapi .background-tool-buttons {
+  display: none;
+}
 .msgapi #map {
   bottom: 0px !important;
 }
