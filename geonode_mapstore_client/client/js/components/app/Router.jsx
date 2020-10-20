@@ -16,6 +16,7 @@ import Localized from '@mapstore/framework/components/I18N/Localized';
 import Theme from '@mapstore/framework/components/theme/Theme';
 import { ErrorBoundary } from 'react-error-boundary';
 import history from '@mapstore/framework/stores/History';
+import ErrorFallback from './ErrorFallback';
 
 export const withRoutes = (routes) => (Component) => {
     const WithRoutes = forwardRef((props, ref) => {
@@ -53,6 +54,7 @@ const Router = forwardRef(({
                     >
                         <ConnectedRouter history={history}>
                             <ErrorBoundary
+                                FallbackComponent={ErrorFallback}
                                 onError={e => {
                                     /* eslint-disable no-console */
                                     console.error(e);
