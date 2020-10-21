@@ -96,7 +96,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
             }
 
             if (defaultConfig && defaultConfig.proxy) {
-                setConfigProp('proxy', defaultConfig.proxy);
+                setConfigProp('proxyUrl', defaultConfig.proxy);
             }
 
             setConfigProp('initialState', {
