@@ -11413,7 +11413,6 @@ Ported to CodeMirror by Peter Kroon
   background: transparent;
   position: relative;
   z-index: 1;
-  height: 100%;
 }
 .msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .add-bar,
 .msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .popover-content {
@@ -12319,6 +12318,19 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill:-webkit-full-screen .ms-cascade-story .ol-viewport {
   cursor: unset !important;
+}
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents {
+  height: auto;
+}
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-visibility-container,
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-image,
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-image > img,
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-video,
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-video,
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-video .ms-content-body,
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-map,
+.msgapi .fill:-webkit-full-screen .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-map .ms-content-body {
+  height: auto;
 }
 .msgapi .fill:-webkit-full-screen .ms-expand-media-button {
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
@@ -23781,7 +23793,6 @@ Ported to CodeMirror by Peter Kroon
   background: transparent;
   position: relative;
   z-index: 1;
-  height: 100%;
 }
 .msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .add-bar,
 .msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .popover-content {
@@ -24687,6 +24698,19 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill .ms-cascade-story .ol-viewport {
   cursor: unset !important;
+}
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents {
+  height: auto;
+}
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-visibility-container,
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-image,
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-image > img,
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-video,
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-video,
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-video .ms-content-body,
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-map,
+.msgapi .fill .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-map .ms-content-body {
+  height: auto;
 }
 .msgapi .fill .ms-expand-media-button {
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);

@@ -11308,7 +11308,6 @@ structure .glyphicon-{iconName}-content
   background: transparent;
   position: relative;
   z-index: 1;
-  height: 100%;
 }
 .msgapi .ms-cascade-story .ms-section .ms-section-contents .add-bar,
 .msgapi .ms-cascade-story .ms-section .ms-section-contents .popover-content {
@@ -12214,6 +12213,19 @@ structure .glyphicon-{iconName}-content
 }
 .msgapi .ms-cascade-story .ol-viewport {
   cursor: unset !important;
+}
+.msgapi .ms-cascade-story .ms-section .ms-section-contents {
+  height: auto;
+}
+.msgapi .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-visibility-container,
+.msgapi .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-image,
+.msgapi .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-image > img,
+.msgapi .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-media.ms-media-video,
+.msgapi .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-video,
+.msgapi .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-video .ms-content-body,
+.msgapi .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-map,
+.msgapi .ms-cascade-story .ms-section .ms-section-contents .ms-content-column .ms-content.ms-content-map .ms-content-body {
+  height: auto;
 }
 .msgapi .ms-expand-media-button {
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
