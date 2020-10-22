@@ -15,6 +15,7 @@ import main from '@mapstore/framework/components/app/main';
 import GeoStory from '@js/routes/GeoStory';
 import Router, { withRoutes } from '@js/components/app/Router';
 import security from '@mapstore/framework/reducers/security';
+import maptype from '@mapstore/framework/reducers/maptype';
 import { registerMediaAPI } from '@mapstore/framework/api/media';
 import * as geoNodeMediaApi from '@js/observables/media/geonode';
 import { getEndpoints } from '@js/api/geonode/v2';
@@ -24,6 +25,7 @@ import {
     setResourceId,
     setResourcePermissions
 } from '@js/actions/gnresource';
+import { setCurrentStory } from '@mapstore/framework/actions/geostory';
 import isMobile from 'ismobilejs';
 
 registerMediaAPI('geonode', geoNodeMediaApi);
@@ -112,7 +114,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                         settings: {},
                         oldSettings: {},
                         updateUrlOnScroll: false,
-                        currentStory: geoStoryConfig,
+                        currentStory: {},
                         mode: isMobile.any || !permissions.canEdit ? 'view' : 'edit',
                         resource: {
                             canEdit: permissions.canEdit
@@ -121,7 +123,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                 }
             });
 
-            import('@js/plugins').then((pluginsModule) => {
+            import('@js/geostoryPlugins').then((pluginsModule) => {
                 const pluginsDef = pluginsModule.default;
                 main({
                     targetId: 'ms-container',
@@ -133,9 +135,11 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                         version: getVersion()
                     },
                     appReducers: {
-                        security
+                        security,
+                        maptype
                     },
                     initialActions: [
+                        setCurrentStory.bind(null, geoStoryConfig),
                         setResourceType.bind(null, 'geostory'),
                         setResourcePermissions.bind(null, permissions),
                         ...(appId ? [setResourceId.bind(null, appId)] : []),

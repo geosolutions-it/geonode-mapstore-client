@@ -2,6 +2,7 @@
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         (function() {
+            const isEmbed = {{ is_embed|default:"false" }};
             const config = {{ config|default:"false" }};
             const newStoryTemplate = {
                 "type": "cascade",
@@ -50,7 +51,7 @@
             const token = "{{ access_token|default:"" }}" || null;
             const permsList = {{ perms_list|default:'[]' }};
             const isNewResource = config ? false : true;
-            const canEdit = isNewResource || permsList.indexOf('change_resourcebase') !== -1;
+            const canEdit = !isEmbed && (isNewResource || permsList.indexOf('change_resourcebase') !== -1);
             const canView = isNewResource || permsList.indexOf('view_resourcebase') !== -1;
             const userDetails = username && token
                 && {
@@ -66,7 +67,9 @@
                     "cfg": {
                         // disable omnibar because it contains only save and saveAs for the moment
                         // and they are disabled in view mode
-                        "disablePluginIf": "{!!(state('browser') && state('browser').mobile) || " + !userDetails + "}",
+                        "disablePluginIf": (isEmbed || !userDetails)
+                            ? true
+                            : "{!!(state('browser') && state('browser').mobile)}",
                         "containerPosition": "header",
                         "className": "navbar shadow navbar-home"
                     }

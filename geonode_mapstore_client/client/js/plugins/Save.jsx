@@ -20,6 +20,7 @@ import {
     updateResourceBeforeSave
 } from '@js/actions/gnsave';
 import { isLoggedIn } from '@mapstore/framework/selectors/security';
+import controls from '@mapstore/framework/reducers/controls';
 import gnresource from '@js/reducers/gnresource';
 import gnsave from '@js/reducers/gnsave';
 import gnsaveEpics from '@js/epics/gnsave';
@@ -89,6 +90,7 @@ export default createPlugin('Save', {
     },
     reducers: {
         gnresource,
-        gnsave
+        gnsave,
+        controls
     }
 });
