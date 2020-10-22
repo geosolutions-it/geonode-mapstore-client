@@ -21537,4 +21537,17 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .background-tool-buttons {
   display: none;
 }
+.msgapi .input-link {
+  padding: 8px;
+}
+.msgapi .input-link .input-link-head {
+  display: flex;
+  align-items: center;
+}
+.msgapi .input-link .input-link-head h4 {
+  flex: 1;
+}
+.msgapi .gn-share-modal .modal-footer {
+  display: none;
+}
 
