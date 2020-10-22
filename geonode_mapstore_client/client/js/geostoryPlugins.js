@@ -19,6 +19,7 @@ import GeoStoryNavigationPlugin from '@mapstore/framework/plugins/GeoStoryNaviga
 import NotificationsPlugin from '@mapstore/framework/plugins/Notifications';
 import SavePlugin from '@js/plugins/Save';
 import SaveAsPlugin from '@js/plugins/SaveAs';
+import SharePlugin from '@js/plugins/Share';
 
 export const plugins = {
     OmniBarPlugin,
@@ -29,7 +30,8 @@ export const plugins = {
     GeoStoryNavigationPlugin,
     NotificationsPlugin,
     SavePlugin,
-    SaveAsPlugin
+    SaveAsPlugin,
+    SharePlugin
 };
 
 export const requires = {};
