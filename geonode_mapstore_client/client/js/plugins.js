@@ -49,6 +49,7 @@ module.exports = {
         MousePositionPlugin: require('../MapStore2/web/client/plugins/MousePosition'),
         SearchPlugin: require('../MapStore2/web/client/plugins/Search'),
         SearchServicesConfigPlugin: require('../MapStore2/web/client/plugins/SearchServicesConfig'),
+        SharePlugin: require('@js/plugins/Share').default,
         AddReducersAndEpics: {
             reducers: {
                 security: require('../MapStore2/web/client/reducers/security').default,

@@ -18,6 +18,7 @@ import controls from '@mapstore/framework/reducers/controls';
 import ShareEmbed from '@mapstore/framework/components/share/ShareEmbed';
 import ShareLink from '@mapstore/framework/components/share/ShareLink';
 import ResizableModal from '@mapstore/framework/components/misc/ResizableModal';
+import { mapInfoSelector } from '@mapstore/framework/selectors/map';
 import url from 'url';
 
 function getShareUrl({
@@ -83,10 +84,11 @@ Share.defaultProps = {
 const SharePlugin = connect(
     createSelector([
         state => state?.controls?.share?.enabled,
-        state => state?.gnresource?.id
-    ], (enabled, resourceId) => ({
+        state => state?.gnresource?.id,
+        mapInfoSelector
+    ], (enabled, resourceId, mapInfo) => ({
         enabled,
-        resourceId
+        resourceId: resourceId || mapInfo?.id
     })),
     {
         onClose: toggleControl.bind(null, 'share', null)
@@ -104,8 +106,10 @@ export default createPlugin('Share', {
             action: toggleControl.bind(null, 'share', null),
             selector: createSelector(
                 state => state?.gnresource?.isNew,
-                (isNew) => ({
-                    style: isNew ? { display: 'none' } : { }
+                state => state?.gnresource?.id,
+                mapInfoSelector,
+                (isNew, resourceId, mapInfo) => ({
+                    style: !isNew && (resourceId || mapInfo?.id) ? { } : { display: 'none' }
                 })
             )
         }

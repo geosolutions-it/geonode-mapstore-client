@@ -71,6 +71,11 @@
                     mapId: ms2_config.map && ms2_config.map.info && ms2_config.map.info.id
                 });
             }
+            // initialize the search state to avoid issue with the identify
+            MapStore2.triggerAction({
+                type: "TEXT_SEARCH_LOADING",
+                loading: false
+            });
         });
     });
 </script>
