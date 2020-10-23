@@ -20690,6 +20690,13 @@ Ported to CodeMirror by Peter Kroon
   border: 1px solid;
   overflow-y: auto;
 }
+.msgapi .ms-meteoblue-panel .ms-meteoblue-child-container .ms-meteoblue-child .ms-meteoblue-charts-loading {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .msgapi .ms-meteoblue-panel .ms-meteoblue-child-container .ms-meteoblue-child .ms-plotly-chart-container .js-plotly-plot {
   width: 100%;
 }
