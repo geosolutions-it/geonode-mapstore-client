@@ -2,16 +2,15 @@
   "name": "ms2-geonode-api",
   "version": "2.0.4",
   "description": "MapStore 2 Api bundle specific to geonode framework",
-  "main": "api.js",
+  "main": "js/index.js",
   "scripts": {
-    "clean": "rimraf ../static/mapstore",
-    "compile": "node ./writeVersion.js npm run clean && mkdirp ../static/mapstore/dist && webpack --progress --config prod-webpack.config.js",
-    "start": "webpack-dev-server --progress --colors --port 8081 --hot --inline",
-    "startprod": "webpack-dev-server --progress --colors --port 8081 --hot --inline --content-base .  --config prod-webpack.config.js",
-    "lint": "eslint js --ext .jsx,.js",
-    "analyze": "webpack --json | webpack-bundle-size-analyzer",
-    "postinstall": "rimraf node_modules/leaflet-simple-graticule/node_modules && rimraf node_modules/react-sortable-items/node_modules/react-dom && rimraf node_modules/mocha && ncp node_modules/@geosolutions/mocha node_modules/mocha",
-    "postcompile": "mkdirp ../static/mapstore/MapStore2/web/client/ && ncp ./MapStore2/web/client/translations ../static/mapstore/MapStore2/web/client/. && ncp ./static/mapstore/translations ../static/mapstore/translations/. && ncp ./version.txt ../static/mapstore/version.txt"
+    "clean-static": "node ./project/cleanStatic.js",
+    "compile": "node ./project/preCompile.js && webpack --progress --config ./project/prod-webpack.config.js",
+    "compile-patch": "node ./project/preCompile.js --v=patch && webpack --progress --config ./project/prod-webpack.config.js",
+    "compile-minor": "node ./project/preCompile.js --v=minor && webpack --progress --config ./project/prod-webpack.config.js",
+    "compile-major": "node ./project/preCompile.js --v=major && webpack --progress --config ./project/prod-webpack.config.js",
+    "start": "webpack-dev-server --progress --colors --port 8081 --hot --inline --config ./project/webpack.config.js",
+    "lint": "eslint js --ext .jsx,.js"
   },
   "author": "GeoSolutions",
   "license": "BSD-2-Clause",
@@ -86,9 +85,10 @@
     "url-loader": "0.5.7",
     "vusion-webfonts-generator": "0.4.1",
     "webpack": "4.41.5",
-    "webpack-bundle-size-analyzer": "2.0.2",
+    "webpack-bundle-analyzer": "3.9.0",
     "webpack-cli": "3.3.6",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "3.10.3",
+    "yargs": "16.1.0"
   },
   "dependencies": {
     "mapstore2": "file:MapStore2"

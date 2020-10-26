@@ -1,0 +1,18 @@
+/**
+ * Copyright 2020, GeoSolutions Sas.
+ * All rights reserved.
+ *
+ * This source code is licensed under the ISC-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable */
+
+const rimraf = require('rimraf');
+const fs = require('fs');
+const path = require('path');
+const appDirectory = fs.realpathSync(process.cwd());
+const staticPath = '../static/mapstore';
+const distDirectory = 'dist';
+rimraf.sync(path.resolve(appDirectory, staticPath));
+fs.mkdirSync(path.resolve(appDirectory, staticPath + '/' + distDirectory), { recursive: true });

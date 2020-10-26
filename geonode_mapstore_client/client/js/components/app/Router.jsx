@@ -56,15 +56,14 @@ const Router = forwardRef(({
                             <ErrorBoundary
                                 FallbackComponent={ErrorFallback}
                                 onError={e => {
-                                    /* eslint-disable no-console */
-                                    console.error(e);
-                                    /* eslint-enable no-console */
+                                    console.error(e); // eslint-disable-line no-console
                                 }}>
                                 {routes.map((route, i) => {
                                     const routeConfig = route.pageConfig || {};
                                     const Component = connect(() => ({
                                         plugins,
                                         pluginsConfig,
+                                        loaderComponent,
                                         ...routeConfig
                                     }))(route.component);
                                     return (

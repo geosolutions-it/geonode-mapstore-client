@@ -5,7 +5,7 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import url from 'url';
@@ -15,6 +15,9 @@ import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import { updateUrlOnScroll } from '@mapstore/framework/actions/geostory';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
 
+import useLazyPlugins from '@js/hooks/useLazyPlugins';
+import pluginsEntries from '@js/plugins/index';
+
 const urlQuery = url.parse(window.location.href, true).query;
 
 const ConnectedPluginsContainer = connect((state) => ({
@@ -23,17 +26,24 @@ const ConnectedPluginsContainer = connect((state) => ({
 }))(PluginsContainer);
 
 function GeoStoryRoute({
-    plugins,
     pluginsConfig,
     params,
-    onMount
+    onMount,
+    loaderComponent
 }) {
+    const [loading, setLoading] = useState(true);
+    const { plugins } = useLazyPlugins({
+        pluginsEntries,
+        pluginsConfig: pluginsConfig || getConfigProp('plugins')
+    });
     useEffect(() => {
-        if (onMount) {
+        if (!loading && onMount) {
             onMount(true);
         }
-    }, [ onMount ]);
+    }, [ loading, onMount ]);
+    const Loader = loaderComponent;
     return (
+        <>
         <ConnectedPluginsContainer
             key="page-geostory"
             id="page-geostory"
@@ -42,7 +52,10 @@ function GeoStoryRoute({
             pluginsConfig={pluginsConfig || getConfigProp('plugins')}
             plugins={plugins}
             params={params}
+            onPluginsLoaded={() => setLoading(false)}
         />
+        {loading && Loader && <Loader />}
+        </>
     );
 }
 

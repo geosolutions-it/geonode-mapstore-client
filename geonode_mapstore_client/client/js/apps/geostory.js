@@ -16,6 +16,8 @@ import GeoStory from '@js/routes/GeoStory';
 import Router, { withRoutes } from '@js/components/app/Router';
 import security from '@mapstore/framework/reducers/security';
 import maptype from '@mapstore/framework/reducers/maptype';
+import geostory from '@mapstore/framework/reducers/geostory';
+import gnresource from '@js/reducers/gnresource';
 import { registerMediaAPI } from '@mapstore/framework/api/media';
 import * as geoNodeMediaApi from '@js/observables/media/geonode';
 import { getEndpoints } from '@js/api/geonode/v2';
@@ -29,6 +31,9 @@ import { setCurrentStory } from '@mapstore/framework/actions/geostory';
 import isMobile from 'ismobilejs';
 
 registerMediaAPI('geonode', geoNodeMediaApi);
+
+// TODO: check styles on less files
+import 'react-select/dist/react-select.css';
 
 // Set X-CSRFToken in axios;
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -123,29 +128,31 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                 }
             });
 
-            import('@js/geostoryPlugins').then((pluginsModule) => {
-                const pluginsDef = pluginsModule.default;
-                main({
-                    targetId: 'ms-container',
-                    appComponent: withRoutes(routes)(ConnectedRouter),
-                    pluginsDef,
-                    themeCfg: {
-                        path: getScriptPath() + '/themes',
-                        prefixContainer: '#ms-container',
-                        version: getVersion()
-                    },
-                    appReducers: {
-                        security,
-                        maptype
-                    },
-                    initialActions: [
-                        setCurrentStory.bind(null, geoStoryConfig),
-                        setResourceType.bind(null, 'geostory'),
-                        setResourcePermissions.bind(null, permissions),
-                        ...(appId ? [setResourceId.bind(null, appId)] : []),
-                        ...(isNewResource ? [setNewResource] : [])
-                    ]
-                });
+            main({
+                targetId: 'ms-container',
+                appComponent: withRoutes(routes)(ConnectedRouter),
+                pluginsDef: {
+                    plugins: {},
+                    requires: {}
+                },
+                themeCfg: {
+                    path: getScriptPath() + '/themes',
+                    prefixContainer: '#ms-container',
+                    version: getVersion()
+                },
+                appReducers: {
+                    geostory,
+                    gnresource,
+                    security,
+                    maptype
+                },
+                initialActions: [
+                    setCurrentStory.bind(null, geoStoryConfig),
+                    setResourceType.bind(null, 'geostory'),
+                    setResourcePermissions.bind(null, permissions),
+                    ...(appId ? [setResourceId.bind(null, appId)] : []),
+                    ...(isNewResource ? [setNewResource] : [])
+                ]
             });
         });
 };
