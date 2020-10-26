@@ -1,52 +1,144 @@
 {
     "parameters": {
         "precipitation": {
-            "units": "mm"
+            "units": "mm",
+            "traceOptions": {
+                "type": "bar",
+                "marker": {
+                    "color": "#1a53ff",
+                    "opacity": 0.6
+                }
+            }
         },
         "convective_precipitation": {
-            "units": "mm"
+            "units": "mm",
+            "traceOptions": {
+                "type": "bar",
+                "marker": {
+                    "color": "#1ac6ff",
+                    "opacity": 0.6
+                }
+            }
         },
         "windspeed": {
-            "units": "ms-1"
+            "units": "ms-1",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "color": "#878787"
+                }
+            }
         },
         "relativehumidity": {
-            "units": "%"
+            "units": "%",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "color": "#009933"
+                }
+            }
         },
         "precipitation_probability": {
-            "units": "%"
+            "units": "%",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "dash": "dot",
+                    "color": "#0052cc"
+                }
+            }
         },
         "temperature": {
             "units": "C°",
             "traceOptions": {
-                "mode": "lines"
+                "mode": "lines",
+                "line": {
+                    "color": "#ff1a1a"
+                }
             }
         },
         "temperature_max": {
-            "units": "C°"
+            "units": "C°",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "dash": "dot",
+                    "color": "#e60000"
+                }
+            }
         },
         "temperature_min": {
-            "units": "C°"
+            "units": "C°",
+            "traceOptions": {
+                "type": "bar",
+                "marker": {
+                    "color": "#ff4d4d",
+                    "opacity": 0.6
+                }
+            }
         },
         "temperature_mean": {
-            "units": "C°"
+            "units": "C°",
+            "traceOptions": {
+                "type": "lines",
+                "color": "#ff1a1a"
+            }
         },
         "windspeed_max": {
-            "units": "ms-1"
+            "units": "ms-1",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "dash": "dot",
+                    "color": "#666666"
+                }
+            }
         },
         "windspeed_min": {
-            "units": "ms-1"
+            "units": "ms-1",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "dash": "dot",
+                    "color": "#b3b3b3"
+                }
+            }
         },
         "windspeed_mean": {
-            "units": "ms-1"
+            "units": "ms-1",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "color": "#878787"
+                }
+            }
         },
         "relativehumidity_max": {
-            "units": "%"
+            "units": "%",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "color": "#006622"
+                }
+            }
         },
         "relativehumidity_min": {
-            "units": "%"
+            "units": "%",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "color": "#00e64d"
+                }
+            }
         },
         "relativehumidity_mean": {
-            "units": "%"
+            "units": "%",
+            "traceOptions": {
+                "mode": "lines",
+                "line": {
+                    "color": "#009933"
+                }
+            }
         }
     },
     "units": {
@@ -54,34 +146,31 @@
             "index": 2,
             "axisOptions": {
                 "title": {
-                    "text": "mm",
-                    "standoff": 4
+                    "text": "mm"
                 },
                 "overlaying": "y",
                 "side": "right",
                 "anchor": "free",
-                "position": 0.90
+                "position": 0.88
             }
         },
         "ms-1": {
             "index": 3,
             "axisOptions": {
                 "title": {
-                    "text": "ms-1",
-                    "standoff": 4
+                    "text": "ms-1"
                 },
                 "overlaying": "y",
                 "side": "right",
                 "anchor": "free",
-                "position": 0.95
+                "position": 0.94
             }
         },
         "%": {
             "index": 4,
             "axisOptions": {
                 "title": {
-                    "text": "%",
-                    "standoff": 4
+                    "text": "%"
                 },
                 "overlaying": "y",
                 "side": "right",
@@ -100,6 +189,6 @@
         }
     },
     "xAxisOptions": {
-        "domain": [0, 0.90]
+        "domain": [0, 0.88]
     }
 }

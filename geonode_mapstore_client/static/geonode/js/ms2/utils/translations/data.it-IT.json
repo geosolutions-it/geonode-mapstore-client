@@ -3,7 +3,28 @@
 	"messages": {
 		"meteoblue": {
 			"title": "Grafici Meteoblue",
-			"mapClickButton": "Attiva questo pulsante e fai clic sulla mappa per visualizzare i grafici meteo per la posizione"
+			"mapClickButton": "Attiva questo pulsante e fai clic sulla mappa per visualizzare i grafici meteo per la posizione",
+			"timeWindows": {
+				"oneDay": "1 giorno",
+				"sevenDays": "7 giorni",
+				"oneWeek": "1 settimana",
+				"oneMonth": "1 mese",
+				"oneYear": "1 anno",
+				"twoYears": "2 anni",
+				"fiveYears": "5 anni"
+			},
+			"forecast": {
+				"title": "Dati di previsione"
+			},
+			"historical": {
+				"title": "Dati storici"
+			},
+			"tocsv": "Esporta in csv",
+			"configLoadError": {
+				"title": "Errore Meteoblue",
+				"message": "Impossibile caricare la configurazione dei parametri"
+			},
+			"chartError": "Richiesta dati Meteoblue non riuscita"
 		}
 	}
 }

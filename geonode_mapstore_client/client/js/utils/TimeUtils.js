@@ -6,8 +6,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { isArray } from 'lodash';
-
 export const addTimeOffset = (date, offset = "") => {
     const scaleFunctions = {
         d: {
@@ -34,7 +32,7 @@ export const addTimeOffset = (date, offset = "") => {
     const amount = parseInt(amountStr, 10);
 
     let dateObj = new Date(date);
-    const curScaleFunctions = scaleFunctions[scale]
+    const curScaleFunctions = scaleFunctions[scale];
     const curValue = dateObj[curScaleFunctions.getF]?.();
 
     dateObj[curScaleFunctions.setF]?.(sign === '+' ? curValue + amount : curValue - amount);
@@ -42,6 +40,4 @@ export const addTimeOffset = (date, offset = "") => {
     return dateObj.toISOString();
 };
 
-export const rangeToDates = range => !range ? range : isArray(range) ?
-    [new Date(range[0]), new Date(range[1])] :
-    {start: new Date(range.start), end: new Date(range.end)};
+export const rangeToDates = range => !range ? range : [new Date(range[0]), new Date(range[1])];

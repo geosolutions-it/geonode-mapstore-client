@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector, createSelector } from 'reselect';
 import ContainerDimensions from 'react-container-dimensions';
 import { Glyphicon } from 'react-bootstrap';
 
@@ -28,6 +28,9 @@ import {
     isFeatureGridOpen,
     getDockSize as featureGridDockSizeSelector
 } from '../../MapStore2/web/client/selectors/featuregrid';
+import {
+    isLoggedIn
+} from '../../MapStore2/web/client/selectors/security';
 
 import {
     setMapClick,
@@ -118,7 +121,13 @@ export default createPlugin('Meteoblue', {
             position: 40,
             text: <Message msgId="meteoblue.title"/>,
             icon: <Glyphicon glyph="info-sign"/>,
-            action: setControlProperty.bind(null, 'meteoblue', 'enabled', true)
+            action: setControlProperty.bind(null, 'meteoblue', 'enabled', true),
+            selector: createSelector(
+                isLoggedIn,
+                (loggedIn) => ({
+                    style: loggedIn ? {} : { display: "none" }
+                })
+            )
         }
     },
     reducers: {

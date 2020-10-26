@@ -9,11 +9,13 @@
 import React from 'react';
 import { toPairs } from 'lodash';
 
-import loadingState from '../../../MapStore2/web/client/components/misc/enhancers/loadingState';
+import Loader from '../../../MapStore2/web/client/components/misc/Loader';
 
 import Chart from '../Chart';
 
 const ChartContainer = ({
+    loading,
+    width,
     height,
     charts = [],
     onChartInitialized = () => {},
@@ -22,7 +24,7 @@ const ChartContainer = ({
     const [currentHeight, setCurrentHeight] = React.useState();
     const [heightTimeoutID, setHeightTimeoutID] = React.useState();
 
-    const validCharts = toPairs(charts).filter(([_, chartData]) => !!chartData);
+    const validCharts = toPairs(charts).filter((chartPair) => !!chartPair[1]);
 
     React.useEffect(() => {
         if (heightTimeoutID) {
@@ -34,14 +36,15 @@ const ChartContainer = ({
     }, [height]);
 
     return (
-        <div className="ms-meteoblue-charts-container">
-            {validCharts.map(([chartName, chartData]) =>
-                <Chart {...chartData}
-                    availableHeight={currentHeight && (currentHeight / validCharts.length - 10)}
-                    onInitialized={chart => onChartInitialized(chartName, chart)}
-                    onUpdate={chart => onChartUpdate(chartName, chart)}/>)}
-        </div>
+        loading ? <div className="ms-meteoblue-charts-loading"><Loader size={Math.min(currentHeight, width) * 0.7}/></div> :
+            <div className="ms-meteoblue-charts-container">
+                {validCharts.map(([chartName, chartData]) =>
+                    <Chart key={chartName} {...chartData}
+                        availableHeight={currentHeight && (currentHeight / validCharts.length - 10)}
+                        onInitialized={chart => onChartInitialized(chartName, chart)}
+                        onUpdate={chart => onChartUpdate(chartName, chart)}/>)}
+            </div>
     );
 };
 
-export default loadingState()(ChartContainer);
+export default ChartContainer;

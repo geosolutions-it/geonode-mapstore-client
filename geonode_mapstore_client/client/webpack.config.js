@@ -64,7 +64,8 @@ module.exports = assign({}, require('./MapStore2/build/buildConfig')(
                 headers: {
                     Host: DEV_SERVER_HOST,
                     Referer: `${protocol}://${DEV_SERVER_HOST}/`
-                }
+                },
+		secure: false
             },
             {
                 context: [

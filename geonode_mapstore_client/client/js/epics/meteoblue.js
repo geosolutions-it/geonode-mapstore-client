@@ -8,7 +8,7 @@
 
 import axios from 'axios';
 import { Observable } from 'rxjs';
-import { findIndex, last, head } from 'lodash';
+import { findIndex, find } from 'lodash';
 
 import {
     SET_MAP_CLICK,
@@ -45,7 +45,8 @@ import {
     makeTimeWindows,
     processChartData,
     mergeFigureData,
-    localizeChart
+    localizeChart,
+    baseConfig as plotlyBaseConfig
 } from '../utils/ChartUtils';
 import {
     rangeToDates
@@ -65,52 +66,54 @@ export const getDataOnMapClick = (action$, store) => action$
         const today = new Date();
         let sevenDaysInFuture = new Date(today);
         sevenDaysInFuture.setDate(today.getDate() + 7);
-        let oneYearPast = new Date(today);
-        oneYearPast.setFullYear(today.getFullYear() - 1);
-        let fiveYearsPast = new Date(today);
-        fiveYearsPast.setFullYear(today.getFullYear() - 5);
+        let yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+        let oneYearPast = new Date(yesterday);
+        oneYearPast.setFullYear(yesterday.getFullYear() - 1);
+        let fiveYearsPast = new Date(yesterday);
+        fiveYearsPast.setFullYear(yesterday.getFullYear() - 5);
 
         const pad = val => `${val < 10 ? '0' : ''}${val}`;
 
-        const forecastStartDate = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
-        const forecastEndDate = `${sevenDaysInFuture.getFullYear()}-${pad(sevenDaysInFuture.getMonth() + 1)}-${pad(sevenDaysInFuture.getDate())}`;
+        const forecastStartDate = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}T00:00:00.000Z`;
+        const forecastEndDate = `${sevenDaysInFuture.getFullYear()}-${pad(sevenDaysInFuture.getMonth() + 1)}-${pad(sevenDaysInFuture.getDate())}T00:00:00.000Z`;
         const historicalStartDate = `${oneYearPast.getFullYear()}-${pad(oneYearPast.getMonth() + 1)}-${pad(oneYearPast.getDate())}`;
-        const historicalEndDate = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+        const historicalEndDate = `${yesterday.getFullYear()}-${pad(yesterday.getMonth() + 1)}-${pad(yesterday.getDate())}`;
         const historicalMaxDate = `${fiveYearsPast.getFullYear()}-${pad(fiveYearsPast.getMonth() + 1)}-${pad(fiveYearsPast.getDate())}`;
 
-        const configLoaded = configLoadedSelector(store.getState())
-        const meteoblueConfigState = configSelector(store.getState()) ;
+        const configLoaded = configLoadedSelector(store.getState());
+        const meteoblueConfigState = configSelector(store.getState());
 
         const loadConfigFlow = configLoaded ? Observable.of(meteoblueConfigState) : Observable.defer(() => axios.get('/static/geonode/js/ms2/utils/meteoblueConfig.json'))
             .switchMap((response = {}) => Observable.of(response.data))
             .catch((e) => Observable.of({error: e}));
         const requestsFlow = Observable.forkJoin(
-            Observable.defer(() => getForecastData(point.latlng.lat, point.latlng.lng, forecastStartDate, forecastEndDate)).catch(e => ({error: e})),
-            Observable.defer(() => getHistoricalData(point.latlng.lat, point.latlng.lng, historicalStartDate, historicalEndDate)).catch(e => ({error: e})),
+            Observable.defer(() => getForecastData(point.latlng.lat, point.latlng.lng, forecastStartDate, forecastEndDate)).pluck('data').catch(e => Observable.of({error: e})),
+            Observable.defer(() => getHistoricalData(point.latlng.lat, point.latlng.lng, historicalStartDate, historicalEndDate)).pluck('data').catch(e => Observable.of({error: e})),
             loadConfigFlow
         );
 
         return requestsFlow.switchMap(([forecastData, historicalData, meteoblueConfig]) => {
             let forecastChart;
-            let historicalChart
+            let historicalChart;
 
             if (forecastData.error) {
-                forecastChart = {error: forecastData.error};
+                forecastChart = {error: {message: 'meteoblue.chartError'}};
             }
             if (historicalData.error) {
-                historicalChart = {error: historicalData.error};
+                historicalChart = {error: {message: 'meteoblue.chartError'}};
             }
 
             const currentMessages = currentMessagesSelector(store.getState());
             const pickTimeWindows = (timeWindows, ...pickNames) => timeWindows.filter(({name}) => findIndex(pickNames, pickName => pickName === name) > -1);
 
             if (!forecastData.error) {
-                const forecastTraces = processChartData(forecastData.results, meteoblueConfig);
+                const forecastTraces = processChartData(forecastData, meteoblueConfig, 'date_time');
                 forecastChart = localizeChart(currentMessages, makeChart({
                     title: 'meteoblue.forecast.title',
-                    timeWindows: pickTimeWindows(makeTimeWindows(head(forecastData.results).date), 'oneDay', 'sevenDays'),
-                    maxRange: {start: forecastStartDate, end: forecastEndDate},
-                    loadedRange: {start: forecastStartDate, end: forecastEndDate},
+                    timeWindows: pickTimeWindows(makeTimeWindows(forecastStartDate), 'oneDay', 'sevenDays'),
+                    maxRange: [forecastStartDate, forecastEndDate],
+                    loadedRange: [forecastStartDate, forecastEndDate],
                     latlng: {...point.latlng},
                     startTimeWindow: 'oneDay',
                     data: forecastTraces,
@@ -120,12 +123,12 @@ export const getDataOnMapClick = (action$, store) => action$
             }
 
             if (!historicalData.error) {
-                const historicalTraces = processChartData(historicalData.results, meteoblueConfig);
+                const historicalTraces = processChartData(historicalData, meteoblueConfig, 'date');
                 historicalChart = localizeChart(currentMessages, makeChart({
                     title: 'meteoblue.historical.title',
-                    timeWindows: pickTimeWindows(makeTimeWindows(last(historicalData.results)?.date, '-'), 'oneWeek', 'oneMonth', 'oneYear', 'twoYears', 'fiveYears'),
-                    maxRange: {start: historicalMaxDate, end: historicalEndDate},
-                    loadedRange: {start: historicalStartDate, end: historicalEndDate},
+                    timeWindows: pickTimeWindows(makeTimeWindows(historicalEndDate, '-'), 'oneWeek', 'oneMonth', 'oneYear', 'twoYears', 'fiveYears'),
+                    maxRange: [historicalMaxDate, historicalEndDate],
+                    loadedRange: [historicalStartDate, historicalEndDate],
                     latlng: {...point.latlng},
                     startTimeWindow: 'oneYear',
                     data: historicalTraces,
@@ -150,35 +153,60 @@ export const getDataOnMapClick = (action$, store) => action$
 
 export const loadDataOnRangeChange = (action$, store) => action$
     .ofType(UPDATE_CHART)
-    .switchMap(({chartName, updateObj}) => {
+    .flatMap(({chartName, updateObj}) => {
         const state = store.getState();
         const chart = chartsSelector(state)?.[chartName];
         const latlng = chart?.latlng;
-        const curRange = rangeToDates(chart?.figure?.layout?.xaxis?.range);
         const loadedRange = rangeToDates(chart?.loadedRange);
         const maxRange = rangeToDates(chart?.maxRange);
+        const newTimeWindowRangeOrig = find(chart?.timeWindows, {name: updateObj.currentTimeWindow});
+        const newTimeWindowRange = rangeToDates(newTimeWindowRangeOrig);
 
         const meteoblueConfig = configSelector(store.getState());
 
-        if (updateObj.figure && chart && curRange && maxRange && latlng && curRange[0] < loadedRange.start && loadedRange.start > maxRange.start) {
+        if (chart && loadedRange && maxRange && newTimeWindowRange && latlng && newTimeWindowRange[0] < loadedRange[0] && loadedRange[0] > maxRange[0]) {
             const apiRequest = chartName === 'forecast' ? getForecastData : getHistoricalData;
-            const startDate = chart.figure.layout.xaxis.range[0];
-            const endDate = chart.loadedRange.start;
+            const startDate = newTimeWindowRangeOrig[0];
+            const endDate = chart.loadedRange[0];
+
 
             return Observable.defer(() => apiRequest(latlng.lat, latlng.lng, startDate, endDate))
-                .switchMap(data => {
-                    const traces = processChartData(data.results, meteoblueConfig);
+                .pluck('data')
+                .flatMap((data = []) => {
+                    const currentMessages = currentMessagesSelector(store.getState());
 
-                    const figureData = chart.figure.data;
-                    const newFigureData = mergeFigureData(traces, figureData);
+                    if (data.length > 0) {
+                        const timeKey = chartName === 'forecast' ? 'date_time' : 'date';
+                        const sortedData = data.map(dataPoint => ({...dataPoint, [timeKey]: new Date(dataPoint[timeKey])})).sort((a, b) => a[timeKey] < b[timeKey] ? -1 : 1);
+                        const newDataRange = [sortedData[0][timeKey], sortedData[sortedData.length - 1][timeKey]];
+                        const newFrontData = newDataRange[0] < loadedRange[0] ? sortedData.filter(dataPoint => dataPoint[timeKey] < loadedRange[0]) : [];
+                        const newBackData = newDataRange[1] > loadedRange[1] ? sortedData.filter(dataPoint => dataPoint[timeKey] > loadedRange[1]) : [];
+                        const traces = processChartData([...newFrontData, ...newBackData].map(dataPoint => ({...dataPoint, [timeKey]: dataPoint[timeKey].toISOString()})), meteoblueConfig, timeKey);
 
-                    return Observable.of(updateChart(chartName, {
-                        loadedRange: {start: startDate, end: endDate},
-                        figure: {data: newFigureData},
-                        loading: false
-                    }));
+                        const figureData = chart.figure.data;
+                        const newFigureData = mergeFigureData(traces, figureData);
+
+                        // a workaround the fact that after init react-plotly removes the config with the button
+                        const newFigure = {
+                            data: newFigureData,
+                            config: plotlyBaseConfig
+                        };
+
+                        return Observable.of(updateChart(chartName, localizeChart(currentMessages, {
+                            loadedRange: [newTimeWindowRangeOrig[0], newTimeWindowRangeOrig[1]],
+                            figure: newFigure,
+                            loading: false
+                        })));
+                    }
+
+                    // a workaround the fact that after init react-plotly removes the config with the button
+                    const newFigure = {
+                        config: plotlyBaseConfig
+                    };
+
+                    return Observable.of(updateChart(chartName, localizeChart(currentMessages, {loading: false, figure: newFigure, loadedRange: [newTimeWindowRangeOrig[0], newTimeWindowRangeOrig[1]]})));
                 })
-                .catch(e => Observable.of(setChart(chartName, {error: e})))
+                .catch(() => Observable.of(setChart(chartName, {error: {message: 'meteoblue.chartError'}})))
                 .startWith(updateChart(chartName, {loading: true}));
         }
 

@@ -23,7 +23,8 @@
 			"configLoadError": {
 				"title": "Meteoblue error",
 				"message": "Parameter config failed to load"
-			}
+			},
+			"chartError": "Meteoblue data request failed"
 		}
 	}
 }

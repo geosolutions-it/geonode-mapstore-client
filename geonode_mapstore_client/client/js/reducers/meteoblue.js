@@ -21,7 +21,7 @@ import {
 import { set } from '../../MapStore2/web/client/utils/ImmutableUtils';
 
 export default (state = {}, action) => {
-    switch(action.type) {
+    switch (action.type) {
     case SET_MAP_CLICK: {
         return {
             ...state,
@@ -65,7 +65,7 @@ export default (state = {}, action) => {
             find(newChart.timeWindows, { name: newChart.currentTimeWindow }) :
             null;
         const newChartWithNewTW = !isNil(newChart?.currentTimeWindow) && !isNil(oldChart?.currentTimeWindow) && !isNil(timeWindow) && newChart?.currentTimeWindow !== oldChart?.currentTimeWindow ?
-            set('figure.layout.xaxis.autorange', false, set('figure.layout.xaxis.range', [timeWindow.start, timeWindow.end], newChart)) :
+            set('figure.layout.xaxis.autorange', false, set('figure.layout.xaxis.range', [timeWindow[0], timeWindow[1]], newChart)) :
             newChart;
 
         return {

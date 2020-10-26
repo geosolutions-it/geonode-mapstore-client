@@ -9,8 +9,10 @@
 import React from 'react';
 import PlotlyChartBase from 'react-plotly.js';
 import { isNil } from 'lodash';
+import { compose, withProps } from 'recompose';
 
 import loadingState from '../../MapStore2/web/client/components/misc/enhancers/loadingState';
+import withError from './enhancers/withError';
 
 import Toolbar from '../../MapStore2/web/client/components/misc/toolbar/Toolbar';
 
@@ -26,6 +28,9 @@ const Chart = ({
     minChartHeight = 420,
     currentTimeWindow,
     timeWindows = [],
+    loadedRange,
+    maxRange,
+    latlng,
     figure = {},
     onInitialized = () => {},
     onUpdate = () => {},
@@ -61,10 +66,23 @@ const Chart = ({
                 {...figure}
                 {...props}
                 loaderProps={{width: figure.layout?.height || 150, height: figure.layout?.height || 150}}
-                onInitialized={newFigure => onInitialized({title, currentTimeWindow, timeWindows, figure: newFigure})}
+                onInitialized={newFigure => onInitialized({loadedRange, maxRange, latlng, currentTimeWindow, timeWindows, figure: newFigure})}
                 onUpdate={newFigure => onUpdate({figure: newFigure})}/>
         </div>
     );
 };
 
-export default Chart;
+export default compose(
+    withProps(({availableHeight}) => ({
+        ...(!isNil(availableHeight) ? {
+            errorStyle: {
+                height: `${availableHeight}px`,
+                padding: `${availableHeight / 4}px 0px ${availableHeight / 4}px 0px`
+            },
+            errorGlyphStyle: {
+                fontSize: `${availableHeight / 5}px`
+            }
+        } : {})
+    })),
+    withError({})
+)(Chart);
