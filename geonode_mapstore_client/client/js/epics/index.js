@@ -17,7 +17,7 @@ const { setEditPermissionStyleEditor, INIT_STYLE_SERVICE } = require("../../MapS
 const { layerEditPermissions, styleEditPermissions, updateThumb } = require("../api/geonode");
 const { getSelectedLayer, layersSelector } = require("../../MapStore2/web/client/selectors/layers");
 const { mapSelector } = require("../../MapStore2/web/client/selectors/map");
-const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils");
+const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils").default;
 
 const { updateMapLayout } = require('../../MapStore2/web/client/actions/maplayout');
 const { TOGGLE_CONTROL, SET_CONTROL_PROPERTY, SET_CONTROL_PROPERTIES } = require('../../MapStore2/web/client/actions/controls');
@@ -27,6 +27,7 @@ const { CLOSE_IDENTIFY, ERROR_FEATURE_INFO, TOGGLE_MAPINFO_STATE, LOAD_FEATURE_I
 const { SHOW_SETTINGS, HIDE_SETTINGS } = require('../../MapStore2/web/client/actions/layers');
 const { PURGE_MAPINFO_RESULTS } = require('../../MapStore2/web/client/actions/mapInfo');
 const { isMapInfoOpen } = require('../../MapStore2/web/client/selectors/mapInfo');
+const { mapInfoDetailsSettingsFromIdSelector, isMouseMoveIdentifyActiveSelector } = require('../../MapStore2/web/client/selectors/map');
 
 const { isFeatureGridOpen, getDockSize } = require('../../MapStore2/web/client/selectors/featuregrid');
 const { head, get } = require('lodash');
@@ -139,7 +140,23 @@ const _setThumbnail = (action$, { getState } = {}) =>
 // Modified to accept map-layout from Config diff less NO_QUERYABLE_LAYERS, SET_CONTROL_PROPERTIES more action$.ofType(PURGE_MAPINFO_RESULTS)
 const updateMapLayoutEpic = (action$, store) =>
 
-    action$.ofType(MAP_CONFIG_LOADED, SIZE_CHANGE, NO_QUERYABLE_LAYER, SET_CONTROL_PROPERTIES, CLOSE_FEATURE_GRID, OPEN_FEATURE_GRID, CLOSE_IDENTIFY, TOGGLE_MAPINFO_STATE, LOAD_FEATURE_INFO, EXCEPTIONS_FEATURE_INFO, TOGGLE_CONTROL, SET_CONTROL_PROPERTY, SHOW_SETTINGS, HIDE_SETTINGS, ERROR_FEATURE_INFO, PURGE_MAPINFO_RESULTS)
+    action$.ofType(
+        MAP_CONFIG_LOADED,
+        SIZE_CHANGE,
+        CLOSE_FEATURE_GRID,
+        OPEN_FEATURE_GRID,
+        CLOSE_IDENTIFY,
+        NO_QUERYABLE_LAYER,
+        TOGGLE_MAPINFO_STATE,
+        LOAD_FEATURE_INFO,
+        EXCEPTIONS_FEATURE_INFO,
+        TOGGLE_CONTROL,
+        SET_CONTROL_PROPERTY,
+        SET_CONTROL_PROPERTIES,
+        SHOW_SETTINGS,
+        HIDE_SETTINGS,
+        ERROR_FEATURE_INFO,
+        PURGE_MAPINFO_RESULTS)
         .switchMap(() => {
             const state = store.getState();
 
@@ -178,11 +195,14 @@ const updateMapLayoutEpic = (action$, store) =>
             ].filter(panel => panel)) || { left: 0 };
 
             const rightPanels = head([
-                get(state, "controls.details.enabled") && { right: mapLayout.right.md } || null,
+                get(state, "controls.details.enabled") && !mapInfoDetailsSettingsFromIdSelector(state)?.showAsModal && {right: mapLayout.right.md} || null,
                 get(state, "controls.annotations.enabled") && { right: mapLayout.right.md } || null,
                 get(state, "controls.metadataexplorer.enabled") && { right: mapLayout.right.md } || null,
                 get(state, "controls.measure.enabled") && showCoordinateEditorSelector(state) && { right: mapLayout.right.md } || null,
-                get(state, "mapInfo.enabled") && isMapInfoOpen(state) && { right: mapLayout.right.md } || null,
+                get(state, "controls.userExtensions.enabled") && { right: mapLayout.right.md } || null,
+                get(state, "controls.mapTemplates.enabled") && { right: mapLayout.right.md } || null,
+                get(state, "controls.mapCatalog.enabled") && { right: mapLayout.right.md } || null,
+                get(state, "mapInfo.enabled") && isMapInfoOpen(state) && !isMouseMoveIdentifyActiveSelector(state) && {right: mapLayout.right.md} || null,
                 meteoblueControlPanelEnabledSelector(state) && { right: meteoblueDockSizeSelector(state) || mapLayout.right.md } || null
             ].filter(panel => panel)) || { right: 0 };
 

@@ -8,7 +8,7 @@
 
 const Rx = require('rxjs');
 const axios = require('../../MapStore2/web/client/libs/ajax');
-const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils");
+const ConfigUtils = require("../../MapStore2/web/client/utils/ConfigUtils").default;
 
 
 const createAttributesFromMetadata = ({ name, description }) => {

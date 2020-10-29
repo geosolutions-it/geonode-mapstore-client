@@ -7,7 +7,7 @@
  */
 require('react-widgets/dist/css/react-widgets.css');
 const assign = require("object-assign");
-const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils');
+const ConfigUtils = require('../MapStore2/web/client/utils/ConfigUtils').default;
 const LocaleUtils = require('../MapStore2/web/client/utils/LocaleUtils');
 const LayersUtils = require('../MapStore2/web/client/utils/LayersUtils');
 LayersUtils.setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
