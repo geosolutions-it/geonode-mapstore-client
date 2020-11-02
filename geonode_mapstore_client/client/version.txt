@@ -1,1 +1,1 @@
-ms2-geonode-api-2.0.2
+geonode-mapstore-client-v2.0.4-8f4bcf0dbbfd28548edcf6f8d09bdacfc33a4c29
