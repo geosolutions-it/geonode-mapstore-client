@@ -12,7 +12,7 @@ import { layersSelector, groupsSelector } from '@mapstore/framework/selectors/la
 import { backgroundListSelector } from '@mapstore/framework/selectors/backgroundselector';
 import { mapOptionsToSaveSelector } from '@mapstore/framework/selectors/mapsave';
 import {
-    // bookmarkSearchConfigSelector,
+    bookmarkSearchConfigSelector,
     textSearchConfigSelector
 } from '@mapstore/framework/selectors/searchconfig';
 import { saveMapConfiguration } from '@mapstore/framework/utils/MapUtils';
@@ -46,7 +46,7 @@ const SaveAPI = {
         const groups = groupsSelector(state);
         const backgrounds = backgroundListSelector(state);
         const textSearchConfig = textSearchConfigSelector(state);
-        // const bookmarkSearchConfig = bookmarkSearchConfigSelector(state);
+        const bookmarkSearchConfig = bookmarkSearchConfigSelector(state);
         const additionalOptions = mapOptionsToSaveSelector(state);
         const data = saveMapConfiguration(
             map,
@@ -54,7 +54,7 @@ const SaveAPI = {
             groups,
             backgrounds,
             textSearchConfig,
-            // bookmarkSearchConfig,
+            bookmarkSearchConfig,
             additionalOptions
         );
         const name = metadata.name;

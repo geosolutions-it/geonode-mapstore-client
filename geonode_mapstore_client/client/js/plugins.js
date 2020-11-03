@@ -13,13 +13,13 @@ module.exports = {
         AddGroupPlugin: require('../MapStore2/web/client/plugins/AddGroup').default,
         IdentifyPlugin: require('../MapStore2/web/client/plugins/Identify'),
         TOCPlugin: require('../MapStore2/web/client/plugins/TOC'),
-        MapPlugin: require('../MapStore2/web/client/plugins/Map'),
+        MapPlugin: require('../MapStore2/web/client/plugins/Map').default,
         ToolbarPlugin: require('../MapStore2/web/client/plugins/Toolbar'),
         DrawerMenuPlugin: require('../MapStore2/web/client/plugins/DrawerMenu'),
         ZoomAllPlugin: require('../MapStore2/web/client/plugins/ZoomAll'),
         MapLoadingPlugin: require('../MapStore2/web/client/plugins/MapLoading'),
         OmniBarPlugin: require('../MapStore2/web/client/plugins/OmniBar'),
-        BackgroundSelectorPlugin: require('../MapStore2/web/client/plugins/BackgroundSelector'),
+        BackgroundSelectorPlugin: require('../MapStore2/web/client/plugins/BackgroundSelector').default,
         FullScreenPlugin: require('../MapStore2/web/client/plugins/FullScreen'),
         ZoomInPlugin: require('../MapStore2/web/client/plugins/ZoomIn'),
         ZoomOutPlugin: require('../MapStore2/web/client/plugins/ZoomOut'),
@@ -51,10 +51,9 @@ module.exports = {
         SearchServicesConfigPlugin: require('../MapStore2/web/client/plugins/SearchServicesConfig'),
         AddReducersAndEpics: {
             reducers: {
-                security: require('../MapStore2/web/client/reducers/security'),
-                maps: require('../MapStore2/web/client/reducers/maps'),
-                currentMap: require('../MapStore2/web/client/reducers/currentMap'),
-                maplayout: require('../MapStore2/web/client/reducers/maplayout')
+                security: require('../MapStore2/web/client/reducers/security').default,
+                maps: require('../MapStore2/web/client/reducers/maps').default,
+                maplayout: require('../MapStore2/web/client/reducers/maplayout').default
             },
             epics
         }

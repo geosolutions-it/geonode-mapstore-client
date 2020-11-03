@@ -9,13 +9,13 @@ const Rx = require("rxjs");
 const {_setThumbnail, updateMapLayoutEpic} = require("./epics");
 module.exports = {
     plugins: {
-        MapPlugin: require('../MapStore2/web/client/plugins/Map'),
+        MapPlugin: require('../MapStore2/web/client/plugins/Map').default,
         IdentifyPlugin: require('../MapStore2/web/client/plugins/Identify'),
         ToolbarPlugin: require('../MapStore2/web/client/plugins/Toolbar'),
         ZoomAllPlugin: require('../MapStore2/web/client/plugins/ZoomAll'),
         MapLoadingPlugin: require('../MapStore2/web/client/plugins/MapLoading'),
         OmniBarPlugin: require('../MapStore2/web/client/plugins/OmniBar'),
-        BackgroundSelectorPlugin: require('../MapStore2/web/client/plugins/BackgroundSelector'),
+        BackgroundSelectorPlugin: require('../MapStore2/web/client/plugins/BackgroundSelector').default,
         FullScreenPlugin: require('../MapStore2/web/client/plugins/FullScreen'),
         ZoomInPlugin: require('../MapStore2/web/client/plugins/ZoomIn'),
         ZoomOutPlugin: require('../MapStore2/web/client/plugins/ZoomOut'),
@@ -28,10 +28,9 @@ module.exports = {
         PlaybackPlugin: require('../MapStore2/web/client/plugins/Playback'),
         AddReducersAndEpics: {
             reducers: {
-                security: require('../MapStore2/web/client/reducers/security'),
-                maps: require('../MapStore2/web/client/reducers/maps'),
-                currentMap: require('../MapStore2/web/client/reducers/currentMap'),
-                maplayout: require('../MapStore2/web/client/reducers/maplayout')
+                security: require('../MapStore2/web/client/reducers/security').default,
+                maps: require('../MapStore2/web/client/reducers/maps').default,
+                maplayout: require('../MapStore2/web/client/reducers/maplayout').default
             },
             epics: {
                 _setThumbnail,
