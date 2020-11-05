@@ -29,6 +29,7 @@ import {
 } from '@js/actions/gnresource';
 import { setCurrentStory } from '@mapstore/framework/actions/geostory';
 import isMobile from 'ismobilejs';
+import uuid from 'uuid';
 
 registerMediaAPI('geonode', geoNodeMediaApi);
 
@@ -85,6 +86,28 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                 isNewResource,
                 appId
             } = geoNodeMSConfig || {};
+
+            const currentStory = isNewResource
+                // change id of new story sections and contents
+                ? {
+                    ...geoStoryConfig,
+                    sections: geoStoryConfig?.sections
+                        .map((section) => {
+                            return {
+                                ...section,
+                                id: uuid(),
+                                contents: section?.contents
+                                    .map((content) => {
+                                        return {
+                                            ...content,
+                                            id: uuid()
+                                        };
+                                    }) || []
+                            };
+                        }) || []
+                }
+                : geoStoryConfig;
+
             setLocalConfigurationFile('');
             setLocale(language);
             setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
@@ -147,7 +170,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
                     maptype
                 },
                 initialActions: [
-                    setCurrentStory.bind(null, geoStoryConfig),
+                    setCurrentStory.bind(null, currentStory),
                     setResourceType.bind(null, 'geostory'),
                     setResourcePermissions.bind(null, permissions),
                     ...(appId ? [setResourceId.bind(null, appId)] : []),

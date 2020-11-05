@@ -25,12 +25,12 @@
                 "sections": [
                     {
                         "type": "title",
-                        "id": "title_section_id1",
+                        "id": "section_id",
                         "title": "Abstract",
                         "cover": true,
                         "contents": [
                             {
-                                "id": "title_content_id1",
+                                "id": "content_id",
                                 "type": "text",
                                 "size": "large",
                                 "align": "center",
@@ -81,11 +81,11 @@
                             "mediaTypes": {
                                 "image": {
                                     "defaultSource": "geostory",
-                                    "sources": ["geostory"]
+                                    "sources": ["geostory", "geonode"]
                                 },
                                 "video": {
                                     "defaultSource": "geostory",
-                                    "sources": ["geostory"]
+                                    "sources": ["geostory", "geonode"]
                                 },
                                 "map": {
                                     "defaultSource": "geostory",
@@ -109,9 +109,13 @@
                     "name": "MediaEditor",
                     "cfg": {
                         "disableAddMedia": {
+                            "image": true,
+                            "video": true,
                             "map": true
                         },
                         "disableEditMedia": {
+                            "image": true,
+                            "video": true,
                             "map": true
                         }
                     }

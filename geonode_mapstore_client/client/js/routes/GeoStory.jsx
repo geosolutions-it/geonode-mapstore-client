@@ -44,17 +44,17 @@ function GeoStoryRoute({
     const Loader = loaderComponent;
     return (
         <>
-        <ConnectedPluginsContainer
-            key="page-geostory"
-            id="page-geostory"
-            className="page page-geostory"
-            component={BorderLayout}
-            pluginsConfig={pluginsConfig || getConfigProp('plugins')}
-            plugins={plugins}
-            params={params}
-            onPluginsLoaded={() => setLoading(false)}
-        />
-        {loading && Loader && <Loader />}
+            <ConnectedPluginsContainer
+                key="page-geostory"
+                id="page-geostory"
+                className="page page-geostory"
+                component={BorderLayout}
+                pluginsConfig={pluginsConfig || getConfigProp('plugins')}
+                plugins={plugins}
+                params={params}
+                onPluginsLoaded={() => setLoading(false)}
+            />
+            {loading && Loader && <Loader />}
         </>
     );
 }

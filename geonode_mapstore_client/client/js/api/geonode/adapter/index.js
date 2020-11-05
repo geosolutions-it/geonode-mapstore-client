@@ -53,6 +53,12 @@ export const updateMapStoreMap = (id, body = {}) => {
         .then(({ data }) => data);
 };
 
+/**
+* Get a map configuration
+* @memberof api.geonode.adapter
+* @param {number|string} id resource id
+* @return {promise} it returns an object with the success map object response
+*/
 export const getMapStoreMapById = (id) => {
     const baseUrl = getConfigProp('genode_rest_api') || '/mapstore/rest/';
     return axios.get(parseDevHostname(`${baseUrl}resources/${id}/`),

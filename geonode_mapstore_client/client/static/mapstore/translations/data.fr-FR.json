@@ -2,8 +2,14 @@
     "locale": "fr-FR",
     "messages": {
         "mediaEditor": {
+            "imageList": {
+                "emptyList": "Aucun résultat pour cette demande. Essayez de changer le filtre ou sélectionnez un service différent à partir de l'entrée dans le coin supérieur droit."
+            },
+            "videoList": {
+                "emptyList": "Aucun résultat pour cette demande. Essayez de changer le filtre ou sélectionnez un service différent à partir de l'entrée dans le coin supérieur droit."
+            },
             "mapList": {
-                "emptyList": "Sélectionnez un autre service de carte dans l'entrée de sélection en haut à droite."
+                "emptyList": "Aucun résultat pour cette demande. Essayez de changer le filtre ou sélectionnez un service différent à partir de l'entrée dans le coin supérieur droit."
             }
         }
     }

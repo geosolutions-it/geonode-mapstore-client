@@ -7,8 +7,11 @@
  */
 
 import axios from '@mapstore/framework/libs/ajax';
-import { parseDevHostname } from '@js/utils/APIUtils';
-import { setRequestOptions, getRequestOptions } from '@js/utils/GNSearchUtils';
+import {
+    parseDevHostname,
+    setRequestOptions,
+    getRequestOptions
+} from '@js/utils/APIUtils';
 import isArray from 'lodash/isArray';
 import castArray from 'lodash/castArray';
 
@@ -17,7 +20,8 @@ let endpoints = {
     'base_resources': '/api/v2/base_resources',
     'maps': '/api/v2/maps',
     'geoapps': '/api/v2/geoapps',
-    'geostories': '/api/v2/geostories'
+    'geostories': '/api/v2/geostories',
+    'documents': '/api/v2/documents'
 };
 
 const RESOURCES = 'base_resources';
@@ -26,6 +30,7 @@ const GEOSTORIES = 'geostories';
 // const GROUPS = 'groups';
 // const LAYERS = 'layers';
 const MAPS = 'maps';
+const DOCUMENTS = 'documents';
 // const USERS = 'users';
 
 const requestOptions = (name, requestFunc) => {
@@ -142,6 +147,42 @@ export const getMaps = ({
         }));
 };
 
+export const getDocumentsByDocType = (docType = 'image', {
+    q,
+    pageSize = 20,
+    page = 1,
+    sort,
+    ...params
+}) => {
+
+    return requestOptions(MAPS, () => axios
+        .get(
+            parseDevHostname(
+                addQueryString(endpoints[DOCUMENTS], q && {
+                    search: q,
+                    search_fields: ['title', 'abstract']
+                })
+            ), {
+                // axios will format query params array to `key[]=value1&key[]=value2`
+                params: {
+                    ...params,
+                    ...(sort && { sort: isArray(sort) ? sort : [ sort ]}),
+                    'filter{doc_type}': [docType],
+                    page,
+                    page_size: pageSize
+                }
+            })
+        .then(({ data }) => {
+            return {
+                totalCount: data.total,
+                isNextPageAvailable: !!data.links.next,
+                resources: (data.documents || [])
+                    .map((resource) => {
+                        return resource;
+                    })
+            };
+        }));
+};
 
 export const getResourceByPk = (pk) => {
     return axios.get(parseDevHostname(`${endpoints[RESOURCES]}/${pk}`))
@@ -181,5 +222,7 @@ export default {
     getResourceByPk,
     createGeoApp,
     createGeoStory,
-    updateGeoStory
+    updateGeoStory,
+    getMaps,
+    getDocumentsByDocType
 };

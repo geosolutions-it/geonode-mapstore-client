@@ -2,8 +2,14 @@
     "locale": "es-ES",
     "messages": {
         "mediaEditor": {
+            "imageList": {
+                "emptyList": "No hay resultados para esta solicitud. Intente cambiar el filtro o seleccione un servicio diferente de la entrada en la esquina superior derecha."
+            },
+            "videoList": {
+                "emptyList": "No hay resultados para esta solicitud. Intente cambiar el filtro o seleccione un servicio diferente de la entrada en la esquina superior derecha."
+            },
             "mapList": {
-                "emptyList": "Seleccione un servicio de mapas diferente de la entrada de selección superior derecha."
+                "emptyList": "No hay resultados para esta solicitud. Intente cambiar el filtro o seleccione un servicio diferente de la entrada en la esquina superior derecha."
             }
         }
     }

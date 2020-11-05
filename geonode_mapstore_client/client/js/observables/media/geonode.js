@@ -6,7 +6,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { Observable } from 'rxjs';
-import { getMaps } from '@js/api/geonode/v2';
+import {
+    getMaps,
+    getDocumentsByDocType
+} from '@js/api/geonode/v2';
 import { getMapStoreMapById } from '@js/api/geonode/adapter';
 import { currentResourcesSelector, selectedIdSelector } from '@mapstore/framework/selectors/mediaEditor';
 import { excludeGoogleBackground, extractTileMatrixFromSources } from '@mapstore/framework/utils/LayersUtils';
@@ -60,21 +63,120 @@ function parseMapConfig({ data, attributes, user, id }, resource) {
     };
 }
 
-export const load = (store, { params }) => {
-    const state = store.getState();
-    const selectedId = selectedIdSelector(state);
-    const { page, pageSize } = params;
-    const currentResources = page === 1
-        ? []
-        : currentResourcesSelector(state) || [];
-    const emptyResponse = {
-        resources: [],
-        totalCount: 0
-    };
-    return Observable.defer(() => getMaps({
+function getImageDimensions(src) {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => {
+            resolve({
+                imgWidth: img.naturalWidth,
+                imgHeight: img.naturalHeight
+            });
+        };
+        img.onerror = () => {
+            resolve({});
+        };
+        img.src = src;
+    });
+}
+
+const loadMediaList = {
+    image: ({
         page,
         pageSize,
-        q: params.q
+        q,
+        currentResources,
+        selectedId
+    }) => getDocumentsByDocType('image', {
+        page,
+        pageSize,
+        q
+    })
+        .then((response) => {
+            const totalCount = response.totalCount || 0;
+            const newResources = response.resources.map((resource) => ({
+                id: resource.pk,
+                type: 'image',
+                data: {
+                    thumbnail: resource.thumbnail_url,
+                    src: resource.doc_file,
+                    title: resource.title,
+                    description: resource.abstract,
+                    alt: resource.alternate,
+                    credits: resource.attribution
+                }
+            }));
+            const resources = [
+                ...currentResources,
+                ...newResources
+            ];
+            const selectedResource = newResources.find((resource) => resource.id === selectedId);
+            if (selectedResource) {
+                // get resource data when it's selected
+                // this will allow to preview the map and retrieve the correct data
+                return getImageDimensions(selectedResource.data.src)
+                    .then((dimensions) => {
+                        return {
+                            resources: resources.map((resource) => selectedId && resource.id === selectedId
+                                ? {
+                                    ...resource,
+                                    data: {
+                                        ...resource.data,
+                                        ...dimensions
+                                    }
+                                }
+                                : resource),
+                            totalCount
+                        };
+                    });
+            }
+            return {
+                resources,
+                totalCount
+            };
+        }),
+    video: ({
+        page,
+        pageSize,
+        q,
+        currentResources
+    }) => getDocumentsByDocType('video', {
+        page,
+        pageSize,
+        q
+    })
+        .then((response) => {
+            const totalCount = response.totalCount || 0;
+            const newResources = response.resources.map((resource) => ({
+                id: resource.pk,
+                type: 'video',
+                data: {
+                    thumbnail: resource.thumbnail_url,
+                    src: resource.doc_file,
+                    title: resource.title,
+                    description: resource.abstract,
+                    credits: resource.attribution
+                }
+            }));
+
+            const resources = [
+                ...currentResources,
+                ...newResources
+            ];
+            return {
+                resources,
+                totalCount
+            };
+        }),
+    map: ({
+        page,
+        pageSize,
+        q,
+        currentResources,
+        selectedId
+    }) => getMaps({
+        page,
+        pageSize,
+        q
     })
         .then((response) => {
             const totalCount = response.totalCount || 0;
@@ -116,13 +218,53 @@ export const load = (store, { params }) => {
                 totalCount
             };
         })
+};
+
+export const load = (store, { params, mediaType }) => {
+    const state = store.getState();
+    const selectedId = selectedIdSelector(state);
+    const { page, pageSize } = params;
+    const currentResources = page === 1
+        ? []
+        : currentResourcesSelector(state) || [];
+    const emptyResponse = {
+        resources: [],
+        totalCount: 0
+    };
+    const mediaListRequest = loadMediaList[mediaType];
+    return Observable.defer(() => mediaListRequest({
+        page,
+        pageSize,
+        q: params.q,
+        currentResources,
+        selectedId
+    })
+        .then(response => response)
         .catch(() => {
             return emptyResponse;
         }));
 };
 
 export const getData = (store, { selectedItem }) => {
-    if (selectedItem && selectedItem.type === 'map' && selectedItem.data && selectedItem.data.id) {
+
+    if (!selectedItem) {
+        return Observable.of(null);
+    }
+
+    if (selectedItem.type === 'image'
+    && selectedItem.data.src
+    && !(selectedItem.data.imgWidth && selectedItem.data.imgHeight)) {
+        return Observable.defer(() =>
+            getImageDimensions(selectedItem.data.src)
+                .then((dimensions) => ({
+                    ...selectedItem.data,
+                    ...dimensions
+                }))
+        );
+    }
+
+    if (selectedItem.type === 'map'
+    && selectedItem.data && selectedItem.data.id) {
         return Observable.defer(() => getMapStoreMapById(selectedItem.data.id)
             .then((response) => {
                 return parseMapConfig(response, selectedItem);
