@@ -12477,7 +12477,10 @@ structure .glyphicon-{iconName}-content
   padding: 0 4px;
   background-color: inherit;
 }
-.msgapi .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar > .btn-group {
+.msgapi .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar {
+  display: flex;
+}
+.msgapi .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar .btn-group {
   display: block;
 }
 .msgapi .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-elements {
@@ -17032,7 +17035,7 @@ Ported to CodeMirror by Peter Kroon
   box-shadow: none;
 }
 .msgapi .ms-color-picker-overlay {
-  z-index: 1000;
+  z-index: 9999;
 }
 .msgapi .ms-color-picker-overlay .ms-sketch-picker {
   background: #ffffff;
@@ -19010,6 +19013,7 @@ Ported to CodeMirror by Peter Kroon
   height: 100%;
   top: 0;
   left: 0;
+  z-index: 9999;
 }
 .msgapi .ms-property-picker-cover {
   position: absolute;
@@ -20342,6 +20346,9 @@ Ported to CodeMirror by Peter Kroon
   -webkit-transition: none;
   -o-transition: none;
   transition: none;
+}
+.msgapi .fade.in.modal {
+  z-index: 9999;
 }
 .msgapi .details-close {
   float: right;

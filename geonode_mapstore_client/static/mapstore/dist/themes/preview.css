@@ -12582,7 +12582,10 @@ Ported to CodeMirror by Peter Kroon
   padding: 0 4px;
   background-color: inherit;
 }
-.msgapi .fill:-webkit-full-screen .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar > .btn-group {
+.msgapi .fill:-webkit-full-screen .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar {
+  display: flex;
+}
+.msgapi .fill:-webkit-full-screen .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar .btn-group {
   display: block;
 }
 .msgapi .fill:-webkit-full-screen .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-elements {
@@ -17060,7 +17063,7 @@ Ported to CodeMirror by Peter Kroon
   box-shadow: none;
 }
 .msgapi .fill:-webkit-full-screen .ms-color-picker-overlay {
-  z-index: 1000;
+  z-index: 9999;
 }
 .msgapi .fill:-webkit-full-screen .ms-color-picker-overlay .ms-sketch-picker {
   background: #ffffff;
@@ -19029,6 +19032,7 @@ Ported to CodeMirror by Peter Kroon
   height: 100%;
   top: 0;
   left: 0;
+  z-index: 9999;
 }
 .msgapi .fill:-webkit-full-screen .ms-property-picker-cover {
   position: absolute;
@@ -20356,6 +20360,9 @@ Ported to CodeMirror by Peter Kroon
   -webkit-transition: none;
   -o-transition: none;
   transition: none;
+}
+.msgapi .fill:-webkit-full-screen .fade.in.modal {
+  z-index: 9999;
 }
 .msgapi .fill:-webkit-full-screen .details-close {
   float: right;
@@ -24962,7 +24969,10 @@ Ported to CodeMirror by Peter Kroon
   padding: 0 4px;
   background-color: inherit;
 }
-.msgapi .fill .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar > .btn-group {
+.msgapi .fill .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar {
+  display: flex;
+}
+.msgapi .fill .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-toolbar .btn-group {
   display: block;
 }
 .msgapi .fill .ms-geostory-navigation .ms-geostory-navigation-bar .ms-geostory-navigation-tools .ms-geostory-navigation-elements {
@@ -29440,7 +29450,7 @@ Ported to CodeMirror by Peter Kroon
   box-shadow: none;
 }
 .msgapi .fill .ms-color-picker-overlay {
-  z-index: 1000;
+  z-index: 9999;
 }
 .msgapi .fill .ms-color-picker-overlay .ms-sketch-picker {
   background: #ffffff;
@@ -31409,6 +31419,7 @@ Ported to CodeMirror by Peter Kroon
   height: 100%;
   top: 0;
   left: 0;
+  z-index: 9999;
 }
 .msgapi .fill .ms-property-picker-cover {
   position: absolute;
@@ -32736,6 +32747,9 @@ Ported to CodeMirror by Peter Kroon
   -webkit-transition: none;
   -o-transition: none;
   transition: none;
+}
+.msgapi .fill .fade.in.modal {
+  z-index: 9999;
 }
 .msgapi .fill .details-close {
   float: right;

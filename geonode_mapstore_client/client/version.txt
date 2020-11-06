@@ -1,1 +1,1 @@
-ms-geonode-5cebffc4340d8f63552d2dad19307731a5773ed6
+ms2-geonode-api-v2.0.4-dfdb963b6c6f7bd054f92def0ba1758ebab8c4a1

@@ -94,6 +94,7 @@
     "yargs": "16.1.0"
   },
   "dependencies": {
+    "fs-extra": "^9.0.1",
     "mapstore2": "file:MapStore2"
   }
 }
