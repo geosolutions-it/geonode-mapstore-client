@@ -11,13 +11,8 @@ import {
     getDocumentsByDocType
 } from '@js/api/geonode/v2';
 import { getMapStoreMapById } from '@js/api/geonode/adapter';
-import { currentResourcesSelector, selectedIdSelector } from '@mapstore/framework/selectors/mediaEditor';
 import { excludeGoogleBackground, extractTileMatrixFromSources } from '@mapstore/framework/utils/LayersUtils';
 import { convertFromLegacy, normalizeConfig } from '@mapstore/framework/utils/ConfigUtils';
-
-export const save = () => Observable.empty();
-export const edit = () => Observable.empty();
-export const remove = () => Observable.empty();
 
 function parseMapConfig({ data, attributes, user, id }, resource) {
     const metadata = attributes.reduce((acc, attribute) => ({
@@ -85,7 +80,6 @@ const loadMediaList = {
         page,
         pageSize,
         q,
-        currentResources,
         selectedId,
         sourceId
     }) => getDocumentsByDocType('image', {
@@ -95,12 +89,12 @@ const loadMediaList = {
     })
         .then((response) => {
             const totalCount = response.totalCount || 0;
-            const newResources = response.resources.map((resource) => ({
+            const resources = response.resources.map((resource) => ({
                 id: resource.pk,
                 type: 'image',
                 data: {
                     thumbnail: resource.thumbnail_url,
-                    src: resource.doc_file,
+                    src: resource.href,
                     title: resource.title,
                     description: resource.abstract,
                     alt: resource.alternate,
@@ -108,11 +102,7 @@ const loadMediaList = {
                     sourceId
                 }
             }));
-            const resources = [
-                ...currentResources,
-                ...newResources
-            ];
-            const selectedResource = newResources.find((resource) => resource.id === selectedId);
+            const selectedResource = resources.find((resource) => resource.id === selectedId);
             if (selectedResource) {
                 // get resource data when it's selected
                 // this will allow to preview the map and retrieve the correct data
@@ -141,7 +131,6 @@ const loadMediaList = {
         page,
         pageSize,
         q,
-        currentResources,
         sourceId
     }) => getDocumentsByDocType('video', {
         page,
@@ -150,12 +139,12 @@ const loadMediaList = {
     })
         .then((response) => {
             const totalCount = response.totalCount || 0;
-            const newResources = response.resources.map((resource) => ({
+            const resources = response.resources.map((resource) => ({
                 id: resource.pk,
                 type: 'video',
                 data: {
                     thumbnail: resource.thumbnail_url,
-                    src: resource.doc_file,
+                    src: resource.href,
                     title: resource.title,
                     description: resource.abstract,
                     credits: resource.attribution,
@@ -163,10 +152,6 @@ const loadMediaList = {
                 }
             }));
 
-            const resources = [
-                ...currentResources,
-                ...newResources
-            ];
             return {
                 resources,
                 totalCount
@@ -176,7 +161,6 @@ const loadMediaList = {
         page,
         pageSize,
         q,
-        currentResources,
         selectedId,
         sourceId
     }) => getMaps({
@@ -186,7 +170,7 @@ const loadMediaList = {
     })
         .then((response) => {
             const totalCount = response.totalCount || 0;
-            const newResources = response.resources.map((resource) => ({
+            const resources = response.resources.map((resource) => ({
                 id: resource.pk,
                 type: 'map',
                 data: {
@@ -197,11 +181,8 @@ const loadMediaList = {
                     sourceId
                 }
             }));
-            const resources = [
-                ...currentResources,
-                ...newResources
-            ];
-            const selectedResource = newResources.find((resource) => resource.id === selectedId);
+
+            const selectedResource = resources.find((resource) => resource.id === selectedId);
             if (selectedResource) {
                 // get resource data when it's selected
                 // this will allow to preview the map and retrieve the correct data
@@ -227,13 +208,13 @@ const loadMediaList = {
         })
 };
 
-export const load = (store, { params, mediaType, sourceId }) => {
-    const state = store.getState();
-    const selectedId = selectedIdSelector(state);
+export const load = ({
+    params,
+    mediaType,
+    sourceId,
+    selectedId
+}) => {
     const { page, pageSize } = params;
-    const currentResources = page === 1
-        ? []
-        : currentResourcesSelector(state) || [];
     const emptyResponse = {
         resources: [],
         totalCount: 0
@@ -243,7 +224,6 @@ export const load = (store, { params, mediaType, sourceId }) => {
         page,
         pageSize,
         q: params.q,
-        currentResources,
         selectedId,
         sourceId
     })
@@ -253,7 +233,7 @@ export const load = (store, { params, mediaType, sourceId }) => {
         }));
 };
 
-export const getData = (store, { selectedItem }) => {
+export const getData = ({ selectedItem }) => {
 
     if (!selectedItem) {
         return Observable.of(null);
