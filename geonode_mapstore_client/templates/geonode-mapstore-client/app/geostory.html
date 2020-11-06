@@ -94,32 +94,31 @@
                             },
                             "sources": {
                                 "geostory": {
-                                    "name": "Current story",
-                                    "type": "geostory"
+                                    "name": "geostory.storyResources",
+                                    "type": "geostory",
+                                    "addMediaEnabled": {
+                                        "image": true,
+                                        "video": true
+                                    },
+                                    "editMediaEnabled": {
+                                        "image": true,
+                                        "video": true
+                                    },
+                                    "removeMediaEnabled": {
+                                        "image": true,
+                                        "video": true,
+                                        "map": true
+                                    }
                                 },
                                 "geonode": {
-                                    "name": "GeoNode",
+                                    "name": "geostory.geoNode",
                                     "type": "geonode"
                                 }
                             }
                         }
                     }
                 },
-                {
-                    "name": "MediaEditor",
-                    "cfg": {
-                        "disableAddMedia": {
-                            "image": true,
-                            "video": true,
-                            "map": true
-                        },
-                        "disableEditMedia": {
-                            "image": true,
-                            "video": true,
-                            "map": true
-                        }
-                    }
-                },
+                { "name": "MediaEditor" },
                 {
                     "name": "GeoStoryEditor",
                     "cfg": {

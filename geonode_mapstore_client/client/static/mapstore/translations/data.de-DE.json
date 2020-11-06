@@ -1,6 +1,9 @@
 {
     "locale": "de-DE",
     "messages": {
+        "geostory": {
+            "geoNode": "GeoNode"
+        },
         "mediaEditor": {
             "imageList": {
                 "emptyList": "Keine Ergebnisse für diese Anfrage. Versuchen Sie, den Filter zu wechseln oder einen anderen Dienst aus der Eingabe in der oberen rechten Ecke auszuwählen."

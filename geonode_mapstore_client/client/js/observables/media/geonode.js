@@ -40,6 +40,7 @@ function parseMapConfig({ data, attributes, user, id }, resource) {
     const map = {
         ...(mapState && mapState.map || {}),
         id,
+        sourceId: resource?.data?.sourceId,
         groups: mapState && mapState.groups || [],
         layers: mapState?.map?.sources
             ? layers.map(layer => {
@@ -85,7 +86,8 @@ const loadMediaList = {
         pageSize,
         q,
         currentResources,
-        selectedId
+        selectedId,
+        sourceId
     }) => getDocumentsByDocType('image', {
         page,
         pageSize,
@@ -102,7 +104,8 @@ const loadMediaList = {
                     title: resource.title,
                     description: resource.abstract,
                     alt: resource.alternate,
-                    credits: resource.attribution
+                    credits: resource.attribution,
+                    sourceId
                 }
             }));
             const resources = [
@@ -138,7 +141,8 @@ const loadMediaList = {
         page,
         pageSize,
         q,
-        currentResources
+        currentResources,
+        sourceId
     }) => getDocumentsByDocType('video', {
         page,
         pageSize,
@@ -154,7 +158,8 @@ const loadMediaList = {
                     src: resource.doc_file,
                     title: resource.title,
                     description: resource.abstract,
-                    credits: resource.attribution
+                    credits: resource.attribution,
+                    sourceId
                 }
             }));
 
@@ -172,7 +177,8 @@ const loadMediaList = {
         pageSize,
         q,
         currentResources,
-        selectedId
+        selectedId,
+        sourceId
     }) => getMaps({
         page,
         pageSize,
@@ -187,7 +193,8 @@ const loadMediaList = {
                     thumbnail: resource.thumbnail_url,
                     title: resource.title,
                     description: resource.abstract,
-                    id: resource.pk
+                    id: resource.pk,
+                    sourceId
                 }
             }));
             const resources = [
@@ -220,7 +227,7 @@ const loadMediaList = {
         })
 };
 
-export const load = (store, { params, mediaType }) => {
+export const load = (store, { params, mediaType, sourceId }) => {
     const state = store.getState();
     const selectedId = selectedIdSelector(state);
     const { page, pageSize } = params;
@@ -237,7 +244,8 @@ export const load = (store, { params, mediaType }) => {
         pageSize,
         q: params.q,
         currentResources,
-        selectedId
+        selectedId,
+        sourceId
     })
         .then(response => response)
         .catch(() => {
