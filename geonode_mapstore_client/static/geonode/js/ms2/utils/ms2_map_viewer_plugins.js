@@ -169,6 +169,8 @@ var MS2_MAP_PLUGINS = {
 		"Notifications",
 		"Timeline",
 		"Playback",
-		"SearchServicesConfig"
+		"SearchServicesConfig",
+		{ "name": "Swipe" },
+		{ "name": "Locate" }
 	]
 }
