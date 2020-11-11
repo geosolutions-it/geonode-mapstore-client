@@ -26,7 +26,7 @@
   "author": "GeoSolutions",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@mapstore/project": "git+https://github.com/geosolutions-it/mapstore-project.git#b752ff71f58f73addb164aeb472a9d353ca17c50"
+    "@mapstore/project": "git+https://github.com/geosolutions-it/mapstore-project.git#604fa074f10e8a8a1317b9de19030771293722c2"
   },
   "dependencies": {
     "mapstore": "file:MapStore2"

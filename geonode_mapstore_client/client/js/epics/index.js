@@ -17,7 +17,7 @@ const { setEditPermissionStyleEditor, INIT_STYLE_SERVICE } = require("@mapstore/
 const { layerEditPermissions, styleEditPermissions, updateThumb } = require("../api/geonode");
 const { getSelectedLayer, layersSelector } = require("@mapstore/framework/selectors/layers");
 const { mapSelector } = require("@mapstore/framework/selectors/map");
-const ConfigUtils = require("@mapstore/framework/utils/ConfigUtils");
+const { getConfigProp } = require("@mapstore/framework/utils/ConfigUtils");
 
 const { updateMapLayout } = require('@mapstore/framework/actions/maplayout');
 const { TOGGLE_CONTROL, SET_CONTROL_PROPERTY, SET_CONTROL_PROPERTIES } = require('@mapstore/framework/actions/controls');
@@ -44,7 +44,7 @@ const { showCoordinateEditorSelector } = require('@mapstore/framework/selectors/
  * When a user selects a layer, the app checks for layer editing permission.
  */
 const _setFeatureEditPermission = (action$, { getState } = {}) =>
-    action$.ofType(SELECT_NODE).filter(({ nodeType }) => nodeType === "layer" && !ConfigUtils.getConfigProp("disableCheckEditPermissions"))
+    action$.ofType(SELECT_NODE).filter(({ nodeType }) => nodeType === "layer" && !getConfigProp("disableCheckEditPermissions"))
         .switchMap(() => {
             const layer = getSelectedLayer(getState() || {});
             return layer ? layerEditPermissions(layer)
@@ -59,8 +59,8 @@ const _setFeatureEditPermission = (action$, { getState } = {}) =>
 const _setStyleEditorPermission = (action$, { getState } = {}) =>
     action$.ofType(INIT_STYLE_SERVICE, SELECT_NODE)
         .filter(({ nodeType }) =>
-            nodeType && nodeType === "layer" && !ConfigUtils.getConfigProp("disableCheckEditPermissions")
-            || !nodeType && !ConfigUtils.getConfigProp("disableCheckEditPermissions"))
+            nodeType && nodeType === "layer" && !getConfigProp("disableCheckEditPermissions")
+            || !nodeType && !getConfigProp("disableCheckEditPermissions"))
         .switchMap((action) => {
             const layer = getSelectedLayer(getState() || {});
             return layer
@@ -150,7 +150,7 @@ const updateMapLayoutEpic = (action$, store) =>
                 }));
             }
 
-            const mapLayout = ConfigUtils.getConfigProp("mapLayout") || { left: { sm: 300, md: 500, lg: 600 }, right: { md: 658 }, bottom: { sm: 30 } };
+            const mapLayout = getConfigProp("mapLayout") || { left: { sm: 300, md: 500, lg: 600 }, right: { md: 658 }, bottom: { sm: 30 } };
 
             if (get(state, "mode") === 'embedded') {
                 const height = { height: 'calc(100% - ' + mapLayout.bottom.sm + 'px)' };

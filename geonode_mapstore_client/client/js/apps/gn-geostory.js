@@ -9,7 +9,7 @@
 import { connect } from 'react-redux';
 import { setConfigProp, setLocalConfigurationFile } from '@mapstore/framework/utils/ConfigUtils';
 import { setRegGeoserverRule } from '@mapstore/framework/utils/LayersUtils';
-import LocaleUtils from '@mapstore/framework/utils/LocaleUtils';
+import { getSupportedLocales, setSupportedLocales } from '@mapstore/framework/utils/LocaleUtils';
 import axios from '@mapstore/framework/libs/ajax';
 import main from '@mapstore/framework/components/app/main';
 import GeoStory from '@js/routes/GeoStory';
@@ -57,11 +57,11 @@ const routes = [{
 }];
 
 const setLocale = (localeKey) => {
-    const supportedLocales = LocaleUtils.getSupportedLocales();
+    const supportedLocales = getSupportedLocales();
     const locale = supportedLocales[localeKey]
         ? { [localeKey]: supportedLocales[localeKey] }
         : { en: supportedLocales.en };
-    LocaleUtils.setSupportedLocales(locale);
+    setSupportedLocales(locale);
 };
 
 const getVersion = () => {
@@ -111,7 +111,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
             setLocalConfigurationFile('');
             setLocale(language);
             setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
-            setConfigProp('translationsPath', [
+            setConfigProp('translationsPath', __GEONODE_PROJECT_CONFIG__.translationsPath || [
                 getScriptPath() + '/../MapStore2/web/client',
                 getScriptPath() + '/../translations'
             ]);

@@ -7,10 +7,10 @@
  */
 require('react-widgets/dist/css/react-widgets.css');
 const assign = require("object-assign");
-const ConfigUtils = require('@mapstore/framework/utils/ConfigUtils');
-const LocaleUtils = require('@mapstore/framework/utils/LocaleUtils');
-const LayersUtils = require('@mapstore/framework/utils/LayersUtils');
-LayersUtils.setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
+const { setConfigProp } = require('@mapstore/framework/utils/ConfigUtils');
+const { getSupportedLocales, setSupportedLocales } = require('@mapstore/framework/utils/LocaleUtils');
+const { setRegGeoserverRule } = require('@mapstore/framework/utils/LayersUtils');
+setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
 const {keyBy, values} = require('lodash');
 require('react-select/dist/react-select.css');
 /**
@@ -18,7 +18,7 @@ require('react-select/dist/react-select.css');
  *
  * ConfigUtils.setConfigProp('translationsPath', ['./MapStore2/web/client/translations', './translations']);
  */
-ConfigUtils.setConfigProp('themePrefix', 'msgapi');
+setConfigProp('themePrefix', 'msgapi');
 const Persistence = require("@mapstore/framework/api/persistence");
 Persistence.addApi("geonode", require("./api/geonode"));
 Persistence.setApi("geonode");
@@ -71,7 +71,7 @@ const createMapStore2Api = function(plugins) {
     // window.MapStore2 = MapStore2;
     return assign({}, MapStore2, { create: function(container, opts) {
         if (opts && opts.localConfig) {
-            Object.keys(opts.localConfig).map(function(c) {ConfigUtils.setConfigProp(c, opts.localConfig[c]); });
+            Object.keys(opts.localConfig).map(function(c) {setConfigProp(c, opts.localConfig[c]); });
         }
         return MapStore2.create(container, opts);
     }
@@ -82,11 +82,11 @@ window.initMapstore2Api = function(config, resolve) {
 
     // force supported locales to the selected one
     const setLocale = (localeKey) => {
-        const supportedLocales = LocaleUtils.getSupportedLocales();
+        const supportedLocales = getSupportedLocales();
         const locale = supportedLocales[localeKey]
             ? { [localeKey]: supportedLocales[localeKey] }
             : { en: supportedLocales.en };
-        LocaleUtils.setSupportedLocales(locale);
+        setSupportedLocales(locale);
     };
 
     require(`./components/${maptype}/ArcGisMapServer`);// eslint-disable-line
