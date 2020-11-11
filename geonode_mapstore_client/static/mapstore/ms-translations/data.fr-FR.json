@@ -97,6 +97,8 @@
             "propertiesFormatDescription": "Affiche les attributs de l'objet sous forme de liste de propriétés",
             "templateFormatTitle": "TEMPLATE",
             "templateFormatDescription": "Personnaliser le format des résultats d'interrogation des attributs",
+            "hideFormatTitle": "DÉSACTIVER L'IDENTIFICATION",
+            "hideFormatDescription": "Désactiver les informations sur les caractéristiques de cette couche",
             "templateFormatInfoAlert1": "Cliquez sur le bouton d'édition pour ajouter un nouveau modèle.",
             "templateFormatInfoAlert2": "Utilisez ${ attribut } pour envelopper les propriétés que vous devez afficher",
             "templateFormatInfoAlertExample": "L'ID de la fonctionnalité est ${ properties }",
@@ -1542,7 +1544,7 @@
             "deselectall": "Tout désélectionner",
             "backtosearch": "Retour à la recherche",
             "resultInfo": "{total, plural, =0 {aucun objet} =1 {{total} de {total}} other {{start}-{end} de {total}}}",
-            "resultInfoVirtual": "{total, plural, =0 {aucun objet} =1 {{total} de {total}} other {{total} Objets}}",
+            "resultInfoVirtual": "{total, plural, =0 {aucun objet} =1 {{total} Objet} other {{total} Objets}}",
             "pageInfo": "{totalPages, plural, =0 {No pages} =1 {Page {totalPages} de {totalPages}} other {Page {page} de {totalPages}}}",
             "pagination": {
                 "page": "Page",
@@ -1576,8 +1578,8 @@
                     "number": "Tapez un nombre ou une expression... Exemples : 10, > 2, < 10",
                     "date": "Tapez une date ou une expression. Utilisez {format} pour la date.",
                     "geometry": {
-                        "disabled": "Filtrez en cliquant sur la carte",
-                        "enabled": "Cliquez sur la carte pour filtrer les résultats",
+                        "disabled": "Filtrez en cliquant sur la carte/ Maintenez ctrl et cliquez pour filtrer plusieurs",
+                        "enabled": "Cliquez sur la carte pour filtrer les résultats / Maintenez ctrl et cliquez pour filtrer plusieurs",
                         "applied": "Supprimez le filtre en cliquant sur la carte"
                     }
                 }

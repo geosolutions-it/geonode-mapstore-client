@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-ms2-geonode-api-v2.0.4-2d24f239ca2287576b03c927b5da0b6fc2729b6c
-=======
-geonode-mapstore-client-v0.0.6-7f4ae17bfa48ab86f16e32374df2f936d74a7f24
->>>>>>> _geonode/master
+geonode-mapstore-client-v2.0.4-58f815b85d52054a987b445e1b2b4c6f8db16a5b
