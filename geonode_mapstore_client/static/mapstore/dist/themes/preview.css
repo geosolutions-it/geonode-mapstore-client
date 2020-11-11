@@ -2764,9 +2764,27 @@ structure .glyphicon-{iconName}-content
 }
 .msgapi .glyphicon-polyline-remove-content {
   content: "\F1F5";
+<<<<<<< HEAD
 }
 .msgapi .glyphicon-polyline-trash-content {
   content: "\F1F6";
+}
+.msgapi .glyphicon-polyline-content {
+  content: "\F1F7";
+}
+.msgapi .glyphicon-preview-content {
+  content: "\F1F8";
+}
+.msgapi .glyphicon-print-content {
+  content: "\F1F9";
+}
+.msgapi .glyphicon-pushpin-content {
+  content: "\F1FA";
+=======
+}
+.msgapi .glyphicon-polyline-trash-content {
+  content: "\F1F6";
+>>>>>>> _geonode/master
 }
 .msgapi .glyphicon-polyline-content {
   content: "\F1F7";
@@ -10640,9 +10658,131 @@ Ported to CodeMirror by Peter Kroon
   padding: 4px 0;
   margin-right: 8px;
 }
+<<<<<<< HEAD
+.msgapi .fill:-webkit-full-screen #identify-container .degrees,
+.msgapi .fill:-webkit-full-screen #identify-container .minutes {
+  width: auto;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .layer-select-row {
+  margin-top: unset;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .layer-select-row .layer-col {
+  display: flex;
+  align-items: center;
+  padding: 8px 8px 0;
+  z-index: 10;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinates-edit-row {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  margin-top: 8px;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinates-edit-row .coordinate-editor {
+  flex: 1 1 0%;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  padding: 0 4px;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow.coord-editor.aeronautical .coordinate {
+  flex-direction: column;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow.coord-editor.aeronautical span.react-numeric-input {
+  width: 100%;
+}
+@media screen and (max-width: 660px) {
+  .msgapi .fill:-webkit-full-screen #identify-container .coordinateRow.coord-editor.aeronautical {
+    display: block;
+  }
+  .msgapi .fill:-webkit-full-screen #identify-container .coordinateRow.coord-editor.aeronautical .col-xs-1 .pull-right.btn-group {
+    margin-top: -70px;
+  }
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow.coord-editor.aeronautical .form-group {
+  width: 100%;
+  position: relative;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow.coord-editor.aeronautical .form-group .seconds {
+  flex: unset;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group {
+  display: flex;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group .react-numeric-input {
+  width: 100%;
+  font-size: 12px;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group .react-numeric-input input#intl-numeric {
+  float: unset;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate {
+  width: 100%;
+  display: flex;
+  flex: 1 1 0%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group {
+  flex: 1 1 0%;
+  padding: 4px 0px;
+  margin-right: 8px;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .input-group-addon {
+  min-width: 45px;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group input#intl-numeric {
+  float: unset;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group .minutes,
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group .degrees {
+  min-width: 45px;
+  flex: 1;
+  display: flex;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group .seconds {
+  display: flex;
+  flex: 1;
+  min-width: 75px;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .form-group .direction-select {
+  min-width: 45px;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .mapstore-identify-viewer .alert-info {
+  margin-bottom: 10px;
+}
+.msgapi .fill:-webkit-full-screen #share-container .coordinateRow.aeronautical .coordinate {
+  flex-direction: column;
+}
+.msgapi .fill:-webkit-full-screen #share-container .coordinateRow.aeronautical .coordinate .form-group .degrees,
+.msgapi .fill:-webkit-full-screen #share-container .coordinateRow.aeronautical .coordinate .minutes,
+.msgapi .fill:-webkit-full-screen #share-container .coordinateRow.aeronautical .coordinate .seconds {
+  flex: 1;
+}
+.msgapi .fill:-webkit-full-screen #share-container .coordinateRow .coordinate {
+  display: flex;
+  flex: 1 1 0%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.msgapi .fill:-webkit-full-screen #share-container .coordinateRow .coordinate .input-group {
+  flex: 1 1 0%;
+  padding: 4px 0;
+  margin-right: 8px;
+}
 .msgapi .fill:-webkit-full-screen #share-container .coordinateRow .coordinate .input-group .form-group input#intl-numeric {
   float: unset;
 }
+=======
+.msgapi .fill:-webkit-full-screen #share-container .coordinateRow .coordinate .input-group .form-group input#intl-numeric {
+  float: unset;
+}
+>>>>>>> _geonode/master
 .msgapi .fill:-webkit-full-screen #share-container .coordinateRow .coordinate .input-group .form-group .minutes,
 .msgapi .fill:-webkit-full-screen #share-container .coordinateRow .coordinate .input-group .form-group .degrees {
   min-width: 45px;
@@ -19436,12 +19576,222 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group input#intl-numeric {
   float: unset;
 }
+<<<<<<< HEAD
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .annotations-edit-error {
+  margin-left: 10px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer > .annotations-edit-error {
+  height: 22px;
+  border-bottom: solid 1px #ddd;
+  margin-bottom: 10px;
+}
+.msgapi .fill:-webkit-full-screen .ql-disabled {
+  background-color: #ddd;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer {
+  font-size: 13px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .measure-feature-select {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  justify-content: flex-end;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .coordinates-row-container {
+  flex: 1 1 auto;
+  overflow: hidden auto;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .coordinates-row-container .glyphicon-menu-hamburger {
+  font-size: 14px;
+  display: table-cell;
+  vertical-align: middle;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .coordinates-row-container .coordinateRow.aeronautical .input-group-addon {
+  padding: 4px 6px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items {
+  padding: 8px;
+  height: calc(100% - 50px);
+  overflow: auto;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometries-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometry-card {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.12);
+  display: flex;
+  position: relative;
+  width: 100%;
+  align-items: center;
+  margin: 8px 0;
+  padding-right: 8px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometry-card:hover {
+  cursor: pointer;
+  transition: 0.3s box-shadow;
+  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  z-index: 1;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometry-card.ms-selected {
+  border: 2px solid #5c9bd1;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometry-card .geometry-card-preview {
+  width: 32px;
+  height: 32px;
+  margin: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometry-card .geometry-card-preview .glyphicon {
+  font-size: 21.33333333px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometry-card .geometry-card-label {
+  flex: 1;
+  font-size: 13px;
+  overflow: hidden;
+  padding: 8px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometry-card .geometry-card-label > * {
+  font-size: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  width: 150px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .geometry-card .geometry-card-label > * * {
+  display: inline-block;
+  margin: 0;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .mapstore-annotations-info-viewer-item {
+  margin-bottom: 10px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .mapstore-annotations-info-viewer-item label {
+  font-size: 13px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .mapstore-annotations-info-viewer-description .quill {
+  max-width: 315px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .mapstore-annotations-info-viewer-description .quill .ql-toolbar {
+  font-family: inherit;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .mapstore-annotations-info-viewer-description .quill .ql-toolbar .ql-header {
+  border-radius: 4px;
+  border: 1px solid #F1F1F1;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .mapstore-annotations-info-viewer-description .quill .ql-toolbar .ql-formats {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .mapstore-annotations-info-viewer-description .quill .ql-toolbar button {
+  border: 1px solid #F1F1F1;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-items .mapstore-annotations-info-viewer-description .quill .ql-container {
+  min-height: 130px;
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded {
+  flex: 1;
+  order: -1;
+  border-right: 1px solid #dddddd;
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .tab-container {
+  flex: 1;
+  padding-top: 8px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-style-manager .Select * {
+  font-size: inherit !important;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-style-manager .Select-value {
+  padding-left: 5px !important;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-style-manager .Select-menu-outer {
+  z-index: 2 !important;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-style-manager .ms-marker-preview canvas {
+  width: 100%;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-style-manager .input-group-addon {
+  padding: 5px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-style-manager .Select-arrow-zone .Select-arrow {
+  margin-right: -10px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .panel-title {
+  font-size: inherit;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .panel {
+  border: 1px solid #dddddd;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-dragg:first-child {
+  padding-top: 8px;
+  border-top: 1px solid #dddddd;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-dragg + .ms-dragg {
+  padding-top: 8px;
+  margin-top: 8px;
+  border-top: 1px solid #dddddd;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .ms-dragg:last-child {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #dddddd;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow.decimal input {
+  min-width: 100px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow {
+  padding-left: 8px;
+  margin: 0;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group {
+  flex: 1;
+  padding: 4px 0;
+  margin-right: 2px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group input#intl-numeric {
+  float: unset;
+}
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group .minutes,
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group .degrees {
   min-width: 45px;
   flex: 1;
   display: flex;
 }
+=======
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group .minutes,
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group .degrees {
+  min-width: 45px;
+  flex: 1;
+  display: flex;
+}
+>>>>>>> _geonode/master
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group .seconds {
   display: flex;
   flex: 1;
@@ -24238,6 +24588,15 @@ Ported to CodeMirror by Peter Kroon
   height: 575px;
 }
 .msgapi .fill .ms-cascade-story .ms-section.ms-section-immersive .ms-content-column .ms-content.ms-content-map.ms-size-small .ms-media-map > div:not(.ms-media-caption) {
+  height: 350px;
+}
+.msgapi .fill .ms-cascade-story .ms-section.ms-section-immersive .ms-content-column .ms-content.ms-content-map.ms-size-large .ms-media-loader {
+  height: 800px;
+}
+.msgapi .fill .ms-cascade-story .ms-section.ms-section-immersive .ms-content-column .ms-content.ms-content-map.ms-size-medium .ms-media-loader {
+  height: 575px;
+}
+.msgapi .fill .ms-cascade-story .ms-section.ms-section-immersive .ms-content-column .ms-content.ms-content-map.ms-size-small .ms-media-loader {
   height: 350px;
 }
 .msgapi .fill .ms-cascade-story .ms-section.ms-section-immersive .ms-content-column .ms-content.ms-content-map.ms-size-large .ms-media-loader {
@@ -31529,6 +31888,51 @@ Ported to CodeMirror by Peter Kroon
   font-weight: normal;
   margin-bottom: 0;
 }
+<<<<<<< HEAD
+.msgapi .fill #mapstore-annotations-panel .items-list.row {
+  margin: 5px 10px;
+}
+.msgapi .fill .mapstore-annotations-panel-cards {
+  height: calc(100% - 50px);
+  overflow: auto;
+}
+.msgapi .fill .mapstore-annotations-panel {
+  height: 100%;
+}
+.msgapi .fill .annotations-empty-panel {
+  padding: 10px;
+  font-style: italic;
+  text-align: center;
+}
+.msgapi .fill #ms-annotations-panel-card .msSideGrid {
+  margin: 0;
+  width: 100%;
+}
+.msgapi .fill #ms-annotations-panel-card .col-xs-12 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.msgapi .fill #ms-annotations-panel-card .mapstore-side-preview {
+  align-items: center;
+}
+.msgapi .fill #ms-annotations-panel-card .mapstore-annotations-panel-card {
+  width: 32px;
+  height: 32px;
+  margin: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+}
+.msgapi .fill #ms-annotations-panel-card .mapstore-side-card-info {
+  padding: 0;
+}
+.msgapi .fill #ms-annotations-panel-card .mapstore-side-card-title {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+=======
+>>>>>>> _geonode/master
 .msgapi .fill #ms-annotations-panel-card .mapstore-annotations-panel-card-title {
   margin-top: 5px;
   text-overflow: ellipsis;
@@ -33975,6 +34379,7 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .background-tool-buttons {
   display: none;
 }
+<<<<<<< HEAD
 .msgapi .input-link {
   padding: 8px;
 }
@@ -33988,6 +34393,8 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .gn-share-modal .modal-footer {
   display: none;
 }
+=======
+>>>>>>> _geonode/master
 .msgapi #map {
   bottom: 0px !important;
 }

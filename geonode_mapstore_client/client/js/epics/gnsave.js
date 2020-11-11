@@ -11,7 +11,10 @@ import { mapSelector } from '@mapstore/framework/selectors/map';
 import { layersSelector, groupsSelector } from '@mapstore/framework/selectors/layers';
 import { backgroundListSelector } from '@mapstore/framework/selectors/backgroundselector';
 import { mapOptionsToSaveSelector } from '@mapstore/framework/selectors/mapsave';
-import { textSearchConfigSelector, bookmarkSearchConfigSelector } from '@mapstore/framework/selectors/searchconfig';
+import {
+    textSearchConfigSelector,
+    bookmarkSearchConfigSelector
+} from '@mapstore/framework/selectors/searchconfig';
 import { saveMapConfiguration } from '@mapstore/framework/utils/MapUtils';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import { currentStorySelector } from '@mapstore/framework/selectors/geostory';

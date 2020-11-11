@@ -2848,6 +2848,7 @@ structure .glyphicon-{iconName}-content
 }
 .msgapi .glyphicon-save-content {
   content: "\F211";
+<<<<<<< HEAD
 }
 .msgapi .glyphicon-saved-content {
   content: "\F212";
@@ -2899,6 +2900,71 @@ structure .glyphicon-{iconName}-content
 }
 .msgapi .glyphicon-sort-by-alphabet-content {
   content: "\F222";
+=======
+}
+.msgapi .glyphicon-saved-content {
+  content: "\F212";
+}
+.msgapi .glyphicon-scissors-content {
+  content: "\F213";
+}
+.msgapi .glyphicon-screenshot-content {
+  content: "\F214";
+}
+.msgapi .glyphicon-search-coords-content {
+  content: "\F215";
+}
+.msgapi .glyphicon-search-content {
+  content: "\F216";
+}
+.msgapi .glyphicon-send-content {
+  content: "\F217";
+}
+.msgapi .glyphicon-share-alt-content {
+  content: "\F218";
+}
+.msgapi .glyphicon-share-content {
+  content: "\F219";
+}
+.msgapi .glyphicon-sheet-content {
+  content: "\F21A";
+}
+.msgapi .glyphicon-shopping-cart-content {
+  content: "\F21B";
+}
+.msgapi .glyphicon-signal-content {
+  content: "\F21C";
+}
+.msgapi .glyphicon-size-extra-large-content {
+  content: "\F21D";
+}
+.msgapi .glyphicon-size-large-content {
+  content: "\F21E";
+}
+.msgapi .glyphicon-size-medium-content {
+  content: "\F21F";
+}
+.msgapi .glyphicon-size-small-content {
+  content: "\F220";
+}
+.msgapi .glyphicon-sort-by-alphabet-alt-content {
+  content: "\F221";
+}
+.msgapi .glyphicon-sort-by-alphabet-content {
+  content: "\F222";
+}
+.msgapi .glyphicon-sort-by-attributes-alt-content {
+  content: "\F223";
+}
+.msgapi .glyphicon-sort-by-attributes-content {
+  content: "\F224";
+}
+.msgapi .glyphicon-sort-content {
+  content: "\F225";
+}
+.msgapi .glyphicon-star-empty-content {
+  content: "\F226";
+>>>>>>> _geonode/master
 }
 .msgapi .glyphicon-sort-by-attributes-alt-content {
   content: "\F223";
@@ -19123,6 +19189,51 @@ Ported to CodeMirror by Peter Kroon
   font-weight: normal;
   margin-bottom: 0;
 }
+<<<<<<< HEAD
+.msgapi #mapstore-annotations-panel .items-list.row {
+  margin: 5px 10px;
+}
+.msgapi .mapstore-annotations-panel-cards {
+  height: calc(100% - 50px);
+  overflow: auto;
+}
+.msgapi .mapstore-annotations-panel {
+  height: 100%;
+}
+.msgapi .annotations-empty-panel {
+  padding: 10px;
+  font-style: italic;
+  text-align: center;
+}
+.msgapi #ms-annotations-panel-card .msSideGrid {
+  margin: 0;
+  width: 100%;
+}
+.msgapi #ms-annotations-panel-card .col-xs-12 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.msgapi #ms-annotations-panel-card .mapstore-side-preview {
+  align-items: center;
+}
+.msgapi #ms-annotations-panel-card .mapstore-annotations-panel-card {
+  width: 32px;
+  height: 32px;
+  margin: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+}
+.msgapi #ms-annotations-panel-card .mapstore-side-card-info {
+  padding: 0;
+}
+.msgapi #ms-annotations-panel-card .mapstore-side-card-title {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+=======
+>>>>>>> _geonode/master
 .msgapi #ms-annotations-panel-card .mapstore-annotations-panel-card-title {
   margin-top: 5px;
   text-overflow: ellipsis;
@@ -21556,6 +21667,7 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .background-tool-buttons {
   display: none;
 }
+<<<<<<< HEAD
 .msgapi .input-link {
   padding: 8px;
 }
@@ -21569,4 +21681,6 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .gn-share-modal .modal-footer {
   display: none;
 }
+=======
+>>>>>>> _geonode/master
 

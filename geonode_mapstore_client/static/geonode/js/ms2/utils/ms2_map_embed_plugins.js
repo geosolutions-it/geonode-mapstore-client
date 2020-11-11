@@ -54,6 +54,8 @@ var MS2_EMBED_PLUGINS = {
 		"Widgets",
 		"WidgetsTray",
 		"Notifications",
-		"SearchServicesConfig"
+		"SearchServicesConfig",
+		{ "name": "Swipe" },
+		{ "name": "Locate" }
 	]
 }

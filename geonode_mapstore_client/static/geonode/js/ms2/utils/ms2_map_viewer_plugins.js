@@ -175,6 +175,8 @@ var MS2_MAP_PLUGINS = {
 			"cfg": {
 				"pathTemplate": "/maps/{id}/embed"
 			}
-		}
+		},
+		{ "name": "Swipe" },
+		{ "name": "Locate" }
 	]
 }
