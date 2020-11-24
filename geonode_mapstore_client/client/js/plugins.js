@@ -6,64 +6,114 @@
  * LICENSE file in the root directory of this source tree.
  */
 // geonode specific epics
-const epics = require("@js/epics");
-const { extendPluginsDefinition } = require("@extend/jsapi/plugins");
+import epics from "@js/epics";
+import { extendPluginsDefinition } from "@extend/jsapi/plugins";
+
+import AddGroupPlugin from '@mapstore/framework/plugins/AddGroup';
+import IdentifyPlugin from '@mapstore/framework/plugins/Identify';
+import TOCPlugin from '@mapstore/framework/plugins/TOC';
+import MapPlugin from '@mapstore/framework/plugins/Map';
+import ToolbarPlugin from '@mapstore/framework/plugins/Toolbar';
+import DrawerMenuPlugin from '@mapstore/framework/plugins/DrawerMenu';
+import ZoomAllPlugin from '@mapstore/framework/plugins/ZoomAll';
+import MapLoadingPlugin from '@mapstore/framework/plugins/MapLoading';
+import OmniBarPlugin from '@mapstore/framework/plugins/OmniBar';
+import BackgroundSelectorPlugin from '@mapstore/framework/plugins/BackgroundSelector';
+import FullScreenPlugin from '@mapstore/framework/plugins/FullScreen';
+import ZoomInPlugin from '@mapstore/framework/plugins/ZoomIn';
+import ZoomOutPlugin from '@mapstore/framework/plugins/ZoomOut';
+import ExpanderPlugin from '@mapstore/framework/plugins/Expander';
+import BurgerMenuPlugin from '@mapstore/framework/plugins/BurgerMenu';
+import HistoryPlugin from '@mapstore/framework/plugins/History';
+import ScaleBoxPlugin from '@mapstore/framework/plugins/ScaleBox';
+import MapFooterPlugin from '@mapstore/framework/plugins/MapFooter';
+import PrintPlugin from '@mapstore/framework/plugins/Print';
+import MeasurePlugin from '@mapstore/framework/plugins/Measure';
+import FilterLayerPlugin from '@mapstore/framework/plugins/FilterLayer';
+import TOCItemsSettingsPlugin from '@mapstore/framework/plugins/TOCItemsSettings';
+import WidgetsPlugin from '@mapstore/framework/plugins/Widgets';
+import WidgetsBuilderPlugin from '@mapstore/framework/plugins/WidgetsBuilder';
+import WidgetsTrayPlugin from '@mapstore/framework/plugins/WidgetsTray';
+import NotificationsPlugin from '@mapstore/framework/plugins/Notifications';
+import FeatureEditorPlugin from '@mapstore/framework/plugins/FeatureEditor';
+import QueryPanelPlugin from '@mapstore/framework/plugins/QueryPanel';
+import MetadataExplorerPlugin from '@mapstore/framework/plugins/MetadataExplorer';
+import GridContainerPlugin from '@mapstore/framework/plugins/GridContainer';
+import StyleEditorPlugin from '@mapstore/framework/plugins/StyleEditor';
+import TimelinePlugin from '@mapstore/framework/plugins/Timeline';
+import PlaybackPlugin from '@mapstore/framework/plugins/Playback';
+import MousePositionPlugin from '@mapstore/framework/plugins/MousePosition';
+import SearchPlugin from '@mapstore/framework/plugins/Search';
+import SearchServicesConfigPlugin from '@mapstore/framework/plugins/SearchServicesConfig';
+import SwipePlugin from '@mapstore/framework/plugins/Swipe';
+import LocatePlugin from '@mapstore/framework/plugins/Locate';
+
+import SavePlugin from '@js/plugins/Save';
+import SaveAsPlugin from '@js/plugins/SaveAs';
+
+
+import security from '@mapstore/framework/reducers/security';
+import maps from '@mapstore/framework/reducers/maps';
+import maplayout from '@mapstore/framework/reducers/maplayout';
+
+import ReactSwipe from 'react-swipeable-views';
+import SwipeHeader from '@mapstore/framework/components/data/identify/SwipeHeader';
 
 const pluginsDefinition = {
     plugins: {
-        AddGroupPlugin: require('@mapstore/framework/plugins/AddGroup').default,
-        IdentifyPlugin: require('@mapstore/framework/plugins/Identify'),
-        TOCPlugin: require('@mapstore/framework/plugins/TOC'),
-        MapPlugin: require('@mapstore/framework/plugins/Map').default,
-        ToolbarPlugin: require('@mapstore/framework/plugins/Toolbar'),
-        DrawerMenuPlugin: require('@mapstore/framework/plugins/DrawerMenu'),
-        ZoomAllPlugin: require('@mapstore/framework/plugins/ZoomAll'),
-        MapLoadingPlugin: require('@mapstore/framework/plugins/MapLoading'),
-        OmniBarPlugin: require('@mapstore/framework/plugins/OmniBar'),
-        BackgroundSelectorPlugin: require('@mapstore/framework/plugins/BackgroundSelector').default,
-        FullScreenPlugin: require('@mapstore/framework/plugins/FullScreen'),
-        ZoomInPlugin: require('@mapstore/framework/plugins/ZoomIn'),
-        ZoomOutPlugin: require('@mapstore/framework/plugins/ZoomOut'),
-        ExpanderPlugin: require('@mapstore/framework/plugins/Expander'),
-        BurgerMenuPlugin: require('@mapstore/framework/plugins/BurgerMenu'),
-        UndoPlugin: require('@mapstore/framework/plugins/History'),
-        RedoPlugin: require('@mapstore/framework/plugins/History'),
-        ScaleBoxPlugin: require('@mapstore/framework/plugins/ScaleBox'),
-        MapFooterPlugin: require('@mapstore/framework/plugins/MapFooter'),
-        PrintPlugin: require('@mapstore/framework/plugins/Print'),
-        MeasurePlugin: require('@mapstore/framework/plugins/Measure'),
-        FilterLayerPlugin: require('@mapstore/framework/plugins/FilterLayer').default,
-        TOCItemsSettingsPlugin: require('@mapstore/framework/plugins/TOCItemsSettings').default,
-        WidgetsPlugin: require('@mapstore/framework/plugins/Widgets').default,
-        WidgetsBuilderPlugin: require('@mapstore/framework/plugins/WidgetsBuilder').default,
-        WidgetsTrayPlugin: require('@mapstore/framework/plugins/WidgetsTray').default,
-        NotificationsPlugin: require('@mapstore/framework/plugins/Notifications'),
-        FeatureEditorPlugin: require('@mapstore/framework/plugins/FeatureEditor').default,
-        QueryPanelPlugin: require('@mapstore/framework/plugins/QueryPanel'),
-        SavePlugin: require('@js/plugins/Save').default,
-        SaveAsPlugin: require('@js/plugins/SaveAs').default,
-        MetadataExplorerPlugin: require('@mapstore/framework/plugins/MetadataExplorer'),
-        GridContainerPlugin: require('@mapstore/framework/plugins/GridContainer'),
-        StyleEditorPlugin: require('@mapstore/framework/plugins/StyleEditor'),
-        TimelinePlugin: require('@mapstore/framework/plugins/Timeline'),
-        PlaybackPlugin: require('@mapstore/framework/plugins/Playback'),
-        MousePositionPlugin: require('@mapstore/framework/plugins/MousePosition'),
-        SearchPlugin: require('@mapstore/framework/plugins/Search'),
-        SearchServicesConfigPlugin: require('@mapstore/framework/plugins/SearchServicesConfig'),
-        SwipePlugin: require('@mapstore/framework/plugins/Swipe').default,
-        LocatePlugin: require('@mapstore/framework/plugins/Locate').default,
+        AddGroupPlugin,
+        IdentifyPlugin,
+        TOCPlugin,
+        MapPlugin,
+        ToolbarPlugin,
+        DrawerMenuPlugin,
+        ZoomAllPlugin,
+        MapLoadingPlugin,
+        OmniBarPlugin,
+        BackgroundSelectorPlugin,
+        FullScreenPlugin,
+        ZoomInPlugin,
+        ZoomOutPlugin,
+        ExpanderPlugin,
+        BurgerMenuPlugin,
+        UndoPlugin: HistoryPlugin,
+        RedoPlugin: HistoryPlugin,
+        ScaleBoxPlugin,
+        MapFooterPlugin,
+        PrintPlugin,
+        MeasurePlugin,
+        FilterLayerPlugin,
+        TOCItemsSettingsPlugin,
+        WidgetsPlugin,
+        WidgetsBuilderPlugin,
+        WidgetsTrayPlugin,
+        NotificationsPlugin,
+        FeatureEditorPlugin,
+        QueryPanelPlugin,
+        SavePlugin,
+        SaveAsPlugin,
+        MetadataExplorerPlugin,
+        GridContainerPlugin,
+        StyleEditorPlugin,
+        TimelinePlugin,
+        PlaybackPlugin,
+        MousePositionPlugin,
+        SearchPlugin,
+        SearchServicesConfigPlugin,
+        SwipePlugin,
+        LocatePlugin,
         AddReducersAndEpics: {
             reducers: {
-                security: require('@mapstore/framework/reducers/security').default,
-                maps: require('@mapstore/framework/reducers/maps').default,
-                maplayout: require('@mapstore/framework/reducers/maplayout').default
+                security,
+                maps,
+                maplayout
             },
             epics
         }
     },
     requires: {
-        ReactSwipe: require('react-swipeable-views').default,
-        SwipeHeader: require('@mapstore/framework/components/data/identify/SwipeHeader')
+        ReactSwipe,
+        SwipeHeader
     }
 };
 
@@ -71,4 +121,4 @@ const extendedPluginsDefinition = extendPluginsDefinition
     ? extendPluginsDefinition(pluginsDefinition)
     : pluginsDefinition;
 
-module.exports = extendedPluginsDefinition;
+export default extendedPluginsDefinition;

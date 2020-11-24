@@ -5,35 +5,62 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const Rx = require("rxjs");
-const {_setThumbnail, updateMapLayoutEpic} = require("@js/epics");
+import Rx from "rxjs";
+import { _setThumbnail, updateMapLayoutEpic } from "@js/epics";
 
-const { extendPluginsDefinition } = require("@extend/jsapi/previewPlugins");
+import { extendPluginsDefinition } from "@extend/jsapi/previewPlugins";
+
+import MapPlugin from '@mapstore/framework/plugins/Map';
+import IdentifyPlugin from '@mapstore/framework/plugins/Identify';
+import ToolbarPlugin from '@mapstore/framework/plugins/Toolbar';
+import ZoomAllPlugin from '@mapstore/framework/plugins/ZoomAll';
+import MapLoadingPlugin from '@mapstore/framework/plugins/MapLoading';
+import OmniBarPlugin from '@mapstore/framework/plugins/OmniBar';
+import BackgroundSelectorPlugin from '@mapstore/framework/plugins/BackgroundSelector';
+import FullScreenPlugin from '@mapstore/framework/plugins/FullScreen';
+import ZoomInPlugin from '@mapstore/framework/plugins/ZoomIn';
+import ZoomOutPlugin from '@mapstore/framework/plugins/ZoomOut';
+import ExpanderPlugin from '@mapstore/framework/plugins/Expander';
+import BurgerMenuPlugin from '@mapstore/framework/plugins/BurgerMenu';
+import ScaleBoxPlugin from '@mapstore/framework/plugins/ScaleBox';
+import MapFooterPlugin from '@mapstore/framework/plugins/MapFooter';
+import PrintPlugin from '@mapstore/framework/plugins/Print';
+import TimelinePlugin from '@mapstore/framework/plugins/Timeline';
+import PlaybackPlugin from '@mapstore/framework/plugins/Playback';
+
+import security from '@mapstore/framework/reducers/security';
+import maps from '@mapstore/framework/reducers/maps';
+import maplayout from '@mapstore/framework/reducers/maplayout';
+
+
+import ReactSwipe from 'react-swipeable-views';
+import SwipeHeader from '@mapstore/framework/components/data/identify/SwipeHeader';
+
 
 const pluginsDefinition = {
     plugins: {
-        MapPlugin: require('@mapstore/framework/plugins/Map').default,
-        IdentifyPlugin: require('@mapstore/framework/plugins/Identify'),
-        ToolbarPlugin: require('@mapstore/framework/plugins/Toolbar'),
-        ZoomAllPlugin: require('@mapstore/framework/plugins/ZoomAll'),
-        MapLoadingPlugin: require('@mapstore/framework/plugins/MapLoading'),
-        OmniBarPlugin: require('@mapstore/framework/plugins/OmniBar'),
-        BackgroundSelectorPlugin: require('@mapstore/framework/plugins/BackgroundSelector').default,
-        FullScreenPlugin: require('@mapstore/framework/plugins/FullScreen'),
-        ZoomInPlugin: require('@mapstore/framework/plugins/ZoomIn'),
-        ZoomOutPlugin: require('@mapstore/framework/plugins/ZoomOut'),
-        ExpanderPlugin: require('@mapstore/framework/plugins/Expander'),
-        BurgerMenuPlugin: require('@mapstore/framework/plugins/BurgerMenu'),
-        ScaleBoxPlugin: require('@mapstore/framework/plugins/ScaleBox'),
-        MapFooterPlugin: require('@mapstore/framework/plugins/MapFooter'),
-        PrintPlugin: require('@mapstore/framework/plugins/Print'),
-        TimelinePlugin: require('@mapstore/framework/plugins/Timeline'),
-        PlaybackPlugin: require('@mapstore/framework/plugins/Playback'),
+        MapPlugin,
+        IdentifyPlugin,
+        ToolbarPlugin,
+        ZoomAllPlugin,
+        MapLoadingPlugin,
+        OmniBarPlugin,
+        BackgroundSelectorPlugin,
+        FullScreenPlugin,
+        ZoomInPlugin,
+        ZoomOutPlugin,
+        ExpanderPlugin,
+        BurgerMenuPlugin,
+        ScaleBoxPlugin,
+        MapFooterPlugin,
+        PrintPlugin,
+        TimelinePlugin,
+        PlaybackPlugin,
         AddReducersAndEpics: {
             reducers: {
-                security: require('@mapstore/framework/reducers/security').default,
-                maps: require('@mapstore/framework/reducers/maps').default,
-                maplayout: require('@mapstore/framework/reducers/maplayout').default
+                security,
+                maps,
+                maplayout
             },
             epics: {
                 _setThumbnail,
@@ -43,8 +70,8 @@ const pluginsDefinition = {
         }
     },
     requires: {
-        ReactSwipe: require('react-swipeable-views').default,
-        SwipeHeader: require('@mapstore/framework/components/data/identify/SwipeHeader')
+        ReactSwipe,
+        SwipeHeader
     }
 };
 
@@ -52,4 +79,4 @@ const extendedPluginsDefinition = extendPluginsDefinition
     ? extendPluginsDefinition(pluginsDefinition)
     : pluginsDefinition;
 
-module.exports = extendedPluginsDefinition;
+export default extendedPluginsDefinition;

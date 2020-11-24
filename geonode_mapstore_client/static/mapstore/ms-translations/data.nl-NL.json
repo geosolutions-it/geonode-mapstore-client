@@ -97,6 +97,8 @@
             "propertiesFormatDescription": "Toont de objectinformatie in een eigenschappenlijst",
             "templateFormatTitle": "TEMPLATE",
             "templateFormatDescription": "Objectinformatie in een formaat op maat",
+            "hideFormatTitle": "UITSCHAKELEN IDENTIFICATIE",
+            "hideFormatDescription": "Schakel de feature-info voor deze laag uit",
             "templateFormatInfoAlert1": "Klik op de editeerknop om een nieuw sjabloon toe te voegen.",
             "templateFormatInfoAlert2": "Gebruik ${ attribute } om de eigenschappen die je wenst te tonen aan te duiden.",
             "templateFormatInfoAlertExample": "Het id van het object is ${ properties }",
@@ -1607,7 +1609,7 @@
                 "createNewChart": "Maak een grafiek voor de geselecteerde laag"
             }
         },
-        "wfsdownload": {
+        "layerdownload": {
             "title": "Exporteer Data",
             "format": "Bestandsformaat",
             "srs":  "Coördinaten ReferentieSysteem",
@@ -2700,7 +2702,7 @@
             "descriptionGeorchestra": "Toont de versie van GeOrchestra in de tool voor kaartinstellingen",
             "title": "Versie"
           },
-          "WFSDownload": {
+          "LayerDownload": {
             "description": "Maakt het mogelijk om gegevens uit de attributentabel te downloaden",
             "title": "Data Downloaden"
           },
