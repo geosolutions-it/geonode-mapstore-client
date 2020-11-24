@@ -3,7 +3,7 @@ var MS2_BASE_PLUGINS = {
 	"desktop": [{
 			"name": "Map",
 			"cfg": {
-				"tools": ["locate", "measurement", "draw"],
+				"tools": ["locate", "measurement", "draw", "box"],
 				"mapOptions": {
 					"openlayers": {
 						"attribution": {
