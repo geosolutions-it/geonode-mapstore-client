@@ -50,7 +50,7 @@ import LocatePlugin from '@mapstore/framework/plugins/Locate';
 
 import SavePlugin from '@js/plugins/Save';
 import SaveAsPlugin from '@js/plugins/SaveAs';
-
+import SharePlugin from '@js/plugins/Share';
 
 import security from '@mapstore/framework/reducers/security';
 import maps from '@mapstore/framework/reducers/maps';
@@ -102,6 +102,7 @@ const pluginsDefinition = {
         SearchServicesConfigPlugin,
         SwipePlugin,
         LocatePlugin,
+        SharePlugin,
         AddReducersAndEpics: {
             reducers: {
                 security,
