@@ -1545,10 +1545,7 @@
             "backtosearch": "Ritorna alla ricerca",
             "resultInfo": "{total, plural, =0 {Nessun elemento} =1 {{total} di {total}} other {{start}-{end} di {total}}}",
             "resultInfoVirtual": "{total, plural, =0 {Nessun elemento} =1 {{total} Elemento} other {{total} Elementi}}",
-<<<<<<< HEAD
-=======
             "selectedInfo": "( {selected} Selezionati )",
->>>>>>> _geonode/master
             "pageInfo": "{totalPages, plural, =0 {Nessuna pagina} =1 {Pagina {totalPages} di {totalPages}} other {Pagina {page} di {totalPages}}}",
             "pagination": {
                 "page": "Pagina",
@@ -1582,15 +1579,9 @@
                     "number": "Digita un numero o una espressione. Esempi: 10, > 2, < 10",
                     "date":"Digita una data o un'espressione. Utilizza {format} per la data",
                     "geometry": {
-<<<<<<< HEAD
-                        "disabled": "Filtra facendo clic sulla mappa / Tieni premuto ctrl e fai clic per filtrare più elementi",
-                        "enabled": "Fai clic sulla mappa per filtrare i risultati / Tieni premuto ctrl e fai clic per filtrare più elementi",
-                        "applied": "Rimuovi il filtro applicato con il click sulla mappa"
-=======
                       "disabled": "Filtra facendo click sulla mappa / Alt + trascinamento per disegnare un filtro rettangolare. Tieni premuto anche ctrl per aggiungere features alla selezione corrente",
                       "enabled": "Clicca per selezionare le features / Alt + trascinamento per disegnare un filtro rettangolare. Tieni premuto anche ctrl per aggiungere features alla selezione corrente",
                       "applied": "Pulisci la selezione"
->>>>>>> _geonode/master
                     }
                 }
             },
