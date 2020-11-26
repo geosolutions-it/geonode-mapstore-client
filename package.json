@@ -7,10 +7,6 @@
   "license": "BSD-2-Clause",
   "devDependencies": {},
   "dependencies": {
-<<<<<<< HEAD
-    "mapstore": "git+https://github.com/geosolutions-it/MapStore2.git#cef170011b2572430b56dbd38b15e37758e5b7e9"
-=======
     "mapstore": "git+https://github.com/geosolutions-it/MapStore2.git#f479e14c597d9451a96d1b1253656844caca7149"
->>>>>>> _geonode/master
   }
 }
