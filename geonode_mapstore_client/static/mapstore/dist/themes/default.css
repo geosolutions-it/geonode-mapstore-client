@@ -21794,4 +21794,7 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .ms-wizard label {
   margin: 0;
 }
+.msgapi .ms-geostory-map-editor-toolbar .square-button-md:last-child {
+  display: none;
+}
 
