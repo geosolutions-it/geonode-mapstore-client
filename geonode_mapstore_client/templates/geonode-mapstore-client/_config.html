@@ -1,3 +1,4 @@
+{% load client_lib_tags %}
 <script>
   const defaultConfig = {
     // proxy: "{{ SITEURL|slice:":-1" }}{{ PROXY_URL }}",
@@ -17,6 +18,7 @@
       genode_rest_api: "{{ SITEURL }}mapstore/rest/",
       printUrl: "{{ GEOSERVER_PUBLIC_LOCATION }}pdf/info.json",
       translations: '',
+      bingApiKey: "{% bing_api_key %}",
       useAuthenticationRules: true,
       loadAfterTheme: true,
       monitorState: [
@@ -64,6 +66,9 @@
         "urlPattern": ".*gs.*",
         "authkeyParamName": "access_token",
         "method": "authkey"
+      }, {
+        "urlPattern": ".*api/v2.*",
+        "method": "bearer"
       }]
     }
   }
