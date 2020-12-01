@@ -11,10 +11,7 @@ import { mapSelector } from '@mapstore/framework/selectors/map';
 import { layersSelector, groupsSelector } from '@mapstore/framework/selectors/layers';
 import { backgroundListSelector } from '@mapstore/framework/selectors/backgroundselector';
 import { mapOptionsToSaveSelector } from '@mapstore/framework/selectors/mapsave';
-import {
-    bookmarkSearchConfigSelector,
-    textSearchConfigSelector
-} from '@mapstore/framework/selectors/searchconfig';
+import { textSearchConfigSelector, bookmarkSearchConfigSelector } from '@mapstore/framework/selectors/searchconfig';
 import { saveMapConfiguration } from '@mapstore/framework/utils/MapUtils';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import {
@@ -34,14 +31,11 @@ import {
     resourceError,
     updateResourceProperties
 } from '@js/actions/gnresource';
-import {
-    getResourceByPk
-} from '@js/api/geonode/v1';
-import { parseDevHostname } from '@js/utils/APIUtils';
+import { getResourceByPk } from '@js/api/geonode/v2';
 
 const SaveAPI = {
-    map: (state, id, metadata, reload) => {
-        const map =  mapSelector(state) || {};
+    map: (state, metadata, id) => {
+        const map =  mapSelector(state);
         const layers = layersSelector(state);
         const groups = groupsSelector(state);
         const backgrounds = backgroundListSelector(state);
@@ -89,9 +83,7 @@ const SaveAPI = {
             ? updateMapStoreMap(id, { ...body, id })
             : creatMapStoreMap(body)
                 .then((response) => {
-                    if (reload) {
-                        window.location.href = parseDevHostname(`${getConfigProp('geonode_url')}maps/${response.id}/edit`);
-                    }
+                    window.location.href = `${getConfigProp('geonode_url')}maps/${response.id}/edit`;
                     return response.data;
                 });
     }
@@ -102,7 +94,7 @@ export const gnSaveContent = (action$, store) =>
         .switchMap((action) => {
             const state = store.getState();
             const contentType = state.gnresource?.type || 'map';
-            return Observable.defer(() => SaveAPI[contentType](state, action.id, action.metadata, action.reload))
+            return Observable.defer(() => SaveAPI[contentType](state, action.metadata, action.id))
                 .switchMap((response) => {
                     return Observable.of(
                         saveSuccess(response),

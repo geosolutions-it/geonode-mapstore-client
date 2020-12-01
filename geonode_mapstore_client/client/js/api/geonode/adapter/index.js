@@ -10,17 +10,6 @@ import axios from '@mapstore/framework/libs/ajax';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import { parseDevHostname } from '@js/utils/APIUtils';
 
-/**
-* Api for GeoNode MapStore adapter
-* @name api.geonode.adapter
-*/
-
-/**
-* Create a new MapStore map configuration
-* @memberof api.geonode.adapter
-* @param {object} body new map configuration
-* @return {promise} it returns an object with the success map object response
-*/
 export const creatMapStoreMap = (body = {}) => {
     const baseUrl = getConfigProp('genode_rest_api') || '/mapstore/rest/';
     return axios.post(parseDevHostname(`${baseUrl}resources/`),
@@ -34,13 +23,6 @@ export const creatMapStoreMap = (body = {}) => {
         .then(({ data }) => data);
 };
 
-/**
-* Update an existing MapStore map configuration
-* @memberof api.geonode.adapter
-* @param {number|string} id resource id
-* @param {object} body map configuration
-* @return {promise} it returns an object with the success map object response
-*/
 export const updateMapStoreMap = (id, body = {}) => {
     const baseUrl = getConfigProp('genode_rest_api') || '/mapstore/rest/';
     return axios.patch(parseDevHostname(`${baseUrl}resources/${id}/`),
@@ -54,6 +36,5 @@ export const updateMapStoreMap = (id, body = {}) => {
 };
 
 export default {
-    creatMapStoreMap,
-    updateMapStoreMap
+    creatMapStoreMap
 };
