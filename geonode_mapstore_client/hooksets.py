@@ -183,6 +183,49 @@ class MapStoreHookSet(BaseHookSet):
     #        callback=ms2_config_converter.convert)
     #    return 'geonode-mapstore-client/map_view.html'
 
+    # GeoApps
+    def geoapp_list_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/app_list.html'
+
+    def geoapp_new_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/app_new.html'
+
+    def geoapp_view_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/app_view.html'
+
+    def geoapp_edit_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/app_edit.html'
+
+    def geoapp_update_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/app_update.html'
+
+    def geoapp_embed_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/app_embed.html'
+
+    def geoapp_download_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/app_download.html'
+
     # Map Persisting
     def viewer_json(self, conf, context=None):
         context['viewer'] = conf

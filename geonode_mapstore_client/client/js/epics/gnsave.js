@@ -11,9 +11,15 @@ import { mapSelector } from '@mapstore/framework/selectors/map';
 import { layersSelector, groupsSelector } from '@mapstore/framework/selectors/layers';
 import { backgroundListSelector } from '@mapstore/framework/selectors/backgroundselector';
 import { mapOptionsToSaveSelector } from '@mapstore/framework/selectors/mapsave';
-import { textSearchConfigSelector, bookmarkSearchConfigSelector } from '@mapstore/framework/selectors/searchconfig';
+import {
+    textSearchConfigSelector,
+    bookmarkSearchConfigSelector
+} from '@mapstore/framework/selectors/searchconfig';
 import { saveMapConfiguration } from '@mapstore/framework/utils/MapUtils';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
+import { currentStorySelector } from '@mapstore/framework/selectors/geostory';
+import { userSelector } from '@mapstore/framework/selectors/security';
+
 import {
     creatMapStoreMap,
     updateMapStoreMap
@@ -31,11 +37,17 @@ import {
     resourceError,
     updateResourceProperties
 } from '@js/actions/gnresource';
-import { getResourceByPk } from '@js/api/geonode/v2';
+import {
+    getResourceByPk,
+    createGeoStory,
+    updateGeoStory
+} from '@js/api/geonode/v2';
+import { parseDevHostname } from '@js/utils/APIUtils';
+import uuid from 'uuid';
 
 const SaveAPI = {
-    map: (state, metadata, id) => {
-        const map =  mapSelector(state);
+    map: (state, id, metadata, reload) => {
+        const map =  mapSelector(state) || {};
         const layers = layersSelector(state);
         const groups = groupsSelector(state);
         const backgrounds = backgroundListSelector(state);
@@ -83,9 +95,33 @@ const SaveAPI = {
             ? updateMapStoreMap(id, { ...body, id })
             : creatMapStoreMap(body)
                 .then((response) => {
-                    window.location.href = `${getConfigProp('geonode_url')}maps/${response.id}/edit`;
+                    if (reload) {
+                        window.location.href = parseDevHostname(`${getConfigProp('geonode_url')}maps/${response.id}/edit`);
+                    }
                     return response.data;
                 });
+    },
+    geostory: (state, id, metadata, reload) => {
+        const story = currentStorySelector(state);
+        const user = userSelector(state);
+        const body = {
+            'title': metadata.name,
+            'abstract': metadata.description,
+            'data': JSON.stringify(story),
+            'thumbnail_url': metadata.thumbnail
+        };
+        return id
+            ? updateGeoStory(id, body)
+            : createGeoStory({
+                'name': metadata.name + ' ' + uuid(),
+                'owner': user.name,
+                ...body
+            }).then((response) => {
+                if (reload) {
+                    window.location.href = parseDevHostname(`${getConfigProp('geonode_url')}apps/${response.pk}/edit`);
+                }
+                return response.data;
+            });
     }
 };
 
@@ -94,7 +130,7 @@ export const gnSaveContent = (action$, store) =>
         .switchMap((action) => {
             const state = store.getState();
             const contentType = state.gnresource?.type || 'map';
-            return Observable.defer(() => SaveAPI[contentType](state, action.metadata, action.id))
+            return Observable.defer(() => SaveAPI[contentType](state, action.id, action.metadata, action.reload))
                 .switchMap((response) => {
                     return Observable.of(
                         saveSuccess(response),

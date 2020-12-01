@@ -29,7 +29,8 @@ function SaveModal({
     onClose,
     onSave,
     onInit,
-    onClear
+    onClear,
+    thumbnailOptions
 }) {
 
     const [thumbnail, setThumbnail] =  useState();
@@ -83,11 +84,14 @@ function SaveModal({
                     {
                         text: <Message msgId={labelId}/>,
                         disabled: !!nameValidation,
-                        onClick: () => onSave({
-                            thumbnail,
-                            name,
-                            description
-                        }, update ? contentId : undefined)
+                        onClick: () => onSave(
+                            update ? contentId : undefined,
+                            {
+                                thumbnail,
+                                name,
+                                description
+                            },
+                            true)
                     }
                 ]}
             onClose={isLoading ? null : () => onClose()}
@@ -107,13 +111,7 @@ function SaveModal({
                     </ControlLabel>
                     <Thumbnail
                         thumbnail={thumbnail}
-                        thumbnailOptions={{
-                            width: 300,
-                            height: 250,
-                            type: 'image/jpeg',
-                            quality: 0.5,
-                            contain: false
-                        }}
+                        thumbnailOptions={thumbnailOptions}
                         message={<Message msgId="map.message"/>}
                         onUpdate={(data) => {
                             setThumbnail(data);
@@ -195,7 +193,8 @@ SaveModal.propTypes = {
     onInit: PropTypes.func,
     onClear: PropTypes.func,
     error: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
-    success: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ])
+    success: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+    thumbnailOptions: PropTypes.object
 };
 
 SaveModal.defaultProps = {
@@ -206,7 +205,14 @@ SaveModal.defaultProps = {
     onClose: () => {},
     onSave: () => {},
     onInit: () => {},
-    onClear: () => {}
+    onClear: () => {},
+    thumbnailOptions: {
+        width: 300,
+        height: 250,
+        type: 'image/jpeg',
+        quality: 0.9,
+        contain: false
+    }
 };
 
 export default SaveModal;

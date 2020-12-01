@@ -170,6 +170,12 @@ var MS2_MAP_PLUGINS = {
 		"Timeline",
 		"Playback",
 		"SearchServicesConfig",
+		{
+			"name": "Share",
+			"cfg": {
+				"pathTemplate": "/maps/{id}/embed"
+			}
+		},
 		{ "name": "Swipe" },
 		{ "name": "Locate" }
 	]

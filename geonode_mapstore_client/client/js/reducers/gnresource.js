@@ -10,7 +10,11 @@ import {
     RESOURCE_LOADING,
     SET_RESOURCE,
     RESOURCE_ERROR,
-    UPDATE_RESOURCE_PROPERTIES
+    UPDATE_RESOURCE_PROPERTIES,
+    SET_RESOURCE_TYPE,
+    SET_NEW_RESOURCE,
+    SET_RESOURCE_ID,
+    SET_RESOURCE_PERMISSIONS
 } from '@js/actions/gnresource';
 
 function gnresource(state = {}, action) {
@@ -44,6 +48,30 @@ function gnresource(state = {}, action) {
                 ...state.data,
                 ...action.properties
             }
+        };
+    }
+    case SET_RESOURCE_TYPE: {
+        return {
+            ...state,
+            type: action.resourceType
+        };
+    }
+    case SET_NEW_RESOURCE: {
+        return {
+            ...state,
+            isNew: true
+        };
+    }
+    case SET_RESOURCE_ID: {
+        return {
+            ...state,
+            id: action.id
+        };
+    }
+    case SET_RESOURCE_PERMISSIONS: {
+        return {
+            ...state,
+            permissions: action.permissions
         };
     }
     default:
