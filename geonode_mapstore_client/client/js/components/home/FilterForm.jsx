@@ -14,59 +14,10 @@ import Message from '@mapstore/framework/components/I18N/Message';
 import localizedProps from '@mapstore/framework/components/misc/enhancers/localizedProps';
 import FaIcon from '@js/components/home/FaIcon';
 import FilterByExtent from '@js/components/home/FilterByExtent';
-import {
-    getKeywords,
-    getCategories,
-    getRegions,
-    getOwners
-} from '@js/api/geonode/v1';
+import { getFilterLabelById } from '@js/utils/GNSearchUtils';
 
 const SelectSync = localizedProps('placeholder')(ReactSelect);
 const SelectAsync = localizedProps('placeholder')(ReactSelect.Async);
-
-const suggestionsRequestTypes = {
-    categories: {
-        filterKey: 'filter{category.identifier.in}',
-        loadOptions: (q) => getCategories({ q })
-            .then(results => ({
-                options: results
-                    .map(({
-                        identifier
-                    }) => ({
-                        label: identifier,
-                        value: identifier
-                    }))
-            }))
-            .catch(() => null)
-    },
-    keywords: {
-        filterKey: 'filter{keywords.slug.in}',
-        loadOptions: (q) => getKeywords({ q })
-            .then(results => ({
-                options: results
-                    .map(({ slug }) => ({ label: slug, value: slug }))
-            }))
-            .catch(() => null)
-    },
-    regions: {
-        filterKey: 'filter{regions.name.in}',
-        loadOptions: (q) => getRegions({ q })
-            .then(results => ({
-                options: results
-                    .map(({ name }) => ({ label: name, value: name }))
-            }))
-            .catch(() => null)
-    },
-    owners: {
-        filterKey: 'filter{owner.username.in}',
-        loadOptions: (q) => getOwners({ q })
-            .then(results => ({
-                options: results
-                    .map(({ username }) => ({ label: username, value: username }))
-            }))
-            .catch(() => null)
-    }
-};
 
 function FilterForm({
     id,
@@ -76,7 +27,8 @@ function FilterForm({
     fields,
     onChange,
     onClose,
-    extentProps
+    extentProps,
+    suggestionsRequestTypes
 }) {
 
     const [values, setValues] = useState({});
@@ -175,7 +127,7 @@ function FilterForm({
                                 >
                                     <Form.Label><strong>{labelId ? <Message msgId={labelId}/> : label}</strong></Form.Label>
                                     <Select
-                                        value={currentValues.map((value) => ({ value, label: value }))}
+                                        value={currentValues.map((value) => ({ value, label: getFilterLabelById(filterKey, value) || value }))}
                                         multi
                                         placeholder={placeholderId}
                                         onChange={(selected) => {
@@ -233,7 +185,8 @@ function FilterForm({
 
 FilterForm.defaultProps = {
     fields: [],
-    onChange: () => {}
+    onChange: () => {},
+    suggestionsRequestTypes: {}
 };
 
 export default FilterForm;

@@ -15,6 +15,14 @@ let defaultQueryKeys = [
 
 let defaultPageSize = 20;
 
+let filters = {};
+
+export const setFilterById = (id, value) => {
+    filters[id] = value;
+};
+export const getFilterLabelById = (filterKey = '', id) => filters?.[filterKey + id]?.selectOption?.label;
+export const getFilterById = (filterKey = '', id) => filters?.[filterKey + id];
+
 export const getQueryKeys = () => defaultQueryKeys;
 export const getPageSize = () => defaultPageSize;
 

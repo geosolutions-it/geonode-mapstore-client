@@ -13,6 +13,9 @@ import url from 'url';
 import { createSelector } from 'reselect';
 import { Button } from 'react-bootstrap-v1';
 import castArray from 'lodash/castArray';
+import { loadLocale } from '@mapstore/framework/actions/locale';
+import { currentLocaleSelector } from '@mapstore/framework/selectors/locale';
+
 import FaIcon from '@js/components/home/FaIcon';
 
 import SearchBar from '@js/components/home/SearchBar';
@@ -23,19 +26,40 @@ import CardGrid from '@js/components/home/CardGrid';
 import DetailsPanel from '@js/components/home/DetailsPanel';
 import FiltersMenu from '@js/components/home/FiltersMenu';
 import FilterForm from '@js/components/home/FilterForm';
+import LanguageSelector from '@js/components/home/LanguageSelector';
 import {
     fetchSuggestions,
     searchResources,
     requestResource,
     updateSuggestions
 } from '@js/actions/gnsearch';
-import { hashLocationToHref } from '@js/utils/GNSearchUtils';
+import {
+    hashLocationToHref,
+    getFilterById
+} from '@js/utils/GNSearchUtils';
 import { withResizeDetector } from 'react-resize-detector';
 import Footer from '@js/components/home/Footer';
 import { useInView } from 'react-intersection-observer';
+import {
+    getKeywords,
+    getCategories,
+    getRegions,
+    getOwners
+} from '@js/api/geonode/v1';
 
 const DEFAULT_SUGGESTIONS = [];
 const DEFAULT_RESOURCES = [];
+
+const ConnectedLanguageSelector = connect(
+    createSelector([
+        currentLocaleSelector
+    ], (value) => ({
+        value
+    })),
+    {
+        onSelect: loadLocale.bind(null, null)
+    }
+)(LanguageSelector);
 
 const ConnectedSearchBar = connect(
     createSelector([
@@ -88,6 +112,45 @@ const ConnectedDetailsPanel = connect(
     }))
 )(DetailsPanel);
 
+const suggestionsRequestTypes = {
+    categories: {
+        filterKey: 'filter{category.identifier.in}',
+        loadOptions: (q, params) => getCategories({ ...params, q }, 'filter{category.identifier.in}')
+            .then(results => ({
+                options: results
+                    .map(({ selectOption }) => selectOption)
+            }))
+            .catch(() => null)
+    },
+    keywords: {
+        filterKey: 'filter{keywords.slug.in}',
+        loadOptions: (q, params) => getKeywords({ ...params, q }, 'filter{keywords.slug.in}')
+            .then(results => ({
+                options: results
+                    .map(({ selectOption }) => selectOption)
+            }))
+            .catch(() => null)
+    },
+    regions: {
+        filterKey: 'filter{regions.name.in}',
+        loadOptions: (q, params) => getRegions({ ...params, q }, 'filter{regions.name.in}')
+            .then(results => ({
+                options: results
+                    .map(({ selectOption }) => selectOption)
+            }))
+            .catch(() => null)
+    },
+    owners: {
+        filterKey: 'filter{owner.username.in}',
+        loadOptions: (q, params) => getOwners({ ...params, q }, 'filter{owner.username.in}')
+            .then(results => ({
+                options: results
+                    .map(({ selectOption }) => selectOption)
+            }))
+            .catch(() => null)
+    }
+};
+
 function Home({
     location,
     theme,
@@ -102,6 +165,14 @@ function Home({
     filters,
     user
 }) {
+
+    const isMounted = useRef();
+    useEffect(() => {
+        isMounted.current = true;
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
 
     const brandNavbarNode = useRef();
     const menuIndexNode = useRef();
@@ -173,6 +244,36 @@ function Home({
         onSelect(pk, ctype);
     }, [pk, ctype]);
 
+    // update all the information of filter in use on mount
+    // to display the correct labels
+    const [reRender, setReRender] = useState(0);
+    const state = useRef(false);
+    state.current = {
+        query
+    };
+    useEffect(() => {
+        const suggestionsRequestTypesArray = Object.keys(suggestionsRequestTypes)
+            .map((key) => suggestionsRequestTypes[key]);
+        const queryKeys = Object.keys(state.current.query);
+        let updateRequests = [];
+        queryKeys.forEach(queryKey => {
+            const suggestionRequest = suggestionsRequestTypesArray.find(({ filterKey }) => queryKey === filterKey);
+            if (suggestionRequest) {
+                const filtersToUpdate = castArray(state.current.query[queryKey]).filter((value) => !getFilterById(queryKey, value));
+                if (filtersToUpdate?.length > 0) {
+                    const request = suggestionRequest.loadOptions.bind(null, '', { idIn: filtersToUpdate });
+                    updateRequests.push(request);
+                }
+            }
+        });
+        Promise.all(updateRequests.map((request) => request()))
+            .then(() => {
+                if (isMounted.current) {
+                    setReRender(reRender + 1);
+                }
+            });
+    }, []);
+
     const search = (
         <ConnectedSearchBar
             key="search"
@@ -204,6 +305,7 @@ function Home({
                 fields={filters?.fields?.options}
                 extentProps={filters?.extent}
                 onChange={handleUpdate}
+                suggestionsRequestTypes={suggestionsRequestTypes}
             />
         </ConnectedSearchBar>
     );
@@ -241,6 +343,10 @@ function Home({
                 query={query}
                 menuItems={menu?.items}
                 formatHref={handleFormatHref}
+                tools={<ConnectedLanguageSelector
+                    inline={theme?.languageSelector?.inline}
+                    style={theme?.languageSelector?.style}
+                />}
             />
             <ConnectedCardGrid
                 user={user}

@@ -95,7 +95,8 @@ const MenuIndex = forwardRef(({
     menuItems,
     query,
     formatHref,
-    user
+    user,
+    tools
 }, ref) => {
 
     const state = { user };
@@ -106,25 +107,30 @@ const MenuIndex = forwardRef(({
             className="gn-menu-index"
             style={style}
         >
-            <ReactResizeDetector handleHeight>
-                {({ height }) => (
-                    <div
-                        className="gn-menu-index-content"
-                        style={{ height }}
-                    >
-                        <SwipeMenu
-                            items={menuItems
-                                .filter((item) => filterMenuItems(state, item))}
-                            menuItemComponent={MenuItem}
-                            menuItemsProps={{
-                                query,
-                                formatHref,
-                                state
-                            }}
-                        />
-                    </div>
-                )}
-            </ReactResizeDetector>
+            <div className="gn-menu-index-container">
+                <ReactResizeDetector handleHeight>
+                    {({ height }) => (
+                        <div
+                            className="gn-menu-index-content"
+                            style={{ height }}
+                        >
+                            <SwipeMenu
+                                items={menuItems
+                                    .filter((item) => filterMenuItems(state, item))}
+                                menuItemComponent={MenuItem}
+                                menuItemsProps={{
+                                    query,
+                                    formatHref,
+                                    state
+                                }}
+                            />
+                        </div>
+                    )}
+                </ReactResizeDetector>
+                {tools && <div className="gn-menu-index-tools">
+                    {tools}
+                </div>}
+            </div>
         </nav>
     );
 });
@@ -133,7 +139,8 @@ MenuIndex.propTypes = {
     style: PropTypes.object,
     menuItems: PropTypes.array,
     query: PropTypes.object,
-    formatHref: PropTypes.func
+    formatHref: PropTypes.func,
+    tools: PropTypes.node
 };
 
 MenuIndex.defaultProps = {
