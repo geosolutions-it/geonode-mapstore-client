@@ -29,6 +29,9 @@
     "@mapstore/project": "git+https://github.com/geosolutions-it/mapstore-project.git#30ac4deb06bfd71d5078a3171463eaab3990bd91"
   },
   "dependencies": {
-    "mapstore": "file:MapStore2"
+    "@fortawesome/fontawesome-free": "5.15.1",
+    "bootstrap-v4": "npm:bootstrap@4.5.0",
+    "mapstore": "file:MapStore2",
+    "react-bootstrap-v1": "npm:react-bootstrap@1.3.0"
   }
 }

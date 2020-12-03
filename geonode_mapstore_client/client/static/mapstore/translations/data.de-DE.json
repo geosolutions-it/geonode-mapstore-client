@@ -14,6 +14,25 @@
             "mapList": {
                 "emptyList": "Keine Ergebnisse für diese Anfrage. Versuchen Sie, den Filter zu wechseln oder einen anderen Dienst aus der Eingabe in der oberen rechten Ecke auszuwählen."
             }
+        },
+        "gnhome": {
+            "orderBy": "Order by",
+            "mostRecent": "Most recent",
+            "lessRecent": "Less recent",
+            "aZ": "A Z",
+            "zA": "Z A",
+            "mostPopular": "Most popular",
+            "data": "Data",
+            "layers": "Layers",
+            "documents": "Documents",
+            "remoteServices": "Remote Services",
+            "maps": "Maps",
+            "about": "About",
+            "people": "People",
+            "groups": "Groups",
+            "groupsCategories": "Groups Categories",
+            "landuse": "Landuse",
+            "water": "Water"
         }
     }
 }
