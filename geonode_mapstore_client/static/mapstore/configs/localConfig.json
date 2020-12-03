@@ -26,6 +26,28 @@
         "endpointV1": "/api",
         "endpointV2": "/api/v2"
     },
+    "supportedLocales": {
+        "en": {
+            "code": "en-US",
+            "description": "English"
+        },
+        "it": {
+            "code": "it-IT",
+            "description": "Italiano"
+        },
+        "fr": {
+            "code": "fr-FR",
+            "description": "Français"
+        },
+        "de": {
+            "code": "de-DE",
+            "description": "Deutsch"
+        },
+        "es": {
+            "code": "es-ES",
+            "description": "Español"
+        }
+    },
     "geoNodeConfiguration": {
         "theme": {
             "variant": "light",
@@ -172,26 +194,36 @@
                             "href": "/messages/inbox/",
                             "labelId": "gnhome.inbox"
                         },
-                        { "type": "divider" },
+                        {
+                            "type": "divider"
+                        },
                         {
                             "type": "link",
                             "href": "/admin/",
                             "labelId": "gnhome.admin",
-                            "allowedGroups": ["admin"]
+                            "allowedGroups": [
+                                "admin"
+                            ]
                         },
                         {
                             "type": "link",
                             "href": "/geoserver/",
                             "labelId": "gnhome.geoServer",
-                            "allowedGroups": ["admin"]
+                            "allowedGroups": [
+                                "admin"
+                            ]
                         },
-                        { "type": "divider" },
+                        {
+                            "type": "divider"
+                        },
                         {
                             "type": "link",
                             "href": "/help/",
                             "labelId": "gnhome.help"
                         },
-                        { "type": "divider" },
+                        {
+                            "type": "divider"
+                        },
                         {
                             "type": "link",
                             "href": "/account/logout/?next=/",
@@ -302,29 +334,36 @@
                         {
                             "type": "divider",
                             "authenticated": true,
-                            "allowedGroups": ["admin"]
+                            "allowedGroups": [
+                                "admin"
+                            ]
                         },
-                        
                         {
                             "type": "link",
                             "href": "/invitations/geonode-send-invite/",
                             "labelId": "gnhome.inviteUsers",
                             "authenticated": true,
-                            "allowedGroups": ["admin"]
+                            "allowedGroups": [
+                                "admin"
+                            ]
                         },
                         {
                             "type": "link",
                             "href": "/admin/people/profile/add/",
                             "labelId": "gnhome.addUser",
                             "authenticated": true,
-                            "allowedGroups": ["admin"]
+                            "allowedGroups": [
+                                "admin"
+                            ]
                         },
                         {
                             "type": "link",
                             "href": "/groups/create/",
                             "labelId": "gnhome.createGroup",
                             "authenticated": true,
-                            "allowedGroups": ["admin"]
+                            "allowedGroups": [
+                                "admin"
+                            ]
                         }
                     ]
                 },

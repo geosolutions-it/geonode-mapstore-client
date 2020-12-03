@@ -12,6 +12,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import SwipeMenu from '@js/components/home/SwipeMenu';
 import Message from '@mapstore/framework/components/I18N/Message';
 import Tag from '@js/components/home/Tag';
+import { getFilterLabelById } from '@js/utils/GNSearchUtils';
 
 function MenuItem({
     tabIndex,
@@ -30,7 +31,7 @@ function MenuItem({
                 query: { [item.key]: item.value }
             })}
         >
-            {item.value}
+            {getFilterLabelById(item.key, item.value) || item.value}
         </Tag>
     );
 }
@@ -45,13 +46,14 @@ const FiltersMenu = forwardRef(({
     defaultLabelId
 }, ref) => {
 
+    const selectedSort = orderOptions.find(({ value }) => order === value);
     return (
         <div
-            className="gn-filter-menu"
+            className="gn-filters-menu"
             style={style}
             ref={ref}
         >
-            <div className="gn-filter-container">
+            <div className="gn-filters-menu-container">
                 {filters?.length > 0
                     && <Button
                         variant="default"
@@ -63,7 +65,7 @@ const FiltersMenu = forwardRef(({
                 <ReactResizeDetector handleHeight>
                     {({ height }) => (
                         <div
-                            className="gn-filter-menu-content"
+                            className="gn-filters-menu-content"
                             style={{ height }}
                         >
                             <SwipeMenu
@@ -77,7 +79,7 @@ const FiltersMenu = forwardRef(({
                     )}
                 </ReactResizeDetector>
                 <div
-                    className="gn-filter-menu-tools"
+                    className="gn-filters-menu-tools"
                 >
                     {orderOptions.length > 0 && <Dropdown alignRight>
                         <Dropdown.Toggle
@@ -85,13 +87,14 @@ const FiltersMenu = forwardRef(({
                             variant="default"
                             size="sm"
                         >
-                            <Message msgId={orderOptions.find(({ value }) => order === value)?.labelId || defaultLabelId} />
+                            <Message msgId={selectedSort?.labelId || defaultLabelId} />
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             {orderOptions.map(({ labelId, value }) => {
                                 return (
                                     <Dropdown.Item
                                         key={value}
+                                        active={value === selectedSort?.value}
                                         href={formatHref({
                                             query: {
                                                 sort: [value]
