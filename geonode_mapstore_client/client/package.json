@@ -21,12 +21,13 @@
     "start": "mapstore-project start geonode",
     "test": "mapstore-project test geonode",
     "test:watch": "mapstore-project test:watch geonode",
-    "update-project": "mapstore-project update geonode"
+    "update-project": "mapstore-project update geonode",
+    "lint": "eslint js --ext .jsx,.js"
   },
   "author": "GeoSolutions",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@mapstore/project": "git+https://github.com/geosolutions-it/mapstore-project.git#30ac4deb06bfd71d5078a3171463eaab3990bd91"
+    "@mapstore/project": "1.0.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.1",
@@ -34,5 +35,11 @@
     "js-cookie": "2.2.1",
     "mapstore": "file:MapStore2",
     "react-bootstrap-v1": "npm:react-bootstrap@1.3.0"
+  },
+  "geonode": {
+    "devServer": {
+      "host": "localhost:8000",
+      "protocol": "http"
+    }
   }
 }

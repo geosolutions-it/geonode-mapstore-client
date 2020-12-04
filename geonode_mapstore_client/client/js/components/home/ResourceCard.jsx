@@ -26,7 +26,7 @@ const ResourceCard = forwardRef(({
 
     const res = data;
     const types = getTypesInfo();
-    const { icon } = types[res.doc_type] || types[res.polymorphic_ctype] || {};
+    const { icon } = types[res.doc_type] || types[res.resource_type] || {};
     return (
         <Card
             ref={ref}
@@ -35,7 +35,7 @@ const ResourceCard = forwardRef(({
             <a
                 className="gn-resource-card-link"
                 href={formatHref({
-                    pathname: `/search/${res.polymorphic_ctype}/${res.pk}`
+                    pathname: `/search/${res.resource_type}/${res.pk}`
                 })}
             />
             <Card.Img
@@ -49,7 +49,7 @@ const ResourceCard = forwardRef(({
                             <Tag
                                 href={formatHref({
                                     query: {
-                                        'filter{polymorphic_ctype_id.in}': res.polymorphic_ctype_id
+                                        'filter{resource_type.in}': res.resource_type
                                     }
                                 })}>
                                 <FaIcon name={icon} />

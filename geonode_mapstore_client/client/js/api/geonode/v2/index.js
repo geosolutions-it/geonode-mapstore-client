@@ -18,25 +18,28 @@ import isString from 'lodash/isString';
 import castArray from 'lodash/castArray';
 import { getUserInfo } from '@js/api/geonode/v1';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
+import { setFilterById } from '@js/utils/GNSearchUtils';
 
 let endpoints = {
     // default values
-    'base_resources': '/api/v2/base_resources',
+    'resources': '/api/v2/resources',
     'documents': '/api/v2/documents',
     'layers': '/api/v2/layers',
     'maps': '/api/v2/maps',
     'geoapps': '/api/v2/geoapps',
     'geostories': '/api/v2/geostories',
-    'users': '/api/v2/users'
+    'users': '/api/v2/users',
+    'resource_types': '/api/v2/resources/resource_types'
 };
 
-const RESOURCES = 'base_resources';
+const RESOURCES = 'resources';
 const DOCUMENTS = 'documents';
 // const LAYERS = 'layers';
 const MAPS = 'maps';
 const GEOAPPS = 'geoapps';
 const GEOSTORIES = 'geostories';
 const USERS = 'users';
+const RESOURCE_TYPES = 'resource_types';
 // const GROUPS = 'groups';
 
 const requestOptions = (name, requestFunc) => {
@@ -77,7 +80,7 @@ function addQueryString(requestUrl, params) {
 }
 
 export const setEndpoints = (data) => {
-    endpoints = data;
+    endpoints = { ...endpoints, ...data };
 };
 
 export const getEndpoints = () => {
@@ -279,6 +282,31 @@ export const getConfiguration = (configUrl) => {
         });
 };
 
+
+let availableResourceTypes;
+export const getResourceTypes = ({}, filterKey = 'resource-types') => {
+    if (availableResourceTypes) {
+        return new Promise(resolve => resolve(availableResourceTypes));
+    }
+    return axios.get(parseDevHostname(endpoints[RESOURCE_TYPES]))
+        .then(({ data }) => {
+            availableResourceTypes = (data?.resource_types || [])
+                .map((value) => {
+                    const selectOption = {
+                        value: value,
+                        label: value
+                    };
+                    const resourceType = {
+                        value,
+                        selectOption
+                    };
+                    setFilterById(filterKey + value, resourceType);
+                    return resourceType;
+                });
+            return [...availableResourceTypes];
+        });
+};
+
 export default {
     getEndpoints,
     getResources,
@@ -290,5 +318,6 @@ export default {
     getDocumentsByDocType,
     getUserByPk,
     getAccountInfo,
-    getConfiguration
+    getConfiguration,
+    getResourceTypes
 };

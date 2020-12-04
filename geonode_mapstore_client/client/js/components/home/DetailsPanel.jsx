@@ -67,7 +67,7 @@ function DetailsPanel({
         embed,
         icon,
         name
-    } = resource && (types[resource.doc_type] || types[resource.polymorphic_ctype]) || {};
+    } = resource && (types[resource.doc_type] || types[resource.resource_type]) || {};
     const embedUrl = embed && embed.replace('{pk}', resource.pk);
 
     return (

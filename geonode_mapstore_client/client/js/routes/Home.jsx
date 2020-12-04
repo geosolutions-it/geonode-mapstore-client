@@ -46,6 +46,7 @@ import {
     getRegions,
     getOwners
 } from '@js/api/geonode/v1';
+import { getResourceTypes } from '@js/api/geonode/v2';
 
 const DEFAULT_SUGGESTIONS = [];
 const DEFAULT_RESOURCES = [];
@@ -113,6 +114,15 @@ const ConnectedDetailsPanel = connect(
 )(DetailsPanel);
 
 const suggestionsRequestTypes = {
+    resourceTypes: {
+        filterKey: 'filter{resource_type.in}',
+        loadOptions: (q, params) => getResourceTypes({ ...params, q }, 'filter{resource_type.in}')
+            .then(results => ({
+                options: results
+                    .map(({ selectOption }) => selectOption)
+            }))
+            .catch(() => null)
+    },
     categories: {
         filterKey: 'filter{category.identifier.in}',
         loadOptions: (q, params) => getCategories({ ...params, q }, 'filter{category.identifier.in}')
