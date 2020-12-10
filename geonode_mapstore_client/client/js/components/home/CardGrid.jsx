@@ -28,11 +28,11 @@ const Cards = withResizeDetector(({
         ? Math.floor((containerWidth - margin * count) / count)
         : '100%';
     const ulPadding = margin / 2;
-
+    const isSingleCard = count === 0 || count === 1;
     return (
         <ul
             style={{
-                paddingLeft: ulPadding,
+                paddingLeft: isSingleCard ? 0 : ulPadding,
                 paddingBottom: margin
             }}
         >
@@ -40,11 +40,16 @@ const Cards = withResizeDetector(({
                 return (
                     <li
                         key={resource.pk}
-                        style={{
-                            width: width,
-                            marginRight: (idx + 1) % count === 0 ? 0 : margin,
-                            marginTop: margin
-                        }}
+                        style={isSingleCard
+                            ? {
+                                width: `calc(100% - ${margin}px)`,
+                                margin: margin / 2
+                            }
+                            : {
+                                width: width,
+                                marginRight: (idx + 1) % count === 0 ? 0 : margin,
+                                marginTop: margin
+                            }}
                     >
                         <ResourceCard
                             active={isCardActive(resource)}
@@ -72,7 +77,8 @@ function CardGrid({
     cardLinks,
     column,
     messageId,
-    children
+    children,
+    pageSize
 }) {
 
     const state = useRef({});
@@ -106,7 +112,12 @@ function CardGrid({
     return (
         <div className="gn-card-grid">
             {header}
-            <div style={{ display: 'flex' }}>
+            <div style={{
+                display: 'flex',
+                ...(pageSize === 'sm' && {
+                    flexDirection: 'column'
+                })
+            }}>
                 <div style={{ flex: 1 }}>
                     <div className="gn-card-grid-container" style={containerStyle}>
                         {children}

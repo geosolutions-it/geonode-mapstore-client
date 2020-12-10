@@ -40,5 +40,15 @@
         .gn-filters-menu-tools > * {
             margin: 0 0.4rem;
         }
+        .gn-filters-menu-tools {
+            /* remove this inline style of dropdown because they cause issue with overflow x*/
+            .dropdown-menu {
+                transform: none !important;
+                inset: unset !important;
+            }
+            .dropdown-menu-right {
+                right: 0 !important;
+            }
+        }
     }
 }

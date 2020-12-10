@@ -15,6 +15,7 @@
         max-width: $gn-hero-max-width;
         margin: auto;
         .gn-hero-description {
+            word-break: break-word;
             font-size: $font-size-base * 1.5; font-weight: lighter;
             h1 { font-size: $font-size-base * 6; font-weight: lighter; }
             h2 { font-size: $font-size-base * 5.5; font-weight: lighter; }

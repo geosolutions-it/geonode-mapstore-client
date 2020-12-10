@@ -10,6 +10,7 @@
     position: relative;
     color: $gn-body-color;
     background-color: $gn-body-bg;
+    z-index: 10;
     section {
         @extend .shadow;
         position: absolute;

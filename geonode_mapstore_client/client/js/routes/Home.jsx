@@ -161,6 +161,16 @@ const suggestionsRequestTypes = {
     }
 };
 
+function getPageSize(width) {
+    if (width < 968) {
+        return 'sm';
+    }
+    if (width < 1200) {
+        return 'md';
+    }
+    return 'lg';
+}
+
 function Home({
     location,
     theme,
@@ -173,9 +183,11 @@ function Home({
     onSelect,
     match,
     filters,
-    user
+    user,
+    width
 }) {
 
+    const pageSize = getPageSize(width);
     const isMounted = useRef();
     useEffect(() => {
         isMounted.current = true;
@@ -299,7 +311,7 @@ function Home({
                     q: value
                 }, '/search/')}
             append={
-                <Button
+                pageSize !== 'sm' && <Button
                     variant="default"
                     onClick={() => setShowFilterForm(!showFilterForm)}
                 >
@@ -307,7 +319,7 @@ function Home({
                 </Button>
             }
         >
-            <FilterForm
+            {pageSize !== 'sm' && <FilterForm
                 id="gn-filter-form"
                 query={query}
                 show={showFilterForm}
@@ -316,7 +328,7 @@ function Home({
                 extentProps={filters?.extent}
                 onChange={handleUpdate}
                 suggestionsRequestTypes={suggestionsRequestTypes}
-            />
+            />}
         </ConnectedSearchBar>
     );
 
@@ -329,7 +341,10 @@ function Home({
                 logo={navbar?.logo}
                 navItems={navbar?.items}
                 user={user}
-                style={theme?.navbar?.style || {}}
+                style={{
+                    ...theme?.navbar?.style,
+                    width
+                }}
             >
                 {!isHeroVisible && search}
             </BrandNavbar>
@@ -347,7 +362,8 @@ function Home({
             <MenuIndex
                 ref={menuIndexNode}
                 style={{
-                    top: dimensions.brandNavbarHeight
+                    top: dimensions.brandNavbarHeight,
+                    width
                 }}
                 user={user}
                 query={query}
@@ -361,6 +377,7 @@ function Home({
             <ConnectedCardGrid
                 user={user}
                 query={query}
+                pageSize={pageSize}
                 containerStyle={!isHeroVisible
                     ? {
                         marginTop: dimensions.brandNavbarHeight,
@@ -373,7 +390,11 @@ function Home({
                         filters={queryFilters}
                         formatHref={handleFormatHref}
                         sectionStyle={{
-                            width: 696,
+                            width: pageSize === 'lg'
+                                ? 700
+                                : pageSize === 'md'
+                                    ? 600
+                                    : '100%',
                             ...(!isHeroVisible && {
                                 position: 'fixed',
                                 top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight,

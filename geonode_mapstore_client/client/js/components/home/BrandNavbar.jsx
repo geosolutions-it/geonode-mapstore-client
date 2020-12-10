@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef, useRef, cloneElement, Children } from 'react';
 import { Dropdown, Nav } from 'react-bootstrap-v1';
 import Message from '@mapstore/framework/components/I18N/Message';
 import FaIcon from '@js/components/home/FaIcon';
@@ -124,7 +124,15 @@ const BrandNavbar = forwardRef(({
                         })}
                 </ul>
             </div>
-            {centerWidth < centerMinWidth && children}
+            {children && centerWidth < centerMinWidth &&
+                Children.map(children, child =>
+                    cloneElement(child, {
+                        style: {
+                            ...child.props.style,
+                            margin: '0.5rem 0.5rem 0 0.5rem',
+                            width: 'calc(100% - 1rem)'
+                        }
+                    }))}
         </nav>
     );
 });

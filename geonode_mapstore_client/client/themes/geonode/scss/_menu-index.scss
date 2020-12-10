@@ -32,6 +32,18 @@
         .gn-menu-index-tools > * {
             margin: 0 0.4rem;
         }
+
+        .gn-menu-index-tools {
+            /* remove this inline style of dropdown because they cause issue with overflow x*/
+            .dropdown-menu {
+                transform: none !important;
+                inset: unset !important;
+            }
+            .dropdown-menu-right {
+                right: 0 !important;
+            }
+        }
+
         .btn-default,
         .gn-tag {
             font-size: $font-size-base;
