@@ -105,10 +105,8 @@ const ConnectedCardGrid = connect(
 
 const ConnectedDetailsPanel = connect(
     createSelector([
-        state => state?.gnresource?.data || null,
         state => state?.gnresource?.loading || false
-    ], (resource, loading) => ({
-        resource,
+    ], (loading) => ({
         loading
     }))
 )(DetailsPanel);
@@ -165,7 +163,7 @@ function getPageSize(width) {
     if (width < 968) {
         return 'sm';
     }
-    if (width < 1200) {
+    if (width < 1400) {
         return 'md';
     }
     return 'lg';
@@ -184,7 +182,8 @@ function Home({
     match,
     filters,
     user,
-    width
+    width,
+    resource
 }) {
 
     const pageSize = getPageSize(width);
@@ -338,8 +337,14 @@ function Home({
         <div className={`gn-home gn-theme-${theme?.variant || 'light'}`}>
             <BrandNavbar
                 ref={brandNavbarNode}
-                logo={navbar?.logo}
+                logo={castArray(navbar?.logo || [])
+                    .map((logo) => ({
+                        ...logo,
+                        ...logo[pageSize]
+                    }))}
                 navItems={navbar?.items}
+                inline={pageSize !== 'sm'}
+                pageSize={pageSize}
                 user={user}
                 style={{
                     ...theme?.navbar?.style,
@@ -378,6 +383,7 @@ function Home({
                 user={user}
                 query={query}
                 pageSize={pageSize}
+                isColumnActive={!!resource}
                 containerStyle={!isHeroVisible
                     ? {
                         marginTop: dimensions.brandNavbarHeight,
@@ -387,6 +393,7 @@ function Home({
                     : undefined}
                 column={
                     <ConnectedDetailsPanel
+                        resource={resource}
                         filters={queryFilters}
                         formatHref={handleFormatHref}
                         sectionStyle={{
@@ -399,13 +406,13 @@ function Home({
                                 position: 'fixed',
                                 top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight,
                                 bottom: dimensions.footerNodeHeight,
-                                overflow: 'auto',
+                                overflowY: 'scroll',
                                 height: 'auto'
                             })
                         }}
                     />
                 }
-                isCardActive={resource => resource.pk === pk}
+                isCardActive={res => res.pk === pk}
                 page={params.page ? parseFloat(params.page) : 1}
                 formatHref={handleFormatHref}
                 onLoad={(value) => {
@@ -458,10 +465,12 @@ const DEFAULT_PARAMS = {};
 const ConnectedHome = connect(
     createSelector([
         state => state?.gnsearch?.params || DEFAULT_PARAMS,
-        state => state?.security?.user || null
-    ], (params, user) => ({
+        state => state?.security?.user || null,
+        state => state?.gnresource?.data || null
+    ], (params, user, resource) => ({
         params,
-        user
+        user,
+        resource
     })),
     {
         onSearch: searchResources,

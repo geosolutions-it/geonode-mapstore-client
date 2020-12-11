@@ -71,7 +71,8 @@ const BrandNavbar = forwardRef(({
     navItems,
     user,
     children,
-    centerMinWidth
+    centerMinWidth,
+    inline
 }, ref) => {
 
     const centerNode = useRef();
@@ -85,7 +86,7 @@ const BrandNavbar = forwardRef(({
             className="gn-brand-navbar"
             style={style}
         >
-            <div className="gn-brand-navbar-container">
+            <div className="gn-brand-navbar-container" style={inline ? {} : { flexWrap: 'wrap' }}>
                 <ul
                     className="gn-brand-navbar-left-side"
                 >
@@ -100,12 +101,12 @@ const BrandNavbar = forwardRef(({
                         );
                     })}
                 </ul>
-                <div
+                {inline && <div
                     className="gn-brand-navbar-center"
                     ref={centerNode}
                 >
                     {centerWidth >= centerMinWidth && children}
-                </div>
+                </div>}
                 <ul
                     className="gn-brand-navbar-right-side"
                 >
@@ -124,12 +125,13 @@ const BrandNavbar = forwardRef(({
                         })}
                 </ul>
             </div>
-            {children && centerWidth < centerMinWidth &&
+            {children && (inline && centerWidth < centerMinWidth
+            || !inline) &&
                 Children.map(children, child =>
                     cloneElement(child, {
                         style: {
                             ...child.props.style,
-                            margin: '0.5rem 0.5rem 0 0.5rem',
+                            margin: '0.5rem auto 0 auto',
                             width: 'calc(100% - 1rem)'
                         }
                     }))}

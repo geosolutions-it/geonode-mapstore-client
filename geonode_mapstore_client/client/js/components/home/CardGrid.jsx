@@ -17,24 +17,30 @@ const Cards = withResizeDetector(({
     resources,
     formatHref,
     isCardActive,
-    width: containerWidth,
+    containerWidth,
+    width: detectedWidth,
     links
 }) => {
 
+    const width = containerWidth || detectedWidth;
     const margin = 24;
     const size = 320;
-    const count = Math.floor(containerWidth / (size + margin));
-    const width = containerWidth >= size + margin * 2
-        ? Math.floor((containerWidth - margin * count) / count)
+    const count = Math.floor(width / (size + margin));
+    const cardWidth = width >= size + margin * 2
+        ? Math.floor((width - margin * count) / count)
         : '100%';
-    const ulPadding = margin / 2;
+    const ulPadding = Math.floor(margin / 2);
     const isSingleCard = count === 0 || count === 1;
     return (
         <ul
-            style={{
-                paddingLeft: isSingleCard ? 0 : ulPadding,
-                paddingBottom: margin
-            }}
+            style={isSingleCard
+                ? {
+                    paddingBottom: margin
+                }
+                : {
+                    paddingLeft: ulPadding,
+                    paddingBottom: margin
+                }}
         >
             {resources.map((resource, idx) => {
                 return (
@@ -42,11 +48,11 @@ const Cards = withResizeDetector(({
                         key={resource.pk}
                         style={isSingleCard
                             ? {
-                                width: `calc(100% - ${margin}px)`,
-                                margin: margin / 2
+                                width: width - margin,
+                                margin: ulPadding
                             }
                             : {
-                                width: width,
+                                width: cardWidth,
                                 marginRight: (idx + 1) % count === 0 ? 0 : margin,
                                 marginTop: margin
                             }}
@@ -64,7 +70,7 @@ const Cards = withResizeDetector(({
     );
 });
 
-function CardGrid({
+const CardGrid = withResizeDetector(({
     resources,
     loading,
     page,
@@ -76,10 +82,17 @@ function CardGrid({
     header,
     cardLinks,
     column,
+    isColumnActive,
     messageId,
     children,
-    pageSize
-}) {
+    pageSize,
+    width
+}) => {
+
+    const columnNode = useRef();
+    const columnWidth = columnNode.current
+        ? columnNode.current.getBoundingClientRect().width
+        : 0;
 
     const state = useRef({});
 
@@ -132,6 +145,7 @@ function CardGrid({
                             formatHref={formatHref}
                             isCardActive={isCardActive}
                             links={cardLinks}
+                            containerWidth={pageSize === 'md' && isColumnActive ? width - columnWidth : undefined}
                         />
                         <div className="gn-card-grid-pagination">
                             {loading && <Spinner animation="border" role="status">
@@ -141,11 +155,13 @@ function CardGrid({
                         </div>
                     </div>
                 </div>
-                {column}
+                <div ref={columnNode}>
+                    {column}
+                </div>
             </div>
         </div>
     );
-}
+});
 
 CardGrid.defaultProps = {
     page: 1,

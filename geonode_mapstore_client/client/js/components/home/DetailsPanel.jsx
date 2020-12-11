@@ -69,7 +69,6 @@ function DetailsPanel({
         name
     } = resource && (types[resource.doc_type] || types[resource.resource_type]) || {};
     const embedUrl = embed && embed.replace('{pk}', resource.pk);
-
     return (
         <div
             ref={detailsContainerNode}
@@ -104,10 +103,12 @@ function DetailsPanel({
                             height: '100%',
                             top: 0,
                             left: 0,
-                            backgroundImage: 'url(' + resource?.thumbnail_url + ')',
-                            backgroundPosition: 'center',
-                            backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat'
+                            ...(resource?.thumbnail_url && {
+                                backgroundImage: 'url(' + resource.thumbnail_url + ')',
+                                backgroundPosition: 'center',
+                                backgroundSize: 'contain',
+                                backgroundRepeat: 'no-repeat'
+                            })
                         }}/>
                     }
                     {loading && <div
@@ -163,17 +164,26 @@ function DetailsPanel({
                         </div>
                     </div>
                     <p>
-                        <div className="gn-details-panel-description">{resource?.abstract}</div>
-                        {(resource?.date_type && resource?.date)
-                            && <div><Message msgId={`gnhome.${resource.date_type}`}/>: <strong>{ moment(resource.date).format('MMMM Do YYYY, h:mm:ss a')}</strong></div>}
-                    </p>
-                    <p>
-                        {resource?.owner && <div><Message msgId="gnhome.author"/>: <strong><a href={formatHref({
+                        {resource?.owner && <><a href={formatHref({
                             query: {
                                 'filter{owner.username.in}': resource.owner.username
                             }
-                        })}>{getUserName(resource.owner)}</a></strong></div>}
-                        {resource?.category?.identifier && <div><Message msgId="gnhome.category"/>: <strong>{resource.category.identifier}</strong></div>}
+                        })}>{getUserName(resource.owner)}</a></>}
+                        {(resource?.date_type && resource?.date)
+                            && <>{' '}/{' '}{ moment(resource.date).format('MMMM Do YYYY')}</>}
+                    </p>
+                    <p>
+                        <div className="gn-details-panel-description">{resource?.abstract}</div>
+                    </p>
+                    <p>
+                        {resource?.category?.identifier && <div>
+                            <Message msgId="gnhome.category"/>:{' '}
+                            <a href={formatHref({
+                                query: {
+                                    'filter{category.identifier.in}': resource.category.identifier
+                                }
+                            })}>{resource.category.identifier}</a>
+                        </div>}
                     </p>
                 </div>
             </section>
