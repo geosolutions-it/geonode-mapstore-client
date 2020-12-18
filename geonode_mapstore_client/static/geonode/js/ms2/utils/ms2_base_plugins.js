@@ -138,6 +138,7 @@ var MS2_BASE_PLUGINS = {
 				},
 				"compact": true
 			}
-		}, "Playback"
+		}, "Playback",
+		{ "name": "LayerDownload" }
 	]
 }
