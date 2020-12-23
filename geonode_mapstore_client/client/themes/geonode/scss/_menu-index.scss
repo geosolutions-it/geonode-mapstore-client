@@ -17,6 +17,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    .badge {
+        margin-left: 0.5rem;
+        padding: 0.2rem;
+        font-size: 0.6rem;
+        border-radius: 0.2rem;
+    }
     .gn-menu-index-container {
         display: flex;
         flex-direction: row;
@@ -32,8 +38,13 @@
         .gn-menu-index-tools > * {
             margin: 0 0.4rem;
         }
-
+        .gn-menu-index-divider {
+            width: 1px;
+            height: 1.2rem;
+        }
         .gn-menu-index-tools {
+            display: flex;
+            align-items: center;
             /* remove this inline style of dropdown because they cause issue with overflow x*/
             .dropdown-menu {
                 transform: none !important;
@@ -41,6 +52,16 @@
             }
             .dropdown-menu-right {
                 right: 0 !important;
+            }
+            .gn-menu-index-right-items {
+                display: flex;
+                align-items: center;
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                li + li {
+                    margin-left: 0.4rem;
+                }
             }
         }
 

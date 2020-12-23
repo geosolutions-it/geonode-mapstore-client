@@ -12,7 +12,8 @@ import MainLoader from '@js/components/app/MainLoader';
 import { connect } from 'react-redux';
 import {
     setConfigProp,
-    setLocalConfigurationFile
+    setLocalConfigurationFile,
+    getConfigProp
 } from '@mapstore/framework/utils/ConfigUtils';
 import {
     getSupportedLocales,
@@ -31,7 +32,8 @@ import gnlocaleEpics from '@js/epics/gnlocale';
 import {
     getConfiguration,
     getEndpoints,
-    getAccountInfo
+    getAccountInfo,
+    getResourcesTotalCount
 } from '@js/api/geonode/v2';
 
 import axios from '@mapstore/framework/libs/ajax';
@@ -100,9 +102,10 @@ axios.interceptors.request.use(
 Promise.all([
     getConfiguration('/static/mapstore/configs/localConfig.json'),
     getAccountInfo(),
+    getResourcesTotalCount(),
     getEndpoints()
 ])
-    .then(([localConfig, user]) => {
+    .then(([localConfig, user, resourcesTotalCount]) => {
         const {
             geoNodeConfiguration,
             supportedLocales: defaultSupportedLocales,
@@ -122,6 +125,8 @@ Promise.all([
         setConfigProp('locale', locale);
         const menuFilters = geoNodeConfiguration?.menu?.items?.filter(({ type }) => type === 'filter');
         setConfigProp('menuFilters', menuFilters);
+        const geoNodeResourcesInfo = getConfigProp('geoNodeResourcesInfo') || {};
+        setConfigProp('geoNodeResourcesInfo', { ...geoNodeResourcesInfo, ...resourcesTotalCount });
         const securityInitialState = user?.info?.access_token
             && {
                 security: {

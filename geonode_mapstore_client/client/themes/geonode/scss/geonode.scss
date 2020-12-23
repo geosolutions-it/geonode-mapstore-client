@@ -76,6 +76,17 @@
         .gn-menu-index {
             @include color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
             @include background-color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
+            .badge {
+                @include color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
+                @include background-color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
+            }
+            .dropdown-menu .badge {
+                @include color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
+                @include background-color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
+            }
+        }
+        .gn-menu-index-divider {
+            @include background-color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
         }
 
         .gn-filter-by-extent-map,
@@ -126,6 +137,10 @@
                 @include color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
                 @include background-color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
                 opacity: 1;
+                .badge {
+                    @include color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
+                    @include background-color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
+                }
             }
         }
 
@@ -191,6 +206,20 @@
             @include hover() {
                 @include color-var(map.get($theme-vars, 'tag-hover-color'), --gn-tag-active-color);
                 @include background-color-var(map.get($theme-vars, 'tag-hover-bg'), --gn-tag-active-bg);
+            }
+        }
+
+        .gn-footer {
+            @include color-var(map.get($theme-vars, 'footer-color'), --gn-footer-color);
+            @include background-color-var(map.get($theme-vars, 'footer-bg'), --gn-footer-bg);
+            a {
+                @include color-var(map.get($theme-vars, 'footer-link-color'), --gn-footer-link-color);
+                text-decoration: none;
+    
+                @include hover() {
+                    @include color-var(map.get($theme-vars, 'footer-link-hover-color'), --gn-footer-link-hover-color);
+                    text-decoration: none;
+                }
             }
         }
 

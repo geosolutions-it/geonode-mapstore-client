@@ -236,12 +236,14 @@
                         {
                             "type": "link",
                             "href": "/layers/?limit=5",
-                            "labelId": "gnhome.layers"
+                            "labelId": "gnhome.layers",
+                            "badge": "${layersTotalCount}"
                         },
                         {
                             "type": "link",
                             "href": "/documents/?limit=5",
-                            "labelId": "gnhome.documents"
+                            "labelId": "gnhome.documents",
+                            "badge": "${documentsTotalCount}"
                         },
                         {
                             "type": "link",
@@ -276,12 +278,14 @@
                     "labelId": "gnhome.maps",
                     "type": "link",
                     "href": "/maps/?limit=5",
-                    "authenticated": false
+                    "authenticated": false,
+                    "badge": "${mapsTotalCount}"
                 },
                 {
                     "labelId": "gnhome.maps",
                     "type": "dropdown",
                     "authenticated": true,
+                    "badge": "${mapsTotalCount}",
                     "items": [
                         {
                             "type": "link",
@@ -298,7 +302,8 @@
                 {
                     "type": "link",
                     "href": "/apps/?limit=5",
-                    "labelId": "gnhome.apps"
+                    "labelId": "gnhome.apps",
+                    "badge": "${geoappsTotalCount}"
                 },
                 {
                     "labelId": "gnhome.about",
@@ -360,6 +365,9 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "type": "divider"
                 },
                 {
                     "type": "filter",

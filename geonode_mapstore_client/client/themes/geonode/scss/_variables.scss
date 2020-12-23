@@ -44,8 +44,13 @@ $gn-tag-hover-bg: rgba(#397AAB, 0.75);
 $gn-tag-active-color: #ffffff;
 $gn-tag-active-bg:  #397AAB;
 
+$gn-footer-color: #ffffff;
+$gn-footer-bg: rgba(#397AAB, 0.75);
+$gn-footer-link-color: #ffffff;
+$gn-footer-link-hover-color:  #397AAB;
+
 $gn-theme-light: (
-    'body-color':$gn-body-color,
+    'body-color': $gn-body-color,
     'body-bg': $gn-body-bg,
     'body-border-color': $gn-body-border-color,
 
@@ -78,7 +83,13 @@ $gn-theme-light: (
     'tag-hover-color': $gn-tag-hover-color,
     'tag-hover-bg': $gn-tag-hover-bg,
     'tag-active-color': $gn-tag-active-color,
-    'tag-active-bg':  $gn-tag-active-bg
+    'tag-active-bg':  $gn-tag-active-bg,
+
+
+    'footer-color': $gn-body-color,
+    'footer-bg': $gn-body-bg,
+    'footer-link-color': $gn-link-color,
+    'footer-link-hover-color': $gn-link-hover-color
 );
 
 $gn-theme-dark: (
@@ -115,7 +126,12 @@ $gn-theme-dark: (
     'tag-hover-color': #292929,
     'tag-hover-bg': rgba(#a7d0f0, 0.75),
     'tag-active-color': #292929,
-    'tag-active-bg':  #a7d0f0
+    'tag-active-bg':  #a7d0f0,
+
+    'footer-color': #dddddd,
+    'footer-bg':  #222222,
+    'footer-link-color': #70b0e0,
+    'footer-link-hover-color': #397AAB
 );
 
 $gn-themes: (

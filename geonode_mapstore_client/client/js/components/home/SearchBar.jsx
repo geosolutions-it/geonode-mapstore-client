@@ -9,8 +9,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FormControl, ListGroup, InputGroup, Button, Spinner } from 'react-bootstrap-v1';
 import FaIcon from '@js/components/home/FaIcon';
+import useDetectClickOut from '@js/hooks/useDetectClickOut';
 import debounce from 'lodash/debounce';
-
 function SearchBar({
     value,
     loading,
@@ -26,6 +26,10 @@ function SearchBar({
 }) {
     const [ outline, setOutline ] = useState(false);
     const [ text, setText ] = useState(value);
+    const suggestionsNode = useDetectClickOut({
+        disabled: suggestions.length === 0,
+        onClickOut: onClearSuggestions
+    });
     const textValue = useRef();
     textValue.current = text;
 
@@ -105,7 +109,10 @@ function SearchBar({
                 </InputGroup.Append>
             </InputGroup>
             {suggestions.length > 0 &&
-            <div className="gn-suggestions">
+            <div
+                ref={suggestionsNode}
+                className="gn-suggestions"
+            >
                 <div className="gn-suggestions-header">
                     <Button
                         onClick={() => onClearSuggestions()}

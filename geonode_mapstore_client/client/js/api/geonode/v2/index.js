@@ -34,7 +34,7 @@ let endpoints = {
 
 const RESOURCES = 'resources';
 const DOCUMENTS = 'documents';
-// const LAYERS = 'layers';
+const LAYERS = 'layers';
 const MAPS = 'maps';
 const GEOAPPS = 'geoapps';
 const GEOSTORIES = 'geostories';
@@ -307,6 +307,41 @@ export const getResourceTypes = ({}, filterKey = 'resource-types') => {
         });
 };
 
+export const getResourcesTotalCount = () => {
+    const params = {
+        page_size: 1
+    };
+    const types = [
+        DOCUMENTS,
+        LAYERS,
+        MAPS,
+        GEOSTORIES,
+        GEOAPPS
+    ];
+    return axios.all(
+        types.map((type) =>
+            axios.get(parseDevHostname(endpoints[type]), { params })
+                .then(({ data }) => data.total)
+                .catch(() => null)
+        )
+    )
+        .then(([
+            documentsTotalCount,
+            layersTotalCount,
+            mapsTotalCount,
+            geostoriesTotalCount,
+            geoappsTotalCount
+        ]) => {
+            return {
+                documentsTotalCount,
+                layersTotalCount,
+                mapsTotalCount,
+                geostoriesTotalCount,
+                geoappsTotalCount
+            };
+        });
+};
+
 export default {
     getEndpoints,
     getResources,
@@ -319,5 +354,6 @@ export default {
     getUserByPk,
     getAccountInfo,
     getConfiguration,
-    getResourceTypes
+    getResourceTypes,
+    getResourcesTotalCount
 };

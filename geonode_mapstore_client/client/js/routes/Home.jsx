@@ -372,7 +372,8 @@ function Home({
                 }}
                 user={user}
                 query={query}
-                menuItems={menu?.items}
+                leftItems={menu?.items || menu?.leftItems}
+                rightItems={menu?.rightItems}
                 formatHref={handleFormatHref}
                 tools={<ConnectedLanguageSelector
                     inline={theme?.languageSelector?.inline}
@@ -437,6 +438,7 @@ function Home({
             <Footer
                 ref={footerNode}
                 footerItems={footer.items}
+                style={theme?.footer?.style}
             />
         </div>
     );

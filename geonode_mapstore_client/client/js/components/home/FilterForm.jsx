@@ -61,6 +61,7 @@ function FilterForm({
 
     function handleApply() {
         onChange(values);
+        onClose();
     }
 
     function handleClear() {

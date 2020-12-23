@@ -10,15 +10,19 @@ import React, { forwardRef } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import castArray from 'lodash/castArray';
+import isNil from 'lodash/isNil';
 import ReactResizeDetector from 'react-resize-detector';
 import SwipeMenu from '@js/components/home/SwipeMenu';
 import Tag from '@js/components/home/Tag';
-import { Dropdown } from 'react-bootstrap-v1';
+import { Dropdown, Badge } from 'react-bootstrap-v1';
 import Message from '@mapstore/framework/components/I18N/Message';
 import {
     readProperty,
     filterMenuItems
 } from '@js/utils/MenuUtils';
+import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
+
+const isValidBadgeValue = value => !!(value !== '' && !isNil(value));
 
 function MenuItem({
     tabIndex,
@@ -28,34 +32,45 @@ function MenuItem({
     containerNode
 }) {
     const { formatHref, query, state } = menuItemsProps;
-    const { type, label, labelId = '', items = [], href } = item;
+    const { type, label, labelId = '', items = [], href, style, badge = '' } = item;
+    const badgeValue = readProperty(state, badge);
     if (type === 'dropdown') {
+        const dropdownItems = items
+            .filter((itm) => filterMenuItems(state, itm, item))
+            .map((itm, idx) => {
+                if (itm.type === 'divider') {
+                    return <Dropdown.Divider key={idx} />;
+                }
+                const itmBadgeValue = readProperty(state, itm.badge || '');
+                return (
+                    <Dropdown.Item
+                        key={idx}
+                        href={readProperty(state, itm.href)}
+                        style={itm.style}
+                    >
+                        {itm.labelId && <Message msgId={itm.labelId}/> || itm.label}
+                        {isValidBadgeValue(itmBadgeValue) && <Badge>{itmBadgeValue}</Badge>}
+                    </Dropdown.Item>
+                );
+            });
         return (
             <Dropdown>
                 <Dropdown.Toggle
                     id={'gn-menu-index-' + item.id}
                     variant="default"
                     tabIndex={tabIndex}
+                    style={style}
                 >
                     {labelId && <Message msgId={labelId}/> || label}
+                    {isValidBadgeValue(badgeValue) && <Badge>{badgeValue}</Badge>}
                 </Dropdown.Toggle>
-                {containerNode && createPortal(<Dropdown.Menu>
-                    {items
-                        .filter((itm) => filterMenuItems(state, itm, item))
-                        .map((itm, idx) => {
-                            if (itm.type === 'divider') {
-                                return <Dropdown.Divider key={idx} />;
-                            }
-                            return (
-                                <Dropdown.Item
-                                    key={idx}
-                                    href={readProperty(state, itm.href)}
-                                >
-                                    {itm.labelId && <Message msgId={itm.labelId}/> || itm.label}
-                                </Dropdown.Item>
-                            );
-                        })}
-                </Dropdown.Menu>, containerNode.parentNode)}
+                {containerNode
+                    ? createPortal(<Dropdown.Menu>
+                        {dropdownItems}
+                    </Dropdown.Menu>, containerNode.parentNode)
+                    : <Dropdown.Menu>
+                        {dropdownItems}
+                    </Dropdown.Menu>}
             </Dropdown>
         );
     }
@@ -65,10 +80,15 @@ function MenuItem({
                 tabIndex={tabIndex}
                 draggable={draggable}
                 href={readProperty(state, href)}
+                style={style}
             >
                 {labelId && <Message msgId={labelId}/> || label}
+                {isValidBadgeValue(badgeValue) && <Badge>{badgeValue}</Badge>}
             </Tag>
         );
+    }
+    if (type === 'divider') {
+        return <div className="gn-menu-index-divider" style={style}></div>;
     }
     if (type === 'filter') {
         const active = castArray(query.f || []).find(value => value === item.id);
@@ -77,12 +97,14 @@ function MenuItem({
                 tabIndex={tabIndex}
                 draggable={draggable}
                 active={active}
+                style={style}
                 href={formatHref({
                     query: { f: item.id },
                     replaceQuery: active ? false : true
                 })}
             >
                 {labelId && <Message msgId={labelId}/> || label}
+                {isValidBadgeValue(badgeValue) && <Badge>{badgeValue}</Badge>}
             </Tag>
         );
     }
@@ -92,14 +114,18 @@ function MenuItem({
 
 const MenuIndex = forwardRef(({
     style,
-    menuItems,
+    leftItems,
+    rightItems,
     query,
     formatHref,
     user,
     tools
 }, ref) => {
 
-    const state = { user };
+    const state = {
+        user,
+        ...(getConfigProp('geoNodeResourcesInfo') || {})
+    };
 
     return (
         <nav
@@ -115,7 +141,7 @@ const MenuIndex = forwardRef(({
                             style={{ height }}
                         >
                             <SwipeMenu
-                                items={menuItems
+                                items={leftItems
                                     .filter((item) => filterMenuItems(state, item))}
                                 menuItemComponent={MenuItem}
                                 menuItemsProps={{
@@ -128,6 +154,24 @@ const MenuIndex = forwardRef(({
                     )}
                 </ReactResizeDetector>
                 {tools && <div className="gn-menu-index-tools">
+                    <ul className="gn-menu-index-right-items">
+                        {rightItems
+                            .filter((item) => filterMenuItems(state, item))
+                            .map((item, idx) => {
+                                return (
+                                    <li key={idx}>
+                                        <MenuItem
+                                            item={{ ...item, id: item.id || idx }}
+                                            menuItemsProps={{
+                                                query,
+                                                formatHref,
+                                                state
+                                            }}
+                                        />
+                                    </li>
+                                );
+                            })}
+                    </ul>
                     {tools}
                 </div>}
             </div>
@@ -137,14 +181,16 @@ const MenuIndex = forwardRef(({
 
 MenuIndex.propTypes = {
     style: PropTypes.object,
-    menuItems: PropTypes.array,
+    leftItems: PropTypes.array,
+    rightItems: PropTypes.array,
     query: PropTypes.object,
     formatHref: PropTypes.func,
     tools: PropTypes.node
 };
 
 MenuIndex.defaultProps = {
-    menuItems: [],
+    leftItems: [],
+    rightItems: [],
     query: {},
     formatHref: () => '#'
 };

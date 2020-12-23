@@ -29,7 +29,8 @@ function FooterItem({
 
 const Footer = forwardRef(({
     footerItems,
-    user
+    user,
+    style
 }, ref) => {
     const state = {
         user
@@ -38,6 +39,7 @@ const Footer = forwardRef(({
         <footer
             ref={ref}
             className="gn-footer"
+            style={style}
         >
             <div>
                 <ul>

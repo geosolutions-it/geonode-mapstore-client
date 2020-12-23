@@ -37,7 +37,8 @@ function RootStyle({
                 image,
                 jumbotron,
                 focus,
-                tag
+                tag,
+                footer
             } = theme;
             const color = themeColor && tinycolor.mostReadable(themeColor, ['#ffffff', '#000000'], {
                 includeFallbackColors: true
@@ -92,6 +93,14 @@ function RootStyle({
                     '--gn-tag-hover-bg': tag.hoverBg || 'rgba(#397AAB, 0.75)',
                     '--gn-tag-active-color': tag.activeColor || '#ffffff',
                     '--gn-tag-active-bg': tag.activeBg || '#397AAB'
+                }),
+                ...(footer && {
+                    '--gn-footer-color': footer.color || '#000000',
+                    '--gn-footer-bg': footer.bg || '#ffffff',
+                    ...(footer?.link && {
+                        '--gn-footer-link-color': footer.link.color || '#397AAB',
+                        '--gn-footer-link-hover-color': footer.link.hoverColor || '#1b4d74'
+                    })
                 })
             };
         }
