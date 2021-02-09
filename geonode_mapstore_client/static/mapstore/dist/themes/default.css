@@ -9907,15 +9907,23 @@ structure .glyphicon-{iconName}-content
   align-items: center;
   height: 100%;
 }
-.msgapi #page-dashboard {
+.msgapi #page-dashboard,
+.msgapi #page-dashboard-embedded {
   position: absolute;
 }
-.msgapi #page-dashboard #home-button {
+.msgapi #page-dashboard #home-button,
+.msgapi #page-dashboard-embedded #home-button {
   float: right;
 }
-.msgapi #page-dashboard #mapstore-navbar-container {
+.msgapi #page-dashboard #mapstore-navbar-container,
+.msgapi #page-dashboard-embedded #mapstore-navbar-container {
   margin-bottom: 0;
   z-index: 100;
+}
+.msgapi #page-dashboard .ms2-border-layout-content,
+.msgapi #page-dashboard-embedded .ms2-border-layout-content {
+  position: relative;
+  overflow: auto;
 }
 .msgapi .dashboard-editor {
   /* flex column */
@@ -10131,6 +10139,8 @@ structure .glyphicon-{iconName}-content
 }
 .msgapi #mapstore-burger-menu .dropdown-menu {
   z-index: 1040;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 .msgapi .dropzone.alert.alert-info {
   cursor: pointer;
@@ -10485,10 +10495,13 @@ structure .glyphicon-{iconName}-content
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.msgapi #identify-container .coordinateRow .coordinate .input-group {
+.msgapi #identify-container .coordinateRow .coordinate > div {
   flex: 1 1 0%;
   padding: 4px 0px;
   margin-right: 8px;
+}
+.msgapi #identify-container .coordinateRow .coordinate .input-group {
+  width: 100%;
 }
 .msgapi #identify-container .coordinateRow .coordinate .input-group .input-group-addon {
   min-width: 45px;
@@ -14467,6 +14480,9 @@ structure .glyphicon-{iconName}-content
   width: 500px;
   left: calc((100% - 500px) / 2);
 }
+.msgapi #viewer #share-panel-dialog {
+  top: -10%;
+}
 .msgapi #mapstore-print-panel .panel-heading {
   background-color: #f2f2f2 !important;
 }
@@ -17446,6 +17462,9 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-invalid {
   outline: 1px solid #af0900;
 }
+.msgapi .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-warning {
+  outline: 1px solid #ff8f31;
+}
 .msgapi .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-disabled {
   opacity: 0.4;
 }
@@ -19464,6 +19483,7 @@ Ported to CodeMirror by Peter Kroon
   justify-content: flex-end;
 }
 .msgapi .mapstore-annotations-info-viewer .coordinates-row-container {
+  font-size: 12px;
   flex: 1 1 auto;
   overflow: hidden auto;
 }
@@ -19471,6 +19491,9 @@ Ported to CodeMirror by Peter Kroon
   font-size: 14px;
   display: table-cell;
   vertical-align: middle;
+}
+.msgapi .mapstore-annotations-info-viewer .coordinates-row-container .coordinateRow.aeronautical span.react-numeric-input {
+  width: 100%;
 }
 .msgapi .mapstore-annotations-info-viewer .coordinates-row-container .coordinateRow.aeronautical .input-group-addon {
   padding: 4px 6px;
@@ -19627,7 +19650,7 @@ Ported to CodeMirror by Peter Kroon
   min-width: 100px;
 }
 .msgapi .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow {
-  padding-left: 8px;
+  padding-left: 2px;
   margin: 0;
 }
 .msgapi .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate {
@@ -19636,10 +19659,13 @@ Ported to CodeMirror by Peter Kroon
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.msgapi .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group {
+.msgapi .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate > div {
   flex: 1;
   padding: 4px 0;
   margin-right: 2px;
+}
+.msgapi .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group {
+  width: 100%;
 }
 .msgapi .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group input#intl-numeric {
   float: unset;
@@ -20588,8 +20614,18 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .details-panel .panel-body {
   height: calc(100% - 31px);
 }
-.msgapi .details-viewer-modal {
-  padding: 8px !important;
+.msgapi .ms-details-text {
+  word-break: break-word;
+}
+.msgapi .details-viewer-modal,
+.msgapi .ms-details-preview {
+  word-break: break-word;
+}
+.msgapi .ms-details-draftjs-editor .ms-text-editor-main {
+  word-break: break-word;
+}
+.msgapi .ms-details-draftjs-editor .public-DraftStyleDefault-ltr {
+  text-align: inherit;
 }
 @keyframes timeline-loading {
   0% {

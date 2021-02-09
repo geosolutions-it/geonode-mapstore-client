@@ -10021,15 +10021,23 @@ Ported to CodeMirror by Peter Kroon
   align-items: center;
   height: 100%;
 }
-.msgapi .fill:-webkit-full-screen #page-dashboard {
+.msgapi .fill:-webkit-full-screen #page-dashboard,
+.msgapi .fill:-webkit-full-screen #page-dashboard-embedded {
   position: absolute;
 }
-.msgapi .fill:-webkit-full-screen #page-dashboard #home-button {
+.msgapi .fill:-webkit-full-screen #page-dashboard #home-button,
+.msgapi .fill:-webkit-full-screen #page-dashboard-embedded #home-button {
   float: right;
 }
-.msgapi .fill:-webkit-full-screen #page-dashboard #mapstore-navbar-container {
+.msgapi .fill:-webkit-full-screen #page-dashboard #mapstore-navbar-container,
+.msgapi .fill:-webkit-full-screen #page-dashboard-embedded #mapstore-navbar-container {
   margin-bottom: 0;
   z-index: 100;
+}
+.msgapi .fill:-webkit-full-screen #page-dashboard .ms2-border-layout-content,
+.msgapi .fill:-webkit-full-screen #page-dashboard-embedded .ms2-border-layout-content {
+  position: relative;
+  overflow: auto;
 }
 .msgapi .fill:-webkit-full-screen .dashboard-editor {
   /* flex column */
@@ -10241,6 +10249,8 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill:-webkit-full-screen #mapstore-burger-menu .dropdown-menu {
   z-index: 1040;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 .msgapi .fill:-webkit-full-screen .dropzone.alert.alert-info {
   cursor: pointer;
@@ -10594,10 +10604,13 @@ Ported to CodeMirror by Peter Kroon
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group {
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate > div {
   flex: 1 1 0%;
   padding: 4px 0px;
   margin-right: 8px;
+}
+.msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group {
+  width: 100%;
 }
 .msgapi .fill:-webkit-full-screen #identify-container .coordinateRow .coordinate .input-group .input-group-addon {
   min-width: 45px;
@@ -14560,6 +14573,9 @@ Ported to CodeMirror by Peter Kroon
   width: 500px;
   left: calc((100% - 500px) / 2);
 }
+.msgapi .fill:-webkit-full-screen #viewer #share-panel-dialog {
+  top: -10%;
+}
 .msgapi .fill:-webkit-full-screen #mapstore-print-panel .panel-heading {
   background-color: #f2f2f2 !important;
 }
@@ -17474,6 +17490,9 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-invalid {
   outline: 1px solid #af0900;
 }
+.msgapi .fill:-webkit-full-screen .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-warning {
+  outline: 1px solid #ff8f31;
+}
 .msgapi .fill:-webkit-full-screen .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-disabled {
   opacity: 0.4;
 }
@@ -19478,6 +19497,7 @@ Ported to CodeMirror by Peter Kroon
   justify-content: flex-end;
 }
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .coordinates-row-container {
+  font-size: 12px;
   flex: 1 1 auto;
   overflow: hidden auto;
 }
@@ -19485,6 +19505,9 @@ Ported to CodeMirror by Peter Kroon
   font-size: 14px;
   display: table-cell;
   vertical-align: middle;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .coordinates-row-container .coordinateRow.aeronautical span.react-numeric-input {
+  width: 100%;
 }
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .coordinates-row-container .coordinateRow.aeronautical .input-group-addon {
   padding: 4px 6px;
@@ -19641,7 +19664,7 @@ Ported to CodeMirror by Peter Kroon
   min-width: 100px;
 }
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow {
-  padding-left: 8px;
+  padding-left: 2px;
   margin: 0;
 }
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate {
@@ -19650,10 +19673,13 @@ Ported to CodeMirror by Peter Kroon
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group {
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate > div {
   flex: 1;
   padding: 4px 0;
   margin-right: 2px;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group {
+  width: 100%;
 }
 .msgapi .fill:-webkit-full-screen .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group input#intl-numeric {
   float: unset;
@@ -20602,8 +20628,18 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .details-panel .panel-body {
   height: calc(100% - 31px);
 }
-.msgapi .fill:-webkit-full-screen .details-viewer-modal {
-  padding: 8px !important;
+.msgapi .fill:-webkit-full-screen .ms-details-text {
+  word-break: break-word;
+}
+.msgapi .fill:-webkit-full-screen .details-viewer-modal,
+.msgapi .fill:-webkit-full-screen .ms-details-preview {
+  word-break: break-word;
+}
+.msgapi .fill:-webkit-full-screen .ms-details-draftjs-editor .ms-text-editor-main {
+  word-break: break-word;
+}
+.msgapi .fill:-webkit-full-screen .ms-details-draftjs-editor .public-DraftStyleDefault-ltr {
+  text-align: inherit;
 }
 @keyframes timeline-loading {
   0% {
@@ -22627,15 +22663,23 @@ Ported to CodeMirror by Peter Kroon
   align-items: center;
   height: 100%;
 }
-.msgapi .fill #page-dashboard {
+.msgapi .fill #page-dashboard,
+.msgapi .fill #page-dashboard-embedded {
   position: absolute;
 }
-.msgapi .fill #page-dashboard #home-button {
+.msgapi .fill #page-dashboard #home-button,
+.msgapi .fill #page-dashboard-embedded #home-button {
   float: right;
 }
-.msgapi .fill #page-dashboard #mapstore-navbar-container {
+.msgapi .fill #page-dashboard #mapstore-navbar-container,
+.msgapi .fill #page-dashboard-embedded #mapstore-navbar-container {
   margin-bottom: 0;
   z-index: 100;
+}
+.msgapi .fill #page-dashboard .ms2-border-layout-content,
+.msgapi .fill #page-dashboard-embedded .ms2-border-layout-content {
+  position: relative;
+  overflow: auto;
 }
 .msgapi .fill .dashboard-editor {
   /* flex column */
@@ -22847,6 +22891,8 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .fill #mapstore-burger-menu .dropdown-menu {
   z-index: 1040;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 .msgapi .fill .dropzone.alert.alert-info {
   cursor: pointer;
@@ -23200,10 +23246,13 @@ Ported to CodeMirror by Peter Kroon
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.msgapi .fill #identify-container .coordinateRow .coordinate .input-group {
+.msgapi .fill #identify-container .coordinateRow .coordinate > div {
   flex: 1 1 0%;
   padding: 4px 0px;
   margin-right: 8px;
+}
+.msgapi .fill #identify-container .coordinateRow .coordinate .input-group {
+  width: 100%;
 }
 .msgapi .fill #identify-container .coordinateRow .coordinate .input-group .input-group-addon {
   min-width: 45px;
@@ -27166,6 +27215,9 @@ Ported to CodeMirror by Peter Kroon
   width: 500px;
   left: calc((100% - 500px) / 2);
 }
+.msgapi .fill #viewer #share-panel-dialog {
+  top: -10%;
+}
 .msgapi .fill #mapstore-print-panel .panel-heading {
   background-color: #f2f2f2 !important;
 }
@@ -30080,6 +30132,9 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-invalid {
   outline: 1px solid #af0900;
 }
+.msgapi .fill .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-warning {
+  outline: 1px solid #ff8f31;
+}
 .msgapi .fill .ms-symbolizer-field .ms-symbolizer-value.ms-symbolizer-value-disabled {
   opacity: 0.4;
 }
@@ -32084,6 +32139,7 @@ Ported to CodeMirror by Peter Kroon
   justify-content: flex-end;
 }
 .msgapi .fill .mapstore-annotations-info-viewer .coordinates-row-container {
+  font-size: 12px;
   flex: 1 1 auto;
   overflow: hidden auto;
 }
@@ -32091,6 +32147,9 @@ Ported to CodeMirror by Peter Kroon
   font-size: 14px;
   display: table-cell;
   vertical-align: middle;
+}
+.msgapi .fill .mapstore-annotations-info-viewer .coordinates-row-container .coordinateRow.aeronautical span.react-numeric-input {
+  width: 100%;
 }
 .msgapi .fill .mapstore-annotations-info-viewer .coordinates-row-container .coordinateRow.aeronautical .input-group-addon {
   padding: 4px 6px;
@@ -32247,7 +32306,7 @@ Ported to CodeMirror by Peter Kroon
   min-width: 100px;
 }
 .msgapi .fill .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow {
-  padding-left: 8px;
+  padding-left: 2px;
   margin: 0;
 }
 .msgapi .fill .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate {
@@ -32256,10 +32315,13 @@ Ported to CodeMirror by Peter Kroon
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.msgapi .fill .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group {
+.msgapi .fill .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate > div {
   flex: 1;
   padding: 4px 0;
   margin-right: 2px;
+}
+.msgapi .fill .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group {
+  width: 100%;
 }
 .msgapi .fill .mapstore-annotations-info-viewer .mapstore-annotations-info-viewer-expanded .coordinateRow .coordinate .input-group .form-group input#intl-numeric {
   float: unset;
@@ -33208,8 +33270,18 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .details-panel .panel-body {
   height: calc(100% - 31px);
 }
-.msgapi .fill .details-viewer-modal {
-  padding: 8px !important;
+.msgapi .fill .ms-details-text {
+  word-break: break-word;
+}
+.msgapi .fill .details-viewer-modal,
+.msgapi .fill .ms-details-preview {
+  word-break: break-word;
+}
+.msgapi .fill .ms-details-draftjs-editor .ms-text-editor-main {
+  word-break: break-word;
+}
+.msgapi .fill .ms-details-draftjs-editor .public-DraftStyleDefault-ltr {
+  text-align: inherit;
 }
 @keyframes timeline-loading {
   0% {
