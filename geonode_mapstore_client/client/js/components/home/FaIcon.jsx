@@ -10,9 +10,10 @@ import React from 'react';
 
 function FaIcon({
     name,
-    className
+    className,
+    style
 }) {
-    return <i className={`fa fa-${name}${className ? ` ${className}` : ''}`}/>;
+    return <i className={`fa fa-${name}${className ? ` ${className}` : ''}`} style={style}/>;
 }
 
 FaIcon.defaultProps = {};

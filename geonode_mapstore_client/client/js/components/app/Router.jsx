@@ -32,7 +32,7 @@ function ThemeLoader({
 }) {
     const [loading, setLoading] = useState(true);
     const Loader = loaderComponent;
-    // explict remove load theme
+    // explicit remove load theme
     if (themeCfg === null) {
         return children;
     }
@@ -93,6 +93,7 @@ const Router = forwardRef(({
                                             component={(props) =>
                                                 <Component
                                                     {...props}
+                                                    name={route.name}
                                                     plugins={plugins}
                                                     pluginsConfig={pluginsConfig}
                                                     loaderComponent={loaderComponent}

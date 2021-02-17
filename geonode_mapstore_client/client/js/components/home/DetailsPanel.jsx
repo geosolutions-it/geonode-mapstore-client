@@ -28,6 +28,37 @@ function formatResourceLinkUrl(resourceUrl = '') {
     return `${protocol}://${host}${path}`;
 }
 
+function ThumbnailPreview({
+    src,
+    style,
+    ...props
+}) {
+
+    const [loading, setLoading] = useState();
+
+    useEffect(() => {
+        if (src && !loading) {
+            setLoading(true);
+        }
+    }, [src]);
+
+    return (
+        <img
+            {...props}
+            src={src}
+            onLoad={() => setLoading(false)}
+            onError={() => setLoading(false)}
+            style={{
+                ...style,
+                ...(loading && {
+                    backgroundColor: 'transparent'
+                }),
+                objectFit: 'contain'
+            }}
+        />
+    );
+}
+
 function DetailsPanel({
     resource,
     // filters,
@@ -64,11 +95,11 @@ function DetailsPanel({
 
     const types = getTypesInfo();
     const {
-        embed,
+        formatEmbedUrl = embedUrl => embedUrl,
         icon,
         name
     } = resource && (types[resource.doc_type] || types[resource.resource_type]) || {};
-    const embedUrl = embed && embed.replace('{pk}', resource.pk);
+    const embedUrl = resource?.embed_url && formatEmbedUrl(resource.embed_url);
     return (
         <div
             ref={detailsContainerNode}
@@ -87,8 +118,21 @@ function DetailsPanel({
                     </Button>
                 </div>
                 <div className="gn-details-panel-preview">
+                    <div
+                        className="gn-loader-placeholder"
+                        style={{
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                        <FaIcon name={icon}/>
+                    </div>
                     {embedUrl
                         ? <iframe
+                            key={embedUrl}
                             src={embedUrl}
                             style={{
                                 position: 'absolute',
@@ -97,19 +141,16 @@ function DetailsPanel({
                             }}
                             frameBorder="0"
                         />
-                        : <div style={{
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%',
-                            top: 0,
-                            left: 0,
-                            ...(resource?.thumbnail_url && {
-                                backgroundImage: 'url(' + resource.thumbnail_url + ')',
-                                backgroundPosition: 'center',
-                                backgroundSize: 'contain',
-                                backgroundRepeat: 'no-repeat'
-                            })
-                        }}/>
+                        : <ThumbnailPreview
+                            src={resource?.thumbnail_url}
+                            style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                top: 0,
+                                left: 0,
+                                backgroundColor: 'inherit'
+                            }}/>
                     }
                     {loading && <div
                         className="gn-details-panel-preview-loader"

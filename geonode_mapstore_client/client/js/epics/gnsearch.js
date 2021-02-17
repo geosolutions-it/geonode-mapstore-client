@@ -192,12 +192,16 @@ export const gnsSearchResourcesOnLocationChangeEpic = (action$, store) =>
             });
         });
 
-export const gnsSelectResourceEpic = (action$) =>
+export const gnsSelectResourceEpic = (action$, store) =>
     action$.ofType(REQUEST_RESOURCE)
         .switchMap(action => {
             if (isNil(action.pk)) {
                 return Observable.of(setResource(null));
             }
+            const state = store.getState();
+            const resources = state.gnsearch?.resources || [];
+            const selectedResource = resources.find(({ pk, resource_type: resourceType}) =>
+                pk === action.pk && action.ctype === resourceType);
             return Observable.defer(() => getResourceByPk(action.pk))
                 .switchMap((resource) => {
                     return Observable.of(setResource(resource));
@@ -205,7 +209,12 @@ export const gnsSelectResourceEpic = (action$) =>
                 .catch((error) => {
                     return Observable.of(resourceError(error.data || error.message));
                 })
-                .startWith(resourceLoading());
+                .startWith(
+                    // preload the resource if available
+                    ...(selectedResource
+                        ? [ setResource(selectedResource) ]
+                        : [ resourceLoading() ]),
+                );
         });
 
 export default {

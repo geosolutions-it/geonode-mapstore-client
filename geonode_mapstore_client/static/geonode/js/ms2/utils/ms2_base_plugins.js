@@ -3,7 +3,7 @@ var MS2_BASE_PLUGINS = {
 	"desktop": [{
 			"name": "Map",
 			"cfg": {
-				"tools": ["locate", "measurement", "draw", "box"],
+				"tools": ["measurement", "draw", "box"],
 				"mapOptions": {
 					"openlayers": {
 						"attribution": {
@@ -13,11 +13,6 @@ var MS2_BASE_PLUGINS = {
 							"pinchRotate": false,
 							"altShiftDragRotate": false
 						}
-					}
-				},
-				"toolsOptions": {
-					"locate": {
-						// "maxZoom": 5 use a custom max zoom
 					}
 				}
 			}

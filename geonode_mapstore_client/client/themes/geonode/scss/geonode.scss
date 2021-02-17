@@ -23,6 +23,7 @@
 'filter-menu',
 'footer',
 'hero',
+'loader',
 'main-loader',
 'menu-index',
 'resource-card',
@@ -92,7 +93,8 @@
         .gn-filter-by-extent-map,
         .gn-details-panel-preview,
         .gn-details-panel-preview-loader,
-        .gn-resource-card .card-img-top {
+        .gn-resource-card .card-img-top,
+        .gn-loader-placeholder {
             @include color-var(map.get($theme-vars, 'image-color'), --gn-image-color);
             @include background-color-var(map.get($theme-vars, 'image-bg'), --gn-image-bg);
         }
@@ -157,6 +159,10 @@
                 color: transparent;
                 @include background-color-var(map.get($theme-vars, 'placeholder-bg'), --gn-placeholder-bg);
             }
+        }
+
+        .gn-loader-placeholder .fa {
+            @include color-var(map.get($theme-vars, 'body-bg'), --gn-body-bg);
         }
 
         .gn-resource-card {

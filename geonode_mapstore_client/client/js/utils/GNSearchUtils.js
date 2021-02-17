@@ -65,14 +65,32 @@ export function getUserName(user) {
     return user.username;
 }
 
+function updateUrlQueryParameter(requestUrl, query) {
+    const parsedUrl = url.parse(requestUrl, true);
+    return url.format({
+        ...parsedUrl,
+        query: {
+            ...parsedUrl.query,
+            ...query
+        }
+    });
+}
+
 export const getResourceTypesInfo = () => ({
     'layer': {
         icon: 'layer-group',
+        formatEmbedUrl: (embedUrl) => updateUrlQueryParameter(embedUrl, {
+            config: 'map_preview',
+            theme: 'preview'
+        }),
         name: 'Layer'
     },
     'map': {
         icon: 'map-marked',
-        embed: '/maps/{pk}/embed',
+        formatEmbedUrl: (embedUrl) => updateUrlQueryParameter(embedUrl, {
+            config: 'map_preview',
+            theme: 'preview'
+        }),
         name: 'Map'
     },
     'document': {
@@ -81,7 +99,6 @@ export const getResourceTypesInfo = () => ({
     },
     'geostory': {
         icon: 'book-open',
-        embed: '/apps/{pk}/embed',
         name: 'GeoStory'
     },
     'image': {

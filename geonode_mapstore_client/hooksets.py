@@ -122,12 +122,11 @@ class MapStoreHookSet(BaseHookSet):
             callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/layer_map.html'
 
-    # -- Not implemented yet
-    # def layer_embed_template(self, context=None):
-    #    self.initialize_context(
-    #        context,
-    #        callback=ms2_config_converter.convert)
-    #    return 'geonode-mapstore-client/layer_map.html'
+    def layer_embed_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/layer_embed.html'
 
     def layer_download_template(self, context=None):
         self.initialize_context(

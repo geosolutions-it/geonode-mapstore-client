@@ -2,7 +2,7 @@ var MS2_PLUGINS = {
 	"desktop": [{
 			"name": "Map",
 			"cfg": {
-				"tools": ["locate", "measurement"],
+				"tools": ["measurement"],
 				"mapOptions": {
 					"openlayers": {
 						"interactions": {
