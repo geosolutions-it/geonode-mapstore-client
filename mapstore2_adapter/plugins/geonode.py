@@ -50,6 +50,59 @@ unsafe_chars = {
     '\u2029': '\\u2029'
 }
 
+# {layer_param_key: default_value}
+"""
+ ref. 
+https://github.com/geosolutions-it/MapStore2/blob/master/web/client/utils/LayersUtils.js#L485-L541
+"""
+LAYER_PARAMS = {
+    'version': None,
+    'visibility': True,
+    'singleTile': False,
+    'selected': False,
+    'hidden': False,
+    'handleClickOnLayer': False,
+    'wrapDateLine': False,
+    'hideLoading': False,
+    'useForElevation': False,
+    'fixed': False,
+    'opacity': 1.0,
+    'transparent': True,
+    'tiled': True,
+    'title': '',
+    'name': '',
+    'description': '',
+    'store': '',
+    'group': '',
+    'format': "image/png",
+    'tileSize': None,
+    'maxZoom': None,
+    'maxNativeZoom': None,
+    'maxResolution': None,
+    'minResolution': None,
+    'disableResolutionLimits': None,
+    'dimensions': None,
+    'search': None,
+    'style': None,
+    'styles': None,
+    'styleName': None,
+    'availableStyles': None,
+    'layerFilter': None,
+    'thumbURL': None,
+    'allowedSRS': None,
+    'matrixIds': None,
+    'tileMatrixSet': None,
+    'requestEncoding': None,
+    'queryable': None,
+    'catalogURL': None,
+    'capabilitiesURL': None,
+    'origin': None,
+    'thematic': None,
+    'tooltipOptions': None,
+    'tooltipPlacement': None,
+    'legendOptions': None,
+    'extraParams': None
+}
 
 class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
 
@@ -286,38 +339,13 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                         if _p_url.query:
                             overlay['params'] = dict(parse.parse_qsl(_p_url.query))
                         overlay['url'] = source['url']
-                        overlay['visibility'] = layer['visibility'] if 'visibility' in layer else True
-                        overlay['singleTile'] = layer['singleTile'] if 'singleTile' in layer else False
-                        overlay['selected'] = layer['selected'] if 'selected' in layer else False
-                        overlay['hidden'] = layer['hidden'] if 'hidden' in layer else False
-                        overlay['handleClickOnLayer'] = layer['handleClickOnLayer'] if \
-                            'handleClickOnLayer' in layer else False
-                        overlay['wrapDateLine'] = layer['wrapDateLine'] if 'wrapDateLine' in layer else False
-                        overlay['hideLoading'] = layer['hideLoading'] if 'hideLoading' in layer else False
-                        overlay['useForElevation'] = layer['useForElevation'] if 'useForElevation' in layer else False
-                        overlay['fixed'] = layer['fixed'] if 'fixed' in layer else False
-                        overlay['opacity'] = layer['opacity'] if 'opacity' in layer else 1.0
-                        overlay['title'] = layer['title'] if 'title' in layer else ''
-                        overlay['name'] = layer['name'] if 'name' in layer else ''
-                        overlay['store'] = layer['store'] if 'store' in layer else ''
-                        overlay['group'] = layer['group'] if 'group' in layer else ''
-                        overlay['format'] = layer['format'] if 'format' in layer else "image/png"
                         overlay['bbox'] = {}
 
-                        if 'dimensions' in layer:
-                            overlay['dimensions'] = layer['dimensions']
-
-                        if 'search' in layer:
-                            overlay['search'] = layer['search']
-
-                        if 'style' in layer:
-                            overlay['style'] = layer['style']
-
-                        if 'styles' in layer:
-                            overlay['styles'] = layer['styles']
-
-                        if 'layerFilter' in layer:
-                            overlay['layerFilter'] = layer['layerFilter']
+                        for _key, _default in LAYER_PARAMS.items():
+                            if _key in layer:
+                                overlay[_key] = layer[_key]
+                            elif _default:
+                                overlay[_key] = _default
 
                         if 'capability' in layer:
                             capa = layer['capability']
@@ -459,10 +487,6 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
 
                                 featureInfo['template'] = _template
                                 overlay['featureInfo'] = featureInfo
-
-                            # Push extraParams into GeoNode layerParams
-                            if 'extraParams' in layer and layer['extraParams']:
-                                overlay['extraParams'] = layer['extraParams']
                     elif 'name' in layer and layer['name'] == 'Annotations':
                         overlay = layer
 
