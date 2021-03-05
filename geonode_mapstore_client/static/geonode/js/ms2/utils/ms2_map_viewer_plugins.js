@@ -169,7 +169,6 @@ var MS2_MAP_PLUGINS = {
 		"Notifications",
 		"Timeline",
 		"Playback",
-		"SearchServicesConfig",
 		{
 			"name": "Share",
 			"cfg": {
