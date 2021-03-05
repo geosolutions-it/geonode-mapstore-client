@@ -8,13 +8,16 @@
 # LICENSE file in the root directory of this source tree.
 #
 #########################################################################
+import os
 from django.apps import AppConfig as BaseAppConfig
-from django.utils.translation import ugettext_lazy as _
-
 
 def run_setup_hooks(*args, **kwargs):
     from geonode.urls import urlpatterns
+    from django.conf import settings
     from django.conf.urls import url, include
+
+    LOCAL_ROOT = os.path.abspath(os.path.dirname(__file__))
+    settings.TEMPLATES[0]["DIRS"].insert(0, os.path.join(LOCAL_ROOT, "templates"))
 
     urlpatterns += [
         url(r'^mapstore/', include('mapstore2_adapter.urls')),
