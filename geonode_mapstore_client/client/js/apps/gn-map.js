@@ -62,7 +62,7 @@ const routes = [
 
 initializeApp();
 
-Promise.all([ getConfiguration('/static/mapstore/configs/localConfig.json') ])
+Promise.all([ getConfiguration() ])
     .then(([localConfig, user]) => {
 
         const {

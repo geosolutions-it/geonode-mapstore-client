@@ -1,0 +1,41 @@
+{% load client_lib_tags %}
+<script>
+    {% autoescape off %}
+    window.__GEONODE_CONFIG__ = {
+        languageCode: '{{ LANGUAGE_CODE }}',
+        resourceConfig: {{ ms2_config|default:"false"|safe }},
+        permissionsList: {{ perms_list|default:'[]' }},
+        pluginsConfigKey: '{{ plugins_config_key|default:"" }}',
+        localConfig: {
+            proxyUrl: {
+                url: '{{ PROXY_URL|default:"/proxy/?url=" }}',
+                useCORS: []
+            },
+            geonode_url: '{{ SITEURL }}',
+            genode_rest_api: '{{ SITEURL }}mapstore/rest/',
+            printUrl: '{{ GEOSERVER_PUBLIC_LOCATION }}pdf/info.json',
+            bingApiKey: '{% bing_api_key %}'
+        }
+    }
+    {% endautoescape %}
+</script>
+{% block override_local_config %}
+{% comment %}
+<script>
+    window.__GEONODE_CONFIG__.overrideLocalConfig = function(localConfig, _) {
+        return _.mergeWith(localConfig, {
+            // ...my override config
+        }, function(objValue, srcValue, key) {
+            if (_.isArray(objValue)) {
+                return srcValue;
+            }
+            // supportedLocales is an object so it's merged with the default one
+            // so to remove the default languages we should take only the supportedLocales from override
+            if (key === 'supportedLocales') {
+                return srcValue;
+            }
+        });
+    };
+</script>
+{% endcomment %}
+{% endblock %}

@@ -328,7 +328,10 @@
                             ]
                         },
                         {
-                            "type": "divider"
+                            "type": "divider",
+                            "allowedGroups": [
+                                "admin"
+                            ]
                         },
                         {
                             "type": "link",
@@ -390,7 +393,10 @@
                             "type": "link",
                             "href": "/services/register/",
                             "labelId": "gnhome.addRemoteService",
-                            "authenticated": true
+                            "authenticated": true,
+                            "allowedGroups": [
+                                "admin"
+                            ]
                         }
                     ]
                 },
@@ -448,23 +454,20 @@
                             "type": "link",
                             "href": "/announcements/",
                             "labelId": "gnhome.announcements",
-                            "authenticated": true
-                        },
-                        {
-                            "type": "divider",
                             "authenticated": true,
                             "allowedGroups": [
                                 "admin"
                             ]
+                        },
+                        {
+                            "type": "divider",
+                            "authenticated": true
                         },
                         {
                             "type": "link",
                             "href": "/invitations/geonode-send-invite/",
                             "labelId": "gnhome.inviteUsers",
-                            "authenticated": true,
-                            "allowedGroups": [
-                                "admin"
-                            ]
+                            "authenticated": true
                         },
                         {
                             "type": "link",
@@ -485,19 +488,6 @@
                             ]
                         }
                     ]
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "filter",
-                    "id": "landuse",
-                    "labelId": "gnhome.customFilterExample",
-                    "query": {
-                        "filter{regions.name.in}": [
-                            "Global"
-                        ]
-                    }
                 }
             ]
         },

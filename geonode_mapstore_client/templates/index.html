@@ -67,11 +67,7 @@
         </style>
     </head>
     <body>
-        <script>
-            window.__GEONODE_PAGE_CONFIG__ = {
-                languageCode: '{{ LANGUAGE_CODE }}'
-            }
-        </script>
+        {% include './geonode-mapstore-client/_geonode_config.html' %}
         <div id="container">
             <div class="gn-main-loader-container">
                 <div class="gn-main-loader-content">
