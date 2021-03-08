@@ -17,7 +17,7 @@ The GeoNode MapStore client is structured in 4 main groups:
 - [Configurations files](#configurations-files)
 - [HTML templates files](#html-templates-files)
 
-```
+```shell
 geonode_mapstore_client/
 |-- ...
 |-- client/
@@ -46,6 +46,26 @@ geonode_mapstore_client/
 |-- templates/
 |    +-- geonode-mapstore-client/
 |-- ...
+mapstore2_adapter/
+|-- ...
+|-- api
+|    |-- ...
+|    |-- serializers.py  # MapStore2 REST APIs
+|    |-- ...
+|    |-- views.py
+|-- geoapps
+|    |-- ...
+|    |-- geostories
+|    |    |-- ...
+|    |    |-- api
+|    |    |    |-- ...
+|    |    |    |-- serializers.py  # MapStore2/GeoStories REST APIs
+|    |    |    |-- ...
+|    |    |    |-- views.py
+|-- plugins
+|    |-- ...
+|    |-- geonode.py  # Converts GeoNode Maps into MapStore2 ones
+|    |-- serializers.py  # Converts MapStore2 maps into a Model (MapStoreResource <--> Map)
 ```
 
 ### Javascript files
@@ -58,7 +78,7 @@ eg. The Save plugin will have plugins/Save.jsx, components/save/*.jsx, utils/Sav
 
 Below the structure of the `geonode_mapstore_client/client/js/` folder:
 
-```
+```shell
 geonode_mapstore_client/
 |-- ...
 |-- client/
@@ -100,7 +120,7 @@ eg. `geonode_mapstore_client/client/themes/my-theme/theme.less` will become a `m
 - default.css used by the full page map viewer
 - preview.css used by the preview map viewer
 
-```
+```shell
 geonode_mapstore_client/
 |-- ...
 |-- client/
@@ -132,7 +152,7 @@ We need to provide two main type of configuration:
    - new app imports static configuration from json files of the `geonode_mapstore_client/client/static/mapstore/configs/` folder or centralize the configuration in the correspondent template (see [geostory.html](geonode_mapstore_client/templates/geonode-mapstore-client/app/geostory.html)).
  - translations: both approaches retrieve custom translations for the geonode client from the `geonode_mapstore_client/client/static/translations/` folder
 
-```
+```shell
 geonode_mapstore_client/
 |-- ...
 |-- client/
@@ -242,6 +262,7 @@ Note: ensure the `geonode-mapstore-client/geonode_mapstore_client/client/MapStor
 `npm install`
 
 Now all the client dependencies are installed. The command `npm install` should be used every time there is an update in the [package.json](geonode_mapstore_client/client/package.json) or after switching to a different branch. If the package are not installed correctly you can try to run `npm update` before `npm install`.
+
 ### Getting Started
 
 The geonode-mapstore-client uses the webpack dev server to proxy requests of a remote or local instance of GeoNode and to replace only the files used by the MapStore client. Once we have a [running instance of GeoNode](#before-starting) and credentials to work on it we can add some environment variables and start the client in development mode.
@@ -433,90 +454,178 @@ expected version in client/package.json
 
 ## Integrating into GeoNode/Django
 
-- Execute `pip install django-mapstore-adapter --upgrade`
+### WARNING: 
+
+- **Deprecated** `django-mapstore-adapter`; this library has been now merged into `django-geonode-mapstore-client`
+- You don't have to change anything on your `settings.py` but you will have to **remove** `django-mapstore-adapter` from `requirements.txt` and `setup.cfg`
+
+### Setup
+
 - Execute `pip install django-geonode-mapstore-client --upgrade`
 
 ### GeoNode settings update
 Update your `GeoNode` > `settings.py` as follows:
 
-```
-# To enable the MapStore2 based Client enable those
-if 'geonode_mapstore_client' not in INSTALLED_APPS:
-    INSTALLED_APPS += (
-        'geonode_mapstore_client.mapstore2_adapter',
-        'geonode_mapstore_client',)
+```python
+# -- START Client Hooksets Setup
 
-GEONODE_CLIENT_LAYER_PREVIEW_LIBRARY = 'mapstore'  # DEPRECATED use HOOKSET instead
-GEONODE_CLIENT_HOOKSET = "geonode_mapstore_client.hooksets.MapStoreHookSet"
+# GeoNode javascript client configuration
 
-def get_geonode_catalogue_service():
-    if PYCSW:
-        pycsw_config = PYCSW["CONFIGURATION"]
-        if pycsw_config:
-                pycsw_catalogue = {
-                    ("%s" % pycsw_config['metadata:main']['identification_title']): {
-                        "url": CATALOGUE['default']['URL'],
-                        "type": "csw",
-                        "title": pycsw_config['metadata:main']['identification_title'],
-                        "autoload": True
-                     }
-                }
-                return pycsw_catalogue
-    return None
+# default map projection
+# Note: If set to EPSG:4326, then only EPSG:4326 basemaps will work.
+DEFAULT_MAP_CRS = os.environ.get('DEFAULT_MAP_CRS', "EPSG:3857")
 
-GEONODE_CATALOGUE_SERVICE = get_geonode_catalogue_service()
+DEFAULT_LAYER_FORMAT = os.environ.get('DEFAULT_LAYER_FORMAT', "image/png")
 
-MAPSTORE_CATALOGUE_SERVICES = {
-    "Demo WMS Service": {
-        "url": "https://demo.geo-solutions.it/geoserver/wms",
-        "type": "wms",
-        "title": "Demo WMS Service",
-        "autoload": False
-     },
-    "Demo WMTS Service": {
-        "url": "https://demo.geo-solutions.it/geoserver/gwc/service/wmts",
-        "type": "wmts",
-        "title": "Demo WMTS Service",
-        "autoload": False
+# Where should newly created maps be focused?
+DEFAULT_MAP_CENTER = (os.environ.get('DEFAULT_MAP_CENTER_X', 0), os.environ.get('DEFAULT_MAP_CENTER_Y', 0))
+
+# How tightly zoomed should newly created maps be?
+# 0 = entire world;
+# maximum zoom is between 12 and 15 (for Google Maps, coverage varies by area)
+DEFAULT_MAP_ZOOM = int(os.environ.get('DEFAULT_MAP_ZOOM', 0))
+
+MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN', None)
+BING_API_KEY = os.environ.get('BING_API_KEY', None)
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', None)
+
+GEONODE_CLIENT_LAYER_PREVIEW_LIBRARY = os.getenv('GEONODE_CLIENT_LAYER_PREVIEW_LIBRARY', 'mapstore')
+
+MAP_BASELAYERS = [{}]
+
+"""
+To enable the MapStore2 REACT based Client:
+1. pip install pip install django-geonode-mapstore-client>=2.1.0
+2. enable those:
+"""
+if GEONODE_CLIENT_LAYER_PREVIEW_LIBRARY == 'mapstore':
+    GEONODE_CLIENT_HOOKSET = os.getenv('GEONODE_CLIENT_HOOKSET', 'geonode_mapstore_client.hooksets.MapStoreHookSet')
+
+    if 'geonode_mapstore_client' not in INSTALLED_APPS:
+        INSTALLED_APPS += (
+            'mapstore2_adapter',
+            'mapstore2_adapter.geoapps',
+            'mapstore2_adapter.geoapps.geostories',
+            'geonode_mapstore_client',)
+
+    def get_geonode_catalogue_service():
+        if PYCSW:
+            pycsw_config = PYCSW["CONFIGURATION"]
+            if pycsw_config:
+                    pycsw_catalogue = {
+                        ("%s" % pycsw_config['metadata:main']['identification_title']): {
+                            "url": CATALOGUE['default']['URL'],
+                            "type": "csw",
+                            "title": pycsw_config['metadata:main']['identification_title'],
+                            "autoload": True
+                         }
+                    }
+                    return pycsw_catalogue
+        return None
+
+    GEONODE_CATALOGUE_SERVICE = get_geonode_catalogue_service()
+
+    MAPSTORE_CATALOGUE_SERVICES = {
+        "Demo WMS Service": {
+            "url": "https://demo.geo-solutions.it/geoserver/wms",
+            "type": "wms",
+            "title": "Demo WMS Service",
+            "autoload": False
+         },
+        "Demo WMTS Service": {
+            "url": "https://demo.geo-solutions.it/geoserver/gwc/service/wmts",
+            "type": "wmts",
+            "title": "Demo WMTS Service",
+            "autoload": False
+        }
     }
-}
 
-MAPSTORE_CATALOGUE_SELECTED_SERVICE = "Demo WMS Service"
+    MAPSTORE_CATALOGUE_SELECTED_SERVICE = "Demo WMS Service"
 
-if GEONODE_CATALOGUE_SERVICE:
-    MAPSTORE_CATALOGUE_SERVICES[list(GEONODE_CATALOGUE_SERVICE.keys())[0]] = GEONODE_CATALOGUE_SERVICE[list(GEONODE_CATALOGUE_SERVICE.keys())[0]]
-    MAPSTORE_CATALOGUE_SELECTED_SERVICE = list(GEONODE_CATALOGUE_SERVICE.keys())[0]
+    if GEONODE_CATALOGUE_SERVICE:
+        MAPSTORE_CATALOGUE_SERVICES[list(list(GEONODE_CATALOGUE_SERVICE.keys()))[0]] = GEONODE_CATALOGUE_SERVICE[list(list(GEONODE_CATALOGUE_SERVICE.keys()))[0]]
+        MAPSTORE_CATALOGUE_SELECTED_SERVICE = list(list(GEONODE_CATALOGUE_SERVICE.keys()))[0]
 
-DEFAULT_MS2_BACKGROUNDS = [{
-        "type": "osm",
-        "title": "Open Street Map",
-        "name": "mapnik",
-        "source": "osm",
-        "group": "background",
-        "visibility": True
-    },
-    {
-        "group": "background",
-        "name": "osm",
-        "source": "mapquest",
-        "title": "MapQuest OSM",
-        "type": "mapquest",
-        "visibility": False
-    }
-]
+    DEFAULT_MS2_BACKGROUNDS = [
+        {
+            "type": "osm",
+            "title": "Open Street Map",
+            "name": "mapnik",
+            "source": "osm",
+            "group": "background",
+            "visibility": True
+        }, {
+            "type": "tileprovider",
+            "title": "OpenTopoMap",
+            "provider": "OpenTopoMap",
+            "name": "OpenTopoMap",
+            "source": "OpenTopoMap",
+            "group": "background",
+            "visibility": False
+        }, {
+            "type": "wms",
+            "title": "Sentinel-2 cloudless - https://s2maps.eu",
+            "format": "image/jpeg",
+            "id": "s2cloudless",
+            "name": "s2cloudless:s2cloudless",
+            "url": "https://maps.geo-solutions.it/geoserver/wms",
+            "group": "background",
+            "thumbURL": "%sstatic/mapstorestyle/img/s2cloudless-s2cloudless.png" % SITEURL,
+            "visibility": False
+       }, {
+            "source": "ol",
+            "group": "background",
+            "id": "none",
+            "name": "empty",
+            "title": "Empty Background",
+            "type": "empty",
+            "visibility": False,
+            "args": ["Empty Background", {"visibility": False}]
+       }
+       # Custom XYZ Tile Provider
+        # {
+        #     "type": "tileprovider",
+        #     "title": "Title",
+        #     "provider": "custom", // or undefined
+        #     "name": "Name",
+        #     "group": "background",
+        #     "visibility": false,
+        #     "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        #     "options": {
+        #         "subdomains": [ "a", "b"]
+        #     }
+        # }
+    ]
 
-MAPSTORE_BASELAYERS = DEFAULT_MS2_BACKGROUNDS
+    if MAPBOX_ACCESS_TOKEN:
+        BASEMAP = {
+            "type": "tileprovider",
+            "title": "MapBox streets-v11",
+            "provider": "MapBoxStyle",
+            "name": "MapBox streets-v11",
+            "accessToken": "%s" % MAPBOX_ACCESS_TOKEN,
+            "source": "streets-v11",
+            "thumbURL": "https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/6/33/23?access_token=%s" % MAPBOX_ACCESS_TOKEN,
+            "group": "background",
+            "visibility": True
+        }
+        DEFAULT_MS2_BACKGROUNDS = [BASEMAP,] + DEFAULT_MS2_BACKGROUNDS
 
-if 'geonode.geoserver' in INSTALLED_APPS:
-    LOCAL_GEOSERVER = {
-        "type": "wms",
-        "url": OGC_SERVER['default']['PUBLIC_LOCATION'] + "wms",
-        "visibility": True,
-        "title": "Local GeoServer",
-        "group": "background",
-        "format": "image/png8",
-        "restUrl": "/gs/rest"
-    }
+    if BING_API_KEY:
+        BASEMAP = {
+            "type": "bing",
+            "title": "Bing Aerial",
+            "name": "AerialWithLabels",
+            "source": "bing",
+            "group": "background",
+            "apiKey": "{{apiKey}}",
+            "visibility": False
+        }
+        DEFAULT_MS2_BACKGROUNDS = [BASEMAP,] + DEFAULT_MS2_BACKGROUNDS
+
+    MAPSTORE_BASELAYERS = DEFAULT_MS2_BACKGROUNDS
+
+# -- END Client Hooksets Setup
 ```
 
 ### Update migrations and static files

@@ -1,5 +1,42 @@
 # Change Log
 
+## 2.1.0 [2020-03-08]
+
+### Breaking Changes
+
+- **Deprecated** `django-mapstore-adapter`; this library has been now merged into `django-geonode-mapstore-client`
+- You don't have to change anything on your `settings.py` but you will have to **remove** `django-mapstore-adapter` from `requirements.txt` and `setup.cfg`
+
+### Setup
+- Install `pip install django-geonode-mapstore-client==2.1.0` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.1.0/)
+- Based on [MapStore2 - v2021.01.01](https://github.com/geosolutions-it/MapStore2/releases/tag/v2021.01.01)
+
+### Commits
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/2.0.9...2.1.0)
+
+<li> Mon Mar 8 12:35:25 2021 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/42d4a93962cb13e3a6e24eaa72e327ca32da0aff target=blank>Fix Home page and preview panel still show the HTML tags for abstract (#88)</a></li>
+<li> Fri Mar 5 17:39:51 2021 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/55c145de9c36ed5f4ad99f06bf05d48456fa4fb8 target=blank>Allow extensibility of localConfig.json via patch for geonode project (#87)</a></li>
+<li> Fri Mar 5 14:44:07 2021 +0100: giohappy <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/d9f08603e66782516e62cb388bdbba152c9cafa7 target=blank>let the client override index.html</a></li>
+<li> Fri Mar 5 11:52:54 2021 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/53b9be17a61f5ec2fe979923d52f5f310eef382e target=blank>remove SearchServicesConfig plugin (#84)</a></li>
+<li> Fri Mar 5 11:06:41 2021 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/27a8c2de2012f7ba5788a0ed853ca64875f83e9f target=blank>Update MapStore submodule to include fix related to widget resizing (#83)</a></li>
+<li> Thu Mar 4 17:41:50 2021 +0100: afabiani <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/b78555f06794d29603ddc84cb851c85d814bc9ea target=blank> - GeoNode plugin: read all the possible layer parameters from the MapStore blob</a></li>
+<li> Thu Feb 25 10:11:20 2021 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/2b2325a37c6d863f3bf6614f8dfe0a26b5775d77 target=blank>Abstract and thumbnail of documents is not displayed correctly in a GeoStory (#81)</a></li>
+<li> Tue Feb 23 11:25:03 2021 +0100: Alessio Fabiani <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/b08a8f3f2dc4d7b311c0b2146e2c629522ddffa2 target=blank> - merging mapstore adapter (#80)</a></li>
+<li> Wed Feb 17 12:36:58 2021 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/2702accb2d82ae7201cfdfee1aba45b8943c8926 target=blank>Enable layer preview in the new homepage (#79)</a></li>
+<li> Tue Feb 9 10:24:23 2021 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/8fef01f61941dd660dbc3e16a1d355e5fd21685d target=blank>Update MapStore2 submodule to latest master (#77)</a></li>
+<li> Wed Dec 23 11:22:24 2020 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/ad1a95d325827147361b1e041416a843d8b73f89 target=blank>Homepage theme and configuration improvements (#76)</a></li>
+<li> Fri Dec 18 12:07:14 2020 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/b2cb925288e25866c9bd051aab5a8441f5ceb229 target=blank>Activate MapStore WPS plugin (Layer Download) (#75)</a></li>
+<li> Tue Dec 15 18:41:44 2020 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/56b2b015edc595edb8d3da7a1fff1bc823c7b5ee target=blank>enable add group plugin in the map editor (#74)</a></li>
+<li> Fri Dec 11 14:55:34 2020 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/5cfa963051b054439f750cb15eea9fb4656d6e97 target=blank>Improve detail panel layout on medium screen (#73)</a></li>
+<li> Thu Dec 10 17:08:14 2020 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/5677e350dcc096ae48bf510195609836c0c04b5c target=blank>Improve mobile layout for homepage (#72)</a></li>
+<li> Fri Dec 4 20:33:23 2020 +0100: afabiani <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/20c1ca043d577f9935992258fdd6e0e7935dff90 target=blank> - Bump to version 2.0.10</a></li>
+<li> Fri Dec 4 19:24:27 2020 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/9759db1d28bb70814f8214a2c0a6e4789ec2a7b1 target=blank>Update README.md files (#70)</a></li>
+<li> Thu Dec 3 16:27:40 2020 +0100: afabiani <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/d5bd40d44913b5ce8cd493c7f29381bb3ae60469 target=blank> - Updating build.build.sh and .*ignore files</a></li>
+<li> Thu Dec 3 16:23:59 2020 +0100: Alessio Fabiani <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/70ef6f88efcc57bcd9b3bd934f87e569db88b590 target=blank>Merge pull request #69 from allyoucanmap/gn-master</a></li>
+<li> Thu Dec 3 16:21:30 2020 +0100: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/bea18482e4364c149ca6cb13df806df5f8df896b target=blank>add missing files of spa homepage</a></li>
+<li> Thu Dec 3 11:21:06 2020 +0100: afabiani <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/be6c15d8d1c94f9aaefc61fda78dd7fb4514b7a0 target=blank> - Merge with "rest_api_v2_geonode_spa_homepage" branch</a></li>
+
 ## 2.0.9 [2020-12-01]
 
 - Install `pip install django-mapstore-adapter>=2.0.6` instructions [Here](https://pypi.org/project/django-mapstore-adapter/)
