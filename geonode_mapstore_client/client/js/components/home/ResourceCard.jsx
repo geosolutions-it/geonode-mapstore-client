@@ -62,7 +62,7 @@ const ResourceCard = forwardRef(({
                 <Card.Text
                     className="gn-card-description"
                 >
-                    {res.abstract ? res.abstract : '...'}
+                    {res.raw_abstract ? res.raw_abstract : '...'}
                 </Card.Text>
                 <Card.Text
                     lassName="gn-card-user"

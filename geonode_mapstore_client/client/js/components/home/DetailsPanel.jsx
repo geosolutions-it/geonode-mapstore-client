@@ -8,6 +8,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { Button, Spinner, Tooltip, OverlayTrigger } from 'react-bootstrap-v1';
+import DOMPurify from 'dompurify';
 import FaIcon from '@js/components/home/FaIcon';
 import Message from '@mapstore/framework/components/I18N/Message';
 import moment from 'moment';
@@ -214,7 +215,11 @@ function DetailsPanel({
                             && <>{' '}/{' '}{ moment(resource.date).format('MMMM Do YYYY')}</>}
                     </p>
                     <p>
-                        <div className="gn-details-panel-description">{resource?.abstract}</div>
+                        <div className="gn-details-panel-description">{
+                            resource?.abstract ?
+                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(resource.abstract) }} />
+                                : null
+                        }</div>
                     </p>
                     <p>
                         {resource?.category?.identifier && <div>

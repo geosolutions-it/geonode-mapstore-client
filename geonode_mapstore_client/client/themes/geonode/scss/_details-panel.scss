@@ -71,4 +71,9 @@
     font-size: 0.9rem;
     text-align: justify;
     word-break: break-word;
+    // force styles of html coming from WYSIWYG
+    img {
+        width: 100% !important;
+        height: auto !important;
+    }
 }
