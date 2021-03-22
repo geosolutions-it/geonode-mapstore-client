@@ -1,6 +1,6 @@
 # Change Log
 
-## 2.1.0 [2020-03-08]
+## 2.1.2 [2020-03-22]
 
 ### Breaking Changes
 
@@ -8,7 +8,24 @@
 - You don't have to change anything on your `settings.py` but you will have to **remove** `django-mapstore-adapter` from `requirements.txt` and `setup.cfg`
 
 ### Setup
-- Install `pip install django-geonode-mapstore-client==2.1.0` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.1.0/)
+- Install `pip install django-geonode-mapstore-client==2.1.2` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.1.2/)
+- Based on [MapStore2 - v2021.01.01](https://github.com/geosolutions-it/MapStore2/releases/tag/v2021.01.01)
+
+### Commits
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/2.1.0...2.1.2)
+
+<li> Fri Mar 19 12:35:25 2021 +0100: bieganowski <57660086+bieganowski@users.noreply.github.com> <a href="https://github.com/GeoNode/geonode-mapstore-client/commit/20da4d134b799fb305918505ec1896b49e5c89a8" target=blank>[Fixes #90] Uploaded thumbnail race hazard (#91)</a></li>
+
+## 2.1.1 [2020-03-08]
+
+### Breaking Changes
+
+- **Deprecated** `django-mapstore-adapter`; this library has been now merged into `django-geonode-mapstore-client`
+- You don't have to change anything on your `settings.py` but you will have to **remove** `django-mapstore-adapter` from `requirements.txt` and `setup.cfg`
+
+### Setup
+- Install `pip install django-geonode-mapstore-client==2.1.1` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.1.1/)
 - Based on [MapStore2 - v2021.01.01](https://github.com/geosolutions-it/MapStore2/releases/tag/v2021.01.01)
 
 ### Commits
