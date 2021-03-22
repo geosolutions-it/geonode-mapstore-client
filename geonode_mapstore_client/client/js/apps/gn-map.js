@@ -14,6 +14,10 @@ import { getConfigProp, setConfigProp } from '@mapstore/framework/utils/ConfigUt
 import { configureMap } from '@mapstore/framework/actions/config';
 import { loadPrintCapabilities } from '@mapstore/framework/actions/print';
 import { setControlProperty } from '@mapstore/framework/actions/controls';
+import StandardApp from '@mapstore/framework/components/app/StandardApp';
+import withExtensions from '@mapstore/framework/components/app/withExtensions';
+
+// the app needs this epics and reducers from mapstore to correctly initialize some functionalities
 import controls from '@mapstore/framework/reducers/controls';
 import maptype from '@mapstore/framework/reducers/maptype';
 import security from '@mapstore/framework/reducers/security';
@@ -24,28 +28,52 @@ import {
     standardRootReducerFunc
 } from '@mapstore/framework/stores/defaultOptions';
 
+import timelineEpics from '@mapstore/framework/epics/timeline';
+import playbackEpics from '@mapstore/framework/epics/playback';
+import timeline from '@mapstore/framework/reducers/timeline';
+import dimension from '@mapstore/framework/reducers/dimension';
+import playback from '@mapstore/framework/reducers/playback';
+import mapPopups from '@mapstore/framework/reducers/mapPopups';
+import catalog from '@mapstore/framework/reducers/catalog';
+// end
+
 import MapView from '@js/routes/MapView';
 
 import gnresource from '@js/reducers/gnresource';
+import gnsettings from '@js/reducers/gnsettings';
 import gnlocaleEpics from '@js/epics/gnlocale';
 
 import { getConfiguration } from '@js/api/geonode/v2';
 
-import isArray from 'lodash/isArray';
-
 import {
     setupConfiguration,
     getVersion,
-    initializeApp
+    initializeApp,
+    getPluginsConfiguration
 } from '@js/utils/AppUtils';
 
+import {
+    setResourcePermissions,
+    setNewResource
+} from '@js/actions/gnresource';
+import { updateGeoNodeSettings } from '@js/actions/gnsettings';
 
 import {
-    updateMapLayoutEpic
+    updateMapLayoutEpic,
+    _setFeatureEditPermission,
+    _setStyleEditorPermission
 } from '@js/epics';
 import maplayout from '@mapstore/framework/reducers/maplayout';
 import 'react-widgets/dist/css/react-widgets.css';
 import 'react-select/dist/react-select.css';
+
+import pluginsDefinition from '@js/plugins/index';
+import ReactSwipe from 'react-swipeable-views';
+import SwipeHeader from '@mapstore/framework/components/data/identify/SwipeHeader';
+const requires = {
+    ReactSwipe,
+    SwipeHeader
+};
 
 const DEFAULT_LOCALE = {};
 const ConnectedRouter = connect((state) => ({
@@ -62,15 +90,23 @@ const routes = [
 
 initializeApp();
 
-Promise.all([ getConfiguration() ])
-    .then(([localConfig, user]) => {
 
+Promise.all([
+    getConfiguration()
+])
+    .then(([localConfig, user]) => {
         const {
             securityState,
             geoNodeConfiguration,
             pluginsConfigKey,
             geoNodePageConfig,
-            query
+            query,
+            configEpics,
+            mapType = 'openlayers',
+            permissions,
+            onStoreInit,
+            targetId = 'ms-container',
+            settings
         } = setupConfiguration({
             localConfig,
             user
@@ -80,55 +116,87 @@ Promise.all([ getConfiguration() ])
         const mapLayout = getConfigProp('mapLayout') || {};
         setConfigProp('mapLayout', mapLayout[query.theme] || mapLayout.viewer);
 
-        main({
-            appComponent: withRoutes(routes)(ConnectedRouter),
-            loaderComponent: MainLoader,
-            initialState: {
-                defaultState: {
-                    ...securityState,
-                    maptype: {
-                        mapType: 'openlayers'
-                    }
-                }
-            },
-            pluginsConfig: isArray(localConfig.plugins)
-                ? localConfig.plugins
-                : localConfig.plugins
-                    ? localConfig.plugins[pluginsConfigKey] || localConfig.plugins
-                    : [],
-            themeCfg: {
-                path: '/static/mapstore/dist/themes',
-                prefixContainer: '#container',
-                version: getVersion(),
-                prefix: 'msgapi',
-                theme: query.theme
-            },
-            printEnabled: true,
-            rootReducerFunc: standardRootReducerFunc,
-            appReducers: {
-                ...standardReducers,
-                gnresource,
-                security,
-                maptype,
-                print,
-                maplayout,
-                controls
-            },
-            appEpics: {
-                ...standardEpics,
-                ...gnlocaleEpics,
-                updateMapLayoutEpic
-            },
-            geoNodeConfiguration,
-            initialActions: [
-                setControlProperty.bind(null, 'toolbar', 'expanded', false),
-                loadPrintCapabilities.bind(null, getConfigProp('printUrl')),
-                configureMap.bind(
-                    null,
-                    geoNodePageConfig.resourceConfig,
-                    1,
-                    true
-                )
-            ]
-        });
+        // register custom arcgis layer
+        import('@js/components/' + mapType + '/ArcGisMapServer')
+            .then(() => {
+                main({
+                    targetId,
+                    enableExtensions: true,
+                    appComponent: withRoutes(routes)(ConnectedRouter),
+                    loaderComponent: MainLoader,
+                    initialState: {
+                        defaultState: {
+                            ...securityState,
+                            maptype: {
+                                mapType
+                            }
+                        }
+                    },
+                    themeCfg: {
+                        path: '/static/mapstore/dist/themes',
+                        prefixContainer: '#' + targetId,
+                        version: getVersion(),
+                        prefix: 'msgapi',
+                        theme: query.theme
+                    },
+                    pluginsConfig: getPluginsConfiguration(localConfig.plugins, pluginsConfigKey),
+                    lazyPlugins: pluginsDefinition.lazyPlugins,
+                    pluginsDef: {
+                        plugins: {
+                            ...pluginsDefinition.plugins
+                        },
+                        requires: {
+                            ...requires,
+                            ...pluginsDefinition.requires
+                        }
+                    },
+                    printEnabled: true,
+                    rootReducerFunc: standardRootReducerFunc,
+                    onStoreInit,
+                    appReducers: {
+                        ...standardReducers,
+                        gnresource,
+                        gnsettings,
+                        security,
+                        maptype,
+                        print,
+                        maplayout,
+                        controls,
+                        timeline,
+                        dimension,
+                        playback,
+                        mapPopups,
+                        catalog,
+                        ...pluginsDefinition.reducers
+                    },
+                    appEpics: {
+                        ...standardEpics,
+                        ...gnlocaleEpics,
+                        ...configEpics,
+                        ...timelineEpics,
+                        ...playbackEpics,
+                        updateMapLayoutEpic,
+                        _setFeatureEditPermission,
+                        _setStyleEditorPermission,
+                        ...pluginsDefinition.epics
+                    },
+                    geoNodeConfiguration,
+                    initialActions: [
+                        // add some settings in the global state to make them accessible in the monitor state
+                        // later we could use expression in localConfig
+                        updateGeoNodeSettings.bind(null, settings),
+                        setControlProperty.bind(null, 'toolbar', 'expanded', false),
+                        loadPrintCapabilities.bind(null, getConfigProp('printUrl')),
+                        setResourcePermissions.bind(null, permissions),
+                        ...(geoNodePageConfig.isNewResource ? [setNewResource] : []),
+                        configureMap.bind(
+                            null,
+                            geoNodePageConfig.resourceConfig,
+                            1,
+                            true
+                        )
+                    ]
+                },
+                withExtensions(StandardApp));
+            });
     });

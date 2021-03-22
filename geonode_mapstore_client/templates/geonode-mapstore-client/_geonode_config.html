@@ -1,22 +1,42 @@
 {% load client_lib_tags %}
 <script>
     {% autoescape off %}
-    window.__GEONODE_CONFIG__ = {
-        languageCode: '{{ LANGUAGE_CODE }}',
-        resourceConfig: {{ ms2_config|default:"false"|safe }},
-        permissionsList: {{ perms_list|default:'[]' }},
-        pluginsConfigKey: '{{ plugins_config_key|default:"" }}',
-        localConfig: {
-            proxyUrl: {
-                url: '{{ PROXY_URL|default:"/proxy/?url=" }}',
-                useCORS: []
+    (function(){
+
+        localStorage.setItem('showPopoverSync', false);
+
+        const username = '{{ user|default:"" }}' || null;
+        const token = '{{ access_token|default:"" }}' || '{{ ACCESS_TOKEN|default:"" }}' || null;
+        window.__GEONODE_CONFIG__ = {
+            languageCode: '{{ LANGUAGE_CODE }}',
+            resourceConfig: {{ ms2_config|default:'false'|safe }},
+            isNewResource: {{ is_new_resource|default:'false'|safe }},
+            permissionsList: {{ perms_list|default:'[]' }},
+            pluginsConfigKey: '{{ plugins_config_key|default:"" }}',
+            userDetails: username && token && {
+                user: {
+                    name: username
+                },
+                token: token
             },
-            geonode_url: '{{ SITEURL }}',
-            genode_rest_api: '{{ SITEURL }}mapstore/rest/',
-            printUrl: '{{ GEOSERVER_PUBLIC_LOCATION }}pdf/info.json',
-            bingApiKey: '{% bing_api_key %}'
-        }
-    }
+            localConfig: {
+                proxyUrl: {
+                    url: '{{ PROXY_URL|default:"/proxy/?url=" }}',
+                    useCORS: []
+                },
+                geoNodeApi: {
+                    endpointAdapter: '{{ SITEURL }}mapstore/rest',
+                    endpointAutocomplete: '{{ SITEURL }}base/autocomplete_response',
+                    endpointV1: '{{ SITEURL }}api',
+                    endpointV2: '{{ SITEURL }}api/v2'
+                },
+                geonodeUrl: '{{ SITEURL }}',
+                geoserverUrl: '{{ OGC_SERVER.default.PUBLIC_LOCATION|default:"" }}',
+                printUrl: '{{ GEOSERVER_PUBLIC_LOCATION }}pdf/info.json',
+                bingApiKey: '{% bing_api_key %}'
+            }
+        };
+    })();
     {% endautoescape %}
 </script>
 {% block override_local_config %}

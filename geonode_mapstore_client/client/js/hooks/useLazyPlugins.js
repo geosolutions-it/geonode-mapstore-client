@@ -32,7 +32,9 @@ function useLazyPlugins({
     const [plugins, setPlugins] = useState({});
     const [pending, setPending] = useState(false);
 
-    const pluginsKeys = pluginsConfig.map(({ name }) => name + 'Plugin');
+    const pluginsKeys = pluginsConfig
+        .map(({ name }) => name + 'Plugin')
+        .filter((pluginName) => pluginsEntries[pluginName]);
     const pluginsString = join(pluginsKeys, ',');
 
     useEffect(() => {

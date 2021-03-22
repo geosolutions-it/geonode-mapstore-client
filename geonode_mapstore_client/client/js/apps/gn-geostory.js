@@ -66,7 +66,7 @@ const setLocale = (localeKey) => {
 
 const getVersion = () => {
     if (!__DEVTOOLS__) {
-        return __GEONODE_PROJECT_CONFIG__.version;
+        return __MAPSTORE_PROJECT_CONFIG__.version;
     }
     return 'dev';
 };
@@ -111,7 +111,7 @@ window.initMapStore = function initMapStore(geoNodeMSConfig) {
             setLocalConfigurationFile('');
             setLocale(language);
             setRegGeoserverRule(/\/[\w- ]*geoserver[\w- ]*\/|\/[\w- ]*gs[\w- ]*\//);
-            setConfigProp('translationsPath', __GEONODE_PROJECT_CONFIG__.translationsPath || [
+            setConfigProp('translationsPath', __MAPSTORE_PROJECT_CONFIG__.translationsPath || [
                 getScriptPath() + '/../MapStore2/web/client',
                 getScriptPath() + '/../translations'
             ]);

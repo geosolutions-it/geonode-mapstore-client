@@ -96,7 +96,7 @@ const SaveAPI = {
             : creatMapStoreMap(body)
                 .then((response) => {
                     if (reload) {
-                        window.location.href = parseDevHostname(`${getConfigProp('geonode_url')}maps/${response.id}/edit`);
+                        window.location.href = parseDevHostname(`${getConfigProp('geonodeUrl')}maps/${response.id}/edit`);
                     }
                     return response.data;
                 });
@@ -118,7 +118,7 @@ const SaveAPI = {
                 ...body
             }).then((response) => {
                 if (reload) {
-                    window.location.href = parseDevHostname(`${getConfigProp('geonode_url')}apps/${response.pk}/edit`);
+                    window.location.href = parseDevHostname(`${getConfigProp('geonodeUrl')}apps/${response.pk}/edit`);
                 }
                 return response.data;
             });

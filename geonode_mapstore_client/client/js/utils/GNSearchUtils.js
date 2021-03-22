@@ -80,7 +80,7 @@ export const getResourceTypesInfo = () => ({
     'layer': {
         icon: 'layer-group',
         formatEmbedUrl: (embedUrl) => updateUrlQueryParameter(embedUrl, {
-            config: 'map_preview',
+            config: 'layer_preview',
             theme: 'preview'
         }),
         name: 'Layer'

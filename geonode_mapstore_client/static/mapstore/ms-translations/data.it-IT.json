@@ -1075,7 +1075,8 @@
                 "operation": "Operazione",
                 "placeholder": "Seleziona il livello",
                 "errors": {
-                    "noCrossLayerAvailable": "L'operazione di filtraggio usando un livello non è supportata per il layer selezionato"
+                    "noCrossLayerAvailable": "L'operazione di filtraggio usando un livello non è supportata per il layer selezionato",
+                    "layersExcluded": "Solo i layer provenienti dalla stessa sorgente possono essere selezionati come layer di destinazione per questo filtro layer"
                 }
             },
             "changedFilter": "Filtero modificato",
@@ -1413,6 +1414,7 @@
             "showPreview": "Mostra la preview",
             "advancedSettings": "Impostazioni avanzate",
             "templateMetadataAvailable": "Metadati disponibili del formato Dublin Core: abstract, boundingBox, contributor, creator, description, format, identifier, references, rights, source, subject, temporal, title, type, uri",
+            "invalidUrlHttpProtocol": "Questo catalogo non può essere aggiunto a quelli disponibili perché utilizza un protocollo http. Fornisci un URL di catalogo che utilizzi il protocollo https",
             "notification": {
                 "errorTitle": "Errore",
                 "errorSearchingRecords": "Alcuni record non sono stati trovati: {records} . Controlla la lista dei parametri nella barra degli indirizzi",

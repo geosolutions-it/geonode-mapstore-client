@@ -56,7 +56,8 @@ const Router = forwardRef(({
     pluginsConfig,
     themeCfg,
     loaderComponent,
-    geoNodeConfiguration
+    geoNodeConfiguration,
+    lazyPlugins
 }, ref) => {
     return (
         <>
@@ -94,6 +95,7 @@ const Router = forwardRef(({
                                                 <Component
                                                     {...props}
                                                     name={route.name}
+                                                    lazyPlugins={lazyPlugins}
                                                     plugins={plugins}
                                                     pluginsConfig={pluginsConfig}
                                                     loaderComponent={loaderComponent}
@@ -136,7 +138,7 @@ Router.defaultProps = {
         messages: {},
         current: 'en-US'
     },
-    className: 'app-router',
+    className: 'app-router fill',
     geoNodeConfiguration: {}
 };
 

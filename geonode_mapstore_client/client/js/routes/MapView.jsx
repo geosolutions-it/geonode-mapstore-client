@@ -16,14 +16,6 @@ import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
 
 import useLazyPlugins from '@js/hooks/useLazyPlugins';
-import pluginsEntries from '@js/plugins/index';
-
-import ReactSwipe from 'react-swipeable-views';
-import SwipeHeader from '@mapstore/framework/components/data/identify/SwipeHeader';
-const requires = {
-    ReactSwipe,
-    SwipeHeader
-};
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -40,15 +32,18 @@ function MapViewerRoute({
     pluginsConfig: propPluginsConfig,
     params,
     onMount,
-    loaderComponent
+    loaderComponent,
+    lazyPlugins,
+    plugins
 }) {
+
     const pluginsConfig = isArray(propPluginsConfig)
         ? propPluginsConfig
         : propPluginsConfig && propPluginsConfig[name] || [];
 
     const [loading, setLoading] = useState(true);
-    const { plugins } = useLazyPlugins({
-        pluginsEntries,
+    const { plugins: loadedPlugins } = useLazyPlugins({
+        pluginsEntries: lazyPlugins,
         pluginsConfig
     });
     useEffect(() => {
@@ -65,7 +60,7 @@ function MapViewerRoute({
                 className="page page-map-viewer"
                 component={BorderLayout}
                 pluginsConfig={pluginsConfig}
-                plugins={{ ...plugins, requires }}
+                plugins={{ ...loadedPlugins, ...plugins }}
                 params={params}
                 onPluginsLoaded={() => setLoading(false)}
             />
