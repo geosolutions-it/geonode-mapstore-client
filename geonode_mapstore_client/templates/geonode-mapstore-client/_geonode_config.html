@@ -1,4 +1,7 @@
 {% load client_lib_tags %}
+{% comment %}
+    app and map configuration need to be normalized
+{% endcomment %}
 <script>
     {% autoescape off %}
     (function(){
@@ -9,8 +12,14 @@
         const token = '{{ access_token|default:"" }}' || '{{ ACCESS_TOKEN|default:"" }}' || null;
         window.__GEONODE_CONFIG__ = {
             languageCode: '{{ LANGUAGE_CODE }}',
-            resourceConfig: {{ ms2_config|default:'false'|safe }},
+            resourceId: {{ appId|default:'null' }},
+            {% if is_app %}
+                resourceConfig: {{ config|default:'false'|safe }},
+            {% else %}
+                resourceConfig: {{ ms2_config|default:'false'|safe }},
+            {% endif %}
             isNewResource: {{ is_new_resource|default:'false'|safe }},
+            isEmbed: {{ is_embed|default:'false'|safe }},
             permissionsList: {{ perms_list|default:'[]' }},
             pluginsConfigKey: '{{ plugins_config_key|default:"" }}',
             userDetails: username && token && {
@@ -43,6 +52,18 @@
 {% comment %}
 <script>
     window.__GEONODE_CONFIG__.overrideLocalConfig = function(localConfig, _) {
+        /*
+        _ is a subset of lodash and contains following functions
+        {
+            mergeWith,
+            merge,
+            isArray,
+            isString,
+            isObject,
+            castArray,
+            get
+        }
+        */
         return _.mergeWith(localConfig, {
             // ...my override config
         }, function(objValue, srcValue, key) {

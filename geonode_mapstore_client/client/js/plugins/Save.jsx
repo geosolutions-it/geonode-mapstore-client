@@ -101,11 +101,11 @@ export default createPlugin('Save', {
                 isLoggedIn,
                 state => state?.gnresource?.isNew,
                 state => state?.gnresource?.permissions?.canEdit,
-                state => state?.gnresource?.permissions?.type,
-                (loggedIn, isNew, canEdit, resourceType) => ({
+                mapInfoSelector,
+                (loggedIn, isNew, canEdit, mapInfo) => ({
                     // we should add permList to map pages too
-                    // no resource type means map page
-                    style: loggedIn && !isNew && (canEdit || !resourceType) ? {} : { display: 'none' }
+                    // currently the canEdit is located inside the map info
+                    style: loggedIn && !isNew && (canEdit || mapInfo?.canEdit) ? {} : { display: 'none' }
                 })
             )
         }

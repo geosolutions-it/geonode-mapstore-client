@@ -12,11 +12,13 @@ import {
     setRequestOptions,
     getRequestOptions
 } from '@js/utils/APIUtils';
-import _ from 'lodash';
+import merge from 'lodash/merge';
 import mergeWith from 'lodash/mergeWith';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
+import isObject from 'lodash/isObject';
 import castArray from 'lodash/castArray';
+import get from 'lodash/get';
 import { getUserInfo } from '@js/api/geonode/v1';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import { setFilterById } from '@js/utils/GNSearchUtils';
@@ -280,17 +282,25 @@ export const getConfiguration = (configUrl = '/static/mapstore/configs/localConf
     return axios.get(configUrl)
         .then(({ data }) => {
             const geoNodePageConfig = window.__GEONODE_CONFIG__ || {};
-            const localConfig = _.mergeWith(
+            const localConfig = mergeWith(
                 data,
                 geoNodePageConfig.localConfig || {},
                 (objValue, srcValue) => {
-                    if (_.isArray(objValue)) {
+                    if (isArray(objValue)) {
                         return srcValue;
                     }
                     return undefined; // eslint-disable-line consistent-return
                 });
             if (geoNodePageConfig.overrideLocalConfig) {
-                return geoNodePageConfig.overrideLocalConfig(localConfig, _);
+                return geoNodePageConfig.overrideLocalConfig(localConfig, {
+                    mergeWith,
+                    merge,
+                    isArray,
+                    isString,
+                    isObject,
+                    castArray,
+                    get
+                });
             }
             return localConfig;
         });
