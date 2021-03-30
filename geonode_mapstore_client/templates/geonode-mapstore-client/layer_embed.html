@@ -75,7 +75,7 @@
         </style>
 
         <style>
-            #container {
+            #ms-container {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -87,27 +87,8 @@
         </style>
     </head>
     <body>
-        <script>
-            {% autoescape off %}
-            window.__GEONODE_PAGE_CONFIG__ = {
-                languageCode: '{{ LANGUAGE_CODE }}',
-                resourceConfig: {{ ms2_config|default:"false"|safe }},
-                permissionsList: {{ perms_list|default:'[]' }},
-                pluginsConfigKey: 'layer_embed',
-                localConfig: {
-                    proxyUrl: {
-                        url: '{{ PROXY_URL|default:"/proxy/?url=" }}',
-                        useCORS: []
-                    },
-                    geonode_url: '{{ SITEURL }}',
-                    genode_rest_api: '{{ SITEURL }}mapstore/rest/',
-                    printUrl: '{{ GEOSERVER_PUBLIC_LOCATION }}pdf/info.json',
-                    bingApiKey: '{% bing_api_key %}'
-                }
-            }
-            {% endautoescape %}
-        </script>
-        <div id="container" class="ms2">
+        {% include './_geonode_config.html' with plugins_config_key='layer_embed' %}
+        <div id="ms-container" class="ms2">
             <div class="gn-main-loader-container">
                 <div class="gn-main-loader-content">
                     <div class="gn-main-loader"></div>

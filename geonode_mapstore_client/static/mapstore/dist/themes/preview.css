@@ -19259,6 +19259,19 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill:-webkit-full-screen .mapstore-chart-advance-options .ms2-border-layout-body .mapstore-switch-panel .panel-title {
   font-weight: bold;
 }
+.msgapi .fill:-webkit-full-screen .ms-widget-empty-message {
+  position: absolute;
+  top: 0;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.msgapi .fill:-webkit-full-screen .mapstore-widget-card .ms2-border-layout-body {
+  position: relative;
+}
 .msgapi .fill:-webkit-full-screen .ms-wizard {
   position: absolute;
   width: 100%;
@@ -34534,6 +34547,21 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .mapstore-chart-advance-options .ms2-border-layout-body .mapstore-switch-panel .panel-title {
   font-weight: bold;
 }
+.msgapi .app-router .ms-widget-empty-message,
+.msgapi .fill .ms-widget-empty-message {
+  position: absolute;
+  top: 0;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.msgapi .app-router .mapstore-widget-card .ms2-border-layout-body,
+.msgapi .fill .mapstore-widget-card .ms2-border-layout-body {
+  position: relative;
+}
 .msgapi .app-router .ms-wizard,
 .msgapi .fill .ms-wizard {
   position: absolute;
@@ -37789,7 +37817,6 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .modal-dialog.modal-content.modal-dialog-container.react-draggable {
   position: fixed;
-  z-index: 100000 !important;
 }
 .msgapi .gfi-t {
   float: left;
@@ -37872,6 +37899,15 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .ms-geostory-map-editor-toolbar .square-button-md:last-child {
   display: none;
 }
+.msgapi .ms-template-viewer .row {
+  margin: 0;
+}
+.msgapi .mapstore-identify-viewer .panel-body {
+  padding: 0;
+}
+.msgapi #page-map-viewer > .ms2-border-layout-body {
+  overflow: hidden !important;
+}
 .msgapi #map {
   bottom: 0px !important;
 }
@@ -37882,6 +37918,7 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .timeline-plugin {
   position: absolute !important;
 }
+.msgapi .app-router .playback-plugin .ms-playback-settings,
 .msgapi .fill .playback-plugin .ms-playback-settings {
   max-height: 190px;
 }
@@ -37892,5 +37929,8 @@ Ported to CodeMirror by Peter Kroon
   transform: none !important;
   height: 400px;
   width: 100%;
+}
+.msgapi #mapstore-print-panel .modal-body {
+  max-height: 100% !important;
 }
 

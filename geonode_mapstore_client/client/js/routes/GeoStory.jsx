@@ -16,7 +16,7 @@ import { updateUrlOnScroll } from '@mapstore/framework/actions/geostory';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
 
 import useLazyPlugins from '@js/hooks/useLazyPlugins';
-import pluginsEntries from '@js/plugins/index';
+import { plugins as pluginsEntries } from '@js/plugins/index';
 
 const urlQuery = url.parse(window.location.href, true).query;
 

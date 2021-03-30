@@ -19237,6 +19237,19 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .mapstore-chart-advance-options .ms2-border-layout-body .mapstore-switch-panel .panel-title {
   font-weight: bold;
 }
+.msgapi .ms-widget-empty-message {
+  position: absolute;
+  top: 0;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.msgapi .mapstore-widget-card .ms2-border-layout-body {
+  position: relative;
+}
 .msgapi .ms-wizard {
   position: absolute;
   width: 100%;
@@ -21785,7 +21798,6 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .modal-dialog.modal-content.modal-dialog-container.react-draggable {
   position: fixed;
-  z-index: 100000 !important;
 }
 .msgapi .gfi-t {
   float: left;
@@ -21867,6 +21879,15 @@ Ported to CodeMirror by Peter Kroon
 }
 .msgapi .ms-geostory-map-editor-toolbar .square-button-md:last-child {
   display: none;
+}
+.msgapi .ms-template-viewer .row {
+  margin: 0;
+}
+.msgapi .mapstore-identify-viewer .panel-body {
+  padding: 0;
+}
+.msgapi #page-map-viewer > .ms2-border-layout-body {
+  overflow: hidden !important;
 }
 .msgapi .app-router,
 .msgapi #container {

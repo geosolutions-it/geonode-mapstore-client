@@ -12,6 +12,7 @@ import {
     setRequestOptions,
     getRequestOptions
 } from '@js/utils/APIUtils';
+import _ from 'lodash';
 import mergeWith from 'lodash/mergeWith';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
@@ -275,10 +276,23 @@ export const getAccountInfo = () => {
         .catch(() => null);
 };
 
-export const getConfiguration = (configUrl) => {
+export const getConfiguration = (configUrl = '/static/mapstore/configs/localConfig.json') => {
     return axios.get(configUrl)
         .then(({ data }) => {
-            return data;
+            const geoNodePageConfig = window.__GEONODE_CONFIG__ || {};
+            const localConfig = _.mergeWith(
+                data,
+                geoNodePageConfig.localConfig || {},
+                (objValue, srcValue) => {
+                    if (_.isArray(objValue)) {
+                        return srcValue;
+                    }
+                    return undefined; // eslint-disable-line consistent-return
+                });
+            if (geoNodePageConfig.overrideLocalConfig) {
+                return geoNodePageConfig.overrideLocalConfig(localConfig, _);
+            }
+            return localConfig;
         });
 };
 

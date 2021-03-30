@@ -12,9 +12,8 @@
 import Rx from "rxjs";
 
 import { setEditPermissionStyleEditor, INIT_STYLE_SERVICE } from "@mapstore/framework/actions/styleeditor";
-import { layerEditPermissions, styleEditPermissions, updateThumb } from "@js/api/geonode";
-import { getSelectedLayer, layersSelector } from "@mapstore/framework/selectors/layers";
-import { mapSelector } from "@mapstore/framework/selectors/map";
+import { layerEditPermissions, styleEditPermissions } from "@js/api/geonode";
+import { getSelectedLayer } from "@mapstore/framework/selectors/layers";
 import { getConfigProp } from "@mapstore/framework/utils/ConfigUtils";
 
 import { updateMapLayout } from '@mapstore/framework/actions/maplayout';
@@ -32,7 +31,6 @@ import get from 'lodash/get';
 /**
  * We need to include missing epics. The plugins that normally include this epic is not used.
  */
-import { mapSaveMapResourceEpic } from "@mapstore/framework/epics/maps";
 import { showCoordinateEditorSelector } from '@mapstore/framework/selectors/controls';
 
 /**
@@ -65,68 +63,7 @@ export const _setStyleEditorPermission = (action$, { getState } = {}) =>
                     .catch(() => Rx.Observable.empty())
                 : Rx.Observable.of(setEditPermissionStyleEditor(false));
         });
-/**
- * Update geonode thumbnail for layers or maps
- */
-export const _setThumbnail = (action$, { getState } = {}) =>
-    action$.ofType("GEONODE:CREATE_MAP_THUMBNAIL", "GEONODE:CREATE_LAYER_THUMBNAIL")
-        .do(() => {
-            try {
-                $("#_thumbnail_processing").modal("show");// eslint-disable-line
-            } catch (err) {
-                console.log(err);// eslint-disable-line
-            }
-        })
-        .exhaustMap(({ type }) => {
-            const state = getState();
-            const layers = layersSelector(state);
-            const map = mapSelector(state);
-            const isMap = type === "GEONODE:CREATE_MAP_THUMBNAIL";
-            const id = isMap ? get(map, "info.id") : (layers[layers.length - 1]).name;
-            const endPoint = isMap ? "maps" : "layers";
-            const { width, height } = map.size;
-            const { maxx, minx, maxy, miny } = map.bbox.bounds;
-            const body = {
-                'bbox': [minx, maxx, miny, maxy],
-                'srid': map.bbox.crs,
-                center: map.center,
-                zoom: map.zoom,
-                width,
-                height,
-                'layers': layers.filter(l => l.group !== 'background' && l.visibility).map(({ name }) => name).join(',')
-            };
-            return updateThumb(endPoint, id, body).do(({ data, status } = {}) => {
-                try {
-                    $("#_thumbnail_feedbacks").find('.modal-title').text(status);// eslint-disable-line
-                    $("#_thumbnail_feedbacks").find('.modal-body').text(data);// eslint-disable-line
-                    $("#_thumbnail_feedbacks").modal("show");// eslint-disable-line
-                } catch (err) {
-                    console.log(err);// eslint-disable-line
-                }
-            }).mapTo({ type: "THUMBNAIL_UPDATE" }).catch(({ code, message }) => {
-                try {
-                    if (code === "ECONNABORTED") {
-                        $("#_thumbnail_feedbacks").find('.modal-title').text('Timeout');// eslint-disable-line
-                        $("#_thumbnail_feedbacks").find('.modal-body').text('Failed from timeout: Could not create Thumbnail');// eslint-disable-line
-                        $("#_thumbnail_feedbacks").modal("show");// eslint-disable-line
-                    } else {
-                        $("#_thumbnail_feedbacks").find('.modal-title').text('Error: ' + message);// eslint-disable-line
-                        $("#_thumbnail_feedbacks").find('.modal-body').text('Could not create Thumbnail');// eslint-disable-line
-                        $("#_thumbnail_feedbacks").modal("show");// eslint-disable-line
-                    }
-                } catch (err) {
-                    console.log(err);// eslint-disable-line
-                } finally {
-                    return Rx.Observable.of({ type: "THUMBNAIL_UPDATE_ERROR" });
-                }
-            }).do(() => {
-                try {
-                    $("#_thumbnail_processing").modal("hide");// eslint-disable-line
-                } catch (err) {
-                    console.log(err);// eslint-disable-line
-                }
-            });
-        });
+
 // Modified to accept map-layout from Config diff less NO_QUERYABLE_LAYERS, SET_CONTROL_PROPERTIES more action$.ofType(PURGE_MAPINFO_RESULTS)
 export const updateMapLayoutEpic = (action$, store) =>
 
@@ -198,9 +135,7 @@ export const updateMapLayoutEpic = (action$, store) =>
             }));
         });
 export default {
-    mapSaveMapResourceEpic,
     _setFeatureEditPermission,
-    _setThumbnail,
     _setStyleEditorPermission,
     updateMapLayoutEpic
 };

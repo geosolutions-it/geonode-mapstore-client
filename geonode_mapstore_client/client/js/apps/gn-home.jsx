@@ -63,7 +63,7 @@ const routes = [
 initializeApp();
 
 Promise.all([
-    getConfiguration('/static/mapstore/configs/localConfig.json'),
+    getConfiguration(),
     getAccountInfo(),
     getResourcesTotalCount(),
     getEndpoints()
