@@ -86,7 +86,6 @@ function FilterByExtent({
                 display: 'flex',
                 flexDirection: 'column',
                 width: '100%',
-                height: '100%',
                 margin: 0
             }}
         >
@@ -100,7 +99,7 @@ function FilterByExtent({
             <div
                 className="gn-filter-by-extent-map"
                 style={{
-                    flex: 1,
+                    minHeight: 300,
                     opacity: enabled ? 1 : 0.4,
                     pointerEvents: enabled ? 'auto' : 'none'
                 }}
@@ -154,9 +153,6 @@ function FilterByExtent({
                     </Map>
                 </div>
             </div>
-            <Form.Text className="text-muted">
-                <Message msgId="gnhome.enableFilterByExtent"/>
-            </Form.Text>
         </Form.Group>
     );
 }

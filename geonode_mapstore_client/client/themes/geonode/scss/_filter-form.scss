@@ -10,12 +10,17 @@
     color: $gn-body-color;
     background-color: $gn-body-bg;
     padding: 1rem;
+    margin-bottom: 1rem;
     position: relative;
     width: 100%;
     .gn-filter-form-header {
         display: flex;
         align-items: center;
         margin-bottom: 0.5rem;
+    }
+    .gn-filter-form-body {
+        display: flex;
+        flex-direction: column;
     }
     .gn-filter-form-title {
         flex: 1;
@@ -24,6 +29,10 @@
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
+        margin-bottom: 0.5rem;
+        @media screen and (max-width: 768px) {
+            margin-top: 5rem;
+        }
     }
 }
 
@@ -38,7 +47,7 @@
         width: 985px;
         left: 50%;
         transform: translateX(-50%);
-        
+
     }
     @media screen and (max-width: 1128px) {
         .gn-filter-form {

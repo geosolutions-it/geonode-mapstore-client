@@ -21,6 +21,7 @@
 'filter-by-extent',
 'filter-form',
 'filter-menu',
+'filter-links',
 'footer',
 'hero',
 'loader',
@@ -67,6 +68,7 @@
             @include background-color-var(map.get($theme-vars, 'body-bg'), --gn-body-bg);
         }
 
+        .gn-main-home,
         .gn-card-grid,
         .gn-filters-menu,
         .gn-filters-menu-content .gn-swipe-menu .btn {
@@ -194,6 +196,16 @@
             }
         }
 
+        .gn-filter-link {
+            a {
+                @include color-var(map.get($theme-vars, 'body-color'), --gn-body-color);
+
+                @include hover() {
+                    text-decoration: underline;
+                }
+            }
+        }
+
         .gn-search-bar {
             @include border-color-var(map.get($theme-vars, 'body-border-color'), --gn-body-border-color);
 
@@ -221,7 +233,7 @@
             a {
                 @include color-var(map.get($theme-vars, 'footer-link-color'), --gn-footer-link-color);
                 text-decoration: none;
-    
+
                 @include hover() {
                     @include color-var(map.get($theme-vars, 'footer-link-hover-color'), --gn-footer-link-hover-color);
                     text-decoration: none;
