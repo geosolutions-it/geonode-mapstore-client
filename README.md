@@ -38,10 +38,6 @@ geonode_mapstore_client/
 |    +-- version.txt
 |-- static/
 |    |-- ...
-|    |-- geonode/
-|    |    +-- js/
-|    |         +-- ms2/
-|    |              +-- utils/
 |    +-- mapstore/
 |-- templates/
 |    +-- geonode-mapstore-client/
@@ -96,19 +92,13 @@ geonode_mapstore_client/
 |         |-- reducers/
 |         |-- routes/
 |         |-- selector/
-|         |-- utils/
-|         |-- api.js
-|         |-- plugins.js
-|         +-- previewPlugins.js
+|         +-- utils/
 |
 |-- ...
 ```
 Some directories and files have special behaviors:
 
 - `geonode_mapstore_client/client/js/apps/`: each file in this folder will be compiled as a new entry point so only .js or .jsx files are allowed. eg. `geonode_mapstore_client/client/js/apps/gn-geostory.js` will become a `gn-geostory.js` file in the dist folder.
-- `geonode_mapstore_client/client/js/api.js`:  entry point for the custom js api of MapStore used in the GeoNode template as map viewer. This compiled name of this file is `ms2-geonode-api.js`
-- `geonode_mapstore_client/client/js/plugins.js`: list of MapStore plugins available inside the full page map viewer
-- `geonode_mapstore_client/client/js/previewPlugins.js`: list of MapStore plugins available inside the preview map viewer
 
 ### Themes files
 
@@ -146,10 +136,7 @@ The language used for the styles is [less](http://lesscss.org/) and it's compati
 The MapStore application needs [configurations](https://mapstore.readthedocs.io/en/latest/developer-guide/local-config/) to load the correct plugins or enable/disable/change functionality. The GeoNode/MapStore integration currently supports two approach one for the MapStore js api (map/layer viewer) and one for the new applications such as geostory and home. Future approach will follow the configuration style of the new application and it will try to align also the map/layer view application.
 
 We need to provide two main type of configuration:
-
- - plugins and app configurations: this includes list of needed plugin in a page and customization of functionalities:
-   - js api imports a combination of files from the directory `geonode_mapstore_client/static/geonode/js/ms2/utils/` inside the templates. The files inside `geonode_mapstore_client/static/geonode/js/ms2/utils/` are list of plugins grouped by purpose: view, embed or edit. There is also an additional app configuration in the _config.html template.
-   - new app imports static configuration from json files of the `geonode_mapstore_client/client/static/mapstore/configs/` folder or centralize the configuration in the correspondent template (see [geostory.html](geonode_mapstore_client/templates/geonode-mapstore-client/app/geostory.html)).
+ - apps and plugins configurations is centralized in [localConfig.json](geonode_mapstore_client/client/static/mapstore/configs/localConfig.json)
  - translations: both approaches retrieve custom translations for the geonode client from the `geonode_mapstore_client/client/static/translations/` folder
 
 ```shell
@@ -159,8 +146,10 @@ geonode_mapstore_client/
 |    |-- ...
 |    |-- static/
 |    |    +-- mapstore/
-|    |         |-- configs/ (new app)
-|    |         |-- img/ (new app)
+|    |         |-- configs/
+|    |         |    |-- ...
+|    |         |    |-- localConfig.json
+|    |         |-- img/
 |    |         +-- translations/
 |    |              |-- ...
 |    |              |-- data.de-DE.json
@@ -171,16 +160,6 @@ geonode_mapstore_client/
 |    |-- ...
 |-- static/
 |    |-- ...
-|    |-- geonode/
-|    |    +-- js/
-|    |         +-- ms2/
-|    |              +-- utils/
-|    |                   |-- ms2_base_plugins.js (js api)
-|    |                   |-- ms2_composer_plugins.js (js api)
-|    |                   |-- ms2_map_embed_plugins.js (js api)
-|    |                   |-- ms2_map_viewer_plugins.js (js api)
-|    |                   |-- ms2_viewer_plugins.js (js api)
-|    |                   +-- thumbnail.js (js api)
 |    +-- mapstore/ (only compiled files here from client/ folder 'npm run compile')
 |-- ...
 ```
@@ -191,7 +170,7 @@ geonode_mapstore_client/
 
 The HTML templates represents all the pages where the MapStore client is integrated. Each template has its own configuration based on the resource type layer, map or app, and for a specific purpose view, edit or embed.
 
-There are special templates used as base configuration for other templates: _config.html and base_ms.html.
+There _geonode_config.html template is used as base configuration for other templates.
 
 
 ```
@@ -203,34 +182,24 @@ geonode_mapstore_client/
 |         |-- app/
 |         |    |-- ...
 |         |    +-- geostory.html
-|         |-- _client_composer_js.html (deprecated)
-|         |-- _client_viewer_js.html (deprecated)
-|         |-- _config.html
+|         |-- _geonode_config.html
 |         |-- app_edit.html
 |         |-- app_embed.html
 |         |-- app_list.html
 |         |-- app_new.html
 |         |-- app_view.html
-|         |-- base_ms.html
-|         |-- edit_map.html
-|         |-- layer_edit.html
-|         |-- layer_map.html
+|         |-- layer_data_edit.html
+|         |-- layer_detail.html
+|         |-- layer_embed.html
 |         |-- layer_style_edit.html
 |         |-- layer_view.html
 |         |-- map_detail.html
+|         |-- map_edit.html
 |         |-- map_embed.html
 |         |-- map_new.html
 |         +-- map_view.html
 |-- ...
 ```
-
-List of templates based on the resource type:
-
-- Layers - templates in use _config.html, base_ms.html, layer_edit.html, layer_map.html, layer_style_edit.html and layer_view.html
-
-- Maps - templates in use _config.html, base_ms.html, edit_map.html, map_detail.html, map_embed.html, map_new.html and map_view.html
-
-- Apps - app_edit.html, app_embed.html, app_list.html, app_new.html, app_view.html and app/geostory.html
 
 ## Running in developer mode
 
@@ -277,8 +246,10 @@ eg.
     ...
     "geonode": {
         "devServer": {
+            // host in use by the local dev application
+            "host": "localhost",
             // if my GeoNode runs on http://localhost:8000/ use
-            "host": "localhost:8080",
+            "proxyTargetHost": "localhost:8080",
             "protocol": "http"
             // if my GeoNode runs on https://my-geonode/ use
             // "host": "my-geonode",

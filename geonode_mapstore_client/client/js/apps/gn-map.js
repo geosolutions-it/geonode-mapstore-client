@@ -41,7 +41,6 @@ import MapView from '@js/routes/MapView';
 
 import gnresource from '@js/reducers/gnresource';
 import gnsettings from '@js/reducers/gnsettings';
-import gnlocaleEpics from '@js/epics/gnlocale';
 
 import { getConfiguration } from '@js/api/geonode/v2';
 
@@ -171,7 +170,6 @@ Promise.all([
                     },
                     appEpics: {
                         ...standardEpics,
-                        ...gnlocaleEpics,
                         ...configEpics,
                         ...timelineEpics,
                         ...playbackEpics,

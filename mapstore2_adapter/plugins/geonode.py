@@ -191,13 +191,15 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                     if _resolve_layer(request,
                                       selected['name'],
                                       'base.change_resourcebase',
-                                      _PERMISSION_MSG_MODIFY):
+                                      _PERMISSION_MSG_MODIFY
+                                      ).user_can(request.user, 'base.change_resourcebase'):
                         info['canEdit'] = True
 
                     if _resolve_layer(request,
                                       selected['name'],
                                       'base.delete_resourcebase',
-                                      _PERMISSION_MSG_DELETE):
+                                      _PERMISSION_MSG_DELETE
+                                      ).user_can(request.user, 'base.delete_resourcebase'):
                         info['canDelete'] = True
                 except Exception:
                     tb = traceback.format_exc()
@@ -223,13 +225,15 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                     if _resolve_map(request,
                                     str(map_id),
                                     'base.change_resourcebase',
-                                    _PERMISSION_MSG_SAVE):
+                                    _PERMISSION_MSG_SAVE
+                                    ).user_can(request.user, 'base.change_resourcebase'):
                         info['canEdit'] = True
 
                     if _resolve_map(request,
                                     str(map_id),
                                     'base.delete_resourcebase',
-                                    _PERMISSION_MSG_DELETE):
+                                    _PERMISSION_MSG_DELETE
+                                    ).user_can(request.user, 'base.delete_resourcebase'):
                         info['canDelete'] = True
                 except Exception:
                     tb = traceback.format_exc()

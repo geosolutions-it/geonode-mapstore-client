@@ -35,7 +35,7 @@ const ResourceCard = forwardRef(({
             <a
                 className="gn-resource-card-link"
                 href={formatHref({
-                    pathname: `/search/${res.resource_type}/${res.pk}`
+                    pathname: `/detail/${res.resource_type}/${res.pk}`
                 })}
             />
             <Card.Img

@@ -6,18 +6,14 @@
  * LICENSE file in the root directory of this source tree.
 */
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import url from 'url';
 import { createSelector } from 'reselect';
-import { Button } from 'react-bootstrap-v1';
 import castArray from 'lodash/castArray';
 import { loadLocale } from '@mapstore/framework/actions/locale';
 import { currentLocaleSelector } from '@mapstore/framework/selectors/locale';
-
-import FaIcon from '@js/components/home/FaIcon';
-
 import SearchBar from '@js/components/home/SearchBar';
 import BrandNavbar from '@js/components/home/BrandNavbar';
 import Hero from '@js/components/home/Hero';
@@ -33,6 +29,7 @@ import {
     requestResource,
     updateSuggestions
 } from '@js/actions/gnsearch';
+
 import {
     hashLocationToHref,
     getFilterById
@@ -47,10 +44,10 @@ import {
     getOwners
 } from '@js/api/geonode/v1';
 import { getResourceTypes } from '@js/api/geonode/v2';
-
+import { Container, Col, Row } from 'react-bootstrap-v1';
 const DEFAULT_SUGGESTIONS = [];
 const DEFAULT_RESOURCES = [];
-
+const REDIRECT_NOT_ALLOWED = ['/', '/search/'];
 const ConnectedLanguageSelector = connect(
     createSelector([
         currentLocaleSelector
@@ -75,6 +72,7 @@ const ConnectedSearchBar = connect(
         onClearSuggestions: updateSuggestions.bind(null, [])
     }
 )(SearchBar);
+
 
 const CardGridWithMessageId = ({ query, user, isFirstRequest, ...props }) => {
     const hasResources = props.resources?.length > 0;
@@ -178,6 +176,7 @@ function Home({
     navbar,
     footer,
     hideHero,
+    isFilterForm,
     onSelect,
     match,
     filters,
@@ -185,7 +184,6 @@ function Home({
     width,
     resource
 }) {
-
     const pageSize = getPageSize(width);
     const isMounted = useRef();
     useEffect(() => {
@@ -194,6 +192,7 @@ function Home({
             isMounted.current = false;
         };
     }, []);
+
 
     const brandNavbarNode = useRef();
     const menuIndexNode = useRef();
@@ -221,7 +220,16 @@ function Home({
         footerNodeHeight
     };
 
-    const [showFilterForm, setShowFilterForm] = useState(false);
+
+    const [showFilterForm, setShowFilterForm] = useState(isFilterForm || false);
+    const [disableHero, setDisableHero] = useState( hideHero );
+
+    const handleShowFilterForm = () => {
+        setShowFilterForm(!showFilterForm);
+        if (!REDIRECT_NOT_ALLOWED.includes(location.pathname)) {
+            window.location = `#/search/${location.search}`;
+        }
+    };
 
     function handleUpdate(newParams, pathname) {
         const { query } = url.parse(location.search, true);
@@ -252,11 +260,13 @@ function Home({
         });
     }
 
+
     const { query } = url.parse(location.search, true);
 
     const queryFilters = Object.keys(query).reduce((acc, key) => key.indexOf('filter') === 0
         ? [...acc, ...castArray(query[key]).map((value) => ({ key, value }))]
         : acc, []);
+
 
     const pk = match.params.pk;
     const ctype = match.params.ctype;
@@ -272,6 +282,7 @@ function Home({
     state.current = {
         query
     };
+
     useEffect(() => {
         const suggestionsRequestTypesArray = Object.keys(suggestionsRequestTypes)
             .map((key) => suggestionsRequestTypes[key]);
@@ -293,13 +304,14 @@ function Home({
                     setReRender(reRender + 1);
                 }
             });
+
+
     }, []);
 
     const search = (
         <ConnectedSearchBar
             key="search"
             value={params.q || ''}
-            disableSuggestions={showFilterForm}
             style={{
                 width: '100%',
                 maxWidth: 716,
@@ -309,30 +321,11 @@ function Home({
                 handleUpdate({
                     q: value
                 }, '/search/')}
-            append={
-                pageSize !== 'sm' && <Button
-                    variant="default"
-                    onClick={() => setShowFilterForm(!showFilterForm)}
-                >
-                    <FaIcon name="filter"/>
-                </Button>
-            }
         >
-            {pageSize !== 'sm' && <FilterForm
-                id="gn-filter-form"
-                query={query}
-                show={showFilterForm}
-                onClose={() => setShowFilterForm(false)}
-                fields={filters?.fields?.options}
-                extentProps={filters?.extent}
-                onChange={handleUpdate}
-                suggestionsRequestTypes={suggestionsRequestTypes}
-            />}
         </ConnectedSearchBar>
     );
 
-    const isHeroVisible = !hideHero && inView;
-
+    const isHeroVisible = !disableHero && inView;
     return (
         <div className={`gn-home gn-theme-${theme?.variant || 'light'}`}>
             <BrandNavbar
@@ -353,7 +346,7 @@ function Home({
             >
                 {!isHeroVisible && search}
             </BrandNavbar>
-            {!hideHero && <Hero
+            {!disableHero && <Hero
                 style={{
                     marginTop: dimensions.brandNavbarHeight,
                     ...theme?.hero?.style
@@ -380,19 +373,40 @@ function Home({
                     style={theme?.languageSelector?.style}
                 />}
             />
-            <ConnectedCardGrid
-                user={user}
-                query={query}
-                pageSize={pageSize}
-                isColumnActive={!!resource}
-                containerStyle={!isHeroVisible
-                    ? {
-                        marginTop: dimensions.brandNavbarHeight,
-                        minHeight: `calc(100vh - ${dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight + dimensions.footerNodeHeight}px )`,
-                        paddingBottom: dimensions.footerNodeHeight
-                    }
-                    : undefined}
-                column={
+            <Container className="gn-main-home " fluid>
+                <Row>
+                    <Col md={4} sm={12} className={` mx-2 mt-3  ${ !showFilterForm ? 'collapse' : ''}`}>
+                        {showFilterForm && <FilterForm
+
+                            key="gn-filter-form"
+                            id="gn-filter-form"
+                            styleContanierForm={ disableHero ? { marginTop: dimensions.brandNavbarHeight } : undefined}
+                            show={true}
+                            fields={filters?.fields?.options}
+                            links={filters?.fields?.links}
+                            extentProps={filters?.extent}
+                            suggestionsRequestTypes={suggestionsRequestTypes}
+                            query={query}
+                            onChange={handleUpdate}
+                            onClose={handleShowFilterForm}
+                        />
+                        }
+                    </Col>
+
+                    <Col className="pl-md-2 pt-2">
+                        <ConnectedCardGrid
+                            user={user}
+                            query={query}
+                            pageSize={pageSize}
+                            isColumnActive={!!resource}
+                            containerStyle={!isHeroVisible
+                                ? {
+                                    marginTop: disableHero && dimensions.brandNavbarHeight,
+                                    minHeight: `calc(100vh - ${dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight + dimensions.footerNodeHeight}px )`,
+                                    paddingBottom: dimensions.footerNodeHeight
+                                }
+                                : undefined}
+                            column={ disableHero &&
                     <ConnectedDetailsPanel
                         resource={resource}
                         filters={queryFilters}
@@ -412,29 +426,34 @@ function Home({
                             })
                         }}
                     />
-                }
-                isCardActive={res => res.pk === pk}
-                page={params.page ? parseFloat(params.page) : 1}
-                formatHref={handleFormatHref}
-                onLoad={(value) => {
-                    handleUpdate({
-                        page: value
-                    });
-                }}
-            >
-                <FiltersMenu
-                    ref={filtersMenuNode}
-                    style={{
-                        top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight
-                    }}
-                    formatHref={handleFormatHref}
-                    order={query?.sort}
-                    filters={queryFilters}
-                    onClear={handleClear}
-                    orderOptions={filters?.order?.options}
-                    defaultLabelId={filters?.order?.defaultLabelId}
-                />
-            </ConnectedCardGrid>
+                            }
+                            isCardActive={res => res.pk === pk}
+                            page={params.page ? parseFloat(params.page) : 1}
+                            formatHref={handleFormatHref}
+                            onLoad={(value) => {
+                                handleUpdate({
+                                    page: value
+                                });
+                            }}
+                        >
+
+                            <FiltersMenu
+                                ref={filtersMenuNode}
+                                style={{
+                                    top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight
+                                }}
+                                formatHref={handleFormatHref}
+                                order={query?.sort}
+                                filters={queryFilters}
+                                onClear={handleClear}
+                                onClick={handleShowFilterForm}
+                                orderOptions={filters?.order?.options}
+                                defaultLabelId={filters?.order?.defaultLabelId}
+                            />
+                        </ConnectedCardGrid>
+                    </Col>
+                </Row>
+            </Container>
             <Footer
                 ref={footerNode}
                 footerItems={footer.items}
@@ -473,11 +492,12 @@ const ConnectedHome = connect(
         params,
         user,
         resource
+
     })),
     {
         onSearch: searchResources,
         onSelect: requestResource
     }
-)(withResizeDetector(Home));
+)(withResizeDetector((Home)));
 
 export default ConnectedHome;
