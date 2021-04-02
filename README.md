@@ -312,12 +312,61 @@ There are three ways to customize the GeoNode MapStore client: changing the conf
 Useful links for customization of the MapStore client
 - [MapStore documentation](https://mapstore.readthedocs.io/)
 - [Framework API](https://mapstore.geo-solutions.it/mapstore/docs/api/framework)
-- [MapStore JS API](https://mapstore.geo-solutions.it/mapstore/docs/api/jsapi)
 - [Plugins](https://mapstore.geo-solutions.it/mapstore/docs/api/plugins)
 
 ### Customization via configurations/templates
 
-It's possible to remove and configure plugins by changing configuration and css directly inside templates. See the [configurations files locations](#configurations-files) in the repository and the MapStore documentations about plugins for more information.
+It's possible to override the localConfig configuration extending the [_geonode_config.html]() template in your geonode project.
+The template needs to be located in the `{geonode-project}/{project-name}/templates/geonode-mapstore-client/` folder:
+
+```
+geonode-project/
+|-- ...
+|-- project-name/
+|    |-- ...
+|    +-- templates/
+|         |-- ...
+|         +-- geonode-mapstore-client/
+|              +-- _geonode_config.html
+|-- ...
+```
+The extended _geonode_config.html template should set the `__GEONODE_CONFIG__.overrideLocalConfig` function and return the modified localConfig.
+
+```html
+{% extends 'geonode-mapstore-client/_geonode_config.html' %}
+{% block override_local_config %}
+<script>
+    window.__GEONODE_CONFIG__.overrideLocalConfig = function(localConfig, _) {
+        /*
+        _ is a subset of lodash and contains following functions
+        {
+            mergeWith,
+            merge,
+            isArray,
+            isString,
+            isObject,
+            castArray,
+            get
+        }
+        */
+        return _.mergeWith(localConfig, {
+            /* 
+            ... my custom configuration
+            */
+        }, function(objValue, srcValue, key) {
+            if (_.isArray(objValue)) {
+                return srcValue;
+            }
+            // supportedLocales is an object so it's merged with the default one
+            // so to remove the default languages we should take only the supportedLocales from override
+            if (key === 'supportedLocales') {
+                return srcValue;
+            }
+        });
+    };
+</script>
+{% endblock %}
+```
 
 ### Customization via fork/branch (advanced)
 
@@ -326,101 +375,6 @@ Create a new fork/branch, apply changes, compile the new client then install the
 Expected version in requirement.txt
 ```
 -e git+https://github.com/GeoNode/geonode-mapstore-client.git@{commit}#egg=django_geonode_mapstore_client
-```
-
-### Customization via @mapstore/project (advanced/experimental)
-
-This type of customization has been introduced to be applied to geonode-project and add, replace or remove plugins for the map and layer viewer. This approach is still in development and aim to normalize the way various apps inside geonode-mapstore-client could be customized.
-
-Given a geonode-project with this directories structure:
-
-```
-geonode-project/
-|-- ...
-|-- project-name/
-|    |-- ...
-|    +-- ...
-|-- ...
-```
-
-- Navigate to `geonode-project/project-name/`
-
-`cd geonode-project/project-name/`
-
-- Run the create script of `@mapstore/project`
-
-`npx @mapstore/project create geonode`
-
-The script above will create a folder called `client` inside `geonode-project/project-name/` with the following structure:
-
-```
-geonode-project/
-|-- ...
-|-- project-name/
-|    |-- ...
-|    |-- client/
-|    |    |-- js/
-|    |    |     |-- ...
-|    |    |     |-- apps/
-|    |    |     +-- jsapi/
-|    |    |          |-- plugins.js
-|    |    |          +-- previewPlugins.js
-|    |    |-- static/
-|    |    |     +-- mapstore/
-|    |    |     |    |-- ...
-|    |    |          +-- translations/
-|    |    |-- themes/
-|    |    |     |-- default/
-|    |    |     |    |-- ...
-|    |    |     |    +-- theme.less
-|    |    |     +-- preview/
-|    |    |          +-- theme.less
-|    |    |-- .gitignore
-|    |    |-- package.json
-|    |    +-- version.txt
-|    +-- ...
-|-- ...
-```
-
-This new `client/` directory has a similar structure of `geonode-mapstore-client/geonode_mapstore_client/client/` with some special file and folders:
-
-- `client/js/apps/` each .js file in this directory will became an application entry
-- `client/js/jsapi/plugins.js` and `client/js/jsapi/previewPlugins.js` this two file have a function that get current plugins imported in mapstore client and should return a plugin list
-
-```js
-// example to add a new plugin
-import MyCustomPlugin from '../plugins/MyCustomPlugin.jsx';
-export const extendPluginsDefinition = ({ plugins,  requires }) =>
-    ({
-        plugins: {
-            ...plugins,
-            MyCustomPlugin
-        },
-        requires
-});
-```
-
-- `client/static/mapstore/translations` extend translations of the client
-- `client/themes/default/theme.less` extend the default theme
-- `client/themes/preview/theme.less` extend the preview theme
-
-Inside this client folder it's possible to use the same scripts used in the geonode-mapstore-client `npm start`, `npm run test`, `npm run compile`, ... .
-
-You can run the `npm run compile` to create the new client application in the `static/mapstore` of the geonode-project once the new customizations are applied.
-
-Important!: the branch/commit of the geonode-mapstore-client inside the package.json must be the same of the pip package inside the requirement.txt
-
-expected version in requirement.txt
-```
--e git+https://github.com/GeoNode/geonode-mapstore-client.git@{commit}#egg=django_geonode_mapstore_client
-```
-expected version in client/package.json
-```js
-"dependencies": {
-    ...,
-    "geonode-mapstore-client": "git+https://github.com/GeoNode/geonode-mapstore-client.git#{commit}",
-    ...
-}
 ```
 
 ## Integrating into GeoNode/Django
