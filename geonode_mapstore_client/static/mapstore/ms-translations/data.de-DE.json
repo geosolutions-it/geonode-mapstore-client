@@ -71,7 +71,6 @@
             "styleCustom": "Stil \"{value}\" nutzen",
             "styleListLoadError": "Es gab einen Fehler beim Laden der Liste von Stilen",
             "stylesRefreshList": "Aktualisiere die Liste von Stilen",
-            "format": "Format",
             "delete": "Löschen",
             "deleteLayer":"Ebene löschen",
             "deleteLayerMessage": "Möchten Sie diese Ebene wirklich löschen?",
@@ -146,6 +145,16 @@
             "enableLocalizedLayerStyles": {
                 "label": "Lokalisierten Stil aktivieren",
                 "tooltip": "Hinweis: Diese Einstellung benötigt spezifische Konfigurationen im GeoServer"
+            },
+            "format": {
+                "title": "Format",
+                "refresh": "Unterstütztes Format abrufen",
+                "loading": "Wird geladen...",
+                "noOption": "Keine Option",
+                "error": {
+                    "title": "Error",
+                    "message": "Format konnte nicht abgerufen werden"
+                }
             }
         },
         "longitude": "Lon",
@@ -811,7 +820,7 @@
                 "single_layer": "Einzelne Ebene",
                 "no_info_description": "Das Identifizierungsfeld wird bei der Suche nicht angezeigt",
                 "all_layers_description": "Das Fenster Identifizieren zeigt Informationen zu allen in der Karte sichtbaren Layern an",
-                "single_layer_description": "Das Fenster Identifizieren wird mit den Daten angezeigt, die bereits über die WFS-Suche verfügbar sind",
+                "single_layer_description": "Im Bereich Identifizieren werden nur Informationen für diese Ebene angezeigt",
                 "openFeatureInfoButtonCheckbox": "Verwenden Sie die Schaltfläche, um Funktionsinformationen zu öffnen",
                 "forceSearchLayerVisibility": "Sichtbarkeit der Suchebene erzwingen"
             },
@@ -1324,7 +1333,8 @@
             "next": "Nächster",
             "skip": "springen",
             "finish": "Fertig",
-            "layerOf": "Ebene {count} von {total}:"
+            "layerOf": "Ebene {count} von {total}:",
+            "styleCustomizationDisabled":"Diese Ebene hat bereits einen Stil definiert und kann nicht angepasst werden."
         },
         "mapImport": {
                 "title": "Importieren",
@@ -1428,6 +1438,10 @@
             "enableLocalizedLayerStyles": {
                 "label": "Lokalisierten Stil aktivieren",
                 "tooltip": "Hinweis: Diese Einstellung benötigt spezifische Konfigurationen im GeoServer"
+            },
+            "format": {
+                "noOption": "Keine Option",
+                "loading": "Wird geladen..."
             }
         },
         "uploader": {
@@ -2491,7 +2505,8 @@
                     "pleaseLogin": "Bitte loggen Sie sich ein",
                     "notAccessible": "Diese Geschichte ist nicht zugänglich",
                     "geostoryNotAccessible": "Sie haben keine Berechtigung, auf diese Geschichte zuzugreifen. Bitte wenden Sie sich an den Eigentümer der Ressource",
-                    "geostoryDoesNotExist": "Diese Geschichte existiert nicht"
+                    "geostoryDoesNotExist": "Diese Geschichte existiert nicht",
+                    "video": "Es tut uns leid! Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
                 }
             },
             "mapEditor": {

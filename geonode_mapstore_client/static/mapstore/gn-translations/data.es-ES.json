@@ -52,6 +52,7 @@
             "noResultsWithFilterContent": "No hay resultados para los filtros seleccionados. <br/> Borre todos los filtros y pruebe con una nueva solicitud.",
             "register": "Registrarse",
             "signIn": "Ingresar",
+            "filters": "Filtros",
             "admin": "Administración",
             "logOut": "Salir",
             "terms": "Terms",

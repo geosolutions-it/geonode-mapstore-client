@@ -18946,6 +18946,12 @@ Ported to CodeMirror by Peter Kroon
   margin: 0;
   margin-top: 8px;
 }
+.msgapi .fill:-webkit-full-screen .ms-format-container {
+  display: flex;
+}
+.msgapi .fill:-webkit-full-screen .ms-format-container .format-select {
+  width: 100%;
+}
 .msgapi .fill:-webkit-full-screen .joyride-overlay {
   z-index: 4000 !important;
 }
@@ -34167,6 +34173,14 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .fill .ms-visibility-limits-form .alert {
   margin: 0;
   margin-top: 8px;
+}
+.msgapi .app-router .ms-format-container,
+.msgapi .fill .ms-format-container {
+  display: flex;
+}
+.msgapi .app-router .ms-format-container .format-select,
+.msgapi .fill .ms-format-container .format-select {
+  width: 100%;
 }
 .msgapi .app-router .joyride-overlay,
 .msgapi .fill .joyride-overlay {
