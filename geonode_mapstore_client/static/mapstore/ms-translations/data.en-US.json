@@ -71,7 +71,6 @@
             "styleCustom": "Use style named \"{value}\"",
             "styleListLoadError": "There was an error loading the styles list",
             "stylesRefreshList": "Refresh Styles List",
-            "format": "Format",
             "delete": "Delete",
             "deleteLayer":"Delete Layer",
             "deleteLayerMessage": "Do you really want to delete this layer?",
@@ -146,6 +145,16 @@
             "enableLocalizedLayerStyles": {
                 "label": "Enable localized style",
                 "tooltip": "Note: This parameter requires specific configurations on GeoServer"
+            },
+            "format": {
+                "title": "Format",
+                "refresh": "Fetch supported format",
+                "loading": "Loading...",
+                "noOption": "No option",
+                "error": {
+                    "title": "Error",
+                    "message": "Failed to fetch format"
+                }
             }
         },
         "longitude": "Lon",
@@ -810,7 +819,7 @@
                 "single_layer": "Single Layer",
                 "no_info_description": "Identify panel will not show up on search",
                 "all_layers_description": "Identify panel will show up displaying information of all layers visible in map",
-                "single_layer_description": "Identify panel will show up with the data already available through the WFS search",
+                "single_layer_description": "Identify panel will show up displaying information only for this layer",
                 "openFeatureInfoButtonCheckbox": "Use button to open feature info",
                 "forceSearchLayerVisibility": "Force search layer visibility"
             },
@@ -1323,7 +1332,8 @@
             "next": "Next",
             "skip": "Skip",
             "finish": "Finish",
-            "layerOf": "Layer {count} of {total}:"
+            "layerOf": "Layer {count} of {total}:",
+            "styleCustomizationDisabled": "This layer has already a style defined and is not possible to customize it."
         },
         "mapImport": {
             "title": "Import",
@@ -1428,6 +1438,10 @@
             "enableLocalizedLayerStyles": {
                 "label": "Enable localized styles",
                 "tooltip": "Note: This parameter requires specific configurations on GeoServer"
+            },
+            "format": {
+                "noOption": "No option",
+                "loading": "Loading..."
             }
         },
         "uploader": {
@@ -2502,7 +2516,9 @@
                     "pleaseLogin": "Please login",
                     "notAccessible": "This story is not accessible",
                     "geostoryNotAccessible": "You don't have permission to access this story. Please contact the resource owner",
-                    "geostoryDoesNotExist": "This story does not exist"
+                    "geostoryDoesNotExist": "This story does not exist",
+                    "video": "Sorry! An error has occurred, please try again later."
+
                 }
             },
             "mapEditor": {

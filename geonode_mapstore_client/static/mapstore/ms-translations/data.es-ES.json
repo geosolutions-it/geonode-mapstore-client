@@ -71,7 +71,6 @@
             "styleCustom": "Use un estilo llamado \"{value} \"",
             "styleListLoadError": "Se ha producido un error al cargar la lista de estilos",
             "stylesRefreshList": "Actualizar la lista de estilos",
-            "format": "Formato",
             "delete": "Borrar",
             "deleteLayer":"Borrar el mapa",
             "deleteLayerMessage": "¿Está totalmente seguro de querer borrar este mapa?",
@@ -146,6 +145,16 @@
             "enableLocalizedLayerStyles": {
                 "label": "Habilitar estilo localizado",
                 "tooltip": "Nota: este parámetro requiere configuraciones específicas en GeoServer"
+            },
+            "format": {
+                "title": "Formato",
+                "refresh": "Obtener formato compatible",
+                "loading": "Cargando...",
+                "noOption": "Sin opcion",
+                "error": {
+                    "title": "Error",
+                    "message": "No se pudo recuperar el formato"
+                }
             }
         },
         "longitude": "Lon",
@@ -810,7 +819,7 @@
                 "single_layer": "Una sola capa",
                 "no_info_description": "El panel de identificación no aparecerá en la búsqueda",
                 "all_layers_description": "El panel Identificar aparecerá mostrando información de todas las capas visibles en el mapa",
-                "single_layer_description": "El panel de identificación aparecerá con los datos ya disponibles a través de la búsqueda de WFS",
+                "single_layer_description": "El panel de identificación aparecerá mostrando información solo para esta capa",
                 "openFeatureInfoButtonCheckbox": "Use el botón para abrir la información de la función",
                 "forceSearchLayerVisibility": "Forzar la visibilidad de la capa de búsqueda"
             },
@@ -1323,7 +1332,8 @@
             "next": "Siguiente",
             "skip": "Saltar",
             "finish": "Terminar",
-            "layerOf": "Capa {count} de {total}:"
+            "layerOf": "Capa {count} de {total}:",
+            "styleCustomizationDisabled":"Esta capa ya tiene un estilo definido y no es posible personalizarlo."
         },
         "mapImport": {
             "title": "Importar",
@@ -1428,6 +1438,10 @@
             "enableLocalizedLayerStyles": {
                 "label": "Habilitar estilos localizados",
                 "tooltip": "Nota: este parámetro requiere configuraciones específicas en GeoServer"
+            },
+            "format": {
+                "noOption": "Sin opcion",
+                "loading": "Cargando..."
             }
         },
         "uploader": {
@@ -2491,7 +2505,8 @@
                     "pleaseLogin": "Por favor Iniciar sesión",
                     "notAccessible": "Esta historia no es accesible.",
                     "geostoryNotAccessible": "No tienes permiso para acceder a esta historia. Por favor, póngase en contacto con el propietario del recurso",
-                    "geostoryDoesNotExist": "Esta historia no existe"
+                    "geostoryDoesNotExist": "Esta historia no existe",
+                    "video": "¡Perdón! Se ha producido un error, inténtelo de nuevo más tarde."
                 }
             },
             "mapEditor": {

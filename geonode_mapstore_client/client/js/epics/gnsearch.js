@@ -213,7 +213,7 @@ export const gnsSelectResourceEpic = (action$, store) =>
                     // preload the resource if available
                     ...(selectedResource
                         ? [ setResource(selectedResource) ]
-                        : [ resourceLoading() ]),
+                        : [ resourceLoading() ])
                 );
         });
 
