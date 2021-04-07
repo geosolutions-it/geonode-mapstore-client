@@ -52,6 +52,7 @@
             "noResultsWithFilterContent": "There are not results for the selected filters. <br/> Clear all filters and try with a new request.",
             "register": "Register",
             "signIn": "Sign in",
+            "filters": "Filters",
             "admin": "Admin",
             "logOut": "Log out",
             "terms": "Terms",

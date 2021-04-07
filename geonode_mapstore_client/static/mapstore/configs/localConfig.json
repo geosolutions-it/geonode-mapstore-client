@@ -215,6 +215,40 @@
                         "type": "select",
                         "suggestionsRequestKey": "owners"
                     }
+
+                ],
+                "links": [{
+                    "myresources" :[
+                        {
+                            "labelId": "gnhome.myresources",
+                            "type": "link",
+                            "href": "#",
+                            "authenticated": false
+                        },
+                        {
+                            "labelId": "gnhome.signIn",
+                            "type": "link",
+                            "href": "#",
+                            "authenticated": false
+                        }
+                    ]
+                },
+                {
+                    "mylink" :[
+                        {
+                            "labelId": "gnhome.myresources",
+                            "type": "link",
+                            "href": "/account/signup/?next=/",
+                            "authenticated": false
+                        },
+                        {
+                            "labelId": "gnhome.signIn",
+                            "type": "link",
+                            "href": "/account/login/?next=/",
+                            "authenticated": false
+                        }
+                    ]
+                }
                 ]
             },
             "order": {

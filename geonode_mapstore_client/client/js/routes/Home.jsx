@@ -222,7 +222,7 @@ function Home({
 
 
     const [showFilterForm, setShowFilterForm] = useState(isFilterForm || false);
-    const [disableHero, setDisableHero] = useState( hideHero );
+    const [disableHero/* , setDisableHero */] = useState( hideHero );
 
     const handleShowFilterForm = () => {
         setShowFilterForm(!showFilterForm);
@@ -381,7 +381,7 @@ function Home({
                             key="gn-filter-form"
                             id="gn-filter-form"
                             styleContanierForm={ disableHero ? { marginTop: dimensions.brandNavbarHeight } : undefined}
-                            show={true}
+                            show
                             fields={filters?.fields?.options}
                             links={filters?.fields?.links}
                             extentProps={filters?.extent}

@@ -18922,6 +18922,12 @@ Ported to CodeMirror by Peter Kroon
   margin: 0;
   margin-top: 8px;
 }
+.msgapi .ms-format-container {
+  display: flex;
+}
+.msgapi .ms-format-container .format-select {
+  width: 100%;
+}
 .msgapi .joyride-overlay {
   z-index: 4000 !important;
 }
