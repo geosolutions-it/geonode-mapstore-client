@@ -28,14 +28,13 @@ import {
     standardRootReducerFunc
 } from '@mapstore/framework/stores/defaultOptions';
 
-import timelineEpics from '@mapstore/framework/epics/timeline';
-import playbackEpics from '@mapstore/framework/epics/playback';
 import timeline from '@mapstore/framework/reducers/timeline';
 import dimension from '@mapstore/framework/reducers/dimension';
 import playback from '@mapstore/framework/reducers/playback';
 import mapPopups from '@mapstore/framework/reducers/mapPopups';
 import catalog from '@mapstore/framework/reducers/catalog';
 import searchconfig from '@mapstore/framework/reducers/searchconfig';
+import widgets from '@mapstore/framework/reducers/widgets';
 // end
 
 import MapView from '@js/routes/MapView';
@@ -168,13 +167,12 @@ Promise.all([
                         mapPopups,
                         catalog,
                         searchconfig,
+                        widgets,
                         ...pluginsDefinition.reducers
                     },
                     appEpics: {
                         ...standardEpics,
                         ...configEpics,
-                        ...timelineEpics,
-                        ...playbackEpics,
                         updateMapLayoutEpic,
                         _setFeatureEditPermission,
                         _setStyleEditorPermission,
