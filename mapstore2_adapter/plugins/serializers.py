@@ -196,6 +196,9 @@ class GeoNodeSerializer(object):
                                         _lyr['store'] = _lyr_store
                                         if 'style' in _lyr:
                                             _lyr_context['style'] = _lyr['style']
+                                            if 'capability' in _gn_layer_ctx:
+                                                # Add selected style to capability in layer_params
+                                                _gn_layer_ctx['capability']['style'] = _lyr['style']
                                         _lyr_context = _gn_layer_ctx
                                         _src_idx = _lyr_context['source']
                                         _map_conf['sources'][_src_idx] = _context_data['sources'][_src_idx]
