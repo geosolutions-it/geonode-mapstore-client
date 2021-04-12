@@ -11,8 +11,10 @@
     background-color: $gn-body-bg;
     padding: 1rem;
     margin-bottom: 1rem;
-    position: relative;
+    position: -webkit-sticky;
+    position: sticky;
     width: 100%;
+    overflow-y: scroll;
     .gn-filter-form-header {
         display: flex;
         align-items: center;
