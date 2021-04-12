@@ -6,7 +6,7 @@
 - You don't have to change anything on your `settings.py` but you will have to **remove** `django-mapstore-adapter` from `requirements.txt` and `setup.cfg`
 
 ### Setup
-- Install `pip install django-geonode-mapstore-client==2.1.2` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.1.2/)
+- Install `pip install django-geonode-mapstore-client==2.1.3` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.1.3/)
 - Based on [MapStore2 - v2021.01.01](https://github.com/geosolutions-it/MapStore2/releases/tag/v2021.01.01)
 
 ### Commits
