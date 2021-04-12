@@ -44,7 +44,6 @@ import {
     getOwners
 } from '@js/api/geonode/v1';
 import { getResourceTypes } from '@js/api/geonode/v2';
-import { Container, Col, Row } from 'react-bootstrap-v1';
 const DEFAULT_SUGGESTIONS = [];
 const DEFAULT_RESOURCES = [];
 const REDIRECT_NOT_ALLOWED = ['/', '/search/'];
@@ -198,11 +197,16 @@ function Home({
     const menuIndexNode = useRef();
     const filtersMenuNode = useRef();
     const footerNode = useRef();
+    const filterFormNode = useRef();
+    const heroNode = useRef();
+
     const [inViewRef, inView] = useInView();
+
 
     const brandNavbarHeight = brandNavbarNode.current
         ? brandNavbarNode.current.getBoundingClientRect().height
         : 0;
+
     const menuIndexNodeHeight = menuIndexNode.current
         ? menuIndexNode.current.getBoundingClientRect().height
         : 0;
@@ -213,16 +217,24 @@ function Home({
         ? footerNode.current.getBoundingClientRect().height
         : 0;
 
+    const heroNodeHeight = heroNode.current
+        ? heroNode.current.getBoundingClientRect().height
+        : 0;
+
+    const filterFormOffset = filterFormNode.current
+        ? filterFormNode?.current?.offsetTop
+        : 0;
+
+
     const dimensions = {
         brandNavbarHeight,
         menuIndexNodeHeight,
         filtersMenuNodeHeight,
-        footerNodeHeight
+        footerNodeHeight,
+        heroNodeHeight
     };
 
-
     const [showFilterForm, setShowFilterForm] = useState(isFilterForm || false);
-    const [disableHero/* , setDisableHero */] = useState( hideHero );
 
     const handleShowFilterForm = () => {
         setShowFilterForm(!showFilterForm);
@@ -325,7 +337,8 @@ function Home({
         </ConnectedSearchBar>
     );
 
-    const isHeroVisible = !disableHero && inView;
+    const isHeroVisible = !hideHero && inView;
+    const stickyFiltersMaxHeight = (window.innerHeight - dimensions.brandNavbarHeight - dimensions.menuIndexNodeHeight - dimensions.footerNodeHeight);
     return (
         <div className={`gn-home gn-theme-${theme?.variant || 'light'}`}>
             <BrandNavbar
@@ -346,7 +359,8 @@ function Home({
             >
                 {!isHeroVisible && search}
             </BrandNavbar>
-            {!disableHero && <Hero
+            {!hideHero && <Hero
+                ref={heroNode}
                 style={{
                     marginTop: dimensions.brandNavbarHeight,
                     ...theme?.hero?.style
@@ -373,40 +387,43 @@ function Home({
                     style={theme?.languageSelector?.style}
                 />}
             />
-            <Container className="gn-main-home " fluid>
-                <Row>
-                    <Col md={4} sm={12} className={` mx-2 mt-3  ${ !showFilterForm ? 'collapse' : ''}`}>
-                        {showFilterForm && <FilterForm
+            <div className="gn-main-home">
 
-                            key="gn-filter-form"
-                            id="gn-filter-form"
-                            styleContanierForm={ disableHero ? { marginTop: dimensions.brandNavbarHeight } : undefined}
-                            show
-                            fields={filters?.fields?.options}
-                            links={filters?.fields?.links}
-                            extentProps={filters?.extent}
-                            suggestionsRequestTypes={suggestionsRequestTypes}
-                            query={query}
-                            onChange={handleUpdate}
-                            onClose={handleShowFilterForm}
-                        />
+                <div className="gn-container">
+                    <div className="gn-row">
+                    {showFilterForm && <div ref={filterFormNode} id="gn-filter-form-container" className={`gn-filter-form-container`}>
+                             <FilterForm
+                                key="gn-filter-form"
+                                id="gn-filter-form"
+                                styleContanierForm={ hideHero ? { marginTop: dimensions.brandNavbarHeight, top: (filterFormOffset + dimensions.brandNavbarHeight), maxHeight: stickyFiltersMaxHeight } :
+                                    { top: (filterFormOffset - dimensions.heroNodeHeight), maxHeight: stickyFiltersMaxHeight }}
+                                show
+                                fields={filters?.fields?.options}
+                                links={filters?.fields?.links}
+                                extentProps={filters?.extent}
+                                suggestionsRequestTypes={suggestionsRequestTypes}
+                                query={query}
+                                onChange={handleUpdate}
+                                onClose={handleShowFilterForm}
+                            />
+
+                        </div>
                         }
-                    </Col>
 
-                    <Col className="pl-md-2 pt-2">
-                        <ConnectedCardGrid
-                            user={user}
-                            query={query}
-                            pageSize={pageSize}
-                            isColumnActive={!!resource}
-                            containerStyle={!isHeroVisible
-                                ? {
-                                    marginTop: disableHero && dimensions.brandNavbarHeight,
-                                    minHeight: `calc(100vh - ${dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight + dimensions.footerNodeHeight}px )`,
-                                    paddingBottom: dimensions.footerNodeHeight
-                                }
-                                : undefined}
-                            column={ disableHero &&
+                        <div className="gn-grid-container">
+                            <ConnectedCardGrid
+                                user={user}
+                                query={query}
+                                pageSize={pageSize}
+                                isColumnActive={!!resource}
+                                containerStyle={!isHeroVisible
+                                    ? {
+                                        marginTop: hideHero && dimensions.brandNavbarHeight,
+                                        minHeight: `calc(100vh - ${dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight + dimensions.footerNodeHeight}px )`,
+                                        paddingBottom: dimensions.footerNodeHeight
+                                    }
+                                    : undefined}
+                                column={ hideHero &&
                     <ConnectedDetailsPanel
                         resource={resource}
                         filters={queryFilters}
@@ -426,34 +443,37 @@ function Home({
                             })
                         }}
                     />
-                            }
-                            isCardActive={res => res.pk === pk}
-                            page={params.page ? parseFloat(params.page) : 1}
-                            formatHref={handleFormatHref}
-                            onLoad={(value) => {
-                                handleUpdate({
-                                    page: value
-                                });
-                            }}
-                        >
-
-                            <FiltersMenu
-                                ref={filtersMenuNode}
-                                style={{
-                                    top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight
-                                }}
+                                }
+                                isCardActive={res => res.pk === pk}
+                                page={params.page ? parseFloat(params.page) : 1}
                                 formatHref={handleFormatHref}
-                                order={query?.sort}
-                                filters={queryFilters}
-                                onClear={handleClear}
-                                onClick={handleShowFilterForm}
-                                orderOptions={filters?.order?.options}
-                                defaultLabelId={filters?.order?.defaultLabelId}
-                            />
-                        </ConnectedCardGrid>
-                    </Col>
-                </Row>
-            </Container>
+                                onLoad={(value) => {
+                                    handleUpdate({
+                                        page: value
+                                    });
+                                }}
+                            >
+
+                                <FiltersMenu
+                                    ref={filtersMenuNode}
+                                    style={{
+                                        top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight
+                                    }}
+                                    formatHref={handleFormatHref}
+                                    order={query?.sort}
+                                    filters={queryFilters}
+                                    onClear={handleClear}
+                                    onClick={handleShowFilterForm}
+                                    orderOptions={filters?.order?.options}
+                                    defaultLabelId={filters?.order?.defaultLabelId}
+                                />
+                            </ConnectedCardGrid>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
             <Footer
                 ref={footerNode}
                 footerItems={footer.items}
@@ -498,6 +518,6 @@ const ConnectedHome = connect(
         onSearch: searchResources,
         onSelect: requestResource
     }
-)(withResizeDetector((Home)));
+)(withResizeDetector(Home));
 
 export default ConnectedHome;

@@ -1,0 +1,47 @@
+.gn-main-home {
+    .gn-container{
+        width: 100%;
+        padding: 0;
+        margin-right: auto;
+        margin-left: auto;
+        display: flex;
+        flex-wrap: wrap;
+        .gn-row{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+    }
+
+    .gn-grid-container{
+        position: relative;
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+        flex-basis: 0;
+        flex-grow: 1;
+        min-width: 0;
+        max-width: 100%;
+        @media screen and (min-width: 768px) {
+            padding-left: 0.5rem !important;
+        }
+
+    }
+
+    .gn-filter-form-container{
+        position: relative;
+        width: 100%;
+        flex: 0 0 25%;
+        max-width: 25%;
+        @media screen and (max-width: 768px) {
+            flex: 0 0 33.3333333333%;
+            max-width: 33.3333333333%;
+        }
+        @media screen and (max-width: 576px){
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+    }
+}

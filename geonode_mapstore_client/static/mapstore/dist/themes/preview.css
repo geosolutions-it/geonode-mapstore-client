@@ -37922,6 +37922,12 @@ Ported to CodeMirror by Peter Kroon
 .msgapi #page-map-viewer > .ms2-border-layout-body {
   overflow: hidden !important;
 }
+.msgapi .ms-popover-overlay {
+  z-index: 1500;
+}
+.msgapi .page-map-viewer {
+  transform: translate(0, 0);
+}
 .msgapi #map {
   bottom: 0px !important;
 }

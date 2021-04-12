@@ -118,3 +118,15 @@
 #page-map-viewer > .ms2-border-layout-body {
     overflow: hidden !important;
 }
+
+// the popover for mark selector, scale denominator and filters
+// are not displayed correctly in the style editor
+// we need am higher z-index to make them visible 
+.ms-popover-overlay {
+    z-index: 1500;
+}
+// ensure the map layout set the correct position for the toolbar and background selector
+// when the attribute table is open
+.page-map-viewer {
+    transform: translate(0, 0);
+}

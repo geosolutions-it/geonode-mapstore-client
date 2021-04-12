@@ -7,7 +7,7 @@
  */
 
 import React, { forwardRef } from 'react';
-import { Dropdown, Button } from 'react-bootstrap-v1';
+import { Dropdown } from 'react-bootstrap-v1';
 import ReactResizeDetector from 'react-resize-detector';
 import Message from '@mapstore/framework/components/I18N/Message';
 
@@ -30,7 +30,7 @@ const FiltersMenu = forwardRef(({
             ref={ref}
         >
             <div className="gn-filters-menu-container">
-                <Button variant="default" onClick={ onClick } > <Message msgId="gnhome.filters"/> {`(${filters.length})`}</Button>
+                <a className="gn-toogle-filter" onClick={ onClick } > <Message msgId="gnhome.filters"/> {`(${filters.length})`}</a>
                 <ReactResizeDetector handleHeight>
                     {({ height }) => (
                         <div
