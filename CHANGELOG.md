@@ -1,5 +1,29 @@
 # Change Log
 
+## 2.1.3 [2020-04-12]
+
+- **Deprecated** `django-mapstore-adapter`; this library has been now merged into `django-geonode-mapstore-client`
+- You don't have to change anything on your `settings.py` but you will have to **remove** `django-mapstore-adapter` from `requirements.txt` and `setup.cfg`
+
+### Setup
+- Install `pip install django-geonode-mapstore-client==2.1.2` instructions [Here](https://pypi.org/project/django-geonode-mapstore-client/2.1.2/)
+- Based on [MapStore2 - v2021.01.01](https://github.com/geosolutions-it/MapStore2/releases/tag/v2021.01.01)
+
+### Commits
+
+[Full Changelog](https://github.com/GeoNode/geonode-mapstore-client/compare/2.1.2...2.1.3)
+
+<li> Fri Apr 9 11:49:43 2021 +0200: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/caff82202d8055396907a4c9135a70951360f591 target=blank>#118: Unable to edit symbol of css style (#124)</a></li>
+<li> Thu Apr 8 18:45:15 2021 +0200: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/b5051e76b2b962f57b2272f099fd78af76b9b7fb target=blank>#117: Widgets on map are not saved (#120)</a></li>
+<li> Thu Apr 8 11:53:06 2021 -0400: NAGGINDA MARTHA <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/e36a60095468c6280f36a529a53657b09885d3a1 target=blank>add style to capability in layer_params (#116)</a></li>
+<li> Tue Apr 6 17:05:47 2021 +0200: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/9f7e6a5816ea24b4c23a51e94e76735adfad74e0 target=blank>Missing search config reducer (#113)</a></li>
+<li> Tue Apr 6 11:32:10 2021 +0200: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/228339859e9a8cdb8cd382c19b30c94b3487f007 target=blank>Update MapStore submodule to include fix for video with autoplay and audio enabled in geostory (#111)</a></li>
+<li> Fri Apr 2 17:50:29 2021 +0200: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/ee8e009ad747884d984929d24a3ad6367ef25df8 target=blank>Update customization section of readme (#107)</a></li>
+<li> Wed Mar 31 17:29:04 2021 +0200: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/be93cf0f714ba944c5581aeb2f60f5000c3cece1 target=blank>Update readme related to template and configuration refactor (#105)</a></li>
+<li> Tue Mar 30 19:40:36 2021 +0200: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/9fb69b33d2d1ae09e4c27fb9533e9263cbb33d27 target=blank>[Backport 2.1.x] Fix loading of app templates (#102)</a></li>
+<li> Tue Mar 30 15:42:59 2021 +0200: stefano bovio <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/6ccf563063ec8b29cf434a8adcf7c3370e510f0a target=blank>Backport 2.1.x - refactor of templates and js entry points (#100)</a></li>
+<li> Tue Mar 30 10:59:22 2021 +0300: NAGGINDA MARTHA <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/89ff104541bc75202a5ff5df239ea92c80e711b0 target=blank>modify resource check (#95)</a></li>
+
 ## 2.1.2 [2020-03-22]
 
 ### Breaking Changes
