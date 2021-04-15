@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.1.4 [2020-04-14]
+
+<li> Wed Apr 14 13:11:43 2021 +0200: afabiani <a href=https://github.com/GeoNode/geonode-mapstore-client/commit/895e60af6903fc4e6dfd3a4d8a87f4e255569efc target=blank>[Fixes #130] REST API v2 endpoint for GeoStories throws an exception</a></li>
+
 ## 2.1.3 [2020-04-12]
 
 - **Deprecated** `django-mapstore-adapter`; this library has been now merged into `django-geonode-mapstore-client`
