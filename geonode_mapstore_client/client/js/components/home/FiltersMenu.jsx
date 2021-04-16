@@ -7,9 +7,11 @@
  */
 
 import React, { forwardRef } from 'react';
-import { Dropdown } from 'react-bootstrap-v1';
+import { Dropdown, Button } from 'react-bootstrap-v1';
 import ReactResizeDetector from 'react-resize-detector';
 import Message from '@mapstore/framework/components/I18N/Message';
+import FaIcon from '@js/components/home/FaIcon';
+import useLocalStorage from '@js/hooks/useLocalStorage';
 
 const FiltersMenu = forwardRef(({
     formatHref,
@@ -18,11 +20,12 @@ const FiltersMenu = forwardRef(({
     filters,
     style,
     onClick,
+    layoutSwitcher,
     defaultLabelId
 }, ref) => {
 
     const selectedSort = orderOptions.find(({ value }) => order === value);
-
+    const [cardLayoutStyle] = useLocalStorage('layoutCardsStyle');
     return (
         <div
             className="gn-filters-menu"
@@ -40,9 +43,15 @@ const FiltersMenu = forwardRef(({
                         </div>
                     )}
                 </ReactResizeDetector>
+                <Button variant="default" onClick={layoutSwitcher} >
+                    <FaIcon name={cardLayoutStyle === 'grid' ? 'th' : cardLayoutStyle } />
+                </Button>
+
                 <div
                     className="gn-filters-menu-tools"
+
                 >
+
                     {orderOptions.length > 0 && <Dropdown alignRight>
                         <Dropdown.Toggle
                             id="sort-dropdown"

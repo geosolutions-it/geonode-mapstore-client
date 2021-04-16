@@ -44,6 +44,7 @@ import {
     getOwners
 } from '@js/api/geonode/v1';
 import { getResourceTypes } from '@js/api/geonode/v2';
+import useLocalStorage from '@js/hooks/useLocalStorage';
 import  { toggleFiltersPanel }  from '@js/actions/gnfiltersPanel';
 
 
@@ -251,6 +252,7 @@ function Home({
         heroNodeHeight
     };
 
+    const [cardLayoutStyle, setCardLayoutStyle] = useLocalStorage('layoutCardsStyle');
     const [showFilterForm, setShowFilterForm] = useState( (isFilterForm && isToggle) || false);
 
     const handleShowFilterForm = () => {
@@ -262,6 +264,12 @@ function Home({
         onToggleFilters();
 
     };
+
+    const handleStoredLayoutStyle = () => {
+        let styleCard = cardLayoutStyle === 'grid' ? 'list' : 'grid';
+        setCardLayoutStyle(styleCard);
+    };
+
 
     function handleUpdate(newParams, pathname) {
         const { query } = url.parse(location.search, true);
@@ -484,9 +492,11 @@ function Home({
                                     filters={queryFilters}
                                     onClear={handleClear}
                                     onClick={handleShowFilterForm}
+                                    layoutSwitcher={handleStoredLayoutStyle}
                                     orderOptions={filters?.order?.options}
                                     defaultLabelId={filters?.order?.defaultLabelId}
                                 />
+
                             </ConnectedCardGrid>
                         </div>
                     </div>

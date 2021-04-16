@@ -12,6 +12,7 @@ import HTML from '@mapstore/framework/components/I18N/HTML';
 import FaIcon from '@js/components/home/FaIcon';
 import ResourceCard from '@js/components/home/ResourceCard';
 import { withResizeDetector } from 'react-resize-detector';
+import useLocalStorage from '@js/hooks/useLocalStorage';
 
 const Cards = withResizeDetector(({
     resources,
@@ -29,8 +30,46 @@ const Cards = withResizeDetector(({
     const cardWidth = width >= size + margin * 2
         ? Math.floor((width - margin * count) / count)
         : '100%';
+
     const ulPadding = Math.floor(margin / 2);
     const isSingleCard = count === 0 || count === 1;
+    const [cardLayoutStyle] = useLocalStorage('layoutCardsStyle');
+
+    const gridLayoutSpace = (idx) => {
+
+        const gridSpace = isSingleCard
+            ? {
+                width: width - margin,
+                margin: ulPadding
+            }
+            : {
+                width: cardWidth,
+                marginRight: (idx + 1) % count === 0 ? 0 : margin,
+                marginTop: margin
+            };
+
+        return gridSpace;
+    };
+
+    const listLayoutSpace = {
+        width: '100%',
+        margin: ulPadding / 2
+    };
+
+
+    const layoutSpace = (cardLayoutStyle, idx) => {
+        let cardContainerSpace;
+        switch (cardLayoutStyle) {
+        case 'list':
+            cardContainerSpace = listLayoutSpace;
+            break;
+        default:
+            cardContainerSpace = gridLayoutSpace(idx);
+        }
+        return cardContainerSpace;
+    };
+
+
     return (
         <ul
             style={isSingleCard
@@ -46,22 +85,14 @@ const Cards = withResizeDetector(({
                 return (
                     <li
                         key={resource.pk}
-                        style={isSingleCard
-                            ? {
-                                width: width - margin,
-                                margin: ulPadding
-                            }
-                            : {
-                                width: cardWidth,
-                                marginRight: (idx + 1) % count === 0 ? 0 : margin,
-                                marginTop: margin
-                            }}
+                        style={(layoutSpace(cardLayoutStyle, idx))}
                     >
                         <ResourceCard
                             active={isCardActive(resource)}
                             data={resource}
                             formatHref={formatHref}
                             links={links}
+                            layoutCardsStyle={cardLayoutStyle}
                         />
                     </li>
                 );
