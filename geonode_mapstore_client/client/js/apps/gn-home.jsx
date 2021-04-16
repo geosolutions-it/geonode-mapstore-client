@@ -21,6 +21,7 @@ import gnsearch from '@js/reducers/gnsearch';
 import gnresource from '@js/reducers/gnresource';
 import gnsearchEpics from '@js/epics/gnsearch';
 import gnlocaleEpics from '@js/epics/gnlocale';
+import gnfiltersPanel from '@js/reducers/gnfiltersPanel';
 
 import {
     getConfiguration,
@@ -102,6 +103,7 @@ Promise.all([
             appReducers: {
                 gnsearch,
                 gnresource,
+                gnfiltersPanel,
                 security
             },
             appEpics: {
