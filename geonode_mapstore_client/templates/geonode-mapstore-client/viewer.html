@@ -1,11 +1,13 @@
 {% load static from staticfiles %}
+{% load client_lib_tags %}
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
         <title>{{ SITE_NAME }}</title>
         <link rel="shortcut icon" href="{% static 'geonode/img/favicon.ico' %}" />
         <style>
@@ -65,10 +67,22 @@
                 }
             }
         </style>
+
+        <style>
+            #ms-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 99999;
+                background-color: #fff;
+            }
+        </style>
     </head>
     <body>
-        {% include './geonode-mapstore-client/_geonode_config.html' %}
-        <div id="container">
+        {% include './_geonode_config.html' %}
+        <div id="ms-container" class="ms2">
             <div class="gn-main-loader-container">
                 <div class="gn-main-loader-content">
                     <div class="gn-main-loader"></div>
@@ -76,6 +90,6 @@
                 </div>
             </div>
         </div>
-        <script id="gn-script" src="{% static 'mapstore/dist/gn-home.js' %}"></script>
+        <script id="gn-script" src="{% static 'mapstore/dist/gn-viewer.js' %}"></script>
     </body>
 </html>

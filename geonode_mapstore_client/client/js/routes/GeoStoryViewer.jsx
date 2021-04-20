@@ -1,21 +1,22 @@
 /*
- * Copyright 2018, GeoSolutions Sas.
+ * Copyright 2021, GeoSolutions Sas.
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import url from 'url';
-import isArray from 'lodash/isArray';
+import { createSelector } from 'reselect';
 import BorderLayout from '@mapstore/framework/components/layout/BorderLayout';
 import { getMonitoredState } from '@mapstore/framework/utils/PluginsUtils';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
-
 import useLazyPlugins from '@js/hooks/useLazyPlugins';
+import { requestGeoStoryConfig } from '@js/actions/gnviewer';
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -27,19 +28,19 @@ const ConnectedPluginsContainer = connect((state) => ({
     }
 }))(PluginsContainer);
 
-function MapViewerRoute({
+function GeoStoryViewerRoute({
     name,
     pluginsConfig: propPluginsConfig,
     params,
-    onMount,
+    onUpdate,
     loaderComponent,
     lazyPlugins,
-    plugins
+    plugins,
+    match
 }) {
 
-    const pluginsConfig = isArray(propPluginsConfig)
-        ? propPluginsConfig
-        : propPluginsConfig && propPluginsConfig[name] || [];
+    const { pk } = match.params || {};
+    const pluginsConfig = propPluginsConfig && propPluginsConfig[name] || [];
 
     const [loading, setLoading] = useState(true);
     const { plugins: loadedPlugins } = useLazyPlugins({
@@ -47,17 +48,18 @@ function MapViewerRoute({
         pluginsConfig
     });
     useEffect(() => {
-        if (!loading && onMount) {
-            onMount(true);
+        if (!loading) {
+            onUpdate(pk);
         }
-    }, [ loading, onMount ]);
+    }, [loading, pk]);
     const Loader = loaderComponent;
+
     return (
         <>
             <ConnectedPluginsContainer
-                key="page-map-viewer"
-                id="page-map-viewer"
-                className="page page-map-viewer"
+                key="page-geostory-viewer"
+                id="page-geostory-viewer"
+                className="page page-geostory-viewer"
                 component={BorderLayout}
                 pluginsConfig={pluginsConfig}
                 plugins={{ ...loadedPlugins, ...plugins }}
@@ -69,17 +71,17 @@ function MapViewerRoute({
     );
 }
 
-MapViewerRoute.propTypes = {
-    onMount: PropTypes.func
+GeoStoryViewerRoute.propTypes = {
+    onUpdate: PropTypes.func
 };
 
-const ConnectedMapViewerRoute = connect(
-    () => ({}),
-    {}
-)(MapViewerRoute);
+const ConnectedGeoStoryViewerRoute = connect(
+    createSelector([], () => ({})),
+    {
+        onUpdate: requestGeoStoryConfig
+    }
+)(GeoStoryViewerRoute);
 
-ConnectedMapViewerRoute.displayName = 'ConnectedMapViewerRoute';
+ConnectedGeoStoryViewerRoute.displayName = 'ConnectedGeoStoryViewerRoute';
 
-export default ConnectedMapViewerRoute;
-
-
+export default ConnectedGeoStoryViewerRoute;

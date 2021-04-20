@@ -250,6 +250,18 @@ export const plugins = {
     DrawerMenuPlugin: toLazyPlugin(
         'DrawerMenu',
         import(/* webpackChunkName: 'plugins/drawer-menu-plugin' */ '@mapstore/framework/plugins/DrawerMenu')
+    ),
+    ViewerLayoutPlugin: toLazyPlugin(
+        'ViewerLayout',
+        import(/* webpackChunkName: 'plugins/viewer-layout-plugin' */ '@js/plugins/ViewerLayout')
+    ),
+    ActionNavbarPlugin: toLazyPlugin(
+        'ActionNavbar',
+        import(/* webpackChunkName: 'plugins/action-navbar-plugin' */ '@js/plugins/ActionNavbar')
+    ),
+    BrandNavbarPlugin: toLazyPlugin(
+        'BrandNavbar',
+        import(/* webpackChunkName: 'plugins/brand-navbar-plugin' */ '@js/plugins/BrandNavbar')
     )
 };
 
