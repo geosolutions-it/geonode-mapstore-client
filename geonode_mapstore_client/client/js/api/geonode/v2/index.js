@@ -231,6 +231,16 @@ export const getResourceByPk = (pk) => {
         .then(({ data }) => data.resource);
 };
 
+export const getLayerByPk = (pk) => {
+    return axios.get(parseDevHostname(`${endpoints[LAYERS]}/${pk}`))
+        .then(({ data }) => data.layer);
+};
+
+export const getDocumentByPk = (pk) => {
+    return axios.get(parseDevHostname(`${endpoints[DOCUMENTS]}/${pk}`))
+        .then(({ data }) => data.document);
+};
+
 export const createGeoApp = (body) => {
     return axios.post(parseDevHostname(`${endpoints[GEOAPPS]}`), body, {
         params: {
@@ -240,8 +250,26 @@ export const createGeoApp = (body) => {
         .then(({ data }) => data.resource);
 };
 
+export const getGeoAppByPk = (pk) => {
+    return axios.get(parseDevHostname(`${endpoints[GEOAPPS]}/${pk}`), {
+        params: {
+            full: true
+        }
+    })
+        .then(({ data }) => data.geoapp);
+};
+
 export const createGeoStory = (body) => {
     return axios.post(parseDevHostname(`${endpoints[GEOSTORIES]}`), body, {
+        params: {
+            include: ['data']
+        }
+    })
+        .then(({ data }) => data.geostory);
+};
+
+export const getGeoStoryByPk = (pk) => {
+    return axios.get(parseDevHostname(`${endpoints[GEOSTORIES]}/${pk}`), {
         params: {
             include: ['data']
         }
@@ -371,7 +399,9 @@ export default {
     getResources,
     getResourceByPk,
     createGeoApp,
+    getGeoAppByPk,
     createGeoStory,
+    getGeoStoryByPk,
     updateGeoStory,
     getMaps,
     getDocumentsByDocType,
@@ -379,5 +409,7 @@ export default {
     getAccountInfo,
     getConfiguration,
     getResourceTypes,
-    getResourcesTotalCount
+    getResourcesTotalCount,
+    getLayerByPk,
+    getDocumentByPk
 };

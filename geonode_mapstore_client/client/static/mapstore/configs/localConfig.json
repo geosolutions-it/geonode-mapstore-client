@@ -215,40 +215,40 @@
                         "type": "select",
                         "suggestionsRequestKey": "owners"
                     }
-
                 ],
-                "links": [{
-                    "myresources" :[
-                        {
-                            "labelId": "gnhome.myresources",
-                            "type": "link",
-                            "href": "#",
-                            "authenticated": false
-                        },
-                        {
-                            "labelId": "gnhome.signIn",
-                            "type": "link",
-                            "href": "#",
-                            "authenticated": false
-                        }
-                    ]
-                },
-                {
-                    "mylink" :[
-                        {
-                            "labelId": "gnhome.myresources",
-                            "type": "link",
-                            "href": "account/signup/?next=/",
-                            "authenticated": false
-                        },
-                        {
-                            "labelId": "gnhome.signIn",
-                            "type": "link",
-                            "href": "account/login/?next=/",
-                            "authenticated": false
-                        }
-                    ]
-                }
+                "links": [
+                    {
+                        "myresources": [
+                            {
+                                "labelId": "gnhome.myresources",
+                                "type": "link",
+                                "href": "#",
+                                "authenticated": false
+                            },
+                            {
+                                "labelId": "gnhome.signIn",
+                                "type": "link",
+                                "href": "#",
+                                "authenticated": false
+                            }
+                        ]
+                    },
+                    {
+                        "mylink": [
+                            {
+                                "labelId": "gnhome.myresources",
+                                "type": "link",
+                                "href": "account/signup/?next=/",
+                                "authenticated": false
+                            },
+                            {
+                                "labelId": "gnhome.signIn",
+                                "type": "link",
+                                "href": "account/login/?next=/",
+                                "authenticated": false
+                            }
+                        ]
+                    }
                 ]
             },
             "order": {
@@ -2428,6 +2428,814 @@
             {
                 "name": "Notifications"
             }
+        ],
+        "layer_viewer": [
+            {
+                "name": "ViewerLayout"
+            },
+            {
+                "name": "ActionNavbar"
+            },
+            {
+                "name": "BrandNavbar"
+            },
+            {
+                "name": "Map",
+                "cfg": {
+                    "shouldLoadFont": false,
+                    "fonts": [],
+                    "tools": [
+                        "measurement",
+                        "draw",
+                        "box"
+                    ],
+                    "mapOptions": {
+                        "openlayers": {
+                            "attribution": {
+                                "container": "#footer-attribution-container"
+                            },
+                            "interactions": {
+                                "pinchRotate": false,
+                                "altShiftDragRotate": false
+                            }
+                        }
+                    }
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "BackgroundSelector",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "Identify",
+                "cfg": {
+                    "viewerOptions": {
+                        "container": "{context.ReactSwipe}"
+                    }
+                },
+                "override": {
+                    "Toolbar": {
+                        "position": 11,
+                        "alwaysVisible": false
+                    }
+                }
+            },
+            {
+                "name": "Toolbar",
+                "id": "NavigationBar",
+                "cfg": {
+                    "id": "navigationBar",
+                    "layout": "horizontal"
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "MapLoading",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": true
+                    }
+                }
+            },
+            {
+                "name": "OmniBar",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "Expander"
+            },
+            {
+                "name": "BurgerMenu"
+            },
+            {
+                "name": "MapFooter",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1,
+                        "target": "footer"
+                    }
+                }
+            },
+            {
+                "name": "Measure"
+            },
+            {
+                "name": "Print",
+                "cfg": {
+                    "useFixedScales": true,
+                    "mapWidth": 256
+                }
+            },
+            {
+                "name": "ZoomAll",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": false
+                    }
+                }
+            },
+            {
+                "name": "ZoomIn",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": true
+                    }
+                }
+            },
+            {
+                "name": "ZoomOut",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": true
+                    }
+                }
+            },
+            {
+                "name": "Timeline",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "Playback"
+            },
+            {
+                "name": "LayerDownload"
+            },
+            {
+                "name": "AddLayer"
+            },
+            {
+                "name": "FilterLayer"
+            },
+            {
+                "name": "ScaleBox"
+            },
+            {
+                "name": "QueryPanel",
+                "cfg": {
+                    "activateQueryTool": true,
+                    "spatialOperations": [
+                        {
+                            "id": "INTERSECTS",
+                            "name": "queryform.spatialfilter.operations.intersects"
+                        },
+                        {
+                            "id": "BBOX",
+                            "name": "queryform.spatialfilter.operations.bbox"
+                        },
+                        {
+                            "id": "CONTAINS",
+                            "name": "queryform.spatialfilter.operations.contains"
+                        },
+                        {
+                            "id": "WITHIN",
+                            "name": "queryform.spatialfilter.operations.within"
+                        }
+                    ],
+                    "spatialMethodOptions": [
+                        {
+                            "id": "Viewport",
+                            "name": "queryform.spatialfilter.methods.viewport"
+                        },
+                        {
+                            "id": "BBOX",
+                            "name": "queryform.spatialfilter.methods.box"
+                        },
+                        {
+                            "id": "Circle",
+                            "name": "queryform.spatialfilter.methods.circle"
+                        },
+                        {
+                            "id": "Polygon",
+                            "name": "queryform.spatialfilter.methods.poly"
+                        }
+                    ]
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "MousePosition",
+                "cfg": {
+                    "editCRS": true,
+                    "showLabels": true,
+                    "showToggle": true,
+                    "filterAllowedCRS": [
+                        "EPSG:4326",
+                        "EPSG:3857"
+                    ],
+                    "additionalCRS": {}
+                }
+            },
+            {
+                "name": "Search",
+                "cfg": {
+                    "withToggle": [
+                        "max-width: 768px",
+                        "min-width: 768px"
+                    ]
+                }
+            },
+            {
+                "name": "FullScreen",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": false
+                    }
+                }
+            },
+            {
+                "name": "Notifications"
+            },
+            {
+                "name": "Share",
+                "cfg": {
+                    "pathTemplate": "/maps/{id}/embed"
+                }
+            },
+            {
+                "name": "Locate"
+            }
+        ],
+        "layer_edit_data_viewer": [
+            {
+                "name": "ViewerLayout"
+            },
+            {
+                "name": "ActionNavbar"
+            },
+            {
+                "name": "BrandNavbar"
+            },
+            {
+                "name": "Map",
+                "cfg": {
+                    "shouldLoadFont": false,
+                    "fonts": [],
+                    "tools": [
+                        "measurement",
+                        "draw",
+                        "box"
+                    ],
+                    "mapOptions": {
+                        "openlayers": {
+                            "attribution": {
+                                "container": "#footer-attribution-container"
+                            },
+                            "interactions": {
+                                "pinchRotate": false,
+                                "altShiftDragRotate": false
+                            }
+                        }
+                    }
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            }
+        ],
+        "layer_edit_style_viewer": [
+            {
+                "name": "ViewerLayout"
+            },
+            {
+                "name": "ActionNavbar"
+            },
+            {
+                "name": "BrandNavbar"
+            },
+            {
+                "name": "Map",
+                "cfg": {
+                    "shouldLoadFont": false,
+                    "fonts": [],
+                    "tools": [
+                        "measurement",
+                        "draw",
+                        "box"
+                    ],
+                    "mapOptions": {
+                        "openlayers": {
+                            "attribution": {
+                                "container": "#footer-attribution-container"
+                            },
+                            "interactions": {
+                                "pinchRotate": false,
+                                "altShiftDragRotate": false
+                            }
+                        }
+                    }
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            }
+        ],
+        "map_viewer": [
+            { "name": "ViewerLayout" },
+            { "name": "ActionNavbar" },
+            { "name": "BrandNavbar" },
+            {
+                "name": "Map",
+                "cfg": {
+                    "tools": [
+                        "measurement",
+                        "draw",
+                        "box"
+                    ],
+                    "mapOptions": {
+                        "openlayers": {
+                            "attribution": {
+                                "container": "#footer-attribution-container"
+                            },
+                            "interactions": {
+                                "pinchRotate": false,
+                                "altShiftDragRotate": false
+                            }
+                        }
+                    }
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "BackgroundSelector",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "Identify",
+                "cfg": {
+                    "viewerOptions": {
+                        "container": "{context.ReactSwipe}"
+                    }
+                },
+                "override": {
+                    "Toolbar": {
+                        "position": 11,
+                        "alwaysVisible": false
+                    }
+                }
+            },
+            {
+                "name": "TOC",
+                "cfg": {
+                    "activateMetedataTool": false
+                }
+            },
+            {
+                "name": "Toolbar",
+                "id": "NavigationBar",
+                "cfg": {
+                    "id": "navigationBar",
+                    "layout": "horizontal"
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "MapLoading",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": true
+                    }
+                }
+            },
+            {
+                "name": "DrawerMenu",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "OmniBar",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "Expander"
+            },
+            {
+                "name": "BurgerMenu",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "MapFooter",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1,
+                        "target": "footer"
+                    }
+                }
+            },
+            {
+                "name": "Measure"
+            },
+            {
+                "name": "Print",
+                "cfg": {
+                    "useFixedScales": true,
+                    "mapWidth": 256
+                }
+            },
+            {
+                "name": "ZoomAll",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": false
+                    }
+                }
+            },
+            {
+                "name": "ZoomIn",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": true
+                    }
+                }
+            },
+            {
+                "name": "ZoomOut",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": true
+                    }
+                }
+            },
+            {
+                "name": "Timeline",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "Playback"
+            },
+            {
+                "name": "LayerDownload"
+            },
+            {
+                "name": "AddLayer"
+            },
+            {
+                "name": "FilterLayer"
+            },
+            {
+                "name": "ScaleBox"
+            },
+            {
+                "name": "FeatureEditor",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "QueryPanel",
+                "cfg": {
+                    "activateQueryTool": true,
+                    "spatialOperations": [
+                        {
+                            "id": "INTERSECTS",
+                            "name": "queryform.spatialfilter.operations.intersects"
+                        },
+                        {
+                            "id": "BBOX",
+                            "name": "queryform.spatialfilter.operations.bbox"
+                        },
+                        {
+                            "id": "CONTAINS",
+                            "name": "queryform.spatialfilter.operations.contains"
+                        },
+                        {
+                            "id": "WITHIN",
+                            "name": "queryform.spatialfilter.operations.within"
+                        }
+                    ],
+                    "spatialMethodOptions": [
+                        {
+                            "id": "Viewport",
+                            "name": "queryform.spatialfilter.methods.viewport"
+                        },
+                        {
+                            "id": "BBOX",
+                            "name": "queryform.spatialfilter.methods.box"
+                        },
+                        {
+                            "id": "Circle",
+                            "name": "queryform.spatialfilter.methods.circle"
+                        },
+                        {
+                            "id": "Polygon",
+                            "name": "queryform.spatialfilter.methods.poly"
+                        }
+                    ]
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "MetadataExplorer",
+                "cfg": {
+                    "wrap": true
+                }
+            },
+            {
+                "name": "MousePosition",
+                "cfg": {
+                    "editCRS": true,
+                    "showLabels": true,
+                    "showToggle": true,
+                    "filterAllowedCRS": [
+                        "EPSG:4326",
+                        "EPSG:3857"
+                    ],
+                    "additionalCRS": {}
+                }
+            },
+            {
+                "name": "Search",
+                "cfg": {
+                    "withToggle": [
+                        "max-width: 768px",
+                        "min-width: 768px"
+                    ]
+                }
+            },
+            {
+                "name": "FullScreen",
+                "override": {
+                    "Toolbar": {
+                        "alwaysVisible": false
+                    }
+                }
+            },
+            {
+                "name": "TOCItemsSettings",
+                "cfg": {
+                    "hideTitleTranslations": true,
+                    "showFeatureInfoTab": false
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "Widgets",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "WidgetsTray",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "SaveAs",
+                "cfg": {
+                    "disablePermission": true
+                }
+            },
+            {
+                "name": "Notifications"
+            },
+            {
+                "name": "Share",
+                "cfg": {
+                    "pathTemplate": "/maps/{id}/embed"
+                }
+            },
+            {
+                "name": "Swipe"
+            },
+            {
+                "name": "Locate"
+            },
+            {
+                "name": "WidgetsBuilder"
+            },
+            {
+                "name": "Save",
+                "cfg": {
+                    "disablePermission": true
+                }
+            },
+            {
+                "name": "AddGroup"
+            },
+            {
+                "name": "StyleEditor",
+                "cfg": {
+                    "styleService": {
+                        "baseUrl": "{state('settings') && state('settings').geonodeUrl && state('settings').geonodeUrl + 'gs/' || '/gs/'}",
+                        "formats": [
+                            "css",
+                            "sld"
+                        ],
+                        "availableUrls": [
+                            "{state('settings') && state('settings').geoserverUrl || '/geoserver/'}",
+                            "{state('settings') && state('settings').geonodeUrl && state('settings').geonodeUrl + 'gs/' || '/gs/'}"
+                        ],
+                        "fonts": [
+                            "Arial",
+                            "Courier New",
+                            "Monospaced",
+                            "SansSerif",
+                            "Serif",
+                            "Times New Roman"
+                        ]
+                    },
+                    "editingAllowedRoles": null,
+                    "enableSetDefaultStyle": true
+                }
+            }
+        ],
+        "geostory_viewer": [
+            { "name": "ViewerLayout" },
+            { "name": "ActionNavbar" },
+            { "name": "BrandNavbar" },
+            {
+                "name": "OmniBar",
+                "cfg": {
+                    "disablePluginIf": "{!!(state('browser') && state('browser').mobile)}",
+                    "containerPosition": "header",
+                    "className": "navbar shadow navbar-home"
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "BurgerMenu",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "GeoStory",
+                "cfg": {
+                    "mediaEditorSettings": {
+                        "sourceId": "geostory",
+                        "mediaTypes": {
+                            "image": {
+                                "defaultSource": "geostory",
+                                "sources": [
+                                    "geostory",
+                                    "geonode"
+                                ]
+                            },
+                            "video": {
+                                "defaultSource": "geostory",
+                                "sources": [
+                                    "geostory",
+                                    "geonode"
+                                ]
+                            },
+                            "map": {
+                                "defaultSource": "geostory",
+                                "sources": [
+                                    "geostory",
+                                    "geonode"
+                                ]
+                            }
+                        },
+                        "sources": {
+                            "geostory": {
+                                "name": "geostory.storyResources",
+                                "type": "geostory",
+                                "addMediaEnabled": {
+                                    "image": true,
+                                    "video": true
+                                },
+                                "editMediaEnabled": {
+                                    "image": true,
+                                    "video": true
+                                },
+                                "removeMediaEnabled": {
+                                    "image": true,
+                                    "video": true,
+                                    "map": true
+                                }
+                            },
+                            "geonode": {
+                                "name": "geostory.geoNode",
+                                "type": "geonode"
+                            }
+                        }
+                    }
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "MediaEditor"
+            },
+            {
+                "name": "GeoStoryEditor",
+                "cfg": {
+                    "disablePluginIf": "{!!(state('browser') && state('browser').mobile)}",
+                    "containerPosition": "columns"
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "GeoStoryNavigation",
+                "cfg": {
+                    "containerPosition": "header"
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "Notifications"
+            },
+            {
+                "name": "Save"
+            },
+            {
+                "name": "SaveAs"
+            },
+            {
+                "name": "Share"
+            }
+        ],
+        "document_viewer": [
+            { "name": "ViewerLayout" },
+            { "name": "ActionNavbar" },
+            { "name": "BrandNavbar" }
         ]
     }
 }

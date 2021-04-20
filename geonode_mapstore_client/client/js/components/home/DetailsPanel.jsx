@@ -96,11 +96,14 @@ function DetailsPanel({
 
     const types = getTypesInfo();
     const {
-        formatEmbedUrl = embedUrl => embedUrl,
+        formatEmbedUrl = res => res?.embed_url,
+        formatDetailUrl = res => res?.detail_url,
         icon,
         name
     } = resource && (types[resource.doc_type] || types[resource.resource_type]) || {};
-    const embedUrl = resource?.embed_url && formatEmbedUrl(resource.embed_url);
+    const embedUrl = resource?.embed_url && formatEmbedUrl(resource);
+    const detailUrl = resource?.pk && formatDetailUrl(resource);
+
     return (
         <div
             ref={detailsContainerNode}
@@ -177,7 +180,7 @@ function DetailsPanel({
                             {resource?.title}
                         </h1>
                         <div className="gn-details-panel-tools">
-                            {resource && <OverlayTrigger
+                            {detailUrl && <OverlayTrigger
                                 placement="top"
                                 overlay={(props) =>
                                     <Tooltip id="share-resource-tooltip" {...props}>
@@ -189,7 +192,7 @@ function DetailsPanel({
                                     </Tooltip>}
                             >
                                 <CopyToClipboard
-                                    text={formatResourceLinkUrl(resource.detail_url)}
+                                    text={formatResourceLinkUrl(detailUrl)}
                                 >
                                     <Button
                                         variant="default"
@@ -198,9 +201,11 @@ function DetailsPanel({
                                     </Button>
                                 </CopyToClipboard>
                             </OverlayTrigger>}
-                            {resource?.detail_url && <Button
+                            {detailUrl && <Button
                                 variant="default"
-                                href={resource.detail_url}>
+                                href={detailUrl}
+                                target="_blank"
+                                rel="noopener noreferrer">
                                 <Message msgId={`gnhome.view${name || ''}`}/>
                             </Button>}
                         </div>
