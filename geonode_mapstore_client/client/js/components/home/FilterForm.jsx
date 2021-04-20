@@ -200,7 +200,7 @@ FilterForm.defaultProps = {
 };
 
 const arePropsEqual = (prevProps, nextProps) => {
-    return isEqual( prevProps.styleContanierForm, nextProps.styleContanierForm)
+    return isEqual( prevProps.styleContanierForm, nextProps.styleContanierForm);
 };
 
 
