@@ -133,10 +133,11 @@ Menu item object contains properties for a list item rendered in a menu. Configu
 {
   "labelId": "gnhome.register", // label message id
   "type": "link", // one of 'link', 'dropdown', 'divider' or 'filter'
-  "href": "/account/signup/?next=/", // link href
-  "authenticated": false, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
-  "badge": "${layersTotalCount}", // (menu configuration only) counter badge. variable available: layersTotalCount, mapsTotalCount, documentsTotalCount, geoappsTotalCount or geostoriesTotalCount
-  "style": {} // (menu configuration only) css style object for a specific menu item
+  "href": "/account/signup/?next=/",
+  "badge": "{state.layersTotalCount}", // (menu configuration only) counter badge. variable available: layersTotalCount, mapsTotalCount,
+  "authenticated": true, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
+  "permissions": [], // the value in array define the access to the contents
+  "allowedRoles": [] // user roles to access  to the contents
 }
 ```
 
@@ -144,16 +145,22 @@ Menu item object contains properties for a list item rendered in a menu. Configu
 ```js
 {
   "labelId": "gnhome.register", // label message id
+  "image": "", //the toogle image
   "type": "dropdown", // one of 'link', 'dropdown', 'divider' or 'filter'
   "authenticated": true, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
-  "items": [] // menu items of type link or divider
+  "permissions": [], // the value in array define the access to the contents
+  "allowedRoles": [], // user roles to access  to the contents
+  "items": []  // menu items of type link or divider
 }
 ```
 
 - type divider
 ```js
 {
-  "type": "divider" // one of 'link', 'dropdown', 'divider' or 'filter'
+  "type": "divider", // one of 'link', 'dropdown', 'divider' or 'filter'
+  "authenticated": true, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
+  "permissions": [], // the value in array define the access to the contents
+  "allowedRoles": [], // user roles to access  to the contents
 }
 ```
 
@@ -163,6 +170,9 @@ Menu item object contains properties for a list item rendered in a menu. Configu
   "type": "filter", // one of 'link', 'dropdown', 'divider' or 'filter'
   "id": "landuse", // unique id of the filter
   "labelId": "gnhome.customFilterExample", // label message id
+  "authenticated": true, // true shows the item only when user authenticated while false only for anonymous user, if undefined the item is always visible
+  "permissions": [], // the value in array define the access to the contents
+  "allowedRoles": [],  // user roles to access  to the contents
   "query": { // query filter to use
     "filter{regions.name.in}": [
         "Global"
