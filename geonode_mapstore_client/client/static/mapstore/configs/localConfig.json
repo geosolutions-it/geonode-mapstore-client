@@ -66,7 +66,16 @@
         {
             "name": "settings",
             "path": "gnsettings"
+        },
+        {
+            "name": "user",
+            "path": "security.user"
+        },
+        {
+            "name": "geoNodeResourcesInfo",
+            "path": "localConfig.geoNodeResourcesInfo"
         }
+
     ],
     "projectionDefs": [
         {
@@ -352,13 +361,13 @@
                     "authenticated": false
                 },
                 {
-                    "image": "${user.avatar}",
+                    "image": "{state('user') && state('user').avatar}",
                     "type": "dropdown",
                     "authenticated": true,
                     "items": [
                         {
                             "type": "link",
-                            "href": "${user.hrefProfile}",
+                            "href": "{state('user') && state('user').hrefProfile}",
                             "labelId": "gnhome.profile"
                         },
                         {
@@ -383,7 +392,7 @@
                             "type": "link",
                             "href": "/admin/",
                             "labelId": "gnhome.admin",
-                            "allowedGroups": [
+                            "allowedRoles": [
                                 "admin"
                             ]
                         },
@@ -391,13 +400,13 @@
                             "type": "link",
                             "href": "/geoserver/",
                             "labelId": "gnhome.geoServer",
-                            "allowedGroups": [
+                            "allowedRoles": [
                                 "admin"
                             ]
                         },
                         {
                             "type": "divider",
-                            "allowedGroups": [
+                            "allowedRoles": [
                                 "admin"
                             ]
                         },
@@ -428,41 +437,53 @@
                             "type": "link",
                             "href": "/layers/?limit=5",
                             "labelId": "gnhome.layers",
-                            "badge": "${layersTotalCount}"
+                            "badge": "{state('geoNodeResourcesInfo').layersTotalCount}",
+                            "permissions": [],
+                            "allowedRoles": []
                         },
                         {
                             "type": "link",
                             "href": "/documents/?limit=5",
                             "labelId": "gnhome.documents",
-                            "badge": "${documentsTotalCount}"
+                            "badge": "{state('geoNodeResourcesInfo').documentsTotalCount}",
+                            "permissions": [],
+                            "allowedRoles": []
                         },
                         {
                             "type": "link",
                             "href": "/services/?limit=5",
-                            "labelId": "gnhome.remoteServices"
+                            "labelId": "gnhome.remoteServices",
+                            "permissions": [],
+                            "allowedRoles": []
                         },
                         {
                             "type": "divider",
-                            "authenticated": true
+                            "authenticated": true,
+                            "permissions": [],
+                            "allowedRoles": []
                         },
                         {
                             "type": "link",
                             "href": "/layers/upload",
                             "labelId": "gnhome.uploadLayer",
-                            "authenticated": true
+                            "authenticated": true,
+                            "permissions": [],
+                            "allowedRoles": []
                         },
                         {
                             "type": "link",
                             "href": "/documents/upload",
                             "labelId": "gnhome.uploadDocument",
-                            "authenticated": true
+                            "authenticated": true,
+                            "permissions": [],
+                            "allowedRoles": []
                         },
                         {
                             "type": "link",
                             "href": "/services/register/",
                             "labelId": "gnhome.addRemoteService",
                             "authenticated": true,
-                            "allowedGroups": [
+                            "allowedRoles": [
                                 "admin"
                             ]
                         }
@@ -470,16 +491,17 @@
                 },
                 {
                     "labelId": "gnhome.maps",
-                    "type": "link",
-                    "href": "/maps/?limit=5",
                     "authenticated": false,
-                    "badge": "${mapsTotalCount}"
+                    "type": "link",
+                    "subType": "tag",
+                    "href": "/maps/?limit=5",
+                    "badge": "{state('geoNodeResourcesInfo').mapsTotalCount}"
                 },
                 {
                     "labelId": "gnhome.maps",
                     "type": "dropdown",
                     "authenticated": true,
-                    "badge": "${mapsTotalCount}",
+                    "badge": "{state('geoNodeResourcesInfo').mapsTotalCount}",
                     "items": [
                         {
                             "type": "link",
@@ -495,9 +517,10 @@
                 },
                 {
                     "type": "link",
+                    "subType": "tag",
                     "href": "/apps/?limit=5",
                     "labelId": "gnhome.apps",
-                    "badge": "${geoappsTotalCount}"
+                    "badge": "{state('geoNodeResourcesInfo').geoappsTotalCount}"
                 },
                 {
                     "labelId": "gnhome.about",
@@ -523,7 +546,7 @@
                             "href": "/announcements/",
                             "labelId": "gnhome.announcements",
                             "authenticated": true,
-                            "allowedGroups": [
+                            "allowedRoles": [
                                 "admin"
                             ]
                         },
@@ -542,7 +565,7 @@
                             "href": "/admin/people/profile/add/",
                             "labelId": "gnhome.addUser",
                             "authenticated": true,
-                            "allowedGroups": [
+                            "allowedRoles": [
                                 "admin"
                             ]
                         },
@@ -551,7 +574,7 @@
                             "href": "/groups/create/",
                             "labelId": "gnhome.createGroup",
                             "authenticated": true,
-                            "allowedGroups": [
+                            "allowedRoles": [
                                 "admin"
                             ]
                         }
@@ -562,7 +585,7 @@
         "footer": {
             "items": [
                 {
-                    "label": "geonode.org",
+                    "labelId": "geonode.org",
                     "type": "link",
                     "href": "https://geonode.org/"
                 },

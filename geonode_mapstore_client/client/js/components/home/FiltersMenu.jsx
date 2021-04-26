@@ -12,52 +12,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import Message from '@mapstore/framework/components/I18N/Message';
 import FaIcon from '@js/components/home/FaIcon';
 import useLocalStorage from '@js/hooks/useLocalStorage';
-import { filterMenuItems } from '@js/utils/MenuUtils';
-
-
-const CardsMenu = ({ item, menuItemsProps }) => {
-    const { type, labelId = '', items = [] } = item;
-    const { state } = menuItemsProps;
-
-    if (type === 'dropdown') {
-
-        const dropdownItems = items
-            .filter((opt) => filterMenuItems(state, opt))
-            .map((opt) => {
-                return (
-                    <Dropdown.Item
-                        key={opt.value}
-                        href={(opt.type === 'link' && opt.href) ? opt.href : undefined}
-                    >
-                        <Message msgId={opt.labelId} />
-                    </Dropdown.Item>
-                );
-            });
-
-        return (
-            <Dropdown alignRight>
-                <Dropdown.Toggle
-                    id="create-new-dropdown"
-                    variant="default"
-                    size="sm"
-                >
-                    <Message msgId={labelId} />
-                </Dropdown.Toggle>
-                {<Dropdown.Menu>
-                    {dropdownItems}
-                </Dropdown.Menu>
-                }
-            </Dropdown>
-        );
-    }
-
-    if (type === 'divider') {
-        return <div className="gn-menu-index-divider" ></div>;
-    }
-
-    return null;
-
-};
+import Menu from '@js/components/Menu';
 
 const FiltersMenu = forwardRef(({
     formatHref,
@@ -68,15 +23,11 @@ const FiltersMenu = forwardRef(({
     style,
     onClick,
     layoutSwitcher,
-    defaultLabelId,
-    user
+    defaultLabelId
 }, ref) => {
 
     const selectedSort = orderOptions.find(({ value }) => order === value);
     const [cardLayoutStyle] = useLocalStorage('layoutCardsStyle');
-    const state = {
-        user
-    };
 
     return (
         <div
@@ -95,22 +46,11 @@ const FiltersMenu = forwardRef(({
                         </div>
                     )}
                 </ReactResizeDetector>
-                <ul className="gn-cards-menu">
-                    {cardsMenu
-                        .filter((item) => filterMenuItems(state, item))
-                        .map((item, idx) => {
-                            return (
-                                <li key={idx}>
-                                    <CardsMenu
-                                        item={{ ...item, id: item.id || idx }}
-                                        menuItemsProps={{
-                                            state
-                                        }}
-                                    />
-                                </li>
-                            );
-                        })}
-                </ul>
+                <Menu
+                    items={cardsMenu}
+                    containerClass={`gn-cards-menu`}
+
+                />
 
                 <Button variant="default" onClick={layoutSwitcher} >
                     <FaIcon name={cardLayoutStyle === 'grid' ? 'th' : cardLayoutStyle} />
