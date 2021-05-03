@@ -30,7 +30,9 @@ const Menu = ({
     containerClass,
     childrenClass,
     query,
-    formatHref
+    formatHref,
+    size,
+    alignRight
 }) => {
 
     return (
@@ -41,6 +43,8 @@ const Menu = ({
                         <li key={idx}>
                             <MenuItem
                                 item={{ ...item, id: item.id || idx }}
+                                size={size}
+                                alignRight={alignRight}
                                 menuItemsProps={{
                                     query,
                                     formatHref

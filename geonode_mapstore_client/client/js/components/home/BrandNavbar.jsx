@@ -54,6 +54,7 @@ const BrandNavbar = forwardRef(({
                     items={[...navItems].reverse()}
                     containerClass={`gn-brand-navbar-right-side`}
                     childrenClass={`gn-user-dropdown`}
+                    alignRight
                 />
 
             </div>

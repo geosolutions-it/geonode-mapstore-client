@@ -49,7 +49,6 @@ import {
     getOwners
 } from '@js/api/geonode/v1';
 import { getResourceTypes } from '@js/api/geonode/v2';
-import useLocalStorage from '@js/hooks/useLocalStorage';
 import  { toggleFiltersPanel }  from '@js/actions/gnfiltersPanel';
 
 
@@ -204,7 +203,8 @@ function Home({
     filters,
     user,
     width,
-    resource
+    resource,
+    totalResources
 }) {
     const pageSize = getPageSize(width);
     const isMounted = useRef();
@@ -261,8 +261,6 @@ function Home({
         return get(monitoredUserState, path);
     };
 
-
-    const [cardLayoutStyle, setCardLayoutStyle] = useLocalStorage('layoutCardsStyle');
     const [showFilterForm, setShowFilterForm] = useState( (isFilterForm && isToggle) || false);
 
     const handleShowFilterForm = () => {
@@ -274,12 +272,6 @@ function Home({
         onToggleFilters();
 
     };
-
-    const handleStoredLayoutStyle = () => {
-        let styleCard = cardLayoutStyle === 'grid' ? 'list' : 'grid';
-        setCardLayoutStyle(styleCard);
-    };
-
 
     function handleUpdate(newParams, pathname) {
         const { query } = url.parse(location.search, true);
@@ -475,25 +467,25 @@ function Home({
                                     }
                                     : undefined}
                                 column={ hideHero &&
-                    <ConnectedDetailsPanel
-                        resource={resource}
-                        filters={queryFilters}
-                        formatHref={handleFormatHref}
-                        sectionStyle={{
-                            width: pageSize === 'lg'
-                                ? 700
-                                : pageSize === 'md'
-                                    ? 600
-                                    : '100%',
-                            ...(!isHeroVisible && {
-                                position: 'fixed',
-                                top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight,
-                                bottom: dimensions.footerNodeHeight,
-                                overflowY: 'scroll',
-                                height: 'auto'
-                            })
-                        }}
-                    />
+                                    <ConnectedDetailsPanel
+                                        resource={resource}
+                                        filters={queryFilters}
+                                        formatHref={handleFormatHref}
+                                        sectionStyle={{
+                                            width: pageSize === 'lg'
+                                                ? 700
+                                                : pageSize === 'md'
+                                                    ? 600
+                                                    : '100%',
+                                            ...(!isHeroVisible && {
+                                                position: 'fixed',
+                                                top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight,
+                                                bottom: dimensions.footerNodeHeight,
+                                                overflowY: 'scroll',
+                                                height: 'auto'
+                                            })
+                                        }}
+                                    />
                                 }
                                 isCardActive={res => res.pk === pk}
                                 page={params.page ? parseFloat(params.page) : 1}
@@ -516,9 +508,9 @@ function Home({
                                     filters={queryFilters}
                                     onClear={handleClear}
                                     onClick={handleShowFilterForm}
-                                    layoutSwitcher={handleStoredLayoutStyle}
                                     orderOptions={filters?.order?.options}
                                     defaultLabelId={filters?.order?.defaultLabelId}
+                                    totalResources={totalResources}
                                 />
 
                             </ConnectedCardGrid>
@@ -565,13 +557,15 @@ const ConnectedHome = connect(
         state => state?.security?.user || null,
         state => state?.gnresource?.data || null,
         state => state?.gnfiltersPanel?.isToggle || false,
-        state => getMonitoredState(state, getConfigProp('monitorState'))
-    ], (params, user, resource, isToggle, monitoredUserState) => ({
+        state => getMonitoredState(state, getConfigProp('monitorState')),
+        state => state?.gnsearch?.total || 0
+    ], (params, user, resource, isToggle, monitoredUserState, totalResources) => ({
         params,
         user,
         resource,
         isToggle,
-        monitoredUserState
+        monitoredUserState,
+        totalResources
     })),
     {
         onSearch: searchResources,

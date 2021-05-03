@@ -145,6 +145,7 @@ export const getResources = ({
     })
         .then(({ data }) => {
             return {
+                total: data.total,
                 isNextPageAvailable: !!data.links.next,
                 resources: (data.resources || [])
                     .map((resource) => {
