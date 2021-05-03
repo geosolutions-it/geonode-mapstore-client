@@ -125,6 +125,7 @@ const requestResourcesObservable = ({
         .defer(() => getResources({ ...params, pageSize }))
         .switchMap(({
             resources,
+            total,
             isNextPageAvailable
         }) => {
             return Observable.of(
@@ -133,7 +134,8 @@ const requestResourcesObservable = ({
                     isNextPageAvailable,
                     params,
                     locationSearch: location.search,
-                    locationPathname: location.pathname
+                    locationPathname: location.pathname,
+                    total
                 }),
                 loadingResources(false)
             );

@@ -58,7 +58,9 @@ const DropdownList = ({
     dropdownClass,
     tabIndex,
     badgeValue,
-    containerNode
+    containerNode,
+    size,
+    alignRight
 }) => {
 
 
@@ -85,6 +87,7 @@ const DropdownList = ({
             variant="default"
             tabIndex={tabIndex}
             style={toogleStyle}
+            size={size}
         >
             {toogleImage
                 ? <img src={toogleImage} />
@@ -100,6 +103,7 @@ const DropdownList = ({
     return (
         <Dropdown
             className={`${dropdownClass}`}
+            alignRight={alignRight}
         >
             {DropdownToogle}
             {containerNode

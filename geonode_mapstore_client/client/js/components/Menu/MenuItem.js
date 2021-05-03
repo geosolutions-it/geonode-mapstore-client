@@ -37,7 +37,7 @@ const isValidBadgeValue = value => !!(value !== '' && !isNil(value));
  *
  */
 
-const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, classItem }) => {
+const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, classItem, size, alignRight }) => {
 
     const { formatHref, query } = menuItemsProps;
     const { id, type, label, labelId = '', items = [], href, style, badge = '', image, subType } = item;
@@ -55,6 +55,8 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
             tabIndex={tabIndex}
             badgeValue={badgeValue}
             containerNode={containerNode}
+            size={size}
+            alignRight={alignRight}
         />);
     }
 

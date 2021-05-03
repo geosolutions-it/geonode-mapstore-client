@@ -25,7 +25,7 @@ import FilterForm from '@js/components/home/FilterForm';
 import LanguageSelector from '@js/components/home/LanguageSelector';
 import { getMonitoredState, handleExpression } from '@mapstore/framework/utils/PluginsUtils';
 import { getConfigProp } from "@mapstore/framework/utils/ConfigUtils";
-import { filterMenuItems, mapObjectFunc, reduceArrayRecursive } from '@js/utils/MenuUtils';
+import { filterMenuItems, mapObjectFunc, reduceArrayRecursive, buildHrefByTemplate } from '@js/utils/MenuUtils';
 
 import get from 'lodash/get';
 import {
@@ -49,7 +49,6 @@ import {
     getOwners
 } from '@js/api/geonode/v1';
 import { getResourceTypes } from '@js/api/geonode/v2';
-import useLocalStorage from '@js/hooks/useLocalStorage';
 import  { toggleFiltersPanel }  from '@js/actions/gnfiltersPanel';
 
 
@@ -103,7 +102,7 @@ const CardGridWithMessageId = ({ query, user, isFirstRequest, ...props }) => {
             || isLoggedIn && 'noContentYet'
             || 'noPublicContent'
         : undefined;
-    return <CardGrid { ...props } messageId={messageId}/>;
+    return <CardGrid { ...props } messageId={messageId}  />;
 };
 
 const ConnectedCardGrid = connect(
@@ -204,7 +203,8 @@ function Home({
     filters,
     user,
     width,
-    resource
+    resource,
+    totalResources
 }) {
     const pageSize = getPageSize(width);
     const isMounted = useRef();
@@ -261,8 +261,6 @@ function Home({
         return get(monitoredUserState, path);
     };
 
-
-    const [cardLayoutStyle, setCardLayoutStyle] = useLocalStorage('layoutCardsStyle');
     const [showFilterForm, setShowFilterForm] = useState( (isFilterForm && isToggle) || false);
 
     const handleShowFilterForm = () => {
@@ -274,12 +272,6 @@ function Home({
         onToggleFilters();
 
     };
-
-    const handleStoredLayoutStyle = () => {
-        let styleCard = cardLayoutStyle === 'grid' ? 'list' : 'grid';
-        setCardLayoutStyle(styleCard);
-    };
-
 
     function handleUpdate(newParams, pathname) {
         const { query } = url.parse(location.search, true);
@@ -369,6 +361,7 @@ function Home({
     const navebarItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.navbar?.items, (item) => filterMenuItems(userState, item));
     const filterMenuItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.cardsMenu?.items, (item) => filterMenuItems(userState, item));
     const footerMenuItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.footer?.items, (item) => filterMenuItems(userState, item));
+    const cardOptionsItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.cardOptions?.items, (item) => filterMenuItems(userState, item));
 
     const search = (
         <ConnectedSearchBar
@@ -464,34 +457,35 @@ function Home({
                                 user={user}
                                 query={query}
                                 pageSize={pageSize}
+                                cardOptions={cardOptionsItemsAllowed}
                                 isColumnActive={!!resource}
+                                buildHrefByTemplate={buildHrefByTemplate}
                                 containerStyle={!isHeroVisible
                                     ? {
                                         marginTop: hideHero && dimensions.brandNavbarHeight,
-                                        minHeight: `calc(100vh - ${dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight + dimensions.footerNodeHeight}px )`,
                                         paddingBottom: dimensions.footerNodeHeight
                                     }
                                     : undefined}
                                 column={ hideHero &&
-                    <ConnectedDetailsPanel
-                        resource={resource}
-                        filters={queryFilters}
-                        formatHref={handleFormatHref}
-                        sectionStyle={{
-                            width: pageSize === 'lg'
-                                ? 700
-                                : pageSize === 'md'
-                                    ? 600
-                                    : '100%',
-                            ...(!isHeroVisible && {
-                                position: 'fixed',
-                                top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight,
-                                bottom: dimensions.footerNodeHeight,
-                                overflowY: 'scroll',
-                                height: 'auto'
-                            })
-                        }}
-                    />
+                                    <ConnectedDetailsPanel
+                                        resource={resource}
+                                        filters={queryFilters}
+                                        formatHref={handleFormatHref}
+                                        sectionStyle={{
+                                            width: pageSize === 'lg'
+                                                ? 700
+                                                : pageSize === 'md'
+                                                    ? 600
+                                                    : '100%',
+                                            ...(!isHeroVisible && {
+                                                position: 'fixed',
+                                                top: dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight,
+                                                bottom: dimensions.footerNodeHeight,
+                                                overflowY: 'scroll',
+                                                height: 'auto'
+                                            })
+                                        }}
+                                    />
                                 }
                                 isCardActive={res => res.pk === pk}
                                 page={params.page ? parseFloat(params.page) : 1}
@@ -514,9 +508,9 @@ function Home({
                                     filters={queryFilters}
                                     onClear={handleClear}
                                     onClick={handleShowFilterForm}
-                                    layoutSwitcher={handleStoredLayoutStyle}
                                     orderOptions={filters?.order?.options}
                                     defaultLabelId={filters?.order?.defaultLabelId}
+                                    totalResources={totalResources}
                                 />
 
                             </ConnectedCardGrid>
@@ -563,13 +557,15 @@ const ConnectedHome = connect(
         state => state?.security?.user || null,
         state => state?.gnresource?.data || null,
         state => state?.gnfiltersPanel?.isToggle || false,
-        state => getMonitoredState(state, getConfigProp('monitorState'))
-    ], (params, user, resource, isToggle, monitoredUserState) => ({
+        state => getMonitoredState(state, getConfigProp('monitorState')),
+        state => state?.gnsearch?.total || 0
+    ], (params, user, resource, isToggle, monitoredUserState, totalResources) => ({
         params,
         user,
         resource,
         isToggle,
-        monitoredUserState
+        monitoredUserState,
+        totalResources
     })),
     {
         onSearch: searchResources,
