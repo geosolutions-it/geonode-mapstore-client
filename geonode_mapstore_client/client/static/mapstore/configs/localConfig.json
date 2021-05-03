@@ -582,6 +582,39 @@
                 }
             ]
         },
+        "cardOptions": {
+            "items":[
+                {
+                    "type": "link",
+                    "href": "${detail_url}",
+                    "labelId": "gnhome.open",
+                    "icon": "edit",
+                    "action": "edit"
+                },
+                {
+                    "type": "link",
+                    "href":"${detail_url}/metadata_advanced",
+                    "labelId": "gnhome.update",
+                    "icon": "paste",
+                    "action": "update",
+                    "authenticated": true,
+                    "allowedGroups": [
+                        "admin"
+                    ]
+                },
+                {
+                    "type": "link",
+                    "href":"${detail_url}/remove",
+                    "labelId": "gnhome.delete",
+                    "icon": "trash",
+                    "action": "delete",
+                    "authenticated": true,
+                    "allowedGroups": [
+                        "admin"
+                    ]
+                }
+            ]
+        },
         "footer": {
             "items": [
                 {

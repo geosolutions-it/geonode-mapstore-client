@@ -95,7 +95,11 @@
             "developers": "Entwickler",
             "customFilterExample": "Benutzerdefinierter Filter (Global)",
             "copiedResourceUrl": "Ressourcen-URL kopiert!",
-            "copyResourceUrl": "Ressourcen-URL kopieren"
+            "copyResourceUrl": "Ressourcen-URL kopieren",
+            "open": "Öffnen",
+            "share": "Teilen",
+            "update": "Aktualisieren",
+            "delete": "Löschen"
         }
     }
 }

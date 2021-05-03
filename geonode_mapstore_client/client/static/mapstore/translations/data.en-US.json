@@ -95,7 +95,12 @@
             "developers": "Developers",
             "customFilterExample": "Custom filter (Global)",
             "copiedResourceUrl": "Resource url copied!",
-            "copyResourceUrl": "Copy resource url"
+            "copyResourceUrl": "Copy resource url",
+            "open": "Open",
+            "share": "Share",
+            "update": "Update",
+            "delete": "Delete"
+
         }
     }
 }
