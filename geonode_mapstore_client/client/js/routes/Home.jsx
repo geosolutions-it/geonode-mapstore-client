@@ -195,7 +195,6 @@ function Home({
     isToggle,
     monitoredUserState,
     geoNodeConfiguration,
-    navbar,
     hideHero,
     isFilterForm,
     onSelect,
@@ -358,7 +357,7 @@ function Home({
     const confWithHandleExpression = mapObjectFunc(v => handleExpression(getMonitorState, {}, v))(geoNodeConfiguration);
     const menuItemsLeftAllowed = reduceArrayRecursive(confWithHandleExpression?.menu?.items, (item) => filterMenuItems(userState, item));
     const menuItemsRightAllowed = reduceArrayRecursive(confWithHandleExpression?.menu?.rightItems, (item) => filterMenuItems(userState, item));
-    const navebarItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.navbar?.items, (item) => filterMenuItems(userState, item));
+    const navbarItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.navbar?.items, (item) => filterMenuItems(userState, item));
     const filterMenuItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.cardsMenu?.items, (item) => filterMenuItems(userState, item));
     const footerMenuItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.footer?.items, (item) => filterMenuItems(userState, item));
     const cardOptionsItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.cardOptions?.items, (item) => filterMenuItems(userState, item));
@@ -386,12 +385,12 @@ function Home({
         <div className={`gn-home gn-theme-${theme?.variant || 'light'}`}>
             <BrandNavbar
                 ref={brandNavbarNode}
-                logo={castArray(navbar?.logo || [])
+                logo={castArray(confWithHandleExpression?.navbar?.logo || [])
                     .map((logo) => ({
                         ...logo,
                         ...logo[pageSize]
                     }))}
-                navItems={navebarItemsAllowed}
+                navItems={navbarItemsAllowed}
                 inline={pageSize !== 'sm'}
                 pageSize={pageSize}
                 style={{
