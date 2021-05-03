@@ -26,7 +26,7 @@ import LanguageSelector from '@js/components/home/LanguageSelector';
 import { getMonitoredState, handleExpression } from '@mapstore/framework/utils/PluginsUtils';
 import { getConfigProp } from "@mapstore/framework/utils/ConfigUtils";
 import { filterMenuItems, mapObjectFunc, reduceArrayRecursive, buildHrefByTemplate } from '@js/utils/MenuUtils';
-
+import { setControlProperty } from '@mapstore/framework/actions/controls';
 import get from 'lodash/get';
 import {
     fetchSuggestions,
@@ -49,12 +49,9 @@ import {
     getOwners
 } from '@js/api/geonode/v1';
 import { getResourceTypes } from '@js/api/geonode/v2';
-import  { toggleFiltersPanel }  from '@js/actions/gnfiltersPanel';
-
 
 const DEFAULT_SUGGESTIONS = [];
 const DEFAULT_RESOURCES = [];
-const REDIRECT_NOT_ALLOWED = ['/', '/search/'];
 const ConnectedLanguageSelector = connect(
     createSelector([
         currentLocaleSelector
@@ -79,19 +76,6 @@ const ConnectedSearchBar = connect(
         onClearSuggestions: updateSuggestions.bind(null, [])
     }
 )(SearchBar);
-
-
-const ConnectedFilterForm = connect(
-    createSelector([
-        state => state?.gnfiltersPanel?.isToggle || false
-    ], (isToggle) => ({
-        isToggle
-    })),
-    {
-        onToggleFilters: toggleFiltersPanel
-    }
-)(FilterForm);
-
 
 const CardGridWithMessageId = ({ query, user, isFirstRequest, ...props }) => {
     const hasResources = props.resources?.length > 0;
@@ -191,11 +175,10 @@ function Home({
     theme,
     params,
     onSearch,
-    onToggleFilters,
-    isToggle,
+    onEnableFiltersPanel,
+    isFiltersPanelEnabled,
     monitoredUserState,
     geoNodeConfiguration,
-    navbar,
     hideHero,
     isFilterForm,
     onSelect,
@@ -261,16 +244,13 @@ function Home({
         return get(monitoredUserState, path);
     };
 
-    const [showFilterForm, setShowFilterForm] = useState( (isFilterForm && isToggle) || false);
-
     const handleShowFilterForm = () => {
-        if (!REDIRECT_NOT_ALLOWED.includes(location.pathname)) {
+        if (!isFilterForm) {
             window.location = `#/search/${location.search}`;
-            return;
+            onEnableFiltersPanel(true);
+        } else {
+            onEnableFiltersPanel(!isFiltersPanelEnabled);
         }
-        setShowFilterForm(!showFilterForm);
-        onToggleFilters();
-
     };
 
     function handleUpdate(newParams, pathname) {
@@ -358,7 +338,7 @@ function Home({
     const confWithHandleExpression = mapObjectFunc(v => handleExpression(getMonitorState, {}, v))(geoNodeConfiguration);
     const menuItemsLeftAllowed = reduceArrayRecursive(confWithHandleExpression?.menu?.items, (item) => filterMenuItems(userState, item));
     const menuItemsRightAllowed = reduceArrayRecursive(confWithHandleExpression?.menu?.rightItems, (item) => filterMenuItems(userState, item));
-    const navebarItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.navbar?.items, (item) => filterMenuItems(userState, item));
+    const navbarItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.navbar?.items, (item) => filterMenuItems(userState, item));
     const filterMenuItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.cardsMenu?.items, (item) => filterMenuItems(userState, item));
     const footerMenuItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.footer?.items, (item) => filterMenuItems(userState, item));
     const cardOptionsItemsAllowed = reduceArrayRecursive(confWithHandleExpression?.cardOptions?.items, (item) => filterMenuItems(userState, item));
@@ -386,12 +366,12 @@ function Home({
         <div className={`gn-home gn-theme-${theme?.variant || 'light'}`}>
             <BrandNavbar
                 ref={brandNavbarNode}
-                logo={castArray(navbar?.logo || [])
+                logo={castArray(confWithHandleExpression?.navbar?.logo || [])
                     .map((logo) => ({
                         ...logo,
                         ...logo[pageSize]
                     }))}
-                navItems={navebarItemsAllowed}
+                navItems={navbarItemsAllowed}
                 inline={pageSize !== 'sm'}
                 pageSize={pageSize}
                 style={{
@@ -433,11 +413,11 @@ function Home({
 
                 <div className="gn-container">
                     <div className="gn-row">
-                        {showFilterForm && <div ref={filterFormNode} id="gn-filter-form-container" className={`gn-filter-form-container`}>
-                            <ConnectedFilterForm
+                        {isFiltersPanelEnabled && isFilterForm && <div ref={filterFormNode} id="gn-filter-form-container" className={`gn-filter-form-container`}>
+                            <FilterForm
                                 key="gn-filter-form"
                                 id="gn-filter-form"
-                                styleContanierForm={ hideHero ? { marginTop: dimensions.brandNavbarHeight, top: (filterFormOffset + dimensions.brandNavbarHeight), maxHeight: stickyFiltersMaxHeight } :
+                                styleContainerForm={ hideHero ? { marginTop: dimensions.brandNavbarHeight, top: (filterFormOffset + dimensions.brandNavbarHeight), maxHeight: stickyFiltersMaxHeight } :
                                     { top: (filterFormOffset - dimensions.heroNodeHeight), maxHeight: stickyFiltersMaxHeight }}
                                 show
                                 fields={filters?.fields?.options}
@@ -544,7 +524,8 @@ Home.propTypes = {
 Home.defaultProps = {
     background: {},
     logo: [],
-    jumbotron: {}
+    jumbotron: {},
+    isFilterForm: true
 };
 
 const DEFAULT_PARAMS = {};
@@ -556,21 +537,21 @@ const ConnectedHome = connect(
         state => state?.gnsearch?.params || DEFAULT_PARAMS,
         state => state?.security?.user || null,
         state => state?.gnresource?.data || null,
-        state => state?.gnfiltersPanel?.isToggle || false,
+        state => state?.controls?.gnFiltersPanel?.enabled || null,
         state => getMonitoredState(state, getConfigProp('monitorState')),
         state => state?.gnsearch?.total || 0
-    ], (params, user, resource, isToggle, monitoredUserState, totalResources) => ({
+    ], (params, user, resource, isFiltersPanelEnabled, monitoredUserState, totalResources) => ({
         params,
         user,
         resource,
-        isToggle,
+        isFiltersPanelEnabled,
         monitoredUserState,
         totalResources
     })),
     {
         onSearch: searchResources,
         onSelect: requestResource,
-        onToggleFilters: toggleFiltersPanel
+        onEnableFiltersPanel: setControlProperty.bind(null, 'gnFiltersPanel', 'enabled')
     }
 )(withResizeDetector(Home));
 
