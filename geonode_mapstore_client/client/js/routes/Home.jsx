@@ -226,10 +226,6 @@ function Home({
         ? heroNode.current.getBoundingClientRect().height
         : 0;
 
-    const filterFormOffset = filterFormNode.current
-        ? filterFormNode?.current?.offsetTop
-        : 0;
-
 
     const dimensions = {
         brandNavbarHeight,
@@ -239,10 +235,14 @@ function Home({
         heroNodeHeight
     };
 
-
     const getMonitorState = (path) => {
         return get(monitoredUserState, path);
     };
+
+    const [isSmallDevice, setIsSmallDevice] = useState(false);
+    useEffect(() => {
+        setIsSmallDevice((pageSize === 'sm') ? true : false);
+    }, [pageSize]);
 
     const handleShowFilterForm = () => {
         if (!isFilterForm) {
@@ -260,7 +260,14 @@ function Home({
             ...params,
             ...newParams
         }, pathname);
+
     }
+    // to update the overlay form in mobile device, after apply,
+    // the form has to close
+    const handleUpdateSmallDevice = (newParams, pathname) => {
+        handleUpdate(newParams, pathname);
+        handleShowFilterForm();
+    };
 
     function handleClear() {
         const { query } = url.parse(location.search, true);
@@ -281,7 +288,6 @@ function Home({
             ...options
         });
     }
-
 
     const { query } = url.parse(location.search, true);
 
@@ -362,6 +368,8 @@ function Home({
 
     const isHeroVisible = !hideHero && inView;
     const stickyFiltersMaxHeight = (window.innerHeight - dimensions.brandNavbarHeight - dimensions.menuIndexNodeHeight - dimensions.footerNodeHeight);
+    const filterFormTop = dimensions.brandNavbarHeight + dimensions.menuIndexNodeHeight;
+
     return (
         <div className={`gn-home gn-theme-${theme?.variant || 'light'}`}>
             <BrandNavbar
@@ -413,19 +421,19 @@ function Home({
 
                 <div className="gn-container">
                     <div className="gn-row">
-                        {isFiltersPanelEnabled && isFilterForm && <div ref={filterFormNode} id="gn-filter-form-container" className={`gn-filter-form-container`}>
+                        {isMounted.current && isFiltersPanelEnabled && isFilterForm &&  <div ref={filterFormNode} id="gn-filter-form-container" className={`gn-filter-form-container`}>
                             <FilterForm
                                 key="gn-filter-form"
                                 id="gn-filter-form"
-                                styleContainerForm={ hideHero ? { marginTop: dimensions.brandNavbarHeight, top: (filterFormOffset + dimensions.brandNavbarHeight), maxHeight: stickyFiltersMaxHeight } :
-                                    { top: (filterFormOffset - dimensions.heroNodeHeight), maxHeight: stickyFiltersMaxHeight }}
+                                styleContainerForm={ hideHero ? { marginTop: dimensions.brandNavbarHeight, top: filterFormTop, maxHeight: stickyFiltersMaxHeight } :
+                                    { top: filterFormTop, maxHeight: stickyFiltersMaxHeight }}
                                 show
                                 fields={filters?.fields?.options}
                                 links={filters?.fields?.links}
                                 extentProps={filters?.extent}
                                 suggestionsRequestTypes={suggestionsRequestTypes}
                                 query={query}
-                                onChange={handleUpdate}
+                                onChange={isSmallDevice && handleUpdateSmallDevice || handleUpdate}
                                 onClose={handleShowFilterForm}
                             />
 
