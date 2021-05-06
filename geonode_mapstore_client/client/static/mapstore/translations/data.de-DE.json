@@ -100,7 +100,10 @@
             "open": "Öffnen",
             "share": "Teilen",
             "update": "Aktualisieren",
-            "delete": "Löschen"
+            "delete": "Löschen",
+            "customFiltersTitle": "Ressourcen",
+            "myResources": "Meine Ressourcen",
+            "pendingApproval": "Ausstehende Genehmigung"
         }
     }
 }

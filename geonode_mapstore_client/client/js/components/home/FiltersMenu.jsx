@@ -18,12 +18,12 @@ const FiltersMenu = forwardRef(({
     orderOptions,
     order,
     cardsMenu,
-    filters,
     style,
     onClick,
     defaultLabelId,
     onClear,
-    totalResources
+    totalResources,
+    filtersActive
 }, ref) => {
 
     const selectedSort = orderOptions.find(({ value }) => order === value);
@@ -42,12 +42,12 @@ const FiltersMenu = forwardRef(({
                     <Button
                         variant="default"
                         size="sm"
-                        active={filters.length}
+                        active={filtersActive}
                         onClick={onClick}
                     >
                         <Message msgId="gnhome.filters" />
                     </Button>
-                    {filters.length > 0 && <Button
+                    {filtersActive && <Button
                         variant="default"
                         size="sm"
                         onClick={onClear}

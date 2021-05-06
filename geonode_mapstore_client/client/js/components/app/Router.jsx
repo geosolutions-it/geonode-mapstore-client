@@ -101,8 +101,6 @@ const Router = forwardRef(({
                                                     loaderComponent={loaderComponent}
                                                     geoNodeConfiguration={geoNodeConfiguration}
                                                     theme={geoNodeConfiguration.theme}
-                                                    filters={geoNodeConfiguration.filters}
-
                                                     {...routeConfig}
                                                 />}
                                         />
