@@ -41,6 +41,7 @@ import {
     getPageSize
 } from '@js/utils/GNSearchUtils';
 import url from 'url';
+import { getCustomMenuFilters } from '@js/selectors/config';
 
 const UPDATE_RESOURCES_REQUEST = 'GEONODE_SEARCH:UPDATE_RESOURCES_REQUEST';
 const updateResourcesRequest = (payload) => ({
@@ -120,9 +121,14 @@ const requestResourcesObservable = ({
     pageSize,
     reset,
     location
-}) => {
+}, store) => {
+    const customFilters = getCustomMenuFilters(store.getState());
     return Observable
-        .defer(() => getResources({ ...params, pageSize }))
+        .defer(() => getResources({
+            ...params,
+            pageSize,
+            customFilters
+        }))
         .switchMap(({
             resources,
             total,
@@ -176,7 +182,7 @@ export const gnsSearchResourcesOnLocationChangeEpic = (action$, store) =>
                     pageSize: PAGE_SIZE,
                     reset: true,
                     location
-                });
+                }, store);
             }
 
             const resourcesLength = state.gnsearch?.resources.length || 0;
@@ -191,7 +197,7 @@ export const gnsSearchResourcesOnLocationChangeEpic = (action$, store) =>
                 pageSize: PAGE_SIZE,
                 reset: resetSearch,
                 location
-            });
+            }, store);
         });
 
 export const gnsSelectResourceEpic = (action$, store) =>

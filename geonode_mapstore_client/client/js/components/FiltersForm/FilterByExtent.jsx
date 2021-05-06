@@ -82,12 +82,6 @@ function FilterByExtent({
             key={id + '-extent'}
             controlId={id + '-extent'}
             className="gn-filter-by-extent"
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '100%',
-                margin: 0
-            }}
         >
             <Form.Check
                 checked={enabled}
@@ -99,59 +93,53 @@ function FilterByExtent({
             <div
                 className="gn-filter-by-extent-map"
                 style={{
-                    minHeight: 300,
+                    height: 300,
                     opacity: enabled ? 1 : 0.4,
-                    pointerEvents: enabled ? 'auto' : 'none'
+                    pointerEvents: enabled ? 'auto' : 'none',
+                    position: 'relative'
                 }}
             >
-                <div
-                    style={{
-                        position: 'relative',
+
+                <Map
+                    id="gn-filter-by-extent-map"
+                    mapType="openlayers"
+                    map={{
+                        registerHooks: false,
+                        projection
+                    }}
+                    styleMap={{
+                        position: 'absolute',
                         width: '100%',
                         height: '100%'
                     }}
+                    eventHandlers={{
+                        onMapViewChanges: handleOnMapViewChanges
+                    }}
+                    layers={[
+                        ...(layers ? layers : []),
+                        ...(queryExtent
+                            ? [{
+                                id: 'highlight',
+                                type: 'vector',
+                                features: [getFeatureFromExtent(queryExtent)],
+                                style: vectorLayerStyle
+                                    ? vectorLayerStyle
+                                    : {
+                                        color: '#397AAB',
+                                        opacity: 0.8,
+                                        fillColor: '#397AAB',
+                                        fillOpacity: 0.4,
+                                        weight: 4
+                                    }
+                            }]
+                            : []
+                        )
+                    ]}
                 >
-                    <Map
-                        id="gn-filter-by-extent-map"
-                        mapType="openlayers"
-                        map={{
-                            registerHooks: false,
-                            projection
-                        }}
-                        styleMap={{
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%'
-                        }}
-                        eventHandlers={{
-                            onMapViewChanges: handleOnMapViewChanges
-                        }}
-                        layers={[
-                            ...(layers ? layers : []),
-                            ...(queryExtent
-                                ? [{
-                                    id: 'highlight',
-                                    type: 'vector',
-                                    features: [getFeatureFromExtent(queryExtent)],
-                                    style: vectorLayerStyle
-                                        ? vectorLayerStyle
-                                        : {
-                                            color: '#397AAB',
-                                            opacity: 0.8,
-                                            fillColor: '#397AAB',
-                                            fillOpacity: 0.4,
-                                            weight: 4
-                                        }
-                                }]
-                                : []
-                            )
-                        ]}
-                    >
-                        <ZoomTo
-                            extent={queryExtent}
-                        />
-                    </Map>
-                </div>
+                    <ZoomTo
+                        extent={queryExtent}
+                    />
+                </Map>
             </div>
         </Form.Group>
     );

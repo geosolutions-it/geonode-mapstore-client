@@ -100,7 +100,10 @@
             "open": "Abierto",
             "share": "Cuota",
             "update": "Actualizar",
-            "delete": "Borrar"
+            "delete": "Borrar",
+            "customFiltersTitle": "Recursos",
+            "myResources": "Mis recursos",
+            "pendingApproval": "Aprobación pendiente"
 
         }
     }

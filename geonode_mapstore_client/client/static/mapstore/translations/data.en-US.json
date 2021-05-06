@@ -100,7 +100,10 @@
             "open": "Open",
             "share": "Share",
             "update": "Update",
-            "delete": "Delete"
+            "delete": "Delete",
+            "customFiltersTitle": "Resources",
+            "myResources": "My resources",
+            "pendingApproval": "Pending approval"
 
         }
     }

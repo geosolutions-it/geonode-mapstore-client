@@ -58,7 +58,7 @@ const Cards = withResizeDetector(({
     };
 
 
-    const layoutSpace = (cardLayoutStyle, idx) => {
+    const layoutSpace = (idx) => {
         let cardContainerSpace;
         switch (cardLayoutStyle) {
         case 'list':
@@ -70,23 +70,23 @@ const Cards = withResizeDetector(({
         return cardContainerSpace;
     };
 
-
+    const containerStyle = isSingleCard
+        ? {
+            paddingBottom: margin
+        }
+        : {
+            paddingLeft: ulPadding,
+            paddingBottom: margin
+        };
     return (
         <ul
-            style={isSingleCard
-                ? {
-                    paddingBottom: margin
-                }
-                : {
-                    paddingLeft: ulPadding,
-                    paddingBottom: margin
-                }}
+            style={cardLayoutStyle === 'list' ? {} : containerStyle}
         >
             {resources.map((resource, idx) => {
                 return (
                     <li
                         key={resource.pk}
-                        style={(layoutSpace(cardLayoutStyle, idx))}
+                        style={(layoutSpace(idx))}
                     >
                         <ResourceCard
                             active={isCardActive(resource)}

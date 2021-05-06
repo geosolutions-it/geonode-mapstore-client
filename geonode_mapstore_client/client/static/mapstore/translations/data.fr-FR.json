@@ -100,8 +100,10 @@
             "open": "Ouvert",
             "share": "Partager",
             "update": "Mettre à jour",
-            "delete": "Effacer"
-
+            "delete": "Effacer",
+            "customFiltersTitle": "Ressources",
+            "myResources": "Mes ressources",
+            "pendingApproval": "En attente de validation"
         }
     }
 }

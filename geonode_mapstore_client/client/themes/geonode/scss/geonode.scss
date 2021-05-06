@@ -113,7 +113,9 @@
         .gn-menu-index-divider {
             @include background-color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
         }
-
+        .gn-filter-form-divider {
+            @include background-color-var(map.get($theme-vars, 'body-shade-bg'), --gn-shade-bg);
+        }
         .gn-filter-by-extent-map,
         .gn-details-panel-preview,
         .gn-details-panel-preview-loader,
