@@ -67,7 +67,6 @@ const SaveAPI = {
         const description = metadata.description;
         const thumbnail = metadata.thumbnail;
         const body = {
-            name,
             data,
             attributes: [{
                 type: 'string',
@@ -91,6 +90,7 @@ const SaveAPI = {
                 : [])
             ]
         };
+        console.log(body);
         return id
             ? updateMapStoreMap(id, { ...body, id })
             : creatMapStoreMap(body)

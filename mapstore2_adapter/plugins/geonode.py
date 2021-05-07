@@ -70,7 +70,6 @@ LAYER_PARAMS = {
     'transparent': True,
     'tiled': True,
     'title': '',
-    'name': '',
     'description': '',
     'store': '',
     'group': '',

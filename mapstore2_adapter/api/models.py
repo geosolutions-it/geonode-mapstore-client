@@ -26,26 +26,26 @@ def random_id():
 
 
 class MapStoreResource(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) #user in resourcebase
     id = models.BigIntegerField(
         primary_key=True,
         unique=True,
         editable=True,
         default=random_id)
-    name = models.CharField(
+    name = models.CharField( #title in resourcebase
         max_length=255,
         unique=False,
         blank=False,
         null=False)
-    creation_date = models.DateTimeField(
+    creation_date = models.DateTimeField( #created in resourcebase
         null=True,
         blank=True,
         auto_now_add=True)
-    last_update = models.DateTimeField(
+    last_update = models.DateTimeField( #last_udapted in resourcebase
         null=True,
         blank=True,
         auto_now=True)
-    data = models.OneToOneField(
+    data = models.OneToOneField( #data in maps
         "MapStoreData",
         related_name="data",
         null=True,
