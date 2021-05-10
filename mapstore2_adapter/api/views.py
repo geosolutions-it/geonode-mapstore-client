@@ -38,7 +38,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class MapStoreResourceViewSet(viewsets.ModelViewSet):
+class NewMapViewSet(viewsets.ModelViewSet):
     """ Only Authenticate User perform CRUD Operations on Respective Data
     """
     authentication_classes = [SessionAuthentication, BasicAuthentication, OAuth2Authentication]
@@ -58,10 +58,10 @@ class MapStoreResourceViewSet(viewsets.ModelViewSet):
         """ Associate current user as task owner """
         if serializer.is_valid():
             hookset.perform_create(self, serializer)
-            return serializer.save(user=self.request.user)
+            return serializer
 
     def perform_update(self, serializer):
         """ Associate current user as task owner """
         if serializer.is_valid():
             hookset.perform_update(self, serializer)
-            return serializer.save()
+            return serializer

@@ -44,13 +44,15 @@ logger = logging.getLogger(__name__)
 class GeoNodeSerializer(object):
 
     @classmethod
-    def update_data(cls, serializer, data):
+    def update_data(cls, serializer, data, geonode_map_obj=None):
+        instance = geonode_map_obj or serializer.instance
         if data:
-            _data, created = MapData.objects.get_or_create(
-                resource=serializer.instance)
-            _data.resource = serializer.instance
+            _data, _ = MapData.objects.get_or_create(
+                resource=instance)
+            _data.resource = instance
             _data.blob = data
             _data.save()
+            instance.data=_data
             serializer.validated_data['data'] = _data
 
     @classmethod
@@ -271,6 +273,7 @@ class GeoNodeSerializer(object):
                             projection=_map_obj['projection'],
                             zoom=_map_obj['zoom'],
                             srid=_map_obj['projection'])
+
                         if 'bbox' in _map_obj:
                             if hasattr(map_obj, 'bbox_polygon'):
                                 map_obj.bbox_polygon = BBOXHelper.from_xy(_map_obj['bbox']).as_polygon()
@@ -279,7 +282,6 @@ class GeoNodeSerializer(object):
                                 map_obj.bbox_y0 = _map_obj['bbox'][1]
                                 map_obj.bbox_x1 = _map_obj['bbox'][2]
                                 map_obj.bbox_y1 = _map_obj['bbox'][3]
-                        map_obj.save()
 
                         if is_analytics_enabled:
                             event_type = EventType.EVENT_CREATE
@@ -297,15 +299,20 @@ class GeoNodeSerializer(object):
 
                     # Update GeoNode Map
                     _map_conf['map'] = _map_obj
-                    map_obj.update_from_viewer(
-                        _map_conf,
-                        context={'config': _map_conf})
 
                     if is_analytics_enabled:
                         register_event(caller.request, event_type, map_obj)
 
-                    serializer.validated_data['id'] = map_obj.id
-                    serializer.save(user=caller.request.user)
+                    for k, v in map_obj.__dict__.items():
+                        if not k.startswith('_'):
+                            serializer.validated_data[k] = v
+
+                    serializer.save()
+
+                    serializer.instance.update_from_viewer(
+                        _map_conf,
+                        context={'config': _map_conf})
+
             except Exception as e:
                 tb = traceback.format_exc()
                 logger.error(tb)
@@ -335,15 +342,11 @@ class GeoNodeSerializer(object):
         # CONTROLLARE COME CREARE L'OGGETTO MAPPA PASSANDO DA QUA
         '''
         map_obj = self.get_geonode_map(caller, serializer)
-        self.set_geonode_map(caller, serializer, map_obj, _data.copy(), _attributes.copy())
+        geonode_map_obj = self.set_geonode_map(caller, serializer, map_obj, _data.copy(), _attributes.copy())
 
         if _data:
             # Save JSON blob
-            GeoNodeSerializer.update_data(serializer, _data.copy())
-
-        if _attributes:
-            # Sabe Attributes
-            GeoNodeSerializer.update_attributes(serializer, _attributes.copy())
+            GeoNodeSerializer.update_data(serializer, _data.copy(), geonode_map_obj)
 
         return serializer
 
