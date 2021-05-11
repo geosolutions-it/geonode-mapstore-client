@@ -57,20 +57,9 @@ class GeoNodeSerializer(object):
 
     @classmethod
     def update_attributes(cls, serializer, attributes):
-        _attributes = []
         for _a in attributes:
-            attribute, created = MapStoreAttribute.objects.get_or_create(
-                name=_a['name'],
-                resource=serializer.instance)
-            attribute.resource = serializer.instance
-            attribute.name = _a['name']
-            attribute.type = _a['type']
-            attribute.label = _a['label']
-            if 'value' in _a:
-                attribute.value = base64.b64encode(_a['value'].encode('utf8'))
-            attribute.save()
-            _attributes.append(attribute)
-        serializer.validated_data['attributes'] = _attributes
+            serializer.validated_data[_a['name']] = _a['value']
+        serializer.save()
 
     def get_queryset(self, caller, queryset):
         allowed_map_ids = []
@@ -136,7 +125,7 @@ class GeoNodeSerializer(object):
         _map_thumbnail_format = 'png'
         if attributes:
             for _a in attributes:
-                if _a['name'] == 'name' and 'value' in _a:
+                if _a['name'] == 'title_en' and 'value' in _a:
                     _map_name = _a['value']
                 if _a['name'] == 'title' and 'value' in _a:
                     _map_title = _a['value']
@@ -285,6 +274,9 @@ class GeoNodeSerializer(object):
 
                         if is_analytics_enabled:
                             event_type = EventType.EVENT_CREATE
+                    else:
+                        map_obj.title = _map_title
+                        map_obj.abstract = _map_abstract
 
                     # Dumps thumbnail from MapStore2 Interface
                     if _map_thumbnail:
@@ -363,13 +355,14 @@ class GeoNodeSerializer(object):
             # Save JSON blob
             GeoNodeSerializer.update_data(serializer, _data.copy())
 
-        #if 'attributes' in serializer.validated_data:
-        #    _attributes = serializer.validated_data['attributes'].copy()
-        #    serializer.validated_data.pop('attributes')
+
+        if 'attributes' in serializer.validated_data:
+            _attributes = serializer.validated_data['attributes'].copy()
+            serializer.validated_data.pop('attributes')
 #
         #    # Sabe Attributes
-        #    GeoNodeSerializer.update_attributes(serializer, _attributes.copy())
+            GeoNodeSerializer.update_attributes(serializer, _attributes.copy())
 
-        self.set_geonode_map(caller, serializer, map_obj, _data, {})
+        self.set_geonode_map(caller, serializer, map_obj, _data, _attributes.copy())
 
         return serializer.save()

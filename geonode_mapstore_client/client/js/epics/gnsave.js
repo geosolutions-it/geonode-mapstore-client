@@ -70,13 +70,13 @@ const SaveAPI = {
             data,
             attributes: [{
                 type: 'string',
-                name: 'title',
+                name: 'title_en',
                 value: name,
                 label: 'Title'
             },
             {
                 type: 'string',
-                name: 'abstract',
+                name: 'abstract_en',
                 value: description,
                 label: 'Abstract'
             },
@@ -90,7 +90,6 @@ const SaveAPI = {
                 : [])
             ]
         };
-        console.log(body);
         return id
             ? updateMapStoreMap(id, { ...body, id })
             : creatMapStoreMap(body)

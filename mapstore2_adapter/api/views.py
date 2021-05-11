@@ -17,9 +17,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthentic
 from oauth2_provider.contrib.rest_framework import OAuth2Authentication
 from geonode.base.api.permissions import IsOwnerOrReadOnly
 from geonode.maps.models import Map
-from .models import MapStoreResource
-from .serializers import (UserSerializer,
-                          MapStoreResourceSerializer,)
+from .serializers import UserSerializer                          
 from geonode.maps.api.serializers import MapSerializer
 from ..hooks import hookset
 
