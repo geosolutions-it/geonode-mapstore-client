@@ -26,10 +26,7 @@ export const creatMapStoreMap = (body = {}) => {
     return axios.post(parseDevHostname(`${newEndpointAdapter}`),
         body,
         {
-            timeout: 10000,
-            params: {
-                full: true
-            }
+            timeout: 10000
         })
         .then(({ data }) => data);
 };
@@ -47,7 +44,7 @@ export const updateMapStoreMap = (id, body = {}) => {
         body,
         {
             params: {
-                full: true
+                include: ['data']
             }
         })
         .then(({ data }) => data);
@@ -61,7 +58,6 @@ export const updateMapStoreMap = (id, body = {}) => {
 */
 export const getMapStoreMapById = (id) => {
     const { newEndpointAdapter = '/api/v2/maps' } = getConfigProp('geoNodeApi') || {};
-    console.log("asdjhasdhhdkashasdkhjasdkjhldsa");
     return axios.get(parseDevHostname(`${newEndpointAdapter}/resources/${id}/`),
         {
             params: {

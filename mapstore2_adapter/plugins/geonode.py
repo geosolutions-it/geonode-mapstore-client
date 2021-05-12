@@ -405,6 +405,8 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                             overlay['nativeCrs'] = layer['nativeCrs']
                         else:
                             try:
+                                if 'name' not in overlay and 'name' in layer:
+                                    overlay['name'] = layer['name']
                                 from geonode.layers.models import Layer
                                 _gn_layer = Layer.objects.get(
                                     store=overlay['store'],
