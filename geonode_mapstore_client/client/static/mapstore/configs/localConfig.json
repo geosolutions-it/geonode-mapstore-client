@@ -21,7 +21,6 @@
         }
     ],
     "geoNodeApi": {
-        "endpointAdapter": "/mapstore/rest",
         "newEndpointAdapter": "/api/v2/maps/",
         "endpointAutocomplete": "/base/autocomplete_response",
         "endpointV1": "/api",
