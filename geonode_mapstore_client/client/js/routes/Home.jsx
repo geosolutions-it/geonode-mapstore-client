@@ -523,7 +523,7 @@ Home.defaultProps = {
     background: {},
     logo: [],
     jumbotron: {},
-    isFilterForm: true
+    isFilterForm: false
 };
 
 const DEFAULT_PARAMS = {};
