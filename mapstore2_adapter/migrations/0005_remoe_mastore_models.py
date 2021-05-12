@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('mapstore2_adapter', '0004_auto_20210219_1015'),
-        ('maps', '0034_merge_20210512_1104'),
+        ('maps', '0033_map_blob_migration'),
     ]
 
     operations = [
