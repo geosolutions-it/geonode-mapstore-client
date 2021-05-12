@@ -10,12 +10,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import castArray from 'lodash/castArray';
-import isNil from 'lodash/isNil';
 import Tag from '@js/components/home/Tag';
 import { Badge, Nav } from 'react-bootstrap-v1';
 import Message from '@mapstore/framework/components/I18N/Message';
 import DropdownList from './DropdownList';
-const isValidBadgeValue = value => !!(value !== '' && !isNil(value));
+import {
+    isValidBadgeValue
+} from '@js/utils/MenuUtils';
+
 /**
  * Menu item component
  * @name MenuItem
@@ -37,7 +39,7 @@ const isValidBadgeValue = value => !!(value !== '' && !isNil(value));
  *
  */
 
-const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, classItem }) => {
+const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, classItem, size, alignRight }) => {
 
     const { formatHref, query } = menuItemsProps;
     const { id, type, label, labelId = '', items = [], href, style, badge = '', image, subType } = item;
@@ -55,6 +57,8 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
             tabIndex={tabIndex}
             badgeValue={badgeValue}
             containerNode={containerNode}
+            size={size}
+            alignRight={alignRight}
         />);
     }
 

@@ -14,7 +14,7 @@
 '~bootstrap-v4/scss/bootstrap',
 
 'mixins',
-
+'action-navbar',
 'brand-navbar',
 'card-grid',
 'details-panel',
@@ -31,6 +31,7 @@
 'search-bar',
 'swipe-menu',
 'home-container',
+'sub-flat-menu',
 'tag';
 
 
@@ -72,13 +73,34 @@
 
         .gn-main-home,
         .gn-card-grid,
-        .gn-filters-menu,
-        .gn-filters-menu-content .gn-swipe-menu .btn {
+        .gn-filters-menu {
             @include color-var(map.get($theme-vars, 'body-shade-color'), --gn-body-shade-color);
             @include background-color-var(map.get($theme-vars, 'body-shade-bg'), --gn-body-shade-bg);
         }
 
-        .gn-menu-index {
+        .btn-default {
+            color: inherit;
+            @include hover() {
+                color: inherit;
+                opacity: 0.8;
+            }
+            &.active {
+                @include color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
+                @include background-color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
+            }
+            .badge {
+                @include color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
+                @include background-color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
+            }
+        }
+        // default badge color
+        .badge {
+            @include color-var(map.get($theme-vars, 'badge-color'), --gn-badge-color);
+            @include background-color-var(map.get($theme-vars, 'badge-bg'), --gn-badge-bg);
+        }
+
+
+        .gn-menu-index, .gn-action-navbar {
             @include color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
             @include background-color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
             .badge {
@@ -93,7 +115,9 @@
         .gn-menu-index-divider {
             @include background-color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
         }
-
+        .gn-filter-form-divider {
+            @include background-color-var(map.get($theme-vars, 'body-shade-bg'), --gn-shade-bg);
+        }
         .gn-filter-by-extent-map,
         .gn-details-panel-preview,
         .gn-details-panel-preview-loader,
@@ -150,13 +174,7 @@
             }
         }
 
-        .btn-default {
-            color: inherit;
-            @include hover() {
-                color: inherit;
-                opacity: 0.8;
-            }
-        }
+
 
         .gn-details-panel.loading .gn-details-panel-content {
             h1, a, p {

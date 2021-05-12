@@ -17,11 +17,24 @@
     .gn-card-options {
         position: absolute;
         right: 0;
-        top: 0;
+        bottom: 0;
         margin: 0.25rem;
         background-color: $gn-body-bg;
-        @extend .shadow-sm;
+        .dropdown-menu {
+            min-width: 8rem;
+            a {
+                color: $gn-body-color;
+            }
+        }
+        .btn-default:hover{
+            opacity: 0.5
+        }
+        .dropdown-item {
+            padding: 0.25rem 1.0rem;
+        }
+
     }
+
     .gn-card-options .dropdown-toggle::after {
         display: none;
     }
@@ -30,8 +43,10 @@
         pointer-events: auto;
     }
     .card-body {
+        position: relative;
         pointer-events: none;
         z-index: 2;
+        width: 20vw;
     }
     .card-img-top {
         height: 160px;
@@ -64,7 +79,7 @@
     .card-text {
         font-size: 0.69rem;
     }
-    
+
     .gn-tag {
         color: $gn-body-color;
         padding: 0;
