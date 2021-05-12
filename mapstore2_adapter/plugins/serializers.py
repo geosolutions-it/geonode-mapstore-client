@@ -12,9 +12,6 @@
 from __future__ import absolute_import
 from geonode.maps.models import MapData
 
-from ..api.models import (MapStoreData,
-                          MapStoreAttribute)
-
 from rest_framework.exceptions import APIException
 from geonode.maps.models import Map
 import json
@@ -129,9 +126,9 @@ class GeoNodeSerializer(object):
                     _map_name = _a['value']
                 if _a['name'] == 'title' and 'value' in _a:
                     _map_title = _a['value']
-                if _a['name'] == 'abstract' and 'value' in _a:
+                if _a['name'] == 'abstract_en' and 'value' in _a:
                     _map_abstract = _a['value']
-                if 'thumb' in _a['name'] and 'value' in _a:
+                if 'thumbnail' in _a['name'] and 'value' in _a:
                     try:
                         (_map_thumbnail, _map_thumbnail_format) = decode_base64(_a['value'])
                     except Exception:

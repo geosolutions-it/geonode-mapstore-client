@@ -15,11 +15,7 @@ from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly  # noqa
 from oauth2_provider.contrib.rest_framework import OAuth2Authentication
-from geonode.base.api.permissions import IsOwnerOrReadOnly
-from geonode.maps.models import Map
 from .serializers import UserSerializer                          
-from geonode.maps.api.serializers import MapSerializer
-from ..hooks import hookset
 
 import logging
 
@@ -35,31 +31,3 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all().order_by('-date')
     serializer_class = UserSerializer
 
-
-class NewMapViewSet(viewsets.ModelViewSet):
-    """ Only Authenticate User perform CRUD Operations on Respective Data
-    """
-    authentication_classes = [SessionAuthentication, BasicAuthentication, OAuth2Authentication]
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-    model = Map
-    serializer_class = MapSerializer
-
-    def get_queryset(self):
-        """ Return datasets belonging to the current user """
-        queryset = self.model.objects.all()
-
-        # filter to tasks owned by user making request
-        queryset = hookset.get_queryset(self, queryset)
-        return queryset
-
-    def perform_create(self, serializer):
-        """ Associate current user as task owner """
-        if serializer.is_valid():
-            hookset.perform_create(self, serializer)
-            return serializer
-
-    def perform_update(self, serializer):
-        """ Associate current user as task owner """
-        if serializer.is_valid():
-            hookset.perform_update(self, serializer)
-            return serializer
