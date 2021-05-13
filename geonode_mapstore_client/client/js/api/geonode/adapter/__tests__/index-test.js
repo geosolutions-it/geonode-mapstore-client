@@ -35,7 +35,7 @@ describe('GeoNode adapter api', () => {
             data: {},
             name: 'Map'
         };
-        mockAxios.onPost(/\/mapstore\/rest\/resources/)
+        mockAxios.onPost(/\/api\/v2\/maps/)
             .reply((config) => {
                 try {
                     expect(config.data).toBe(JSON.stringify(mapConfiguration));
@@ -56,7 +56,7 @@ describe('GeoNode adapter api', () => {
             data: {},
             name: 'Map'
         };
-        mockAxios.onPatch(new RegExp(`/mapstore/rest/resources/${id}`))
+        mockAxios.onPatch(new RegExp(`/api/v2/maps/${id}`))
             .reply((config) => {
                 try {
                     expect(config.data).toBe(JSON.stringify(mapConfiguration));
