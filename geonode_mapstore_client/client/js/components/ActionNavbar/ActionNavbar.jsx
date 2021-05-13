@@ -58,7 +58,7 @@ const RightContentMenu = ({ items, formatHref, query, parentRef, cfg }) => {
     const { width: widthNavbarRight } = useResizeElement(navbarRight);
     const { width: widthParent } = useResizeElement(parentRef);
     const { width: widthNavbarContentRight } = useResizeElement(navbarContentRight);
-    const isSpaceRight = (cfg?.style) ? widthNavbarRight >= widthNavbarContentRight :  widthNavbarRight >= widthParent
+    const isSpaceRight = (cfg?.style) ? widthNavbarRight >= widthNavbarContentRight :  widthNavbarRight >= widthParent;
     const [switchToBurgerMenu, setSwitchToBurgerMenu] = useState(false);
     useEffect(() => {
         setSwitchToBurgerMenu(isSpaceRight);
@@ -120,10 +120,10 @@ const ActionNavbar = forwardRef(({
                     {
                         leftItems.length > 0 &&
                         <LeftContentMenu
-                        items={leftItems}
-                        formatHref={formatHref}
-                        query={query}
-                    />
+                            items={leftItems}
+                            formatHref={formatHref}
+                            query={query}
+                        />
                     }
 
                     {
