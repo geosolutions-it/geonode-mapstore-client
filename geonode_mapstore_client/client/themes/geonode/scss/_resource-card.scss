@@ -46,6 +46,8 @@
         position: relative;
         pointer-events: none;
         z-index: 2;
+    }
+    &.gn-card-type-list .card-body {
         width: 20vw;
     }
     .card-img-top {
