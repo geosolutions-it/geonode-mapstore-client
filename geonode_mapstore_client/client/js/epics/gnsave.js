@@ -21,9 +21,9 @@ import { currentStorySelector } from '@mapstore/framework/selectors/geostory';
 import { userSelector } from '@mapstore/framework/selectors/security';
 
 import {
-    creatMapStoreMap,
-    updateMapStoreMap
-} from '@js/api/geonode/adapter';
+    createMap,
+    updateMap
+} from '@js/api/geonode/v2';
 import {
     SAVE_CONTENT,
     UPDATE_RESOURCE_BEFORE_SAVE,
@@ -91,8 +91,8 @@ const SaveAPI = {
             ]
         };
         return id
-            ? updateMapStoreMap(id, { ...body, id })
-            : creatMapStoreMap(body)
+            ? updateMap(id, { ...body, id })
+            : createMap(body)
                 .then((response) => {
                     if (reload) {
                         window.location.href = parseDevHostname(`${getConfigProp('geonodeUrl')}maps/${response.id}/edit`);
