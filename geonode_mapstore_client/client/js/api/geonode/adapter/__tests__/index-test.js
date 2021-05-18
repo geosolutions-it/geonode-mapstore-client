@@ -12,7 +12,7 @@ import axios from '@mapstore/framework/libs/ajax';
 import {
     createMap,
     updateMap
-} from '@js/api/geonode/adapter';
+} from '@js/api/geonode/v2';
 
 let mockAxios;
 
