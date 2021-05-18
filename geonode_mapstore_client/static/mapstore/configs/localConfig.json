@@ -66,6 +66,10 @@
         {
             "name": "settings",
             "path": "gnsettings"
+        },
+        {
+            "name": "selectedLayerPermissions",
+            "path": "gnresource.selectedLayerPermissions"
         }
     ],
     "projectionDefs": [
@@ -1005,7 +1009,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -1277,7 +1284,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -1546,7 +1556,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -1795,7 +1808,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -2062,7 +2078,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
