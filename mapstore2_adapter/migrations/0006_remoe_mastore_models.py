@@ -6,8 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mapstore2_adapter', '0004_auto_20210219_1015'),
-        ('maps', '0033_map_blob_migration'),
+        ('mapstore2_adapter', '0005_map_blob_migration'),
     ]
 
     operations = [
