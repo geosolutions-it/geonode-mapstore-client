@@ -28,7 +28,8 @@ WHERE mb.resource_id NOT IN (SELECT resource_id FROM public.maps_mapdata )
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mapstore2_adapter', '0004_auto_20210219_1015')
+        ('mapstore2_adapter', '0004_auto_20210219_1015'),
+        ('maps', '0031_auto_20190329_1652')
     ]
 
     operations = [
