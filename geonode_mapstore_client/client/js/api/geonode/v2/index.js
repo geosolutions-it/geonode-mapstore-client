@@ -31,7 +31,11 @@ let endpoints = {
     'geoapps': '/api/v2/geoapps',
     'geostories': '/api/v2/geostories',
     'users': '/api/v2/users',
-    'resource_types': '/api/v2/resources/resource_types'
+    'resource_types': '/api/v2/resources/resource_types',
+    'categories': '/api/v2/categories',
+    'owners': '/api/v2/owners',
+    'keywords': '/api/v2/keywords',
+    'regions': '/api/v2/regions'
 };
 
 const RESOURCES = 'resources';
@@ -42,7 +46,16 @@ const GEOAPPS = 'geoapps';
 const GEOSTORIES = 'geostories';
 const USERS = 'users';
 const RESOURCE_TYPES = 'resource_types';
+const OWNERS = 'owners';
+const REGIONS = 'regions';
+const CATEGORIES = 'categories';
+const KEYWORDS = 'keywords';
+
 // const GROUPS = 'groups';
+
+function addCountToLabel(name, count) {
+    return `${name} (${count || 0})`;
+}
 
 const requestOptions = (name, requestFunc) => {
     const options = getRequestOptions(name);
@@ -142,7 +155,8 @@ export const getResources = ({
             ...mergeCustomQuery(params, customQuery),
             ...(sort && { sort: isArray(sort) ? sort : [ sort ]}),
             page,
-            page_size: pageSize
+            page_size: pageSize,
+            'filter{metadata_only}': false // exclude resources such as services
         }
     })
         .then(({ data }) => {
@@ -370,6 +384,23 @@ export const getResourceTypes = ({}, filterKey = 'resource-types') => {
         });
 };
 
+export const getLayerByName = name => {
+    const url = parseDevHostname(`${endpoints[LAYERS]}/?filter{alternate}=${name}`);
+    return axios.get(url)
+        .then(({data}) => data?.layers[0]);
+};
+
+export const getLayersByName = names => {
+    const url = parseDevHostname(endpoints[LAYERS]);
+    return axios.get(url, {
+        params: {
+            page_size: names.length,
+            'filter{alternate.in}': names
+        }
+    })
+        .then(({data}) => data?.layers);
+};
+
 export const getResourcesTotalCount = () => {
     const params = {
         page_size: 1
@@ -458,6 +489,113 @@ export const getMapById = (id) => {
 };
 
 
+export const getCategories = ({ q, idIn, ...params }, filterKey = 'categories') => {
+    return axios.get(parseDevHostname(`${endpoints[CATEGORIES]}`), {
+        params: {
+            page_size: 9999,
+            ...params,
+            ...(idIn && {'filter{identifier.in}': idIn}),
+            ...(q && { 'filter{identifier.icontains}': q })
+        }
+    })
+        .then(({ data }) => {
+            const results = (data?.TopicCategories || [])
+                .map((result) => {
+                    const selectOption = {
+                        value: result.identifier,
+                        label: addCountToLabel(result.gn_description || result.gn_description_en, result.total)
+                    };
+                    const category = {
+                        ...result,
+                        selectOption
+                    };
+                    setFilterById(filterKey + result.identifier, category);
+                    return category;
+                });
+            return results;
+        });
+};
+
+export const getRegions = ({ q, idIn, ...params }, filterKey = 'regions') => {
+    return axios.get(parseDevHostname(`${endpoints[REGIONS]}`), {
+        params: {
+            page_size: 9999,
+            ...params,
+            ...(idIn && {'filter{name.in}': idIn}),
+            ...(q && { 'filter{name.icontains}': q })
+        }
+    })
+        .then(({ data }) => {
+            const results = (data?.Regions || [])
+                .map((result) => {
+                    const selectOption = {
+                        value: result.name,
+                        label: addCountToLabel(result.name, result.total)
+                    };
+                    const region = {
+                        ...result,
+                        selectOption
+                    };
+                    setFilterById(filterKey + result.name, region);
+                    return region;
+                });
+            return results;
+        });
+};
+
+export const getOwners = ({ q, idIn, ...params }, filterKey = 'owners') => {
+    return axios.get(parseDevHostname(`${endpoints[OWNERS]}`), {
+        params: {
+            page_size: 9999,
+            ...params,
+            ...(idIn && {'filter{username.in}': idIn}),
+            ...(q && { 'filter{username.icontains}': q })
+        }
+    })
+        .then(({ data }) => {
+            const results = (data?.users || [])
+                .map((result) => {
+                    const selectOption = {
+                        value: result.username,
+                        label: addCountToLabel(result.username, result.total)
+                    };
+                    const owner = {
+                        ...result,
+                        selectOption
+                    };
+                    setFilterById(filterKey + result.username, owner);
+                    return owner;
+                });
+            return results;
+        });
+};
+
+export const getKeywords = ({ q, idIn, ...params }, filterKey =  'keywords') => {
+    return axios.get(parseDevHostname(`${endpoints[KEYWORDS]}`), {
+        params: {
+            page_size: 9999,
+            ...params,
+            ...(idIn && {'filter{slug.in}': idIn}),
+            ...(q && { 'filter{slug.icontains}': q })
+        }
+    })
+        .then(({ data }) => {
+            const results = (data?.HierarchicalKeywords || [])
+                .map((result) => {
+                    const selectOption = {
+                        value: result.slug,
+                        label: addCountToLabel(result.slug, result.total)
+                    };
+                    const keyword = {
+                        ...result,
+                        selectOption
+                    };
+                    setFilterById(filterKey + result.slug, keyword);
+                    return keyword;
+                });
+            return results;
+        });
+};
 export default {
     getEndpoints,
     getResources,
@@ -478,5 +616,9 @@ export default {
     getDocumentByPk,
     createMap,
     updateMap,
-    getMapById
+    getMapById,
+    getCategories,
+    getRegions,
+    getOwners,
+    getKeywords
 };

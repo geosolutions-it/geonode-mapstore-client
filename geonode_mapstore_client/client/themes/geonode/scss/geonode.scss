@@ -153,7 +153,9 @@
         }
 
         .gn-menu-index .gn-tag,
-        .gn-menu-index .btn-default {
+        .gn-menu-index .btn-default,
+        .gn-action-navbar .gn-tag,
+        .gn-action-navbar .btn-default {
             @include color-var(map.get($theme-vars, 'primary-color'), --gn-primary-color);
             @include background-color-var(map.get($theme-vars, 'primary-bg'), --gn-primary-bg);
             border: none;

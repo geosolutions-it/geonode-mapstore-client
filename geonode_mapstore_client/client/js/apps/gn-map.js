@@ -27,7 +27,6 @@ import {
     standardEpics,
     standardRootReducerFunc
 } from '@mapstore/framework/stores/defaultOptions';
-
 import timeline from '@mapstore/framework/reducers/timeline';
 import dimension from '@mapstore/framework/reducers/dimension';
 import playback from '@mapstore/framework/reducers/playback';
@@ -42,7 +41,7 @@ import MapView from '@js/routes/MapView';
 import gnresource from '@js/reducers/gnresource';
 import gnsettings from '@js/reducers/gnsettings';
 
-import { getConfiguration } from '@js/api/geonode/v2';
+import { getConfiguration, getAccountInfo } from '@js/api/geonode/v2';
 
 import {
     setupConfiguration,
@@ -59,8 +58,8 @@ import { updateGeoNodeSettings } from '@js/actions/gnsettings';
 
 import {
     updateMapLayoutEpic,
-    _setFeatureEditPermission,
-    _setStyleEditorPermission
+    gnCheckSelectedLayerPermissions,
+    gnSetLayersPermissions
 } from '@js/epics';
 import maplayout from '@mapstore/framework/reducers/maplayout';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -91,7 +90,8 @@ initializeApp();
 
 
 Promise.all([
-    getConfiguration()
+    getConfiguration(),
+    getAccountInfo()
 ])
     .then(([localConfig, user]) => {
         const {
@@ -174,8 +174,8 @@ Promise.all([
                         ...standardEpics,
                         ...configEpics,
                         updateMapLayoutEpic,
-                        _setFeatureEditPermission,
-                        _setStyleEditorPermission,
+                        gnCheckSelectedLayerPermissions,
+                        gnSetLayersPermissions,
                         ...pluginsDefinition.epics
                     },
                     geoNodeConfiguration,

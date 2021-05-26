@@ -74,6 +74,10 @@
         {
             "name": "geoNodeResourcesInfo",
             "path": "localConfig.geoNodeResourcesInfo"
+        },
+        {
+            "name": "selectedLayerPermissions",
+            "path": "gnresource.selectedLayerPermissions"
         }
 
     ],
@@ -311,20 +315,31 @@
                     "labelId": "gnhome.createNew",
                     "authenticated": true,
                     "type": "dropdown",
+                    "perms": [{ "type": "user", "value": "add_resource" }],
                     "items": [
+                        {
+                            "labelId": "gnhome.layer",
+                            "value": "map",
+                            "type": "link",
+                            "href": "/layers/upload",
+                            "authenticated": true,
+                            "perms": [{ "type": "user", "value": "add_resource" }]
+                        },
                         {
                             "labelId": "gnhome.map",
                             "value": "map",
                             "type": "link",
                             "href": "/maps/new",
-                            "authenticated": true
+                            "authenticated": true,
+                            "perms": [{ "type": "user", "value": "add_resource" }]
                         },
                         {
                             "labelId": "gnhome.geostory",
                             "value": "geostory",
                             "type": "link",
                             "href": "/apps/new?appType=GeoStory",
-                            "authenticated": true
+                            "authenticated": true,
+                            "perms": [{ "type": "user", "value": "add_resource" }]
                         }
 
                     ]
@@ -583,7 +598,9 @@
                     "type": "link",
                     "href": "${detail_url}",
                     "labelId": "gnhome.open",
-                    "icon": "edit"
+                    "icon": "edit",
+                    "perms": [{ "type": "resource", "value": "view_resourcebase" }]
+
                 },
                 {
                     "type": "link",
@@ -591,6 +608,7 @@
                     "labelId": "gnhome.update",
                     "icon": "paste",
                     "authenticated": true,
+                    "perms": [{ "type": "resource", "value": "change_resourcebase" }],
                     "allowedGroups": [
                         "admin"
                     ]
@@ -599,6 +617,7 @@
                     "type": "link",
                     "href":"${detail_url}/remove",
                     "labelId": "gnhome.delete",
+                    "perms": [{ "type": "resource", "value": "delete_resourcebase" }],
                     "icon": "trash",
                     "authenticated": true,
                     "allowedGroups": [
@@ -1117,7 +1136,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -1389,7 +1411,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -1658,7 +1683,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -1907,7 +1935,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -2174,7 +2205,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -2657,7 +2691,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -2997,7 +3034,10 @@
                 "name": "Playback"
             },
             {
-                "name": "LayerDownload"
+                "name": "LayerDownload",
+                "cfg": {
+                    "disablePluginIf": "{!state('selectedLayerPermissions').includes('download_resourcebase')}"
+                }
             },
             {
                 "name": "AddLayer"
@@ -3313,7 +3353,8 @@
         "document_viewer": [
             { "name": "ViewerLayout" },
             { "name": "ActionNavbar" },
-            { "name": "BrandNavbar" }
+            { "name": "BrandNavbar" },
+            { "name": "DetailViewer"}
         ]
     }
 }

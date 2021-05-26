@@ -29,6 +29,7 @@
             "remoteServices": "Services à distance",
             "maps": "Cartes",
             "map": "Carte",
+            "layer": "Couche",
             "geostory": "GeoStory",
             "createNew": "Créer un nouveau",
             "about": "À propos",
@@ -63,7 +64,6 @@
             "privacy": "Privacy",
             "extent": "Étendue",
             "enableFilterByExtent": "Activer le filtre par étendue",
-            "advancedSearch": "Recherche vvancée",
             "apply": "Appliquer",
             "clearFilters": "Effacer les filtres",
 
