@@ -96,54 +96,12 @@ class GeoNodeSerializer(object):
             logger.debug(tb)
             raise APIException(_PERMISSION_MSG_SAVE)
 
-    def set_geonode_map(self, caller, serializer, map_obj=None, data=None, attributes=None):
+    def set_geonode_map(self, caller, serializer, map_obj=None, data=None):
 
-        def decode_base64(data):
-            """Decode base64, padding being optional.
-
-            :param data: Base64 data as an ASCII byte string
-            :returns: The decoded byte string.
-
-            """
-            _thumbnail_format = 'png'
-            _invalid_padding = data.find(';base64,')
-            if _invalid_padding:
-                _thumbnail_format = data[data.find('image/') + len('image/'):_invalid_padding]
-                data = data[_invalid_padding + len(';base64,'):]
-            missing_padding = len(data) % 4
-            if missing_padding != 0:
-                data += b'=' * (4 - missing_padding)
-            return (base64.b64decode(data), _thumbnail_format)
-
-        _map_name = None
-        _map_title = None
-        _map_abstract = None
-        _map_thumbnail = None
-        _map_thumbnail_format = 'png'
-        if attributes:
-            for _a in attributes:
-                if _a['name'] == 'title_en' and 'value' in _a:
-                    _map_name = _a['value']
-                if _a['name'] == 'title' and 'value' in _a:
-                    _map_title = _a['value']
-                if _a['name'] == 'abstract_en' and 'value' in _a:
-                    _map_abstract = _a['value']
-                if 'thumbnail' in _a['name'] and 'value' in _a:
-                    try:
-                        (_map_thumbnail, _map_thumbnail_format) = decode_base64(_a['value'])
-                    except Exception:
-                        if _a['value']:
-                            _map_thumbnail = _a['value']
-                            _map_thumbnail_format = 'link'
-        elif map_obj:
-            _map_title = map_obj.title
-            _map_abstract = map_obj.abstract
-
-        _map_name = _map_name or None
-        if not _map_name and 'name' in serializer.validated_data:
-            _map_name = serializer.validated_data['name']
-        _map_title = _map_title or _map_name
-        _map_abstract = _map_abstract or ""
+        _map_name = serializer.validated_data['title'] or map_obj.title
+        _map_title = serializer.validated_data['title'] or map_obj.title
+        _map_abstract = serializer.validated_data.get('abstract', '') or '' if not hasattr(map_obj, 'abstract') else map_obj.abstract
+       
         if data:
             try:
                 _map_conf = dict(data)
@@ -275,17 +233,6 @@ class GeoNodeSerializer(object):
                         map_obj.title = _map_title
                         map_obj.abstract = _map_abstract
 
-                    # Dumps thumbnail from MapStore2 Interface
-                    if _map_thumbnail:
-                        # note: dumping a thumbnail should be performed before update_from_viewer(), to remove
-                        # a race hazard. update_from_viewer() saves an existing map without a thumbnail,
-                        # triggering asynchronous generation of a default thumbnail, which may overwrite uploaded thumb
-                        if _map_thumbnail_format == 'link':
-                            map_obj.thumbnail_url = _map_thumbnail
-                        else:
-                            _map_thumbnail_filename = "map-%s-thumb.%s" % (map_obj.uuid, _map_thumbnail_format)
-                            map_obj.save_thumbnail(_map_thumbnail_filename, _map_thumbnail)
-
                     # Update GeoNode Map
                     _map_conf['map'] = _map_obj
 
@@ -311,7 +258,6 @@ class GeoNodeSerializer(object):
 
     def perform_create(self, caller, serializer):
         _data = None
-        _attributes = None
 
         try:
             _data = serializer.validated_data['blob'].copy()
@@ -320,18 +266,8 @@ class GeoNodeSerializer(object):
             logger.exception(e)
             raise APIException("Map Configuration (blob) is Mandatory!")
 
-        try:
-            _attributes = serializer.validated_data['attributes'].copy()
-            serializer.validated_data.pop('attributes')
-        except Exception as e:
-            logger.exception(e)
-            raise APIException("Map Metadata (attributes) are Mandatory!")
-
-        '''
-        # CONTROLLARE COME CREARE L'OGGETTO MAPPA PASSANDO DA QUA
-        '''
         map_obj = self.get_geonode_map(caller, serializer)
-        geonode_map_obj = self.set_geonode_map(caller, serializer, map_obj, _data.copy(), _attributes.copy())
+        geonode_map_obj = self.set_geonode_map(caller, serializer, map_obj, _data.copy())
 
         if _data:
             # Save JSON blob
@@ -343,7 +279,6 @@ class GeoNodeSerializer(object):
         map_obj = self.get_geonode_map(caller, serializer)
 
         _data = None
-        _attributes = None
 
         if 'blob' in serializer.validated_data:
             _data = serializer.validated_data['blob'].copy()
@@ -352,14 +287,6 @@ class GeoNodeSerializer(object):
             # Save JSON blob
             GeoNodeSerializer.update_data(serializer, _data.copy())
 
-
-        if 'attributes' in serializer.validated_data:
-            _attributes = serializer.validated_data['attributes'].copy()
-            serializer.validated_data.pop('attributes')
-#
-        #    # Sabe Attributes
-            GeoNodeSerializer.update_attributes(serializer, _attributes.copy())
-
-        self.set_geonode_map(caller, serializer, map_obj, _data, _attributes.copy())
+        self.set_geonode_map(caller, serializer, map_obj, _data)
 
         return serializer.save()

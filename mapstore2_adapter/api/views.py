@@ -28,6 +28,6 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     authentication_classes = (SessionAuthentication, BasicAuthentication, OAuth2Authentication)
     permission_classes = (IsAdminUser,)
-    queryset = get_user_model().objects.all().order_by('-date')
+    queryset = get_user_model().objects.all().order_by('-id')
     serializer_class = UserSerializer
 

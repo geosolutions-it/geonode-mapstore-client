@@ -67,32 +67,11 @@ const SaveAPI = {
             bookmarkSearchConfig,
             additionalOptions
         );
-        const name = metadata.name;
-        const description = metadata.description;
-        const thumbnail = metadata.thumbnail;
         const body = {
-            data,
-            attributes: [{
-                type: 'string',
-                name: 'title_en',
-                value: name,
-                label: 'Title'
-            },
-            {
-                type: 'string',
-                name: 'abstract_en',
-                value: description,
-                label: 'Abstract'
-            },
-            ...(thumbnail
-                ? [{
-                    type: 'string',
-                    name: 'thumbnail',
-                    value: thumbnail,
-                    label: 'Thumbnail'
-                }]
-                : [])
-            ]
+            "title": metadata.name,
+            "abstract": metadata.description,
+            "thumbnail_url": metadata.thumbnail,
+            data
         };
         return id
             ? updateMap(id, { ...body, id })
