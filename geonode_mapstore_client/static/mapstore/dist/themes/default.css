@@ -21901,6 +21901,9 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .page-map-viewer {
   transform: translate(0, 0);
 }
+.msgapi .add-bar-popover {
+  max-width: 500px;
+}
 .msgapi .app-router,
 .msgapi #container {
   position: absolute;
