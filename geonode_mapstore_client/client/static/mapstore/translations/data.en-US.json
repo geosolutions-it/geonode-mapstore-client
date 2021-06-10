@@ -110,6 +110,9 @@
             "myResources": "My resources",
             "pendingApproval": "Pending approval"
 
+        },
+        "gnviewer":{
+            "edit": "Edit"
         }
     }
 }

@@ -109,6 +109,10 @@
             "customFiltersTitle": "Ressourcen",
             "myResources": "Meine Ressourcen",
             "pendingApproval": "Ausstehende Genehmigung"
+        },
+        "gnviewer":{
+            "edit": "Bearbeiten"
         }
+
     }
 }
