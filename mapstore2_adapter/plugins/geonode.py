@@ -70,7 +70,6 @@ LAYER_PARAMS = {
     'transparent': True,
     'tiled': True,
     'title': '',
-    'name': '',
     'description': '',
     'store': '',
     'group': '',
@@ -251,27 +250,6 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
             tb = traceback.format_exc()
             logger.debug(tb)
 
-        # Additional Configurations
-        if map_id:
-            from mapstore2_adapter import fixup_map
-            from mapstore2_adapter.api.models import MapStoreResource
-            try:
-                fixup_map(map_id)
-                ms2_resource = MapStoreResource.objects.get(id=map_id)
-                ms2_map_data = ms2_resource.data.blob
-                if isinstance(ms2_map_data, string_types):
-                    ms2_map_data = json.loads(ms2_map_data)
-                if 'map' in ms2_map_data:
-                    for _k, _v in ms2_map_data['map'].items():
-                        if _k not in data['map']:
-                            data['map'][_k] = ms2_map_data['map'][_k]
-                    del ms2_map_data['map']
-                data.update(ms2_map_data)
-            except Exception:
-                # traceback.print_exc()
-                tb = traceback.format_exc()
-                logger.debug(tb)
-
         # Default Catalogue Services Definition
         try:
             ms2_catalogue = {}
@@ -411,6 +389,8 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                             overlay['nativeCrs'] = layer['nativeCrs']
                         else:
                             try:
+                                if 'name' not in overlay and 'name' in layer:
+                                    overlay['name'] = layer['name']
                                 from geonode.layers.models import Layer
                                 _gn_layer = Layer.objects.get(
                                     store=overlay['store'],

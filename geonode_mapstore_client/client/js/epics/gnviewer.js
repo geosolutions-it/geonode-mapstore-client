@@ -21,7 +21,7 @@ import {
     getGeoStoryByPk,
     getDocumentByPk
 } from '@js/api/geonode/v2';
-import { getMapStoreMapById } from '@js/api/geonode/adapter';
+import { getMapById } from '@js/api/geonode/v2';
 import { configureMap } from '@mapstore/framework/actions/config';
 import { zoomToExtent } from '@mapstore/framework/actions/map';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
@@ -99,7 +99,7 @@ export const gnViewerRequestMapConfig = (action$) =>
     action$.ofType(REQUEST_MAP_CONFIG)
         .switchMap(({ pk }) => {
             return Observable.defer(() => axios.all([
-                getMapStoreMapById(pk)
+                getMapById(pk)
             ])).switchMap((response) => {
                 const [adapterMap] = response;
                 return Observable.of(

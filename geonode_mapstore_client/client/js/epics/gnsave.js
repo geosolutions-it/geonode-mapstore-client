@@ -23,9 +23,9 @@ import { error as errorNotification, success as successNotification } from '@map
 
 
 import {
-    creatMapStoreMap,
-    updateMapStoreMap
-} from '@js/api/geonode/adapter';
+    createMap,
+    updateMap
+} from '@js/api/geonode/v2';
 import {
     SAVE_CONTENT,
     UPDATE_RESOURCE_BEFORE_SAVE,
@@ -67,37 +67,15 @@ const SaveAPI = {
             bookmarkSearchConfig,
             additionalOptions
         );
-        const name = metadata.name;
-        const description = metadata.description;
-        const thumbnail = metadata.thumbnail;
         const body = {
-            name,
-            data,
-            attributes: [{
-                type: 'string',
-                name: 'title',
-                value: name,
-                label: 'Title'
-            },
-            {
-                type: 'string',
-                name: 'abstract',
-                value: description,
-                label: 'Abstract'
-            },
-            ...(thumbnail
-                ? [{
-                    type: 'string',
-                    name: 'thumbnail',
-                    value: thumbnail,
-                    label: 'Thumbnail'
-                }]
-                : [])
-            ]
+            "title": metadata.name,
+            "abstract": metadata.description,
+            "thumbnail_url": metadata.thumbnail,
+            data
         };
         return id
-            ? updateMapStoreMap(id, { ...body, id })
-            : creatMapStoreMap(body)
+            ? updateMap(id, { ...body, id })
+            : createMap(body)
                 .then((response) => {
                     if (reload) {
                         window.location.href = parseDevHostname(`${getConfigProp('geonodeUrl')}maps/${response.id}/edit`);
