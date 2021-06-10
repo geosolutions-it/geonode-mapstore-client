@@ -372,7 +372,7 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                                 overlay['keywords'] = capa['keywords']
                             if 'dimensions' in capa and capa['dimensions']:
                                 overlay['dimensions'] = self.get_layer_dimensions(dimensions=capa['dimensions'])
-                            if 'storeType' in capa and capa['storeType'] == 'dataStore':
+                            if 'storeType' in capa and 'vector' in capa['storeType']:
                                 overlay['search'] = {
                                     "url": get_wfs_endpoint(request),
                                     "type": "wfs"
