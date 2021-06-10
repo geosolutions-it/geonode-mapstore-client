@@ -118,6 +118,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
             _data = validated_data.pop('blob')
 
         # Create a new instance
+        # TODO: Must use resource_manager here!
         _instance = GeoStory.objects.create(**validated_data)
 
         if _instance and _data:

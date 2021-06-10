@@ -317,8 +317,11 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                     source = sources[layer['source']]
                     overlay = {}
                     if 'url' in source:
-                        overlay['type'] = "wms" if 'ptype' not in source or \
-                            source['ptype'] != 'gxp_arcrestsource' else 'arcgis'
+                        if 'ptype' not in source or source['ptype'] != 'gxp_arcrestsource': 
+                            overlay['type'] = "wms" 
+                            overlay['tileSize'] = getattr(settings, "DEFAULT_TILE_SIZE", 512)
+                        else:
+                            overlay['type'] = "arcgis"
                         _p_url = parse.urlparse(source['url'])
                         if _p_url.query:
                             overlay['params'] = dict(parse.parse_qsl(_p_url.query))
@@ -347,7 +350,7 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                                 overlay['keywords'] = capa['keywords']
                             if 'dimensions' in capa and capa['dimensions']:
                                 overlay['dimensions'] = self.get_layer_dimensions(dimensions=capa['dimensions'])
-                            if 'storeType' in capa and capa['storeType'] == 'dataStore':
+                            if 'storeType' in capa and 'vector' in capa['storeType']:
                                 overlay['search'] = {
                                     "url": get_wfs_endpoint(request),
                                     "type": "wfs"

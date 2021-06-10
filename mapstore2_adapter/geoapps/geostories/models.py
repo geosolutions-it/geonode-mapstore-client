@@ -25,7 +25,6 @@ from django.db.models import signals
 from django.utils.translation import ugettext_lazy as _
 
 from geonode.geoapps.models import GeoApp
-from geonode.base.models import resourcebase_post_save
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +37,3 @@ class GeoStory(GeoApp):
         default='GeoStory',
         max_length=255)
     # The type of the current geoapp.
-
-
-signals.post_save.connect(resourcebase_post_save, sender=GeoStory)

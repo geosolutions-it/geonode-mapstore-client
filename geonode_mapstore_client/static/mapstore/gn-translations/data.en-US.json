@@ -23,13 +23,16 @@
             "aZ": "A Z",
             "zA": "Z A",
             "mostPopular": "Most popular",
-            "data": "Data",
-            "layers": "Layers",
+            "data": "Dati",
+            "layer": "Dataset",
+            "layers": "Datasets",
+            "document": "Document",
             "documents": "Documents",
             "remoteServices": "Remote services",
             "map": "Map",
-            "layer": "Layer",
             "geostory": "GeoStory",
+            "geostories": "GeoStories",
+            "createGeostory": "Create geostory",
             "createNew": "Create new",
             "maps": "Maps",
             "about": "About",
@@ -37,7 +40,7 @@
             "groups": "Groups",
             "groupsCategories": "Groups categories",
             "view": "View",
-            "viewLayer": "View layer",
+            "viewLayer": "View dataset",
             "viewMap": "View map",
             "viewGeoStory": "View GeoStory",
             "viewDocument": "View document",
@@ -84,12 +87,13 @@
             "inbox": "Inbox",
             "geoServer": "GeoServer",
             "help": "Help",
-            "uploadLayer": "Upload layer",
+            "uploadLayer": "Upload dataset",
             "uploadDocument": "Upload document",
             "addRemoteService": "Add remote service",
             "exploreMaps": "Explore maps",
             "createMap": "Create map",
             "apps": "Apps",
+            "createApp": "Create app",
             "announcements": "Announcements",
             "inviteUsers": "Invite users",
             "addUser": "Add user",
@@ -106,6 +110,9 @@
             "myResources": "My resources",
             "pendingApproval": "Pending approval"
 
+        },
+        "gnviewer":{
+            "edit": "Edit"
         }
     }
 }

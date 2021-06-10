@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Form } from 'react-bootstrap-v1';
+import { FormGroup, Checkbox } from 'react-bootstrap';
 import BaseMap from '@mapstore/framework/components/map/BaseMap';
 import mapType from '@mapstore/framework/components/map/enhancers/mapType';
 import Message from '@mapstore/framework/components/I18N/Message';
@@ -25,17 +25,31 @@ function ZoomTo({
     map,
     extent
 }) {
+    const once = useRef();
     useEffect(() => {
-        if (map && extent) {
+        if (map && extent && !once.current) {
             const [
-                minx, miny, maxx, maxy
+                aMinx, aMiny, aMaxx, aMaxy,
+                bMinx, bMiny, bMaxx, bMaxy
             ] = extent.split(',');
             const projection = map.getView().getProjection().getCode();
-            const bounds = reprojectBbox([minx, miny, maxx, maxy], 'EPSG:4326', projection);
+            let bounds;
+            const aBounds = reprojectBbox([aMinx, aMiny, aMaxx, aMaxy], 'EPSG:4326', projection);
+            if (bMinx !== undefined && bMiny !== undefined && bMaxx !== undefined && bMaxy !== undefined) {
+                const bBounds = reprojectBbox([bMinx, bMiny, bMaxx, bMaxy], 'EPSG:4326', projection);
+                // if there is the second bbox we should shift the minimum x value to correctly center the view
+                // the x of the [A] bounds needs to be shifted by the width of the [B] bounds
+                const minx = aBounds[0] - (bBounds[2] - bBounds[0]);
+                bounds = [minx, aBounds[1], aBounds[2], aBounds[3]];
+            } else {
+                bounds = aBounds;
+            }
             map.getView().fit(bounds, {
                 size: map.getSize(),
                 duration: 300
             });
+            // ensure to avoid other fit action by setting once to true
+            once.current = true;
         }
     }, [ extent ]);
 
@@ -78,18 +92,19 @@ function FilterByExtent({
     }
 
     return (
-        <Form.Group
+        <FormGroup
             key={id + '-extent'}
             controlId={id + '-extent'}
             className="gn-filter-by-extent"
         >
-            <Form.Check
+            <Checkbox
                 checked={enabled}
                 type="switch"
                 id="gn-filter-by-extent-switch"
-                label={<Message msgId="gnhome.extent"/>}
                 onChange={handleOnSwitch}
-            />
+            >
+                <Message msgId="gnhome.extent"/>
+            </Checkbox>
             <div
                 className="gn-filter-by-extent-map"
                 style={{
@@ -123,25 +138,23 @@ function FilterByExtent({
                                 type: 'vector',
                                 features: [getFeatureFromExtent(queryExtent)],
                                 style: vectorLayerStyle
-                                    ? vectorLayerStyle
+                                    ? { ...vectorLayerStyle,  weight: 0.001 }
                                     : {
                                         color: '#397AAB',
                                         opacity: 0.8,
                                         fillColor: '#397AAB',
                                         fillOpacity: 0.4,
-                                        weight: 4
+                                        weight: 0.001
                                     }
                             }]
                             : []
                         )
                     ]}
                 >
-                    <ZoomTo
-                        extent={queryExtent}
-                    />
+                    <ZoomTo extent={queryExtent} />
                 </Map>
             </div>
-        </Form.Group>
+        </FormGroup>
     );
 }
 
