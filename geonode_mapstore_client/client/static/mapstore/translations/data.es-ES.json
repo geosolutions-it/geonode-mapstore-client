@@ -61,6 +61,7 @@
             "register": "Registrarse",
             "signIn": "Ingresar",
             "filters": "Filtros",
+            "filtersCount": "{count, plural, =0 { Filtros } other {Filtros (#)}}",
             "admin": "Administración",
             "logOut": "Salir",
             "terms": "Terms",
@@ -108,7 +109,8 @@
             "delete": "Borrar",
             "customFiltersTitle": "Recursos",
             "myResources": "Mis recursos",
-            "pendingApproval": "Aprobación pendiente"
+            "pendingApproval": "Aprobación pendiente",
+            "featuredList": "Presentada"
 
         },
         "gnviewer":{
