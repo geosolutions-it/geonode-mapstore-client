@@ -22,6 +22,7 @@ import CardGrid from '@js/components/home/CardGrid';
 import DetailsPanel from '@js/components/home/DetailsPanel';
 import FiltersMenu from '@js/components/home/FiltersMenu';
 import FiltersForm from '@js/components/FiltersForm';
+import FeaturedList from '@js/components/home/FeaturedList';
 import LanguageSelector from '@js/components/home/LanguageSelector';
 import { getParsedGeoNodeConfiguration } from "@js/selectors/config";
 import { userSelector } from '@mapstore/framework/selectors/security';
@@ -31,7 +32,8 @@ import {
     fetchSuggestions,
     searchResources,
     requestResource,
-    updateSuggestions
+    updateSuggestions,
+    loadFeaturedResources
 } from '@js/actions/gnsearch';
 
 import {
@@ -100,6 +102,18 @@ const ConnectedCardGrid = connect(
         isFirstRequest
     }))
 )(CardGridWithMessageId);
+
+const ConnectedFeatureList = connect(
+    createSelector([
+        state => state?.gnsearch?.featuredResources?.resources || DEFAULT_RESOURCES,
+        state => state?.gnsearch?.featuredResources?.page || 1,
+        state => state?.gnsearch?.featuredResources?.isNextPageAvailable || false,
+        state => state?.gnsearch?.featuredResources?.isPreviousPageAvailable || false,
+        state => state?.gnsearch?.featuredResources?.loading || false
+    ], (resources, page, isNextPageAvailable, isPreviousPageAvailable, loading) => ({
+        resources, page, isNextPageAvailable, isPreviousPageAvailable, loading})
+    ), {loadFeaturedResources}
+)(FeaturedList);
 
 
 const ConnectedDetailsPanel = connect(
@@ -172,7 +186,9 @@ function Home({
     user,
     width,
     resource,
-    totalResources
+    totalResources,
+    disableFeatured = false,
+    fetchFeaturedResources = () => {}
 }) {
 
     const {
@@ -415,6 +431,19 @@ function Home({
             <div className="gn-main-home">
 
                 <div className="gn-container">
+                    <div className="gn-row gn-home-section">
+                        <div className="gn-grid-container">
+                            {!disableFeatured &&  <ConnectedFeatureList
+                                query={query}
+                                formatHref={handleFormatHref}
+                                buildHrefByTemplate={buildHrefByTemplate}
+                                onLoad={fetchFeaturedResources}
+                                containerStyle={{
+                                    minHeight: 'auto'
+                                }}/> }
+
+                        </div>
+                    </div>
                     <div className="gn-row">
                         {isMounted.current && isFiltersPanelEnabled && isFilterForm &&  <div ref={filterFormNode} id="gn-filter-form-container" className={`gn-filter-form-container`}>
                             <FiltersForm
@@ -551,7 +580,8 @@ const ConnectedHome = connect(
     {
         onSearch: searchResources,
         onSelect: requestResource,
-        onEnableFiltersPanel: setControlProperty.bind(null, 'gnFiltersPanel', 'enabled')
+        onEnableFiltersPanel: setControlProperty.bind(null, 'gnFiltersPanel', 'enabled'),
+        fetchFeaturedResources: loadFeaturedResources
     }
 )(withResizeDetector(Home));
 

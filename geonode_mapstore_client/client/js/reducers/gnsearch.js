@@ -14,14 +14,18 @@ import {
     SEARCH_RESOURCES,
     UPDATE_RESOURCES,
     LOADING_RESOURCES,
-    UPDATE_RESOURCES_METADATA
+    UPDATE_RESOURCES_METADATA,
+    SET_FEATURED_RESOURCES
 } from '@js/actions/gnsearch';
 
 function gnsearch(state = {
     resources: [],
     params: {},
     previousParams: {},
-    isFirstRequest: true
+    isFirstRequest: true,
+    featuredResources: {
+        resources: []
+    }
 }, action) {
     switch (action.type) {
     case UPDATE_SUGGESTIONS: {
@@ -81,6 +85,14 @@ function gnsearch(state = {
             loading: action.loading
         };
     }
+    case SET_FEATURED_RESOURCES:
+        return {
+            ...state,
+            featuredResources: {
+                ...state.featuredResources,
+                ...action.data
+            }
+        };
     default:
         return state;
     }

@@ -108,7 +108,8 @@
             "delete": "Borrar",
             "customFiltersTitle": "Recursos",
             "myResources": "Mis recursos",
-            "pendingApproval": "Aprobación pendiente"
+            "pendingApproval": "Aprobación pendiente",
+            "featuredList": "Presentada"
 
         },
         "gnviewer":{
