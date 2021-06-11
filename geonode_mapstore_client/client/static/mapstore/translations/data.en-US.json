@@ -61,6 +61,7 @@
             "register": "Register",
             "signIn": "Sign in",
             "filters": "Filters",
+            "filtersCount": "{count, plural, =0 { Filters } other {Filters (#)}}",
             "admin": "Admin",
             "logOut": "Log out",
             "terms": "Terms",

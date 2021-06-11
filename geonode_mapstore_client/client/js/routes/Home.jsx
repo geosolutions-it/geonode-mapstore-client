@@ -309,11 +309,9 @@ function Home({
 
 
     const { query } = url.parse(location.search, true);
-
-    const queryFilters = Object.keys(query).reduce((acc, key) => key.indexOf('filter') === 0
-        ? [...acc, ...castArray(query[key]).map((value) => ({ key, value }))]
-        : acc, []);
-
+    const queryFilters = Object.keys(query).reduce((acc, key) => key.indexOf('sort') === 0
+        ? acc
+        : [...acc, ...castArray(query[key]).map((value) => ({ key, value }))], []);
 
     const pk = match.params.pk;
     const ctype = match.params.ctype;
@@ -479,7 +477,6 @@ function Home({
                                 column={ hideHero &&
                                     <ConnectedDetailsPanel
                                         resource={resource}
-                                        filters={queryFilters}
                                         linkHref={hrefDetailPanel}
                                         formatHref={handleFormatHref}
                                         sectionStyle={{
@@ -521,7 +518,8 @@ function Home({
                                     orderOptions={filters?.order?.options}
                                     defaultLabelId={filters?.order?.defaultLabelId}
                                     totalResources={totalResources}
-                                    filtersActive={!!(queryFilters.length > 0 || query.f || query.extent)}
+                                    totalFilters={queryFilters.length}
+                                    filtersActive={!!(queryFilters.length > 0)}
                                 />
 
                             </ConnectedCardGrid>
