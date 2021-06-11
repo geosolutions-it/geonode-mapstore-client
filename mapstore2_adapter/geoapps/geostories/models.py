@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 class GeoStory(GeoApp):
 
     app_type = models.CharField(
-        _('%s Type' % settings.GEONODE_APPS_NAME),
+        _(f'{settings.GEONODE_APPS_NAME} Type'),
         db_column='geostory_app_type',
         default='GeoStory',
         max_length=255)

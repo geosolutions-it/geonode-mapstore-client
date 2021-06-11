@@ -130,7 +130,7 @@ class GeoNodeSerializer(object):
                                 except Exception:
                                     _lyr_store = None
 
-                        _lyr_name = "%s:%s" % (_lyr_store, _lyr['name']) if _lyr_store else _lyr['name']
+                        _lyr_name = f"{_lyr_store}:{_lyr['name']}" if _lyr_store else _lyr['name']
                         try:
                             # Retrieve the Layer Params back from GeoNode
                             _gn_layer = layer_detail(

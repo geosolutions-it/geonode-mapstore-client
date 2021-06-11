@@ -110,7 +110,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
             if _u:
                 validated_data[_key] = _u
             else:
-                raise ValidationError("The specified '{}' does not exist!".format(_key))
+                raise ValidationError(f"The specified '{_key}' does not exist!")
 
         # Extract JSON blob
         _data = None
@@ -145,7 +145,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
             if _u:
                 validated_data[_key] = _u
             else:
-                raise ValidationError("The specified '{}' does not exist!".format(_key))
+                raise ValidationError(f"The specified '{_key}' does not exist!")
 
         # Extract JSON blob
         _data = None
