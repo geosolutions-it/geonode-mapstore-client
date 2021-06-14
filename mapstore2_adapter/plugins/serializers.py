@@ -42,14 +42,6 @@ logger = logging.getLogger(__name__)
 class GeoNodeSerializer(object):
 
     @classmethod
-    def update_data(cls, serializer, data, geonode_map_obj=None):
-        instance = geonode_map_obj or serializer.instance
-        if data:
-            instance.data = data
-            instance.save()
-            serializer.validated_data['data'] = instance
-
-    @classmethod
     def update_attributes(cls, serializer, attributes):
         for _a in attributes:
             serializer.validated_data[_a['name']] = _a['value']
