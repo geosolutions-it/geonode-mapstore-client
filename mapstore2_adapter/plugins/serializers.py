@@ -10,6 +10,7 @@
 #########################################################################
 
 from __future__ import absolute_import
+from uuid import uuid4
 from geonode.maps.models import MapData
 
 from rest_framework.exceptions import APIException
@@ -39,18 +40,6 @@ logger = logging.getLogger(__name__)
 
 
 class GeoNodeSerializer(object):
-
-    @classmethod
-    def update_data(cls, serializer, data, geonode_map_obj=None):
-        instance = geonode_map_obj or serializer.instance
-        if data:
-            _data, _ = MapData.objects.get_or_create(
-                resource=instance)
-            _data.resource = instance
-            _data.blob = data
-            _data.save()
-            instance.data=_data
-            serializer.validated_data['data'] = _data
 
     @classmethod
     def update_attributes(cls, serializer, attributes):
@@ -104,6 +93,7 @@ class GeoNodeSerializer(object):
        
         if data:
             try:
+                data_blob = data.copy()
                 _map_conf = dict(data)
                 _map_conf["about"] = {
                     "name": _map_name,
@@ -211,6 +201,7 @@ class GeoNodeSerializer(object):
                         from geonode.maps.models import Map
                         map_obj = Map(
                             title=_map_title,
+                            abstract=_map_abstract,
                             owner=caller.request.user,
                             center_x=_map_obj['center']['x'],
                             center_y=_map_obj['center']['y'],
@@ -233,6 +224,10 @@ class GeoNodeSerializer(object):
                         map_obj.title = _map_title
                         map_obj.abstract = _map_abstract
 
+                    if not map_obj.uuid:
+                        map_obj.uuid=str(uuid4())
+
+                    map_obj.data = data_blob
                     # Update GeoNode Map
                     _map_conf['map'] = _map_obj
 
@@ -242,7 +237,7 @@ class GeoNodeSerializer(object):
                     for k, v in map_obj.__dict__.items():
                         if not k.startswith('_'):
                             serializer.validated_data[k] = v
-
+            
                     serializer.save()
 
                     serializer.instance.update_from_viewer(
@@ -260,32 +255,21 @@ class GeoNodeSerializer(object):
         _data = None
 
         try:
-            _data = serializer.validated_data['blob'].copy()
-            serializer.validated_data.pop('blob')
+            _data = serializer.validated_data['data'].copy()
+            serializer.validated_data.pop('data')
         except Exception as e:
             logger.exception(e)
-            raise APIException("Map Configuration (blob) is Mandatory!")
+            raise APIException("Map Configuration (data) is Mandatory!")
 
         map_obj = self.get_geonode_map(caller, serializer)
-        geonode_map_obj = self.set_geonode_map(caller, serializer, map_obj, _data.copy())
-
-        if _data:
-            # Save JSON blob
-            GeoNodeSerializer.update_data(serializer, _data.copy(), geonode_map_obj)
+        self.set_geonode_map(caller, serializer, map_obj, _data.copy())
 
         return serializer
 
     def perform_update(self, caller, serializer):
         map_obj = self.get_geonode_map(caller, serializer)
 
-        _data = None
-
-        if 'blob' in serializer.validated_data:
-            _data = serializer.validated_data['blob'].copy()
-            serializer.validated_data.pop('blob')
-
-            # Save JSON blob
-            GeoNodeSerializer.update_data(serializer, _data.copy())
+        _data = serializer.validated_data['data'].copy()
 
         self.set_geonode_map(caller, serializer, map_obj, _data)
 

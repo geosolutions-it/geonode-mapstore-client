@@ -35,6 +35,7 @@
     "dompurify": "2.2.6",
     "js-cookie": "2.2.1",
     "mapstore": "file:MapStore2",
+    "react-pdf": "^5.3.0",
     "yargs": "^17.0.1"
   },
   "geonode": {
