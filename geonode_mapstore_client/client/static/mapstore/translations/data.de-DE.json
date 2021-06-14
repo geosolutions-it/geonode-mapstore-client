@@ -118,7 +118,8 @@
             }
         },
         "gnviewer":{
-            "edit": "Bearbeiten"
+            "edit": "Bearbeiten",
+            "details": "Einzelheiten"
         }
 
     }

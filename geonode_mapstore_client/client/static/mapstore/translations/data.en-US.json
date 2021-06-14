@@ -119,7 +119,8 @@
             }
         },
         "gnviewer":{
-            "edit": "Edit"
+            "edit": "Edit",
+            "details": "Details"
         }
     }
 }
