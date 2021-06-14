@@ -17,6 +17,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 #########################################################################
+from geonode.geoapps.models import GeoApp
+from geonode.base.models import ResourceBase
 import json
 import logging
 
@@ -27,7 +29,6 @@ from rest_framework.serializers import ValidationError
 from dynamic_rest.serializers import DynamicModelSerializer
 from dynamic_rest.fields.fields import DynamicRelationField
 
-from geonode.geoapps.models import GeoAppData
 from geonode.base.api.serializers import ResourceBaseSerializer
 
 from ..models import GeoStory
@@ -46,16 +47,19 @@ class GeoAppDataSerializer(DynamicModelSerializer):
 
     class Meta:
         ref_name = 'GeoAppData'
-        model = GeoAppData
+        model = ResourceBase
         name = 'GeoAppData'
         fields = ('pk', 'blob')
 
     def to_internal_value(self, data):
         return data
 
+       
     def to_representation(self, value):
-        data = GeoAppData.objects.filter(resource__id=value).first()
-        return json.loads(data.blob) if data else {}
+        data = GeoApp.objects.filter(resourcebase_ptr_id=value)
+        if data.exists():
+            return data.first().data
+        return {}
 
 
 class GeoStorySerializer(ResourceBaseSerializer):
@@ -113,7 +117,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
                 raise ValidationError(f"The specified '{_key}' does not exist!")
 
         # Extract JSON blob
-        _data = None
+        _data = {}
         if 'blob' in validated_data:
             _data = validated_data.pop('blob')
 
@@ -121,13 +125,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
         # TODO: Must use resource_manager here!
         _instance = GeoStory.objects.create(**validated_data)
 
-        if _instance and _data:
-            try:
-                _geo_app, _created = GeoAppData.objects.get_or_create(resource=_instance)
-                _geo_app.blob = _data
-                _geo_app.save()
-            except Exception as e:
-                raise ValidationError(e)
+        _instance.data = _data
 
         _instance.save()
         return _instance
@@ -158,13 +156,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
         except Exception as e:
             raise ValidationError(e)
 
-        if instance and _data:
-            try:
-                _geo_app, _created = GeoAppData.objects.get_or_create(resource=instance)
-                _geo_app.blob = _data
-                _geo_app.save()
-            except Exception as e:
-                raise ValidationError(e)
+        instance.data = _data
 
         instance.save()
         return instance

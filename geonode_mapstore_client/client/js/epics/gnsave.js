@@ -78,7 +78,7 @@ const SaveAPI = {
             : createMap(body)
                 .then((response) => {
                     if (reload) {
-                        window.location.href = parseDevHostname(`${getConfigProp('geonodeUrl')}maps/${response.id}/edit`);
+                        window.location.href = parseDevHostname(`${getConfigProp('geonodeUrl')}maps/${response.map.pk}/edit`);
                     }
                     return response.data;
                 });
