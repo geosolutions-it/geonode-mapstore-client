@@ -36,7 +36,7 @@ describe('FiltersForm component', () => {
                 done(e);
             }
         };
-        ReactDOM.render( <FiltersForm show onChange={onChange}/>, document.getElementById("container"));
+        ReactDOM.render( <FiltersForm show onChange={onChange} submitOnChangeField={false} />, document.getElementById("container"));
         const filterFormNode = document.querySelector('.gn-filter-form');
         expect(filterFormNode).toBeTruthy();
         const footerButtons = filterFormNode.querySelectorAll('.gn-filter-form-footer > button');
@@ -53,7 +53,7 @@ describe('FiltersForm component', () => {
                 done(e);
             }
         };
-        ReactDOM.render( <FiltersForm show onChange={onChange}/>, document.getElementById("container"));
+        ReactDOM.render( <FiltersForm show onChange={onChange} submitOnChangeField={false} />, document.getElementById("container"));
         const filterFormNode = document.querySelector('.gn-filter-form');
         expect(filterFormNode).toBeTruthy();
         const footerButtons = filterFormNode.querySelectorAll('.gn-filter-form-footer > button');
@@ -69,7 +69,7 @@ describe('FiltersForm component', () => {
                 done(e);
             }
         };
-        ReactDOM.render( <FiltersForm show onClose={onClose}/>, document.getElementById("container"));
+        ReactDOM.render( <FiltersForm show onClose={onClose} />, document.getElementById("container"));
         const filterFormNode = document.querySelector('.gn-filter-form');
         expect(filterFormNode).toBeTruthy();
         const footerButtons = filterFormNode.querySelectorAll('.gn-filter-form-header > button');
@@ -77,4 +77,14 @@ describe('FiltersForm component', () => {
         const closeButton = footerButtons[0];
         Simulate.click(closeButton);
     });
+
+    it('should the apply button hidden with submitOnChangeField flag', () => {
+        ReactDOM.render( <FiltersForm show  submitOnChangeField />, document.getElementById("container"));
+        const filterFormNode = document.querySelector('.gn-filter-form');
+        expect(filterFormNode).toBeTruthy();
+        const footerButtons = filterFormNode.querySelectorAll('.gn-filter-form-footer > button');
+        expect(footerButtons.length).toBe(1);
+
+    });
+
 });

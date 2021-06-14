@@ -219,6 +219,15 @@
                                 "filter{is_approved}": false
                             },
                             "authenticated": true
+                        },
+                        {
+                            "id": "favorite",
+                            "labelId": "gnhome.favorites",
+                            "type": "filter",
+                            "query": {
+                                "favorite": true
+                            },
+                            "authenticated": true
                         }
                     ]
                 },
