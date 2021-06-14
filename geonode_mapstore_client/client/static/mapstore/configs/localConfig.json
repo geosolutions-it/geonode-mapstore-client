@@ -3392,7 +3392,8 @@
             { "name": "ViewerLayout" },
             { "name": "ActionNavbar" },
             { "name": "BrandNavbar" },
-            { "name": "DetailViewer"}
+            { "name": "DetailViewer"},
+            {"name": "MediaViewer"}
         ]
     }
 }

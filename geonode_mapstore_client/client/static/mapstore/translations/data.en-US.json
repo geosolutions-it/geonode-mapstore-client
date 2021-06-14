@@ -113,6 +113,11 @@
             "featuredList": "Featured"
 
         },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Media format is unsupported"
+            }
+        },
         "gnviewer":{
             "edit": "Edit"
         }
