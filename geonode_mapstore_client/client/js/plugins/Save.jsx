@@ -14,14 +14,17 @@ import Message from '@mapstore/framework/components/I18N/Message';
 import { Glyphicon } from 'react-bootstrap';
 import { mapInfoSelector } from '@mapstore/framework/selectors/map';
 import Loader from '@mapstore/framework/components/misc/Loader';
-
+import Button from '@js/components/Button';
 import { isLoggedIn } from '@mapstore/framework/selectors/security';
 import controls from '@mapstore/framework/reducers/controls';
 import gnresource from '@js/reducers/gnresource';
 import gnsave from '@js/reducers/gnsave';
 import gnsaveEpics from '@js/epics/gnsave';
 import { saveDirectContent } from '@js/actions/gnsave';
-
+import {
+    isNewResource,
+    canEditResource
+} from '@js/selectors/gnresource';
 /**
  * Plugin for Save modal
  * @name Save
@@ -65,6 +68,37 @@ const SavePlugin = connect(
     }))
 )(Save);
 
+function SaveButton({
+    enabled,
+    onClick
+}) {
+    return enabled
+        ? <Button
+            onClick={() => onClick()}
+        >
+            <Message msgId="save"/>
+        </Button>
+        : null
+    ;
+}
+
+const ConnectedSaveButton = connect(
+    createSelector(
+        isLoggedIn,
+        isNewResource,
+        canEditResource,
+        mapInfoSelector,
+        (loggedIn, isNew, canEdit, mapInfo) => ({
+            // we should add permList to map pages too
+            // currently the canEdit is located inside the map info
+            enabled: loggedIn && !isNew && (canEdit || mapInfo?.canEdit)
+        })
+    ),
+    {
+        onClick: saveDirectContent
+    }
+)((SaveButton));
+
 export default createPlugin('Save', {
     component: SavePlugin,
     containers: {
@@ -76,8 +110,8 @@ export default createPlugin('Save', {
             action: saveDirectContent,
             selector: createSelector(
                 isLoggedIn,
-                state => state?.gnresource?.isNew,
-                state => state?.gnresource?.permissions?.canEdit,
+                isNewResource,
+                canEditResource,
                 mapInfoSelector,
                 (loggedIn, isNew, canEdit, mapInfo) => ({
                     // we should add permList to map pages too
@@ -85,6 +119,11 @@ export default createPlugin('Save', {
                     style: loggedIn && !isNew && (canEdit || mapInfo?.canEdit) ? {} : { display: 'none' }
                 })
             )
+        },
+        ActionNavbar: {
+            name: 'Save',
+            target: 'leftMenuItem',
+            Component: ConnectedSaveButton
         }
     },
     epics: {

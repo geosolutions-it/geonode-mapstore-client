@@ -8,11 +8,8 @@
   "devDependencies": {},
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.1",
-    "array-unique": "^0.3.2",
     "dompurify": "2.2.6",
     "js-cookie": "2.2.1",
-    "mapstore": "git+https://github.com/geosolutions-it/MapStore2.git#4e80fa5119f7d183d3595869541d57a7fee267d7",
-    "react-pdf": "^5.3.0",
-    "yargs": "^17.0.1"
+    "mapstore": "git+https://github.com/geosolutions-it/MapStore2.git#4e80fa5119f7d183d3595869541d57a7fee267d7"
   }
 }

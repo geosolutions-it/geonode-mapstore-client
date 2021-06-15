@@ -20,7 +20,6 @@ function ActionNavbarPlugin({
     rightMenuItems
 }, context) {
 
-
     const { loadedPlugins } = context;
     const configuredItems = usePluginItems({ items, loadedPlugins });
     const leftMenuConfiguredItems = configuredItems
