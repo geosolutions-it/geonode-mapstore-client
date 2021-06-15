@@ -19,7 +19,8 @@ import { getBaseMapConfiguration } from '@js/api/geonode/config';
 import {
     getLayerByPk,
     getGeoStoryByPk,
-    getDocumentByPk
+    getDocumentByPk,
+    getResourceByPk
 } from '@js/api/geonode/v2';
 import { getMapById } from '@js/api/geonode/v2';
 import { configureMap } from '@mapstore/framework/actions/config';
@@ -28,9 +29,14 @@ import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import {
     // setResourcePermissions,
     // setNewResource,
+    setResourceType,
+    setResourceId,
     setResource
 } from '@js/actions/gnresource';
-import { setCurrentStory } from '@mapstore/framework/actions/geostory';
+import {
+    setCurrentStory,
+    setResource as setGeoStoryResource
+} from '@mapstore/framework/actions/geostory';
 
 export const gnViewerRequestLayerConfig = (action$) =>
     action$.ofType(REQUEST_LAYER_CONFIG)
@@ -87,7 +93,8 @@ export const gnViewerRequestLayerConfig = (action$) =>
                         }
                     }),
                     zoomToExtent(extent, 'EPSG:4326'),
-                    setResource(gnLayer)
+                    setResource(gnLayer),
+                    setResourceId(pk)
                 );
             }).catch(() => {
                 // TODO: implement various error cases
@@ -101,10 +108,12 @@ export const gnViewerRequestMapConfig = (action$) =>
             return Observable.defer(() => axios.all([
                 getMapById(pk)
             ])).switchMap((response) => {
-                const [adapterMap] = response;
+                const { data, ...resource }  = response;
                 return Observable.of(
-                    configureMap(adapterMap.data)// ,
-                    // setResource(gnLayer)
+                    configureMap(data),
+                    setResource(resource),
+                    setResourceId(pk),
+                    setResourceType('map')
                 );
             }).catch(() => {
                 // TODO: implement various error cases
@@ -122,7 +131,12 @@ export const gnViewerRequestGeoStoryConfig = (action$) =>
                 const { data, ...resource } = gnGeoStory;
                 return Observable.of(
                     setCurrentStory(data),
-                    setResource(resource)
+                    setResource(resource),
+                    setResourceId(pk),
+                    setResourceType('geostory'),
+                    setGeoStoryResource({
+                        canEdit: resource?.perms?.includes('change_resourcebase')
+                    })
                 );
             }).catch(() => {
                 // TODO: implement various error cases
@@ -138,7 +152,8 @@ export const gnViewerRequestDocumentConfig = (action$) =>
             ])).switchMap((response) => {
                 const [gnDocument] = response;
                 return Observable.of(
-                    setResource(gnDocument)
+                    setResource(gnDocument),
+                    setResourceId(pk)
                 );
             }).catch(() => {
                 // TODO: implement various error cases

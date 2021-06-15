@@ -21,6 +21,7 @@ import {toggleControl} from '@mapstore/framework/actions/controls';
 import gnresource from '@js/reducers/gnresource';
 import Message from '@mapstore/framework/components/I18N/Message';
 import { userSelector } from '@mapstore/framework/selectors/security';
+import Button from '@js/components/Button';
 
 const ConnectedDetailsPanel = connect(
     createSelector([
@@ -42,10 +43,10 @@ const ButtonViewer = ({user,  onClick}) => {
         onClick();
     };
 
-    return (user && <button
-        className="btn btn-default"
+    return (user && <Button
         onClick={handleClickButton}
-    > <Message msgId="gnviewer.edit"/> </button>);
+    > <Message msgId="gnviewer.details"/>
+    </Button>);
 };
 
 const ConnectedButton = connect(
