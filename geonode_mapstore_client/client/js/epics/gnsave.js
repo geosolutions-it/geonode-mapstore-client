@@ -71,7 +71,7 @@ const SaveAPI = {
             "title": metadata.name,
             "abstract": metadata.description,
             "thumbnail_url": metadata.thumbnail,
-            data
+            "data": data
         };
         return id
             ? updateMap(id, { ...body, id })

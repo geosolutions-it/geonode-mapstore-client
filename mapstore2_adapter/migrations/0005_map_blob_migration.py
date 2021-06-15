@@ -8,28 +8,23 @@ import logging
 logger = logging.getLogger(__name__)
    
 SQL_MIGRATION = '''WITH mapstore_blob AS (
-	SELECT
-		msd.resource_id, msd.blob
-	FROM
-		public.mapstore2_adapter_mapstoredata msd
-	JOIN public.maps_map md 
-	ON msd.resource_id =md.resourcebase_ptr_id)
-INSERT
-	into
-	public.maps_mapdata(resource_id,
-	blob)
-SELECT
-	mb.resource_id,
-	mb.blob
-FROM mapstore_blob mb
-WHERE mb.resource_id NOT IN (SELECT resource_id FROM public.maps_mapdata )
+    SELECT
+        msd.resource_id, msd.blob
+    FROM
+        public.mapstore2_adapter_mapstoredata msd
+    JOIN public.maps_map md 
+    ON msd.resource_id =md.resourcebase_ptr_id)
+UPDATE base_resourcebase
+SET "blob"=subquery."blob"
+FROM (select resource_id,"blob" from mapstore_blob gg) AS subquery
+WHERE base_resourcebase.id=subquery.resource_id;
 '''
 
 class Migration(migrations.Migration):
 
     dependencies = [
         ('mapstore2_adapter', '0004_auto_20210219_1015'),
-        ('maps', '0031_auto_20190329_1652')
+        ('maps', '0030_auto_20210506_0836')
     ]
 
     operations = [

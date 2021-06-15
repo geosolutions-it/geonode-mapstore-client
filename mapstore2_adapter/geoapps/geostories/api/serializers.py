@@ -17,6 +17,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 #########################################################################
+from uuid import uuid4
 from geonode.geoapps.models import GeoApp
 from geonode.base.models import ResourceBase
 import json
@@ -123,9 +124,13 @@ class GeoStorySerializer(ResourceBaseSerializer):
 
         # Create a new instance
         # TODO: Must use resource_manager here!
+        
+        if 'uuid' not in validated_data:
+            validated_data["uuid"] =str(uuid4())
+
         _instance = GeoStory.objects.create(**validated_data)
 
-        _instance.data = _data
+        _instance.blob = _data
 
         _instance.save()
         return _instance
@@ -156,7 +161,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
         except Exception as e:
             raise ValidationError(e)
 
-        instance.data = _data
+        instance.blob = _data
 
         instance.save()
         return instance

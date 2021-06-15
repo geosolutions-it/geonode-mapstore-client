@@ -11,12 +11,9 @@
 
 from __future__ import absolute_import
 from uuid import uuid4
-from geonode.maps.models import MapData
 
 from rest_framework.exceptions import APIException
-from geonode.maps.models import Map
 import json
-import base64
 import logging
 import traceback
 from django.http import Http404
@@ -227,7 +224,7 @@ class GeoNodeSerializer(object):
                     if not map_obj.uuid:
                         map_obj.uuid=str(uuid4())
 
-                    map_obj.data = data_blob
+                    map_obj.blob = data_blob
                     # Update GeoNode Map
                     _map_conf['map'] = _map_obj
 
@@ -255,8 +252,8 @@ class GeoNodeSerializer(object):
         _data = None
 
         try:
-            _data = serializer.validated_data['data'].copy()
-            serializer.validated_data.pop('data')
+            _data = serializer.validated_data['blob'].copy()
+            serializer.validated_data.pop('blob')
         except Exception as e:
             logger.exception(e)
             raise APIException("Map Configuration (data) is Mandatory!")
@@ -269,7 +266,7 @@ class GeoNodeSerializer(object):
     def perform_update(self, caller, serializer):
         map_obj = self.get_geonode_map(caller, serializer)
 
-        _data = serializer.validated_data['data'].copy()
+        _data = serializer.validated_data['blob'].copy()
 
         self.set_geonode_map(caller, serializer, map_obj, _data)
 
