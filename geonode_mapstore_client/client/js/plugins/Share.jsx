@@ -18,9 +18,13 @@ import controls from '@mapstore/framework/reducers/controls';
 import ShareEmbed from '@mapstore/framework/components/share/ShareEmbed';
 import ShareLink from '@mapstore/framework/components/share/ShareLink';
 import ResizableModal from '@mapstore/framework/components/misc/ResizableModal';
+import Button from '@js/components/Button';
 import { mapInfoSelector } from '@mapstore/framework/selectors/map';
 import url from 'url';
-
+import {
+    isNewResource,
+    getResourceId
+} from '@js/selectors/gnresource';
 function getShareUrl({
     resourceId,
     pathTemplate
@@ -95,6 +99,34 @@ const SharePlugin = connect(
     }
 )(Share);
 
+function ShareButton({
+    enabled,
+    onClick
+}) {
+    return enabled
+        ? <Button
+            onClick={() => onClick()}
+        >
+            <Message msgId="share.title"/>
+        </Button>
+        : null
+    ;
+}
+
+const ConnectedShareButton = connect(
+    createSelector(
+        isNewResource,
+        getResourceId,
+        mapInfoSelector,
+        (isNew, resourceId, mapInfo) => ({
+            enabled: !isNew && (resourceId || mapInfo?.id)
+        })
+    ),
+    {
+        onClick: toggleControl.bind(null, 'share', null)
+    }
+)((ShareButton));
+
 export default createPlugin('Share', {
     component: SharePlugin,
     containers: {
@@ -105,13 +137,18 @@ export default createPlugin('Share', {
             icon: <Glyphicon glyph="share-alt"/>,
             action: toggleControl.bind(null, 'share', null),
             selector: createSelector(
-                state => state?.gnresource?.isNew,
-                state => state?.gnresource?.id,
+                isNewResource,
+                getResourceId,
                 mapInfoSelector,
                 (isNew, resourceId, mapInfo) => ({
                     style: !isNew && (resourceId || mapInfo?.id) ? { } : { display: 'none' }
                 })
             )
+        },
+        ActionNavbar: {
+            name: 'Share',
+            target: 'leftMenuItem',
+            Component: ConnectedShareButton
         }
     },
     epics: {},
