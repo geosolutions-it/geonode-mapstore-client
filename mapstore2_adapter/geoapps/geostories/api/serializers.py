@@ -59,7 +59,7 @@ class GeoAppDataSerializer(DynamicModelSerializer):
     def to_representation(self, value):
         data = GeoApp.objects.filter(resourcebase_ptr_id=value)
         if data.exists():
-            return data.first().data
+            return data.first().blob
         return {}
 
 
