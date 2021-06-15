@@ -254,11 +254,10 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
         if map_id:
             try:
                 # TODO: MapData will be replaced by ResourceBase.DATA soon...
-                from geonode.maps.models import Map, MapData
+                from geonode.maps.models import Map
                 gn_map_query = Map.objects.filter(id=map_id)
-                if gn_map_query.exists():
-                    gn_map_data = MapData.objects.get(resource=gn_map_query.get())
-                    ms2_map_data = gn_map_data.blob
+                if gn_map_query.exists() and gn_map_query.count() == 1:
+                    ms2_map_data = gn_map_query.get().blob
                     if isinstance(ms2_map_data, string_types):
                         ms2_map_data = json.loads(ms2_map_data)
                     if 'map' in ms2_map_data:
