@@ -89,8 +89,8 @@ const SaveAPI = {
         const body = {
             'title': metadata.name,
             'abstract': metadata.description,
-            'data': JSON.stringify(story),
-            'thumbnail_url': metadata.thumbnail
+            'thumbnail_url': metadata.thumbnail,
+            'data': story
         };
         return id
             ? updateGeoStory(id, body)
