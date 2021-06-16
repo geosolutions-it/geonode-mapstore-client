@@ -189,7 +189,7 @@ class GeoNodeSerializer(object):
 
                     if not map_obj:
                         # Update Map BBox
-                        if 'bbox' not in _map_obj and (not _map_bbox or len(_map_bbox) != 4):
+                        if 'bbox' not in _map_obj:
                             _map_bbox = _map_obj['maxExtent']
                             # Must be in the form : [x0, x1, y0, y1]
                             _map_obj['bbox'] = [_map_bbox[0], _map_bbox[1],
