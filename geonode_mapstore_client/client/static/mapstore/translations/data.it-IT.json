@@ -114,8 +114,14 @@
             "pendingApproval": "In attesa di approvazione",
             "featuredList": "In primo piano"
         },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Il formato multimediale non è supportato"
+            }
+        },
         "gnviewer":{
-            "edit": "Modifica"
+            "edit": "Modifica",
+            "details": "Dettagli"
         }
     }
 }

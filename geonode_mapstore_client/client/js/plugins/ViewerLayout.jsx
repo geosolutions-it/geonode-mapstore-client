@@ -21,6 +21,7 @@ function ViewerLayout({
     const configuredItems = usePluginItems({ items, loadedPlugins });
     return (
         <div
+            className="gn-viewer-layout"
             style={{
                 position: 'fixed',
                 top: 0,
@@ -36,12 +37,20 @@ function ViewerLayout({
                     .map(({ Component, name }) => <Component key={name} />)}
             </header>
             <div
+                className="gn-viewer-layout-body"
                 style={{
                     display: 'flex',
                     width: '100%',
-                    flex: 1
+                    flex: 1,
+                    position: 'relative'
                 }}>
+                <div className="gn-viewer-left-column">
+                    {configuredItems
+                        .filter(({ target }) => target === 'leftColumn')
+                        .map(({ Component, name }) => <Component key={name} />)}
+                </div>
                 <div
+                    className="gn-viewer-layout-center"
                     style={{
                         flex: 1,
                         position: 'relative'
@@ -51,7 +60,7 @@ function ViewerLayout({
                         .filter(({ target }) => !target)
                         .map(({ Component, name }) => <Component key={name} />)}
                 </div>
-                <div>
+                <div className="gn-viewer-right-column">
                     {configuredItems
                         .filter(({ target }) => target === 'rightColumn')
                         .map(({ Component, name }) => <Component key={name} />)}

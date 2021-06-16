@@ -112,8 +112,14 @@
             "pendingApproval": "En attente de validation",
             "featuredList": "Mis en exergue"
         },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Le format multimédia n'est pas pris en charge"
+            }
+        },
         "gnviewer":{
-            "edit": "Éditer"
+            "edit": "Éditer",
+            "details": "Des détails"
         }
     }
 }

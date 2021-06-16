@@ -112,8 +112,14 @@
             "pendingApproval": "Ausstehende Genehmigung",
             "featuredList": "Vorgestellt"
         },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "Das Medienformat wird nicht unterstützt"
+            }
+        },
         "gnviewer":{
-            "edit": "Bearbeiten"
+            "edit": "Bearbeiten",
+            "details": "Einzelheiten"
         }
 
     }

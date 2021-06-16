@@ -113,8 +113,14 @@
             "featuredList": "Presentada"
 
         },
+        "viewer":{
+            "document": {
+                "unSupportedMedia": "El formato de medios no es compatible"
+            }
+        },
         "gnviewer":{
-            "edit": "Editar"
+            "edit": "Editar",
+            "details": "Detalles"
         }
 
 
