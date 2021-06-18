@@ -13,26 +13,30 @@ import {
     REQUEST_LAYER_CONFIG,
     REQUEST_MAP_CONFIG,
     REQUEST_GEOSTORY_CONFIG,
-    REQUEST_DOCUMENT_CONFIG
+    REQUEST_DOCUMENT_CONFIG,
+    REQUEST_NEW_GEOSTORY_CONFIG,
+    REQUEST_NEW_MAP_CONFIG
 } from '@js/actions/gnviewer';
-import { getBaseMapConfiguration } from '@js/api/geonode/config';
+import { getBaseMapConfiguration, getNewGeoStoryConfig } from '@js/api/geonode/config';
 import {
     getLayerByPk,
     getGeoStoryByPk,
     getDocumentByPk,
     getResourceByPk
 } from '@js/api/geonode/v2';
+import { error as errorNotification } from '@mapstore/framework/actions/notifications';
 import { getMapStoreMapById } from '@js/api/geonode/adapter';
 import { configureMap } from '@mapstore/framework/actions/config';
 import { zoomToExtent } from '@mapstore/framework/actions/map';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import {
     // setResourcePermissions,
-    // setNewResource,
+    setNewResource,
     setResourceType,
     setResourceId,
     setResource
 } from '@js/actions/gnresource';
+
 import {
     setCurrentStory,
     setResource as setGeoStoryResource
@@ -122,6 +126,18 @@ export const gnViewerRequestMapConfig = (action$) =>
             });
         });
 
+export const gnViewerRequestNewMapConfig = (action$) =>
+    action$.ofType(REQUEST_NEW_MAP_CONFIG)
+        .switchMap(() => {
+            return Observable.defer(getBaseMapConfiguration
+            ).switchMap((response) => {
+                return Observable.of(configureMap(response));
+            }).catch(() => {
+                // TODO: implement various error cases
+                return Observable.empty();
+            });
+        });
+
 export const gnViewerRequestGeoStoryConfig = (action$) =>
     action$.ofType(REQUEST_GEOSTORY_CONFIG)
         .switchMap(({ pk }) => {
@@ -144,7 +160,32 @@ export const gnViewerRequestGeoStoryConfig = (action$) =>
                 return Observable.empty();
             });
         });
-
+export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}) =>
+    action$.ofType(REQUEST_NEW_GEOSTORY_CONFIG)
+        .switchMap(() => {
+            const canAddResource = getState()?.security?.user?.perms?.includes('add_resource');
+            if (!canAddResource) {
+                return Observable.of(
+                    setGeoStoryResource({
+                        canEdit: false
+                    }),
+                    errorNotification({title: "geostory.errors.loading.title", message: "viewer.errors.noPermissions"})
+                );
+            }
+            return Observable.defer(() => getNewGeoStoryConfig())
+                .switchMap((gnGeoStory) => {
+                    return Observable.of(
+                        setNewResource(),
+                        setResource(gnGeoStory),
+                        setResourceType('geostory'),
+                        setGeoStoryResource({
+                            canEdit: true
+                        })
+                    );
+                }).catch(() => {
+                    return Observable.empty();
+                });
+        });
 export const gnViewerRequestDocumentConfig = (action$) =>
     action$.ofType(REQUEST_DOCUMENT_CONFIG)
         .switchMap(({ pk }) => {
@@ -165,6 +206,8 @@ export const gnViewerRequestDocumentConfig = (action$) =>
 export default {
     gnViewerRequestLayerConfig,
     gnViewerRequestMapConfig,
+    gnViewerRequestNewMapConfig,
     gnViewerRequestGeoStoryConfig,
-    gnViewerRequestDocumentConfig
+    gnViewerRequestDocumentConfig,
+    gnViewerRequestNewGeoStoryConfig
 };

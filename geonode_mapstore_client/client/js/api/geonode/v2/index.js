@@ -303,6 +303,7 @@ export const updateGeoStory = (pk, body) => {
         .then(({ data }) => data.geostory);
 };
 
+
 export const getUserByPk = (pk) => {
     return axios.get(parseDevHostname(`${endpoints[USERS]}/${pk}`))
         .then(({ data }) => data.user);
