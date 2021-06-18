@@ -188,12 +188,6 @@ class GeoNodeSerializer(object):
                         event_type = EventType.EVENT_CHANGE
 
                     if not map_obj:
-                        # Update Map BBox
-                        if 'bbox' not in _map_obj and (not _map_bbox or len(_map_bbox) != 4):
-                            _map_bbox = _map_obj['maxExtent']
-                            # Must be in the form : [x0, x1, y0, y1]
-                            _map_obj['bbox'] = [_map_bbox[0], _map_bbox[1],
-                                                _map_bbox[2], _map_bbox[3]]
                         # Create a new GeoNode Map
                         from geonode.maps.models import Map
                         map_obj = Map(
@@ -204,7 +198,8 @@ class GeoNodeSerializer(object):
                             center_y=_map_obj['center']['y'],
                             projection=_map_obj['projection'],
                             zoom=_map_obj['zoom'],
-                            srid=_map_obj['projection'])
+                            srid=_map_obj['projection'],
+                            resource_type="map")
 
                         if 'bbox' in _map_obj:
                             if hasattr(map_obj, 'bbox_polygon'):
@@ -236,7 +231,7 @@ class GeoNodeSerializer(object):
 
                     if is_analytics_enabled:
                         register_event(caller.request, event_type, map_obj)
-                    
+
                     serializer.instance = map_obj
                     serializer.save()
 
