@@ -188,12 +188,6 @@ class GeoNodeSerializer(object):
                         event_type = EventType.EVENT_CHANGE
 
                     if not map_obj:
-                        # Update Map BBox
-                        if 'bbox' not in _map_obj:
-                            _map_bbox = _map_obj['maxExtent']
-                            # Must be in the form : [x0, x1, y0, y1]
-                            _map_obj['bbox'] = [_map_bbox[0], _map_bbox[1],
-                                                _map_bbox[2], _map_bbox[3]]
                         # Create a new GeoNode Map
                         from geonode.maps.models import Map
                         map_obj = Map(
@@ -204,7 +198,8 @@ class GeoNodeSerializer(object):
                             center_y=_map_obj['center']['y'],
                             projection=_map_obj['projection'],
                             zoom=_map_obj['zoom'],
-                            srid=_map_obj['projection'])
+                            srid=_map_obj['projection'],
+                            resource_type="map")
 
                         if 'bbox' in _map_obj:
                             if hasattr(map_obj, 'bbox_polygon'):
@@ -214,6 +209,12 @@ class GeoNodeSerializer(object):
                                 map_obj.bbox_y0 = _map_obj['bbox'][1]
                                 map_obj.bbox_x1 = _map_obj['bbox'][2]
                                 map_obj.bbox_y1 = _map_obj['bbox'][3]
+                        elif hasattr(map_obj, 'bbox_polygon') and map_obj.bbox_polygon is None:
+                            # set the bbox_polygon to the obj and then to serializer instance
+                            map_obj.set_bounds_from_center_and_zoom(
+                                _map_obj['center']['x'],
+                                _map_obj['center']['y'],
+                                _map_obj['zoom'])
 
                         if is_analytics_enabled:
                             event_type = EventType.EVENT_CREATE
@@ -231,16 +232,14 @@ class GeoNodeSerializer(object):
                     if is_analytics_enabled:
                         register_event(caller.request, event_type, map_obj)
 
-                    for k, v in map_obj.__dict__.items():
-                        if not k.startswith('_'):
-                            serializer.validated_data[k] = v
-            
+                    serializer.instance = map_obj
                     serializer.save()
 
                     serializer.instance.update_from_viewer(
                         _map_conf,
                         context={'config': _map_conf})
-
+                    return serializer
+                    
             except Exception as e:
                 tb = traceback.format_exc()
                 logger.error(tb)
@@ -259,15 +258,15 @@ class GeoNodeSerializer(object):
             raise APIException("Map Configuration (data) is Mandatory!")
 
         map_obj = self.get_geonode_map(caller, serializer)
-        self.set_geonode_map(caller, serializer, map_obj, _data.copy())
+        updated_serializer = self.set_geonode_map(caller, serializer, map_obj, _data.copy())
 
-        return serializer
+        return updated_serializer
 
     def perform_update(self, caller, serializer):
         map_obj = self.get_geonode_map(caller, serializer)
 
         _data = serializer.validated_data['blob'].copy()
 
-        self.set_geonode_map(caller, serializer, map_obj, _data)
+        updated_serializer = self.set_geonode_map(caller, serializer, map_obj, _data)
 
-        return serializer
+        return updated_serializer
