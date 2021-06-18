@@ -14,12 +14,8 @@ import {
 import { excludeGoogleBackground, extractTileMatrixFromSources } from '@mapstore/framework/utils/LayersUtils';
 import { convertFromLegacy, normalizeConfig } from '@mapstore/framework/utils/ConfigUtils';
 
-function parseMapConfig({ data, attributes, user, id }, resource) {
-    const metadata = attributes.reduce((acc, attribute) => ({
-        ...acc,
-        [attribute.name]: attribute.value
-    }), { });
-
+function parseMapConfig(mapResponse, resource) {
+    const { data, pk: id } = mapResponse;
     const config = data;
     const mapState = !config.version
         ? convertFromLegacy(config)
@@ -48,13 +44,13 @@ function parseMapConfig({ data, attributes, user, id }, resource) {
     return {
         ...map,
         id,
-        owner: user,
+        owner: mapResponse?.owner?.username,
         canCopy: true,
         canDelete: true,
         canEdit: true,
-        name: resource?.data?.title || metadata.title,
-        description: resource?.data?.description || metadata.abstract,
-        thumbnail: resource?.data?.thumbnail || metadata.thumbnail,
+        name: resource?.data?.title || mapResponse?.title,
+        description: resource?.data?.description || mapResponse?.abstract,
+        thumbnail: resource?.data?.thumbnail || mapResponse?.thumbnail_url,
         type: 'map'
     };
 }
@@ -181,7 +177,6 @@ const loadMediaList = {
                     sourceId
                 }
             }));
-
             const selectedResource = resources.find((resource) => resource.id === selectedId);
             if (selectedResource) {
                 // get resource data when it's selected

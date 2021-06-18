@@ -450,7 +450,7 @@ export const createMap = (body = {}) => {
         {
             timeout: 10000
         })
-        .then(({ data }) => data);
+        .then(({ data }) => data?.map);
 };
 
 /**
@@ -468,7 +468,7 @@ export const updateMap = (id, body = {}) => {
                 include: ['data']
             }
         })
-        .then(({ data }) => data);
+        .then(({ data }) => data?.map);
 };
 
 /**
@@ -484,7 +484,7 @@ export const getMapByPk = (pk) => {
                 include: ['data']
             }
         })
-        .then(({ data }) => data);
+        .then(({ data }) => data?.map);
 };
 
 

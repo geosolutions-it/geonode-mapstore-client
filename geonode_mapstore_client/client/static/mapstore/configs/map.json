@@ -80,6 +80,7 @@
             },
             {
                 "source": "ol",
+                "name": "empty",
                 "group": "background",
                 "title": "Empty Background",
                 "fixed": true,
