@@ -10,13 +10,14 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import url from 'url';
+import isUndefined from 'lodash/isUndefined';
 import { createSelector } from 'reselect';
 import BorderLayout from '@mapstore/framework/components/layout/BorderLayout';
 import { getMonitoredState } from '@mapstore/framework/utils/PluginsUtils';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import PluginsContainer from '@mapstore/framework/components/plugins/PluginsContainer';
 import useLazyPlugins from '@js/hooks/useLazyPlugins';
-import { requestGeoStoryConfig } from '@js/actions/gnviewer';
+import { requestGeoStoryConfig, requestNewGeostoryConfig } from '@js/actions/gnviewer';
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -36,7 +37,9 @@ function GeoStoryViewerRoute({
     loaderComponent,
     lazyPlugins,
     plugins,
-    match
+    match,
+    onCreate = () => {},
+    resource
 }) {
 
     const { pk } = match.params || {};
@@ -49,9 +52,15 @@ function GeoStoryViewerRoute({
     });
     useEffect(() => {
         if (!loading) {
-            onUpdate(pk);
+            pk === "new" ? onCreate() : onUpdate(pk);
         }
     }, [loading, pk]);
+
+    useEffect(() => {
+        if (pk === "new" && !isUndefined(resource?.canEdit) && !(resource?.canEdit)) {
+            window.location.replace('/account/login');
+        }
+    }, [pk, resource]);
     const Loader = loaderComponent;
 
     return (
@@ -76,9 +85,12 @@ GeoStoryViewerRoute.propTypes = {
 };
 
 const ConnectedGeoStoryViewerRoute = connect(
-    createSelector([], () => ({})),
+    createSelector([
+        state => state?.geostory?.resource
+    ], (resource) => ({resource})),
     {
-        onUpdate: requestGeoStoryConfig
+        onUpdate: requestGeoStoryConfig,
+        onCreate: requestNewGeostoryConfig
     }
 )(GeoStoryViewerRoute);
 

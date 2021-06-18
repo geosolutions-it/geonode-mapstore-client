@@ -303,6 +303,7 @@ export const updateGeoStory = (pk, body) => {
         .then(({ data }) => data.geostory);
 };
 
+
 export const getUserByPk = (pk) => {
     return axios.get(parseDevHostname(`${endpoints[USERS]}/${pk}`))
         .then(({ data }) => data.user);
@@ -452,8 +453,6 @@ export const createMap = (body = {}) => {
         .then(({ data }) => data);
 };
 
-
-
 /**
 * Update an existing MapStore map configuration
 * @memberof api.geonode.adapter
@@ -478,8 +477,8 @@ export const updateMap = (id, body = {}) => {
 * @param {number|string} id resource id
 * @return {promise} it returns an object with the success map object response
 */
-export const getMapById = (id) => {
-    return axios.get(parseDevHostname(`${endpoints[MAPS]}/${id}/`),
+export const getMapByPk = (pk) => {
+    return axios.get(parseDevHostname(`${endpoints[MAPS]}/${pk}/`),
         {
             params: {
                 include: ['data']
@@ -626,7 +625,7 @@ export default {
     getDocumentByPk,
     createMap,
     updateMap,
-    getMapById,
+    getMapByPk,
     getCategories,
     getRegions,
     getOwners,

@@ -8,9 +8,9 @@
 import { Observable } from 'rxjs';
 import {
     getMaps,
-    getDocumentsByDocType
+    getDocumentsByDocType,
+    getMapByPk
 } from '@js/api/geonode/v2';
-import { getMapById } from '@js/api/geonode/v2';
 import { excludeGoogleBackground, extractTileMatrixFromSources } from '@mapstore/framework/utils/LayersUtils';
 import { convertFromLegacy, normalizeConfig } from '@mapstore/framework/utils/ConfigUtils';
 
@@ -186,7 +186,7 @@ const loadMediaList = {
             if (selectedResource) {
                 // get resource data when it's selected
                 // this will allow to preview the map and retrieve the correct data
-                return getMapById(selectedResource.id)
+                return getMapByPk(selectedResource.id)
                     .then((mapResponse) => ({
                         resources: resources.map((resource) => selectedId && resource.id === selectedId
                             ? {
@@ -253,7 +253,7 @@ export const getData = ({ selectedItem }) => {
 
     if (selectedItem.type === 'map'
     && selectedItem.data && selectedItem.data.id) {
-        return Observable.defer(() => getMapById(selectedItem.data.id)
+        return Observable.defer(() => getMapByPk(selectedItem.data.id)
             .then((response) => {
                 return parseMapConfig(response, selectedItem);
             }));
