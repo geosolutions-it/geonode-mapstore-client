@@ -270,4 +270,4 @@ class GeoNodeSerializer(object):
 
         self.set_geonode_map(caller, serializer, map_obj, _data)
 
-        return serializer.save()
+        return serializer
