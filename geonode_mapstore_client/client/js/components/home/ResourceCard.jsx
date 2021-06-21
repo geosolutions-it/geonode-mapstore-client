@@ -58,7 +58,9 @@ const ResourceCard = forwardRef(({
                                 <FaIcon name={icon} />
                             </Tag>
                         </>}
-                        <a href={res.detail_url}>
+                        <a href={formatHref({
+                            pathname: `/detail/${res.resource_type}/${res.pk}`
+                        })}>
                             {res.title}
                         </a>
                     </div>
@@ -94,10 +96,18 @@ const ResourceCard = forwardRef(({
                         {options
                             .map((opt) => {
 
+                                const viewResourcebase = opt.perms.filter(obj => {
+                                    return obj.value === "view_resourcebase";
+                                });
+
                                 return (
                                     <Dropdown.Item
                                         key={opt.href}
-                                        href={buildHrefByTemplate(res, opt.href)}
+                                        href={
+                                            (viewResourcebase.length > 0 ) ? formatHref({
+                                                pathname: `/detail/${res.resource_type}/${res.pk}`
+                                            }) : buildHrefByTemplate(res, opt.href)
+                                        }
                                     >
                                         <FaIcon name={opt.icon} /> <Message msgId={opt.labelId}/>
                                     </Dropdown.Item>

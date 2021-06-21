@@ -76,15 +76,6 @@ function updateUrlQueryParameter(requestUrl, query) {
     });
 }
 
-// temporary wrapper to allow new path for detail in dev env
-// and keep legacy detail path for prod until the complete development of gn-viewer
-function devViewerDetailPath(resource, formattedDetailUrl) {
-    if (__DEVTOOLS__) {
-        return formattedDetailUrl;
-    }
-    return resource?.detail_url;
-}
-
 export const getResourceTypesInfo = () => ({
     'layer': {
         icon: 'layer-group',
@@ -92,7 +83,7 @@ export const getResourceTypesInfo = () => ({
             config: 'layer_preview',
             theme: 'preview'
         }),
-        formatDetailUrl: (resource) => devViewerDetailPath(resource, `/viewer/#/layer/${resource.pk}`),
+        formatDetailUrl: (resource) => (`/viewer/#/layer/${resource.pk}`),
         name: 'Layer'
     },
     'map': {
@@ -101,28 +92,28 @@ export const getResourceTypesInfo = () => ({
             config: 'map_preview',
             theme: 'preview'
         }),
-        formatDetailUrl: (resource) => devViewerDetailPath(resource, `/viewer/#/map/${resource.pk}`),
+        formatDetailUrl: (resource) => (`/viewer/#/map/${resource.pk}`),
         name: 'Map'
     },
     'document': {
         icon: 'file',
         name: 'Document',
-        formatDetailUrl: (resource) => devViewerDetailPath(resource, `/viewer/#/document/${resource.pk}`)
+        formatDetailUrl: (resource) => (`/viewer/#/document/${resource.pk}`)
     },
     'geostory': {
         icon: 'book-open',
         name: 'GeoStory',
-        formatDetailUrl: (resource) => devViewerDetailPath(resource, `/viewer/#/geostory/${resource.pk}`)
+        formatDetailUrl: (resource) => (`/viewer/#/geostory/${resource.pk}`)
     },
     'image': {
         icon: 'file-image',
         name: 'Image',
-        formatDetailUrl: (resource) => devViewerDetailPath(resource, `/viewer/#/document/${resource.pk}`)
+        formatDetailUrl: (resource) => (`/viewer/#/document/${resource.pk}`)
     },
     'video': {
         icon: 'file-video',
         name: 'Video',
-        formatDetailUrl: (resource) => devViewerDetailPath(resource, `/viewer/#/document/${resource.pk}`)
+        formatDetailUrl: (resource) => (`/viewer/#/document/${resource.pk}`)
     }
 });
 

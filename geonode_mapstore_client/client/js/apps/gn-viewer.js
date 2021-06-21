@@ -73,6 +73,10 @@ import pluginsDefinition from '@js/plugins/index';
 import ReactSwipe from 'react-swipeable-views';
 import SwipeHeader from '@mapstore/framework/components/data/identify/SwipeHeader';
 
+import { registerMediaAPI } from '@mapstore/framework/api/media';
+import * as geoNodeMediaApi from '@js/observables/media/geonode';
+registerMediaAPI('geonode', geoNodeMediaApi);
+
 const requires = {
     ReactSwipe,
     SwipeHeader
