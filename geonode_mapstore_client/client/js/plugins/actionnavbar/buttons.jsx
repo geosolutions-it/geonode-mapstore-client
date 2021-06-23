@@ -24,6 +24,7 @@ export const PrintActionButton = connect(
 )(({ onClick }) => {
     return (
         <Button
+            variant="primary"
             onClick={() => onClick()}
         >
             <Message msgId="printbutton"/>
@@ -37,6 +38,7 @@ export const CatalogActionButton = connect(
 )(({ onClick }) => {
     return (
         <Button
+            variant="primary"
             onClick={() => onClick()}
         >
             <Message msgId="catalog.title"/>
@@ -50,6 +52,7 @@ export const MeasureActionButton = connect(
 )(({ onClick }) => {
     return (
         <Button
+            variant="primary"
             onClick={() => onClick()}
         >
             <Message msgId="measureComponent.Measure"/>

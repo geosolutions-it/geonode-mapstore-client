@@ -2844,6 +2844,65 @@
                 "name": "BrandNavbar"
             },
             {
+                "name": "FeatureEditor"
+            },
+            {
+                "name": "QueryPanel",
+                "cfg": {
+                    "activateQueryTool": true,
+                    "spatialOperations": [
+                        {
+                            "id": "INTERSECTS",
+                            "name": "queryform.spatialfilter.operations.intersects"
+                        },
+                        {
+                            "id": "BBOX",
+                            "name": "queryform.spatialfilter.operations.bbox"
+                        },
+                        {
+                            "id": "CONTAINS",
+                            "name": "queryform.spatialfilter.operations.contains"
+                        },
+                        {
+                            "id": "WITHIN",
+                            "name": "queryform.spatialfilter.operations.within"
+                        }
+                    ],
+                    "spatialMethodOptions": [
+                        {
+                            "id": "Viewport",
+                            "name": "queryform.spatialfilter.methods.viewport"
+                        },
+                        {
+                            "id": "BBOX",
+                            "name": "queryform.spatialfilter.methods.box"
+                        },
+                        {
+                            "id": "Circle",
+                            "name": "queryform.spatialfilter.methods.circle"
+                        },
+                        {
+                            "id": "Polygon",
+                            "name": "queryform.spatialfilter.methods.poly"
+                        }
+                    ]
+                },
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
+                }
+            },
+            {
+                "name": "MapFooter",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1,
+                        "target": "footer"
+                    }
+                }
+            },
+            {
                 "name": "Map",
                 "cfg": {
                     "shouldLoadFont": false,
@@ -2881,6 +2940,48 @@
             },
             {
                 "name": "BrandNavbar"
+            },
+            {
+                "name": "StyleEditor",
+                "cfg": {
+                    "styleService": {
+                        "baseUrl": "{state('settings') && state('settings').geonodeUrl && state('settings').geonodeUrl + 'gs/' || '/gs/'}",
+                        "formats": [
+                            "css",
+                            "sld"
+                        ],
+                        "availableUrls": [
+                            "{state('settings') && state('settings').geoserverUrl || '/geoserver/'}",
+                            "{state('settings') && state('settings').geonodeUrl && state('settings').geonodeUrl + 'gs/' || '/gs/'}"
+                        ],
+                        "fonts": [
+                            "Arial",
+                            "Courier New",
+                            "Monospaced",
+                            "SansSerif",
+                            "Serif",
+                            "Times New Roman"
+                        ]
+                    },
+                    "editingAllowedRoles": null,
+                    "enableSetDefaultStyle": true
+                }
+            },
+            {
+                "name": "TOCItemsSettings",
+                "cfg": {
+                    "hideTitleTranslations": true,
+                    "showFeatureInfoTab": false
+                }
+            },
+            {
+                "name": "MapFooter",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1,
+                        "target": "footer"
+                    }
+                }
             },
             {
                 "name": "Map",

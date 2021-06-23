@@ -1,10 +1,33 @@
-/*
- * Copyright 2021, GeoSolutions Sas.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree.
- */
+//
+// Copyright 2021, GeoSolutions Sas.
+// All rights reserved.
+//
+// This source code is licensed under the BSD-style license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-action-navbar {
+        .color-var(@theme-vars[primary-contrast]);
+        .background-color-var(@theme-vars[primary]);
+        .badge {
+            .color-var(@theme-vars[primary]);
+            .background-color-var(@theme-vars[primary-contrast]);
+        }
+        .dropdown-menu .badge {
+            .color-var(@theme-vars[primary-contrast]);
+            .background-color-var(@theme-vars[primary]);
+        }
+    }
+}
+
+// **************
+// Layout
+// **************
 
 .gn-action-navbar {
     position: sticky;
@@ -106,8 +129,6 @@
         .btn-default,
         .gn-tag {
             font-size: @font-size-base;
-            color: @gn-primary-color;
-            background-color: @gn-primary-bg;
             border: none;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;

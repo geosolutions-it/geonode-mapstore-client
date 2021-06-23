@@ -40,7 +40,7 @@ import {
  *
  */
 
-const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, classItem, size, alignRight }) => {
+const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, classItem, size, alignRight, variant }) => {
 
     const { formatHref, query } = menuItemsProps;
     const { id, type, label, labelId = '', items = [], href, style, badge = '', image, subType, Component } = item;
@@ -60,6 +60,7 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
             containerNode={containerNode}
             size={size}
             alignRight={alignRight}
+            variant={variant}
         />);
     }
 
@@ -75,7 +76,7 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
                     draggable={draggable}
                     href={href}
                     style={style}
-
+                    variant={variant}
                 >
                     {labelId && <Message msgId={labelId} /> || label}
                     {isValidBadgeValue(badgeValue) && <Badge>{badgeValue}</Badge>}
@@ -104,6 +105,7 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
                     query: { f: item.id },
                     replaceQuery: active ? false : true
                 })}
+                variant={variant}
             >
                 {labelId && <Message msgId={labelId} /> || label}
                 {isValidBadgeValue(badgeValue) && <Badge>{badgeValue}</Badge>}

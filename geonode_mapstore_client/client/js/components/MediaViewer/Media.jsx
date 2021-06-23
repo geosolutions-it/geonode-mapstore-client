@@ -45,14 +45,16 @@ const Media = ({resource}) => {
     if (resource) {
         const mediaType = determineResourceType(resource.extension);
         const MediaViewer =  mediaMap[mediaType];
-        return (<MediaViewer
-            mediaType={mediaType}
-            {...mediaDefaultProps[mediaType]}
-            description={resource.abstract}
-            id={resource.pk}
-            thumbnail={resource.thumbnail_url}
-            src={mediaType === 'unsupported' ? resource.thumbnail_url : resource.href}
-        />);
+        return (<>
+            <MediaViewer
+                mediaType={mediaType}
+                {...mediaDefaultProps[mediaType]}
+                description={resource.abstract}
+                id={resource.pk}
+                thumbnail={resource.thumbnail_url}
+                src={mediaType === 'unsupported' ? resource.thumbnail_url : resource.href}
+            />
+        </>);
     }
     return null;
 };

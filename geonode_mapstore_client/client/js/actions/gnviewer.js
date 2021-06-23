@@ -14,10 +14,11 @@ export const REQUEST_DOCUMENT_CONFIG = 'GEONODE_VIEWER:REQUEST_DOCUMENT_CONFIG';
 export const REQUEST_NEW_GEOSTORY_CONFIG = "GEONODE:VIEWER:REQUEST_NEW_GEOSTORY_CONFIG";
 
 
-export function requestLayerConfig(pk) {
+export function requestLayerConfig(pk, page) {
     return {
         type: REQUEST_LAYER_CONFIG,
-        pk
+        pk,
+        page
     };
 }
 
