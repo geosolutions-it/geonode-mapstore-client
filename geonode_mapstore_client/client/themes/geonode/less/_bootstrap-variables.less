@@ -6,10 +6,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@font-family-sans-serif: 'Montserrat', sans-serif;
+@font-family-serif: var(--gn-font-family-serif, @gn-font-family-serif);
+@font-family-monospace: var(--gn-font-family-monospace, @gn-font-family-monospace);
+@font-family-sans-serif: var(--gn-font-family-sans-serif, @gn-font-family-sans-serif);
+@font-family-base: var(--gn-font-family-base, @gn-font-family-base);
+
 @jumbotron-bg: transparent;
 
-@primary: @gn-primary-bg;
+@primary: @gn-primary;
 @font-size-base: 0.875rem;
 @font-size-large: @font-size-base * 1.25;
 @font-size-small: @font-size-base * 0.875;

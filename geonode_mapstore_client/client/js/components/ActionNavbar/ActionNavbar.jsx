@@ -42,6 +42,7 @@ const LeftContentMenu = ({ items, formatHref, query }) => {
                     childrenClass={`gn-user-dropdown`}
                     formatHref={formatHref}
                     query={query}
+                    variant="primary"
                 />
 
             }
@@ -83,7 +84,7 @@ const RightContentMenu = ({ items, formatHref, query, parentRef, cfg }) => {
                     childrenClass={`gn-user-dropdown`}
                     formatHref={formatHref}
                     query={query}
-
+                    variant="primary"
                 />
 
             }

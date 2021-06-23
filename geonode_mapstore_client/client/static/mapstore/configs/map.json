@@ -84,6 +84,7 @@
                 "title": "Empty Background",
                 "fixed": true,
                 "type": "empty",
+                "name": "empty",
                 "visibility": false,
                 "args": [
                     "Empty Background",

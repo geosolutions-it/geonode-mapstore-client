@@ -94,6 +94,7 @@ function SaveAsButton({
 }) {
     return enabled
         ? <Button
+            variant="primary"
             onClick={() => onClick()}
         >
             <Message msgId="saveAs"/>

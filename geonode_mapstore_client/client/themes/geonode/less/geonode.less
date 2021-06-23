@@ -19,19 +19,15 @@
 @import '_resource-card.less';
 @import '_search-bar.less';
 @import '_spinner.less';
-@import '_swipe-menu.less';
 @import '_home-container.less';
 @import '_sub-flat-menu.less';
 @import '_tag.less';
 
 @import '_mixins.less';
-@import '_react-select.less';
 @import '_bootstrap-variables.less';
 @import '_variables.less';
-@import 'look.less';
 @import '_media-viewer.less';
 
-@import '~react-select/dist/react-select.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import '~ol/ol.css';
 
@@ -39,15 +35,19 @@
     font-size: 16px;
 }
 
-@gn-theme-variants: light, dark;
+// compose theme based on mapstore and custom components
+.write-ms-theme(@gn-theme-vars);
+#gn-base-components-theme(@gn-theme-vars);
+#gn-components-theme(@gn-theme-vars);
 
-.generate-themes(length(@gn-theme-variants));
-
-.generate-themes(@n, @i: 1) when (@i =< @n) {
-  @current-theme-variant: extract(@gn-theme-variants, @i);
-  .gn-theme-@{current-theme-variant} {
-    @theme-var: #theme-library[@@current-theme-variant];
-    .write-gn-theme(@theme-var);
-  }
-  .generate-themes(@n, (@i + 1));
+// ****************
+// default theme
+// ****************
+.gn-theme-light {
+    .extract-css-variables(@gn-theme-vars);
 }
+
+// ****************
+// theme variants
+// ****************
+@import 'variants/dark.less';

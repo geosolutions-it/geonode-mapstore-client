@@ -29,6 +29,12 @@ import { error as errorNotification } from '@mapstore/framework/actions/notifica
 import { getMapStoreMapById } from '@js/api/geonode/adapter';
 import { configureMap } from '@mapstore/framework/actions/config';
 import { zoomToExtent } from '@mapstore/framework/actions/map';
+import {
+    browseData,
+    selectNode,
+    showSettings
+} from '@mapstore/framework/actions/layers';
+import { toggleStyleEditor } from '@mapstore/framework/actions/styleeditor';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import {
     // setResourcePermissions,
@@ -43,16 +49,17 @@ import {
     setResource as setGeoStoryResource, setEditing
 } from '@mapstore/framework/actions/geostory';
 
+import { setControlProperty } from '@mapstore/framework/actions/controls';
+
 export const gnViewerRequestLayerConfig = (action$) =>
     action$.ofType(REQUEST_LAYER_CONFIG)
-        .switchMap(({ pk }) => {
+        .switchMap(({ pk, page }) => {
             return Observable.defer(() => axios.all([
                 getBaseMapConfiguration(),
                 getLayerByPk(pk)
             ])).switchMap((response) => {
                 const [mapConfig, gnLayer] = response;
                 const geoserverUrl = getConfigProp('geoserverUrl') || '/geoserver/';
-                const geonodeUrl = getConfigProp('geonodeUrl') || '/';
                 const extent = turfBbox({
                     type: 'Feature',
                     properties: {},
@@ -63,6 +70,31 @@ export const gnViewerRequestLayerConfig = (action$) =>
                     crs: 'EPSG:4326',
                     bounds: { minx, miny, maxx, maxy }
                 };
+                const newLayer = {
+                    perms: gnLayer.perms,
+                    id: `pk:${gnLayer.pk}`,
+                    pk: gnLayer.pk,
+                    type: 'wms',
+                    name: `${gnLayer.workspace}:${gnLayer.name}`,
+                    url: `${geoserverUrl}ows`,
+                    format: 'image/png',
+                    ...(gnLayer.storeType === 'vector' && {
+                        search: {
+                            type: 'wfs',
+                            url: `/gs/ows`
+                        }
+                    }),
+                    bbox,
+                    ...(gnLayer.featureinfo_custom_template && {
+                        featureInfo: {
+                            format: 'TEMPLATE',
+                            template: gnLayer.featureinfo_custom_template
+                        }
+                    }),
+                    style: '',
+                    title: gnLayer.title,
+                    visibility: true
+                };
                 return Observable.of(
                     configureMap({
                         ...mapConfig,
@@ -70,36 +102,29 @@ export const gnViewerRequestLayerConfig = (action$) =>
                             ...mapConfig.map,
                             layers: [
                                 ...mapConfig.map.layers,
-                                {
-                                    id: `pk:${gnLayer.pk}`,
-                                    pk: gnLayer.pk,
-                                    type: 'wms',
-                                    name: `${gnLayer.workspace}:${gnLayer.name}`,
-                                    url: `${geoserverUrl}/ows`,
-                                    format: 'image/png',
-                                    ...(gnLayer.storeType === 'dataStore' && {
-                                        search: {
-                                            type: 'wfs',
-                                            url: `${geonodeUrl}/gs/ows`
-                                        }
-                                    }),
-                                    bbox,
-                                    ...(gnLayer.featureinfo_custom_template && {
-                                        featureInfo: {
-                                            format: 'TEMPLATE',
-                                            template: gnLayer.featureinfo_custom_template
-                                        }
-                                    }),
-                                    style: '',
-                                    title: gnLayer.title,
-                                    visibility: true
-                                }
+                                newLayer
                             ]
                         }
                     }),
                     zoomToExtent(extent, 'EPSG:4326'),
                     setResource(gnLayer),
-                    setResourceId(pk)
+                    setResourceId(pk),
+                    ...(page === 'layer_edit_data_viewer'
+                        ? [
+                            selectNode(newLayer.id, 'layer', false),
+                            browseData(newLayer)
+                        ]
+                        : []),
+                    ...(page === 'layer_edit_style_viewer'
+                        ? [
+                            selectNode(newLayer.id, 'layer', false),
+                            showSettings(newLayer.id, 'layer', {
+                                opacity: newLayer.opacity || 1
+                            }),
+                            setControlProperty('layersettings', 'activeTab', 'style'),
+                            toggleStyleEditor(null, true)
+                        ]
+                        : [])
                 );
             }).catch(() => {
                 // TODO: implement various error cases

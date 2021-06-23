@@ -6,6 +6,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-filters-menu {
+        .color-var(@theme-vars[main-variant-color]);
+        .background-color-var(@theme-vars[main-variant-bg]);
+        .btn-default {
+            background: transparent;
+            border-color: transparent;
+        }
+        .gn-menu-index-divider {
+            .background-color-var(@theme-vars[main-border-color]);
+        }
+    }
+}
+
+// **************
+// Layout
+// **************
+
 .gn-filters-menu {
     position: sticky;
     min-height: 3rem;
@@ -33,8 +55,7 @@
             align-items: center;
             list-style-type: none;
             padding: 0;
-            .gn-menu-index-divider{
-                background-color: @gn-body-color;
+            .gn-menu-index-divider {
                 width: 1px;
                 height: 1.2rem;
                 margin: 0.25rem;
