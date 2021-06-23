@@ -9,6 +9,7 @@
 import { Observable } from 'rxjs';
 import axios from '@mapstore/framework/libs/ajax';
 import turfBbox from '@turf/bbox';
+import uuid from "uuid";
 import {
     REQUEST_LAYER_CONFIG,
     REQUEST_MAP_CONFIG,
@@ -39,7 +40,7 @@ import {
 
 import {
     setCurrentStory,
-    setResource as setGeoStoryResource
+    setResource as setGeoStoryResource, setEditing
 } from '@mapstore/framework/actions/geostory';
 
 export const gnViewerRequestLayerConfig = (action$) =>
@@ -176,8 +177,10 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
                 .switchMap((gnGeoStory) => {
                     return Observable.of(
                         setNewResource(),
-                        setResource(gnGeoStory),
+                        setCurrentStory({...gnGeoStory, sections: [{...gnGeoStory.sections[0], id: uuid(),
+                            contents: [{...gnGeoStory.sections[0].contents[0], id: uuid()}]}]}),
                         setResourceType('geostory'),
+                        setEditing(true),
                         setGeoStoryResource({
                             canEdit: true
                         })
