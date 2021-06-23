@@ -1,3 +1,20 @@
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .spinner {
+        .border-top-color-var(@theme-vars[loader-fade-color]);
+        .border-right-color-var(@theme-vars[loader-fade-color]);
+        .border-bottom-color-var(@theme-vars[loader-fade-color]);
+        .border-left-color-var(@theme-vars[loader-color]);
+    }
+}
+
+// **************
+// Layout
+// **************
+
 .get-spinner(@border-size: 0.1em, @size: 1em) {
     @-webkit-keyframes load {
         0% {

@@ -44,6 +44,7 @@ const ButtonViewer = ({user,  onClick}) => {
     };
 
     return (user && <Button
+        variant="primary"
         onClick={handleClickButton}
     > <Message msgId="gnviewer.details"/>
     </Button>);

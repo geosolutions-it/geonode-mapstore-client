@@ -6,9 +6,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-home-section .gn-card-grid {
+        .color-var(@theme-vars[main-color]);
+        .background-color-var(@theme-vars[main-bg]);
+    }
+    .gn-card-grid {
+        .color-var(@theme-vars[main-variant-color]);
+        .background-color-var(@theme-vars[main-variant-bg]);
+    }
+}
+
+// **************
+// Layout
+// **************
+
 .gn-card-grid {
-    color: @gn-body-shade-color;
-    background-color: @gn-body-shade-bg;
     .gn-card-grid-container {
         position: relative;
         max-width: @gn-page-max-width;
@@ -77,6 +94,5 @@
             height: auto;
             object-fit: cover;
         }
-
     }
 }

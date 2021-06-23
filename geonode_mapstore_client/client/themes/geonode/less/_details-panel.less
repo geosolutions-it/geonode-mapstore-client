@@ -6,10 +6,54 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-details-panel,
+    .gn-details-panel > * {
+        .color-var(@theme-vars[main-color]);
+        .background-color-var(@theme-vars[main-bg]);
+    }
+
+    .gn-details-panel-preview,
+    .gn-details-panel-preview-loader {
+        .color-var(@theme-vars[image-color]);
+        .background-color-var(@theme-vars[image-bg]);
+    }
+
+    .gn-details-panel.loading .gn-details-panel-content {
+        h1, a, p {
+            color: transparent;
+            .background-color-var(@theme-vars[placeholder-bg]);
+        }
+    }
+
+    .gn-edit-toogle {
+        .background-color-var(@theme-vars[placeholder-bg]);
+    }
+
+    .gn-details-panel {
+        .editContainer {
+            [contenteditable] {
+                .border-color-var(@theme-vars[main-border-color]);
+            }
+            &.imagepreview {
+                .icon-image-preview {
+                    .color-var(@theme-vars[main-bg]);
+                }
+            }
+        }
+    }
+}
+
+// **************
+// Layout
+// **************
+
 .gn-details-panel {
     position: relative;
-    color: @gn-body-color;
-    background-color: @gn-body-bg;
     z-index: 10;
     section {
         .shadow();
@@ -23,7 +67,6 @@
         a,
         p {
             color: transparent;
-            background-color: @gn-placeholder-bg;
         }
         a, .btn {
             display: none;
@@ -34,9 +77,9 @@
         flex: 1;
         [contenteditable] {
             padding: 0.5em;
-            border: 1px solid @gn-focus-color;
+            border-width: 1px;
+            border-style: solid;
             border-radius: 5px;
-            border-color: @gn-body-border-color;
             margin-right: 0.5rem;
         }
         &.imagepreview {
@@ -51,17 +94,12 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 font-size: 4.5em;
-                color: #ddd;
                 opacity: 0.5;
                 z-index: 0;
                 pointer-events: none;
             }
         }
-      }
-}
-
-.gn-edit-toogle{
-    background-color: @gn-placeholder-bg;
+    }
 }
 
 .gn-details-panel-header {
@@ -73,11 +111,6 @@
     position: relative;
     width: 100%;
     padding-bottom: 56.25%;
-    color: @gn-image-color;
-    background-color: @gn-image-bg;
-    .gn-details-panel-preview-loader {
-        background-color: @gn-image-bg;
-    }
     &.inediting{
         padding-bottom:0
     }

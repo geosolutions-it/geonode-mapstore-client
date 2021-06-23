@@ -6,15 +6,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-search-bar {
+        .color-var(@theme-vars[main-color]);
+        .background-color-var(@theme-vars[main-bg]);
+        .border-color-var(@theme-vars[main-border-color]);
+        &.focus {
+            .outline-color-var(@theme-vars[focus-color]);
+        }
+        .gn-suggestions {
+            .color-var(@theme-vars[main-color]);
+            .background-color-var(@theme-vars[main-bg]);
+        }
+    }
+}
+
+// **************
+// Layout
+// **************
+
 .gn-search-bar {
     .shadow-sm;
     position: relative;
     width: 100%;
     z-index: 20;
-    border: 2px solid @gn-body-border-color;
-    background-color: @gn-body-bg;
+    border-width: 2px;
+    border-style: solid;
     &.focus {
-        outline: 3px solid @gn-focus-color;
+        outline-width: 3px;
+        outline-style: solid;
     }
     .form-control {
         border: none;
@@ -28,7 +52,6 @@
     .gn-suggestions {
         font-size: @font-size-base;
         .shadow-lg;
-        background-color: @gn-body-bg;
         position: absolute;
         width: 100%;
         margin-top: 0.5rem;

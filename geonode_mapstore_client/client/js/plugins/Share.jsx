@@ -105,6 +105,7 @@ function ShareButton({
 }) {
     return enabled
         ? <Button
+            variant="primary"
             onClick={() => onClick()}
         >
             <Message msgId="share.title"/>

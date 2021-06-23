@@ -6,11 +6,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-footer {
+        .color-var(@theme-vars[footer-color]);
+        .background-color-var(@theme-vars[footer-bg]);
+        a {
+            .color-var(@theme-vars[footer-link-color]);
+            text-decoration: none;
+
+            &:hover {
+                .color-var(@theme-vars[footer-link-hover-color]);
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+// **************
+// Layout
+// **************
+
 .gn-footer {
     position: fixed;
     bottom: 0;
-    color: @gn-body-shade-color;
-    background-color: @gn-body-shade-bg;
     z-index: 18;
     padding: 0.5rem;
     width: 100%;

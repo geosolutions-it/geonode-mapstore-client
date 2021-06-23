@@ -51,7 +51,7 @@ const LanguageSelector = forwardRef(({
                 : <Dropdown pullRight>
                     <Dropdown.Toggle
                         id="language-selector"
-                        bsStyle="default"
+                        bsStyle="primary"
                         bsSize="sm"
                         noCaret
                     >

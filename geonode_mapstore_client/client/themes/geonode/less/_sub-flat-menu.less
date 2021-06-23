@@ -6,15 +6,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-.gn-sub-flat-menu-container{
-  position: relative;
-  display: flex;
-  flex-direction: row-reverse;
+// **************
+// Theme
+// **************
 
-  .gn-sub-flat-menu-block{
-    padding-left: 1em;
-    .nav-link{
-      padding: 0rem 0.5rem 0.2rem 1.5rem;
+#gn-components-theme(@theme-vars) {}
+
+// **************
+// Layout
+// **************
+
+.gn-sub-flat-menu-container {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+
+    .gn-sub-flat-menu-block {
+        padding-left: 1em;
+
+        .nav-link {
+            padding: 0rem 0.5rem 0.2rem 1.5rem;
+        }
     }
-  }
 }

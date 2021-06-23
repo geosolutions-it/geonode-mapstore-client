@@ -49,6 +49,7 @@ function ThemeLoader({
 }
 
 const Router = forwardRef(({
+    id,
     plugins,
     locale,
     routes,
@@ -63,6 +64,7 @@ const Router = forwardRef(({
     return (
         <>
             <RootStyle
+                targetId={id}
                 theme={geoNodeConfiguration.theme}
             />
             <ThemeLoader
@@ -70,7 +72,8 @@ const Router = forwardRef(({
                 loaderComponent={loaderComponent}
             >
                 <div
-                    className={`${className} gn-theme-${variant}`}
+                    id={id}
+                    className={`${className} gn-theme-${variant} gn-theme`}
                     ref={ref}
                 >
                     <Localized
@@ -118,6 +121,7 @@ const Router = forwardRef(({
 });
 
 Router.propTypes = {
+    id: PropTypes.string,
     plugins: PropTypes.object,
     locale: PropTypes.object,
     className: PropTypes.string,
@@ -129,6 +133,7 @@ Router.propTypes = {
 };
 
 Router.defaultProps = {
+    id: 'ms-app',
     plugins: {},
     locale: {
         messages: {},

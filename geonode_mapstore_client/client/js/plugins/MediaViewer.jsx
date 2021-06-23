@@ -29,14 +29,13 @@ function MediaViewer() {
     return (
         <div
             className="gn-media-viewer">
-            <ConnectedMediaViewer/>
+            <ConnectedMediaViewer />
         </div>
     );
 }
 
 const MediaViewerPlugin = connect(
-    createSelector([
-    ], () => ({})),
+    createSelector([], () => ({})),
     {}
 )(MediaViewer);
 

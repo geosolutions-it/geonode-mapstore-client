@@ -1,5 +1,23 @@
 
 
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-loader-placeholder {
+        .color-var(@theme-vars[image-color]);
+        .background-color-var(@theme-vars[image-bg]);
+        .fa {
+            .color-var(@theme-vars[main-bg]);
+        }
+    }
+}
+
+// **************
+// Layout
+// **************
+
 @gn-loader-placeholder-bg: 251, 251, 251;
 .gn-loader-placeholder {
     position: relative;
@@ -17,23 +35,5 @@
         height: 100%;
         width: 45%;
         mix-blend-mode: overlay;
-        /*
-        .gradient-x-three-colors(
-            rgba(251,251,251, 0),
-            rgba(251,251,251, .3),
-            50%,
-            rgba(251,251,251, .0)
-        );
-        animation: background-loading 1.25s infinite;
-        @keyframes background-loading {
-            0%{
-                left: -45%;
-            }
-            100%{
-                left: 100%;
-            }
-        }
-        */
     }
 }
-

@@ -32,7 +32,8 @@ const Menu = forwardRef(({
     query,
     formatHref,
     size,
-    alignRight
+    alignRight,
+    variant
 }, ref) => {
 
     return (
@@ -42,6 +43,7 @@ const Menu = forwardRef(({
                     return (
                         <li key={idx}>
                             <MenuItem
+                                variant={variant}
                                 item={{ ...item, id: item.id || idx }}
                                 size={size}
                                 alignRight={alignRight}

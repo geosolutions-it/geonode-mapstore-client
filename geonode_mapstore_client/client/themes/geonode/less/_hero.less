@@ -6,9 +6,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+
+// **************
+// Theme
+// **************
+
+#gn-components-theme(@theme-vars) {
+    .gn-hero .gn-search-bar {
+        .color-var(@theme-vars[main-color]);
+        .background-color-var(@theme-vars[main-bg]);
+    }
+    .gn-hero {
+        .color-var(@theme-vars[jumbotron-color]);
+        .background-color-var(@theme-vars[jumbotron-bg]);
+    }
+}
+
+// **************
+// Layout
+// **************
+
 .gn-hero {
-    background-color: @gn-jumbotron-bg;
-    color: @gn-jumbotron-color;
     position: relative;
     .jumbotron {
         max-width: @gn-hero-max-width;
@@ -25,9 +43,5 @@
             h6 { font-size: @font-size-base * 1.5; font-weight: lighter; }
             p:not(.gn-hero-tools) { font-size: @font-size-base * 1.5; font-weight: lighter; }
         }
-    }
-    .gn-search-bar {
-        background-color: @gn-body-bg;
-        color: @gn-body-color;
     }
 }

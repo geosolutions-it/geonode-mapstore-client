@@ -76,7 +76,8 @@ const DropdownList = ({
     badgeValue,
     containerNode,
     size,
-    alignRight
+    alignRight,
+    variant
 }) => {
 
     const dropdownItems = items
@@ -106,7 +107,7 @@ const DropdownList = ({
     const DropdownToogle = (
         <Dropdown.Toggle
             id={ `gn-toggle-dropdown-${id}`}
-            bsStyle={`default`}
+            bsStyle={variant}
             tabIndex={tabIndex}
             style={toogleStyle}
             bsSize={size}
