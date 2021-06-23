@@ -45,6 +45,7 @@ import Footer from '@js/components/home/Footer';
 import { useInView } from 'react-intersection-observer';
 
 import { getResourceTypes, getCategories, getRegions, getOwners, getKeywords } from '@js/api/geonode/v2';
+import MetaTags from "@js/components/MetaTags";
 
 import {
     getPageSize
@@ -188,7 +189,8 @@ function Home({
     resource,
     totalResources,
     disableFeatured = false,
-    fetchFeaturedResources = () => {}
+    fetchFeaturedResources = () => {},
+    siteName
 }) {
 
     const {
@@ -203,9 +205,9 @@ function Home({
         filters,
         menu: {cfg: actionNavbarCfg} = {}
     } = config;
-
     const pageSize = getPageSize(width);
     const isMounted = useRef();
+
     useEffect(() => {
         isMounted.current = true;
         return () => {
@@ -375,10 +377,14 @@ function Home({
     const isHeroVisible = !hideHero && inView;
     const stickyFiltersMaxHeight = (window.innerHeight - dimensions.brandNavbarHeight - dimensions.actionNavbarNodeHeight - dimensions.footerNodeHeight);
     const filterFormTop = dimensions.brandNavbarHeight + dimensions.actionNavbarNodeHeight;
-
-
     return (
         <div className={`gn-home`}>
+            <MetaTags
+                logo={resource ? resource.thumbnail_url : window.location.origin + config?.navbar?.logo[0]?.src}
+                siteName={siteName + " " + (resource ? resource.title : "")}
+                contentURL={resource?.detail_url}
+                content={resource?.abstract}
+            />
             <BrandNavbar
                 ref={brandNavbarNode}
                 logo={castArray(config?.navbar?.logo || [])
@@ -567,14 +573,16 @@ const ConnectedHome = connect(
         state => state?.gnresource?.data || null,
         state => state?.controls?.gnFiltersPanel?.enabled || null,
         getParsedGeoNodeConfiguration,
-        state => state?.gnsearch?.total || 0
-    ], (params, user, resource, isFiltersPanelEnabled, config, totalResources) => ({
+        state => state?.gnsearch?.total || 0,
+        state => state?.localConfig?.siteName || "Geonode"
+    ], (params, user, resource, isFiltersPanelEnabled, config, totalResources, siteName) => ({
         params,
         user,
         resource,
         isFiltersPanelEnabled,
         config,
-        totalResources
+        totalResources,
+        siteName
     })),
     {
         onSearch: searchResources,
