@@ -13,12 +13,13 @@ import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
 import { createPlugin } from '@mapstore/framework/utils/PluginsUtils';
 import usePluginItems from '@js/hooks/usePluginItems';
-
+import { getResourceId } from '@js/selectors/gnresource';
 function ViewerLayout({
-    items
+    items,
+    resourcePk
 }, context) {
     const { loadedPlugins } = context;
-    const configuredItems = usePluginItems({ items, loadedPlugins });
+    const configuredItems = usePluginItems({ items, loadedPlugins }, [resourcePk]);
     return (
         <div
             className="gn-viewer-layout"
@@ -86,7 +87,11 @@ function arePropsEqual(prevProps, nextProps) {
 const MemoizeViewerLayout = memo(ViewerLayout, arePropsEqual);
 
 const ViewerLayoutPlugin = connect(
-    createSelector([], () => ({})),
+    createSelector([
+        getResourceId
+    ], (resourcePk) => ({
+        resourcePk
+    })),
     {}
 )(MemoizeViewerLayout);
 

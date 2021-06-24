@@ -21,7 +21,7 @@ import {
     SET_SELECTED_LAYER_PERMISSIONS
 } from '@js/actions/gnresource';
 
-function gnresource(state = {selectedLayerPermissions: []}, action) {
+function gnresource(state = {selectedLayerPermissions: [], data: {}}, action) {
     switch (action.type) {
     case RESOURCE_LOADING: {
         return {
@@ -34,7 +34,8 @@ function gnresource(state = {selectedLayerPermissions: []}, action) {
             ...state,
             error: null,
             data: action.data,
-            loading: false
+            loading: false,
+            isNew: false
         };
     }
     case RESOURCE_ERROR: {
@@ -63,7 +64,8 @@ function gnresource(state = {selectedLayerPermissions: []}, action) {
     case SET_NEW_RESOURCE: {
         return {
             ...state,
-            isNew: true
+            isNew: true,
+            data: {}
         };
     }
     case SET_RESOURCE_ID: {

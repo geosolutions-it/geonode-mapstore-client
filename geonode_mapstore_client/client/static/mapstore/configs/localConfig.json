@@ -78,8 +78,11 @@
         {
             "name": "selectedLayerPermissions",
             "path": "gnresource.selectedLayerPermissions"
+        },
+        {
+            "name": "gnResourceData",
+            "path": "gnresource.data"
         }
-
     ],
     "projectionDefs": [
         {
@@ -2590,7 +2593,33 @@
                 "name": "ViewerLayout"
             },
             {
-                "name": "ActionNavbar"
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "labelId": "gnviewer.edit",
+                            "type": "dropdown",
+                            "perms": [{ "type": "resource", "value": "change_resourcebase" }],
+                            "items": [
+                                {
+                                    "type": "link",
+                                    "href": "{(state('gnResourceData') || {}).detail_url + '/metadata'}",
+                                    "labelId": "gnviewer.editMetadata"
+                                },
+                                {
+                                    "type": "link",
+                                    "href": "{'#/layer/' + (state('gnResourceData') || {}).pk + '/edit/style'}",
+                                    "labelId": "gnviewer.editStyle"
+                                },
+                                {
+                                    "type": "link",
+                                    "href": "{'#/layer/' + (state('gnResourceData') || {}).pk + '/edit/data'}",
+                                    "labelId": "gnviewer.editData"
+                                }
+                            ]
+                        }
+                    ]
+                }
             },
             {
                 "name": "BrandNavbar"
@@ -2842,7 +2871,16 @@
                 "name": "ViewerLayout"
             },
             {
-                "name": "ActionNavbar"
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{'#/layer/' + (state('gnResourceData') || {}).pk}",
+                            "labelId": "gnviewer.backToDataset"
+                        }
+                    ]
+                }
             },
             {
                 "name": "BrandNavbar"
@@ -2952,7 +2990,16 @@
                 "name": "ViewerLayout"
             },
             {
-                "name": "ActionNavbar"
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{'#/layer/' + (state('gnResourceData') || {}).pk}",
+                            "labelId": "gnviewer.backToDataset"
+                        }
+                    ]
+                }
             },
             {
                 "name": "BrandNavbar"
@@ -3041,7 +3088,19 @@
         ],
         "map_viewer": [
             { "name": "ViewerLayout" },
-            { "name": "ActionNavbar" },
+            {
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{(state('gnResourceData') || {}).detail_url + '/metadata'}",
+                            "labelId": "gnviewer.editMetadata",
+                            "perms": [{ "type": "resource", "value": "change_resourcebase" }]
+                        }
+                    ]
+                }
+            },
             { "name": "DetailViewer"},
             { "name": "BrandNavbar" },
             {
@@ -3406,7 +3465,19 @@
         ],
         "geostory_viewer": [
             { "name": "ViewerLayout" },
-            { "name": "ActionNavbar" },
+            {
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{(state('gnResourceData') || {}).detail_url + '/metadata'}",
+                            "labelId": "gnviewer.editMetadata",
+                            "perms": [{ "type": "resource", "value": "change_resourcebase" }]
+                        }
+                    ]
+                }
+            },
             { "name": "BrandNavbar" },
             { "name": "DetailViewer"},
             {
@@ -3513,7 +3584,19 @@
         ],
         "document_viewer": [
             { "name": "ViewerLayout" },
-            { "name": "ActionNavbar" },
+            {
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{(state('gnResourceData') || {}).detail_url + '/metadata'}",
+                            "labelId": "gnviewer.editMetadata",
+                            "perms": [{ "type": "resource", "value": "change_resourcebase" }]
+                        }
+                    ]
+                }
+            },
             { "name": "BrandNavbar" },
             { "name": "DetailViewer"},
             {"name": "MediaViewer"}
