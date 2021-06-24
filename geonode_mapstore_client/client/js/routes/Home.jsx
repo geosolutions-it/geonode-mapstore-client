@@ -281,6 +281,7 @@ function Home({
         handleUpdate(newParams, pathname);
         handleShowFilterForm();
     };
+    const [formParams, setFormParams] = useState({});
 
     function handleClear() {
         const { query } = url.parse(location.search, true);
@@ -293,6 +294,8 @@ function Home({
                         [key]: []
                     }
                     : acc, { extent: undefined });
+
+        setFormParams(newParams);
         handleUpdate(newParams);
     }
 
@@ -462,7 +465,9 @@ function Home({
                                 query={query}
                                 onChange={isSmallDevice && handleUpdateSmallDevice || handleUpdate}
                                 onClose={handleShowFilterForm}
+                                onClear={handleClear}
                                 submitOnChangeField={!isSmallDevice}
+                                formParams={formParams}
                             />
 
                         </div>
