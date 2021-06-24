@@ -48,6 +48,15 @@
 }
 @import   "../../default/less/geonode.less";
 
+// ensure the inline-flex of square-buttons does not override
+// the vertical group style in preview mode
+.btn-group-vertical > .btn,
+.btn-group-vertical > .btn-group,
+.btn-group-vertical > .btn-group > .btn {
+    display: block;
+    width: 100%;
+}
+
 #map{
     bottom: 0px !important;
 }
