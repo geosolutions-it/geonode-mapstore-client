@@ -381,7 +381,8 @@ function Home({
         <div className={`gn-home`}>
             <MetaTags
                 logo={resource ? resource.thumbnail_url : window.location.origin + config?.navbar?.logo[0]?.src}
-                siteName={siteName + " " + (resource ? resource.title : "")}
+                title={(resource?.title) ? resource?.title + " - " + siteName : siteName }
+                siteName={siteName}
                 contentURL={resource?.detail_url}
                 content={resource?.abstract}
             />
