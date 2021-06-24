@@ -118,7 +118,7 @@ export const gnViewerRequestLayerConfig = (action$) =>
                     ...(page === 'layer_edit_style_viewer'
                         ? [
                             selectNode(newLayer.id, 'layer', false),
-                            showSettings(newLayer.id, 'layer', {
+                            showSettings(newLayer.id, 'layers', {
                                 opacity: newLayer.opacity || 1
                             }),
                             setControlProperty('layersettings', 'activeTab', 'style'),

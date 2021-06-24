@@ -2644,7 +2644,11 @@
                 "override": {
                     "Toolbar": {
                         "position": 11,
-                        "alwaysVisible": false
+                        "alwaysVisible": false,
+                        "priority": 1
+                    },
+                    "ViewerLayout": {
+                        "priority": 1
                     }
                 }
             },
@@ -2844,7 +2848,16 @@
                 "name": "BrandNavbar"
             },
             {
-                "name": "FeatureEditor"
+                "name": "FeatureEditor",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    },
+                    "TOC": {
+                        "priority": 1,
+                        "doNotHide": false
+                    }
+                }
             },
             {
                 "name": "QueryPanel",
@@ -2929,6 +2942,9 @@
                         "priority": 1
                     }
                 }
+            },
+            {
+                "name": "Notifications"
             }
         ],
         "layer_edit_style_viewer": [
@@ -2965,6 +2981,14 @@
                     },
                     "editingAllowedRoles": null,
                     "enableSetDefaultStyle": true
+                }
+            },
+            {
+                "name": "DrawerMenu",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
                 }
             },
             {
@@ -3010,6 +3034,9 @@
                         "priority": 1
                     }
                 }
+            },
+            {
+                "name": "Notifications"
             }
         ],
         "map_viewer": [
@@ -3062,7 +3089,11 @@
                 "override": {
                     "Toolbar": {
                         "position": 11,
-                        "alwaysVisible": false
+                        "alwaysVisible": false,
+                        "priority": 1
+                    },
+                    "ViewerLayout": {
+                        "priority": 1
                     }
                 }
             },
@@ -3182,7 +3213,16 @@
                 "name": "ScaleBox"
             },
             {
-                "name": "FeatureEditor"
+                "name": "FeatureEditor",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    },
+                    "TOC": {
+                        "priority": 1,
+                        "doNotHide": false
+                    }
+                }
             },
             {
                 "name": "QueryPanel",
@@ -3275,7 +3315,16 @@
                 }
             },
             {
-                "name": "Widgets"
+                "name": "Widgets",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    },
+                    "TOC": {
+                        "priority": 1,
+                        "doNotHide": false
+                    }
+                }
             },
             {
                 "name": "WidgetsTray",
@@ -3307,7 +3356,16 @@
                 "name": "Locate"
             },
             {
-                "name": "WidgetsBuilder"
+                "name": "WidgetsBuilder",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    },
+                    "TOC": {
+                        "priority": 1,
+                        "doNotHide": false
+                    }
+                }
             },
             {
                 "name": "Save",

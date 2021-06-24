@@ -32,6 +32,32 @@
     }
 }
 
+.page-map-viewer {
+    .gn-viewer-layout-body {
+        // needed to compute the position of ma toolbar and background selector
+        // when the attribute table is open
+        transform: translate(0, 0);
+    }
+}
+
+#map {
+    top: 0;
+}
+
+// display a margin on search bar and TOC buttons
+// to get a floating effect in map and layer viewer
+#drawer-menu-button,
+#mapstore-navbar-container {
+    margin: 5px;
+}
+
+// hide di edit, remove and add buttons
+// because these functionalities are not supported on the geonode catalog
+.background-preview-button > .btn-group,
+.background-tool-buttons {
+    display: none;
+}
+
 // mapstore compute this value using @square-btn-size and @font-size-h4
 // in this specific context those value have different uom
 // we should override this to ensure to use rem and have the correct value for padding
