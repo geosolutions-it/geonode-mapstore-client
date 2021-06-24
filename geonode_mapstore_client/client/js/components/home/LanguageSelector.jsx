@@ -37,11 +37,12 @@ const LanguageSelector = forwardRef(({
         >
             {inline
                 ? options.map((option) => {
+                    const active = option.value === value;
                     return (
                         <Button
-                            active={option.value === value}
+                            active={active}
                             key={option.key}
-                            variant="default"
+                            variant={active ? 'default' : 'primary'}
                             onClick={() => onSelect(option.value)}
                         >
                             {option.key}
