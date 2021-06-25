@@ -56,7 +56,7 @@ function SaveAs(props) {
     return (
         <SaveModal
             {...props}
-            labelId="saveAs"
+            labelId="save"
         />
     );
 }
