@@ -17,7 +17,7 @@ export const SET_RESOURCE_PERMISSIONS = 'GEONODE:SET_RESOURCE_PERMISSIONS';
 export const EDIT_TITLE_RESOURCE = 'GEONODE:EDIT_TITLE_RESOURCE';
 export const EDIT_ABSTRACT_RESOURCE = 'GEONODE:EDIT_ABSTRACT_RESOURCE';
 export const EDIT_THUMBNAIL_RESOURCE = 'GEONODE:EDIT_THUMBNAIL_RESOURCE';
-export const SET_FAVOURITE_RESOURCE = 'GEONODE:SET_FAVOURITE_RESOURCE';
+export const SET_FAVORITE_RESOURCE = 'GEONODE:SET_FAVORITE_RESOURCE';
 
 export const SET_SELECTED_LAYER_PERMISSIONS = "GEONODE:SET_SELECTED_LAYER_PERMISSIONS";
 
@@ -178,14 +178,14 @@ export function setSelectedLayerPermissions(permissions) {
 }
 
 /**
-* Set the resource favourite field (trigger epic gnSaveFavouriteContent)
+* Set the resource favorite field (trigger epic gnSaveFavoriteContent)
 * @memberof actions.gnresource
-* @param {bool} favourite resource data field
+* @param {bool} favorite resource data field
 */
-export function setFavouriteResource(favourite) {
+export function setFavoriteResource(favorite) {
 
     return {
-        type: SET_FAVOURITE_RESOURCE,
-        favourite
+        type: SET_FAVORITE_RESOURCE,
+        favorite
     };
 }

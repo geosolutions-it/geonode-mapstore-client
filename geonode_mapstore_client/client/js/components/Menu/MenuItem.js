@@ -85,7 +85,7 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
         }
 
         return (
-            <NavLink href={href} className={`btn btn-${variant || 'default'}`}>{labelId && <Message msgId={labelId} /> || label}</NavLink>
+            <NavLink href={href} className={variant ? `btn btn-${variant}` : ''}>{labelId && <Message msgId={labelId} /> || label}</NavLink>
         );
 
     }
