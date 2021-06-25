@@ -37,7 +37,7 @@ const ConnectedDetailsPanel = connect(
     }
 )(DetailsPanel);
 
-const ButtonViewer = ({onClick}) => {
+const ButtonViewer = ({onClick, isEnabledViewer}) => {
 
     const handleClickButton = () => {
         onClick();
@@ -46,13 +46,15 @@ const ButtonViewer = ({onClick}) => {
     return (<Button
         variant="primary"
         onClick={handleClickButton}
-    > <Message msgId="gnviewer.details"/>
+        active={!isEnabledViewer} > <Message msgId="gnviewer.details"/>
     </Button>);
 };
 
 const ConnectedButton = connect(
-    createSelector([],
-        () => ({})),
+    createSelector([
+        state => state?.controls?.DetailViewer?.enabled || false
+    ],
+    (isEnabledViewer) => ({isEnabledViewer})),
     {
         onClick: toggleControl.bind(null, 'DetailViewer', null)
     }

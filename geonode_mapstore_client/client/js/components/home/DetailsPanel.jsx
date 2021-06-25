@@ -253,7 +253,7 @@ function DetailsPanel({
                                         <FaIcon name="share-alt" />
                                     </Button>
                                 </CopyToClipboard>}
-                                {detailUrl && <Button
+                                {detailUrl && !editThumbnail && <Button
                                     variant="default"
                                     href={detailUrl}
                                     rel="noopener noreferrer">
