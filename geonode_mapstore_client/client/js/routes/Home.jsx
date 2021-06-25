@@ -36,6 +36,9 @@ import {
     loadFeaturedResources
 } from '@js/actions/gnsearch';
 
+import { setFavouriteResource
+} from '@js/actions/gnresource';
+
 import {
     hashLocationToHref,
     getFilterById
@@ -119,10 +122,15 @@ const ConnectedFeatureList = connect(
 
 const ConnectedDetailsPanel = connect(
     createSelector([
-        state => state?.gnresource?.loading || false
-    ], (loading) => ({
-        loading
-    }))
+        state => state?.gnresource?.loading || false,
+        state => state?.gnresource?.data?.favourite || false
+    ], (loading, favourite) => ({
+        loading,
+        favourite
+    })),
+    {
+        onFavourite: setFavouriteResource
+    }
 )(DetailsPanel);
 
 const suggestionsRequestTypes = {
@@ -380,6 +388,8 @@ function Home({
     const isHeroVisible = !hideHero && inView;
     const stickyFiltersMaxHeight = (window.innerHeight - dimensions.brandNavbarHeight - dimensions.actionNavbarNodeHeight - dimensions.footerNodeHeight);
     const filterFormTop = dimensions.brandNavbarHeight + dimensions.actionNavbarNodeHeight;
+
+
     return (
         <div className={`gn-home`}>
             <MetaTags
@@ -489,6 +499,7 @@ function Home({
                                     : undefined}
                                 column={ hideHero &&
                                     <ConnectedDetailsPanel
+                                        enableFavourite={!!user}
                                         resource={resource}
                                         linkHref={hrefDetailPanel}
                                         formatHref={handleFormatHref}

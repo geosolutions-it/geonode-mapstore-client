@@ -408,8 +408,8 @@
                         },
                         {
                             "type": "link",
-                            "href": "/favorite/list/",
-                            "labelId": "gnhome.favorites"
+                            "href": "/favourite/list/",
+                            "labelId": "gnhome.favourites"
                         },
                         {
                             "type": "link",

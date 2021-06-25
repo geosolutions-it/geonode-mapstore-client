@@ -112,7 +112,6 @@ function gnresource(state = {selectedLayerPermissions: [], data: {}}, action) {
         };
     }
 
-
     case SET_SELECTED_LAYER_PERMISSIONS:
         return {
             ...state,
