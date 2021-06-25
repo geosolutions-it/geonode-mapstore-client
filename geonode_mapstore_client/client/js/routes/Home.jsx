@@ -36,8 +36,7 @@ import {
     loadFeaturedResources
 } from '@js/actions/gnsearch';
 
-import { setFavouriteResource
-} from '@js/actions/gnresource';
+import { setFavoriteResource } from '@js/actions/gnresource';
 
 import {
     hashLocationToHref,
@@ -123,13 +122,13 @@ const ConnectedFeatureList = connect(
 const ConnectedDetailsPanel = connect(
     createSelector([
         state => state?.gnresource?.loading || false,
-        state => state?.gnresource?.data?.favourite || false
-    ], (loading, favourite) => ({
+        state => state?.gnresource?.data?.favorite || false
+    ], (loading, favorite) => ({
         loading,
-        favourite
+        favorite
     })),
     {
-        onFavourite: setFavouriteResource
+        onFavorite: setFavoriteResource
     }
 )(DetailsPanel);
 
@@ -473,7 +472,6 @@ function Home({
                                 query={query}
                                 onChange={isSmallDevice && handleUpdateSmallDevice || handleUpdate}
                                 onClose={handleShowFilterForm}
-                                submitOnChangeField={!isSmallDevice}
                                 onClear={handleClear}
                                 submitOnChangeField={!isSmallDevice}
                                 formParams={formParams}
@@ -498,7 +496,7 @@ function Home({
                                     : undefined}
                                 column={ hideHero &&
                                     <ConnectedDetailsPanel
-                                        enableFavourite={!!user}
+                                        enableFavorite={!!user}
                                         resource={resource}
                                         linkHref={hrefDetailPanel}
                                         formatHref={handleFormatHref}
