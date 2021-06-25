@@ -22,6 +22,7 @@ import gnresource from '@js/reducers/gnresource';
 import Message from '@mapstore/framework/components/I18N/Message';
 import { canEditResource } from '@js/selectors/gnresource';
 import Button from '@js/components/Button';
+import PropTypes from 'prop-types';
 
 const ConnectedDetailsPanel = connect(
     createSelector([
@@ -66,7 +67,8 @@ function DetailViewer({
     onEditResource,
     onEditAbstractResource,
     onEditThumbnail,
-    canEdit
+    canEdit,
+    width
 }) {
 
     const handleTitleValue = (val) => {
@@ -95,13 +97,21 @@ function DetailViewer({
                 editThumbnail={handleEditThumbnail}
                 activeEditMode={!enabled && canEdit}
                 sectionStyle={{
-                    width: '600px',
+                    width,
                     position: 'fixed'
                 }}
             /> }
         </div>
     );
 }
+
+DetailViewer.propTypes = {
+    width: PropTypes.number
+};
+
+DetailViewer.defaultProps = {
+    width: 800
+};
 
 const DetailViewerPlugin = connect(
     createSelector([
