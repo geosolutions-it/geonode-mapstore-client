@@ -123,7 +123,11 @@
         },
         "gnviewer":{
             "edit": "Edit",
-            "details": "Details"
+            "details": "Details",
+            "editMetadata": "Edit Metadata",
+            "editStyle": "Edit Style",
+            "editData": "Edit Data",
+            "backToDataset": "Back to Dataset"
         }
     }
 }

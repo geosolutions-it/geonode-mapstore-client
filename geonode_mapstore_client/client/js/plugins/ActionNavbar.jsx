@@ -13,11 +13,20 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import ActionNavbar from '@js/components/ActionNavbar';
 import usePluginItems from '@js/hooks/usePluginItems';
+import { getResourcePerms } from '@js/selectors/gnresource';
+import { hasPermissionsTo, reduceArrayRecursive } from '@js/utils/MenuUtils';
 
+function checkResourcePerms(menuItem, resourcePerms) {
+    if (menuItem.type && menuItem.perms) {
+        return hasPermissionsTo(resourcePerms, menuItem.perms, 'resource');
+    }
+    return true;
+}
 function ActionNavbarPlugin({
     items,
     leftMenuItems,
-    rightMenuItems
+    rightMenuItems,
+    resourcePerms
 }, context) {
 
     const { loadedPlugins } = context;
@@ -30,8 +39,14 @@ function ActionNavbarPlugin({
         .filter(({ target }) => target === 'rightMenuItem')
         .map(({ Component }) => ({ type: 'custom',  Component }));
 
-    const leftItems = [...leftMenuConfiguredItems, ...leftMenuItems];
-    const rightItems = [...rightMenuConfiguredItems, ...rightMenuItems];
+    const leftItems = reduceArrayRecursive(
+        [...leftMenuConfiguredItems, ...leftMenuItems],
+        menuItem => checkResourcePerms(menuItem, resourcePerms)
+    );
+    const rightItems = reduceArrayRecursive(
+        [...rightMenuConfiguredItems, ...rightMenuItems],
+        menuItem => checkResourcePerms(menuItem, resourcePerms)
+    );
 
     return (
 
@@ -55,8 +70,11 @@ ActionNavbarPlugin.defaultProps = {
 };
 
 const ConnectedActionNavbarPlugin = connect(
-    createSelector([], () => ({})),
-    {}
+    createSelector([
+        getResourcePerms
+    ], (resourcePerms) => ({
+        resourcePerms
+    }))
 )(ActionNavbarPlugin);
 
 export default createPlugin('ActionNavbar', {

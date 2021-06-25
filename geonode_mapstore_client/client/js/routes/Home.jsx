@@ -36,6 +36,9 @@ import {
     loadFeaturedResources
 } from '@js/actions/gnsearch';
 
+import { setFavouriteResource
+} from '@js/actions/gnresource';
+
 import {
     hashLocationToHref,
     getFilterById
@@ -119,10 +122,15 @@ const ConnectedFeatureList = connect(
 
 const ConnectedDetailsPanel = connect(
     createSelector([
-        state => state?.gnresource?.loading || false
-    ], (loading) => ({
-        loading
-    }))
+        state => state?.gnresource?.loading || false,
+        state => state?.gnresource?.data?.favourite || false
+    ], (loading, favourite) => ({
+        loading,
+        favourite
+    })),
+    {
+        onFavourite: setFavouriteResource
+    }
 )(DetailsPanel);
 
 const suggestionsRequestTypes = {
@@ -281,6 +289,7 @@ function Home({
         handleUpdate(newParams, pathname);
         handleShowFilterForm();
     };
+    const [formParams, setFormParams] = useState({});
 
     function handleClear() {
         const { query } = url.parse(location.search, true);
@@ -293,6 +302,8 @@ function Home({
                         [key]: []
                     }
                     : acc, { extent: undefined });
+
+        setFormParams(newParams);
         handleUpdate(newParams);
     }
 
@@ -381,7 +392,8 @@ function Home({
         <div className={`gn-home`}>
             <MetaTags
                 logo={resource ? resource.thumbnail_url : window.location.origin + config?.navbar?.logo[0]?.src}
-                siteName={siteName + " " + (resource ? resource.title : "")}
+                title={(resource?.title) ? resource?.title + " - " + siteName : siteName }
+                siteName={siteName}
                 contentURL={resource?.detail_url}
                 content={resource?.abstract}
             />
@@ -462,6 +474,9 @@ function Home({
                                 onChange={isSmallDevice && handleUpdateSmallDevice || handleUpdate}
                                 onClose={handleShowFilterForm}
                                 submitOnChangeField={!isSmallDevice}
+                                onClear={handleClear}
+                                submitOnChangeField={!isSmallDevice}
+                                formParams={formParams}
                             />
 
                         </div>
@@ -483,6 +498,7 @@ function Home({
                                     : undefined}
                                 column={ hideHero &&
                                     <ConnectedDetailsPanel
+                                        enableFavourite={!!user}
                                         resource={resource}
                                         linkHref={hrefDetailPanel}
                                         formatHref={handleFormatHref}

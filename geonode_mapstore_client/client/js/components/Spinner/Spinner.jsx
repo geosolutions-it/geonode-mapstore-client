@@ -22,7 +22,7 @@ function Spinner({
             <div
                 { ...props }
                 id={id}
-                className={`spinner${customClassName}`}
+                className={`gn-spinner${customClassName}`}
                 style={style}
             >
                 <div />
