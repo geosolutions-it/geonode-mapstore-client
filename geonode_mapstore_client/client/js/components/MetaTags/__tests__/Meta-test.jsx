@@ -18,6 +18,7 @@ describe('MetaTags', () => {
     it('should render by default', () => {
         render(<Meta
             logo={'http://example.com'}
+            title={"Test Title"}
             siteName={"Test Site"}
             content={"Test Content"}
         />, document.getElementById("container"));
@@ -27,6 +28,10 @@ describe('MetaTags', () => {
         metaTags.forEach(tag => {
             if (tag.property === "og:site_name") {
                 expect(tag.content).toEqual("Test Site");
+            }
+
+            if (tag.property === "title") {
+                expect(tag.content).toEqual("Test Title");
             }
 
             if (tag.name === "decription" || tag.name === "twitter:description") {

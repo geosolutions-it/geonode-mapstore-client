@@ -26,7 +26,7 @@ function buttonTheme(style, name) {
         includeFallbackColors: true
     }).toHexString();
 
-    const borderColor = style.borderColor || tinycolor(bg).darken(8).toString();
+    const borderColor = style.borderColor || bg;
     const focusColor = style.focusColor || color;
     const focusBg = style.focusBg || tinycolor(bg).darken(10).toString();
     const focusBorderColor = style.focusBorderColor || tinycolor(bg).darken(25).toString();
@@ -81,6 +81,9 @@ function RootStyle({
                 bodyShade,
                 placeholder,
                 disabled,
+                info,
+                success,
+                warning,
                 danger,
                 primary,
                 link,
@@ -91,17 +94,30 @@ function RootStyle({
                 badge,
                 footer,
                 buttonDefault,
-                buttonPrimary
+                buttonPrimary,
+                buttonInfo,
+                buttonSuccess,
+                buttonWarning,
+                buttonDanger
             } = theme;
-            const color = themeColor && tinycolor.mostReadable(themeColor, ['#ffffff', '#000000'], {
+
+            const bg = primary?.value || themeColor;
+            const color = primary?.contrast || bg && tinycolor.mostReadable(bg, ['#ffffff', '#000000'], {
                 includeFallbackColors: true
             }).toHexString();
+
+            const btnPrimary = (bg || buttonPrimary) && {
+                ...(bg && { bg }),
+                ...(color && { color }),
+                ...buttonPrimary
+            };
+
             return {
-                ...(themeColor && {
+                ...(bg && {
                     '--gn-primary-contrast': color,
-                    '--gn-primary': themeColor,
-                    '--gn-loader-primary-color': themeColor,
-                    '--gn-loader-primary-fade-color': tinycolor(themeColor).setAlpha(0.2).toString(),
+                    '--gn-primary': bg,
+                    '--gn-loader-primary-color': bg,
+                    '--gn-loader-primary-fade-color': tinycolor(bg).setAlpha(0.2).toString(),
                     '--gn-loader-primary-contrast-color': color,
                     '--gn-loader-primary-contrast-fade-color': tinycolor(color).setAlpha(0.2).toString()
                 }),
@@ -124,13 +140,25 @@ function RootStyle({
                     '--gn-disabled-color': disabled.color || '#acacac',
                     '--gn-disabled-bg': disabled.bg || '#fcfcfc'
                 }),
-                ...(danger && {
-                    '--gn-danger-contrast': danger.contrast || '#ffffff',
-                    '--gn-danger': danger.value || '#D0021B'
-                }),
                 ...(primary && {
                     '--gn-primary-contrast': primary.contrast || '#ffffff',
                     '--gn-primary': primary.value || '#397AAB'
+                }),
+                ...(info && {
+                    '--gn-info-contrast': info.contrast || '#ffffff',
+                    '--gn-info': info.value || '#639fcc'
+                }),
+                ...(success && {
+                    '--gn-success-contrast': success.contrast || '#ffffff',
+                    '--gn-success': success.value || '#58cf80'
+                }),
+                ...(warning && {
+                    '--gn-warning-contrast': warning.contrast || '#ffffff',
+                    '--gn-warning': warning.value || '#ebbc35'
+                }),
+                ...(danger && {
+                    '--gn-danger-contrast': danger.contrast || '#ffffff',
+                    '--gn-danger': danger.value || '#bb4940'
                 }),
                 ...(link && {
                     '--gn-link-color': link.color || '#397AAB',
@@ -166,11 +194,12 @@ function RootStyle({
                         '--gn-footer-link-hover-color': footer.link.hoverColor || '#1b4d74'
                     })
                 }),
-                ...buttonDefault?.bg && buttonTheme(buttonDefault),
-                ...(buttonPrimary?.bg || themeColor || primary?.bg) && buttonTheme({
-                    bg: themeColor || primary?.bg,
-                    ...buttonPrimary
-                }, 'primary')
+                ...(buttonDefault?.bg && buttonTheme(buttonDefault)),
+                ...(buttonInfo?.bg && buttonTheme(buttonInfo, 'info')),
+                ...(buttonSuccess?.bg && buttonTheme(buttonSuccess, 'success')),
+                ...(buttonWarning?.bg && buttonTheme(buttonWarning, 'warning')),
+                ...(buttonDanger?.bg && buttonTheme(buttonDanger, 'danger')),
+                ...(btnPrimary?.bg && buttonTheme(btnPrimary, 'primary'))
             };
         }
         return {};

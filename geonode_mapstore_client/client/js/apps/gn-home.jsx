@@ -22,6 +22,7 @@ import gnsearch from '@js/reducers/gnsearch';
 import gnresource from '@js/reducers/gnresource';
 import gnsearchEpics from '@js/epics/gnsearch';
 import gnlocaleEpics from '@js/epics/gnlocale';
+import gnsaveEpics from '@js/epics/gnsave';
 
 import {
     getConfiguration,
@@ -108,7 +109,8 @@ Promise.all([
             },
             appEpics: {
                 ...gnsearchEpics,
-                ...gnlocaleEpics
+                ...gnlocaleEpics,
+                ...gnsaveEpics
             },
             geoNodeConfiguration
         });

@@ -61,10 +61,11 @@ function LayerViewerRoute({
     return (
         <>
             {resource &&  <MetaTags
-                logo={resource.thumbnail_url}
-                siteName={siteName + " " + resource.title}
-                contentURL={resource.detail_url}
-                content={resource.abstract}
+                logo={resource?.thumbnail_url}
+                title={(resource?.title) ? resource?.title + " - " + siteName : siteName }
+                siteName={siteName}
+                contentURL={resource?.detail_url}
+                content={resource?.abstract}
             />}
             <ConnectedPluginsContainer
                 key="page-layer-viewer"

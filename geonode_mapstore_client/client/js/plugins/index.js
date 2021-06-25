@@ -109,7 +109,14 @@ export const plugins = {
                 ActionNavbar: {
                     name: 'Catalog',
                     target: 'leftMenuItem',
-                    Component: CatalogActionButton
+                    Component: CatalogActionButton,
+                    priority: 1
+                },
+                ViewerLayout: {
+                    priority: 1
+                },
+                TOC: {
+                    priority: 1
                 }
             }
         }

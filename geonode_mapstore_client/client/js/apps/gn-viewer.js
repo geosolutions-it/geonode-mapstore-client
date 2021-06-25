@@ -60,7 +60,6 @@ import {
 import { updateGeoNodeSettings } from '@js/actions/gnsettings';
 
 import {
-    updateMapLayoutEpic,
     gnCheckSelectedLayerPermissions,
     gnSetLayersPermissions
 } from '@js/epics';
@@ -216,7 +215,6 @@ Promise.all([
                     appEpics: {
                         ...standardEpics,
                         ...configEpics,
-                        updateMapLayoutEpic,
                         gnCheckSelectedLayerPermissions,
                         gnSetLayersPermissions,
                         ...pluginsDefinition.epics,

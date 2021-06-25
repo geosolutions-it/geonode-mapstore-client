@@ -36,6 +36,7 @@ import {
 import { toggleStyleEditor } from '@mapstore/framework/actions/styleeditor';
 import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import {
+    // setResourcePermissions,
     setNewResource,
     setResourceType,
     setResourceId,
@@ -116,7 +117,7 @@ export const gnViewerRequestLayerConfig = (action$) =>
                     ...(page === 'layer_edit_style_viewer'
                         ? [
                             selectNode(newLayer.id, 'layer', false),
-                            showSettings(newLayer.id, 'layer', {
+                            showSettings(newLayer.id, 'layers', {
                                 opacity: newLayer.opacity || 1
                             }),
                             setControlProperty('layersettings', 'activeTab', 'style'),
@@ -153,11 +154,15 @@ export const gnViewerRequestNewMapConfig = (action$) =>
         .switchMap(() => {
             return Observable.defer(getBaseMapConfiguration
             ).switchMap((response) => {
-                return Observable.of(configureMap(response));
+                return Observable.of(
+                    configureMap(response),
+                    setResourceType('map')
+                );
             }).catch(() => {
                 // TODO: implement various error cases
                 return Observable.empty();
-            });
+            })
+                .startWith(setNewResource());
         });
 
 export const gnViewerRequestGeoStoryConfig = (action$) =>
@@ -197,7 +202,6 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
             return Observable.defer(() => getNewGeoStoryConfig())
                 .switchMap((gnGeoStory) => {
                     return Observable.of(
-                        setNewResource(),
                         setCurrentStory({...gnGeoStory, sections: [{...gnGeoStory.sections[0], id: uuid(),
                             contents: [{...gnGeoStory.sections[0].contents[0], id: uuid()}]}]}),
                         setResourceType('geostory'),
@@ -208,7 +212,8 @@ export const gnViewerRequestNewGeoStoryConfig = (action$, { getState = () => {}}
                     );
                 }).catch(() => {
                     return Observable.empty();
-                });
+                })
+                .startWith(setNewResource());
         });
 export const gnViewerRequestDocumentConfig = (action$) =>
     action$.ofType(REQUEST_DOCUMENT_CONFIG)

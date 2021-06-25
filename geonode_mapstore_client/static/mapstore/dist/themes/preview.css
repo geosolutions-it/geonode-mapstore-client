@@ -44932,6 +44932,12 @@ Ported to CodeMirror by Peter Kroon
 .msgapi .add-bar-popover {
   max-width: 500px;
 }
+.msgapi .btn-group-vertical > .btn,
+.msgapi .btn-group-vertical > .btn-group,
+.msgapi .btn-group-vertical > .btn-group > .btn {
+  display: block;
+  width: 100%;
+}
 .msgapi #map {
   bottom: 0px !important;
 }

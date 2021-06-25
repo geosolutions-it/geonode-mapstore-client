@@ -12,6 +12,10 @@ export const getResourceId = (state) => {
     return resourceId || resourcePk;
 };
 
+export const getResourcePerms = (state) => {
+    return state?.gnresource?.data?.perms || [];
+};
+
 export const canEditResource = (state) => {
     const canEdit = state?.gnresource?.permissions?.canEdit;
     const perms = state?.gnresource?.data?.perms || [];
@@ -25,5 +29,5 @@ export const canViewResource = (state) => {
 };
 
 export const isNewResource = (state) => {
-    return state?.gnresource?.isNew;
+    return !!state?.gnresource?.isNew;
 };

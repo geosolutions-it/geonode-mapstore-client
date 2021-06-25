@@ -243,6 +243,13 @@ export const getDocumentsByDocType = (docType = 'image', {
         }));
 };
 
+
+export const setFavouriteResource = (pk, favourite) => {
+    const request = favourite ? axios.post : axios.delete;
+    return request(parseDevHostname(`${endpoints[RESOURCES]}/${pk}/favorite`))
+        .then(({ data }) => data );
+};
+
 export const getResourceByPk = (pk) => {
     return axios.get(parseDevHostname(`${endpoints[RESOURCES]}/${pk}`))
         .then(({ data }) => data.resource);
@@ -437,7 +444,6 @@ export const getResourcesTotalCount = () => {
         });
 };
 
-
 /**
 * Create a new MapStore map configuration
 * @memberof api.geonode.adapter
@@ -486,7 +492,6 @@ export const getMapByPk = (pk) => {
         })
         .then(({ data }) => data?.map);
 };
-
 
 export const getFeaturedResources = (page = 1, page_size =  4) => {
     return axios.get(parseDevHostname(endpoints[RESOURCES]), {

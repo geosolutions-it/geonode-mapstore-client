@@ -26,7 +26,8 @@ const loaderComponent = () => <div className="pdf-loader"><Loader size={70}/></d
 const mediaDefaultProps = {
     video: {
         mode: "view",
-        inView: true
+        inView: true,
+        fit: 'contain'
     },
     image: {
         fit: "contain",

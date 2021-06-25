@@ -78,8 +78,11 @@
         {
             "name": "selectedLayerPermissions",
             "path": "gnresource.selectedLayerPermissions"
+        },
+        {
+            "name": "gnResourceData",
+            "path": "gnresource.data"
         }
-
     ],
     "projectionDefs": [
         {
@@ -405,8 +408,8 @@
                         },
                         {
                             "type": "link",
-                            "href": "/favorite/list/",
-                            "labelId": "gnhome.favorites"
+                            "href": "/favourite/list/",
+                            "labelId": "gnhome.favourites"
                         },
                         {
                             "type": "link",
@@ -2590,7 +2593,33 @@
                 "name": "ViewerLayout"
             },
             {
-                "name": "ActionNavbar"
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "labelId": "gnviewer.edit",
+                            "type": "dropdown",
+                            "perms": [{ "type": "resource", "value": "change_resourcebase" }],
+                            "items": [
+                                {
+                                    "type": "link",
+                                    "href": "{(state('gnResourceData') || {}).detail_url + '/metadata'}",
+                                    "labelId": "gnviewer.editMetadata"
+                                },
+                                {
+                                    "type": "link",
+                                    "href": "{'#/layer/' + (state('gnResourceData') || {}).pk + '/edit/style'}",
+                                    "labelId": "gnviewer.editStyle"
+                                },
+                                {
+                                    "type": "link",
+                                    "href": "{'#/layer/' + (state('gnResourceData') || {}).pk + '/edit/data'}",
+                                    "labelId": "gnviewer.editData"
+                                }
+                            ]
+                        }
+                    ]
+                }
             },
             {
                 "name": "BrandNavbar"
@@ -2644,7 +2673,11 @@
                 "override": {
                     "Toolbar": {
                         "position": 11,
-                        "alwaysVisible": false
+                        "alwaysVisible": false,
+                        "priority": 1
+                    },
+                    "ViewerLayout": {
+                        "priority": 1
                     }
                 }
             },
@@ -2838,13 +2871,31 @@
                 "name": "ViewerLayout"
             },
             {
-                "name": "ActionNavbar"
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{'#/layer/' + (state('gnResourceData') || {}).pk}",
+                            "labelId": "gnviewer.backToDataset"
+                        }
+                    ]
+                }
             },
             {
                 "name": "BrandNavbar"
             },
             {
-                "name": "FeatureEditor"
+                "name": "FeatureEditor",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    },
+                    "TOC": {
+                        "priority": 1,
+                        "doNotHide": false
+                    }
+                }
             },
             {
                 "name": "QueryPanel",
@@ -2929,6 +2980,9 @@
                         "priority": 1
                     }
                 }
+            },
+            {
+                "name": "Notifications"
             }
         ],
         "layer_edit_style_viewer": [
@@ -2936,7 +2990,16 @@
                 "name": "ViewerLayout"
             },
             {
-                "name": "ActionNavbar"
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{'#/layer/' + (state('gnResourceData') || {}).pk}",
+                            "labelId": "gnviewer.backToDataset"
+                        }
+                    ]
+                }
             },
             {
                 "name": "BrandNavbar"
@@ -2965,6 +3028,14 @@
                     },
                     "editingAllowedRoles": null,
                     "enableSetDefaultStyle": true
+                }
+            },
+            {
+                "name": "DrawerMenu",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    }
                 }
             },
             {
@@ -3010,11 +3081,27 @@
                         "priority": 1
                     }
                 }
+            },
+            {
+                "name": "Notifications"
             }
         ],
         "map_viewer": [
             { "name": "ViewerLayout" },
-            { "name": "ActionNavbar" },
+            {
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{(state('gnResourceData') || {}).detail_url + '/metadata'}",
+                            "labelId": "gnviewer.editMetadata",
+                            "perms": [{ "type": "resource", "value": "change_resourcebase" }]
+                        }
+                    ]
+                }
+            },
+            { "name": "DetailViewer"},
             { "name": "BrandNavbar" },
             {
                 "name": "Map",
@@ -3062,7 +3149,11 @@
                 "override": {
                     "Toolbar": {
                         "position": 11,
-                        "alwaysVisible": false
+                        "alwaysVisible": false,
+                        "priority": 1
+                    },
+                    "ViewerLayout": {
+                        "priority": 1
                     }
                 }
             },
@@ -3182,7 +3273,16 @@
                 "name": "ScaleBox"
             },
             {
-                "name": "FeatureEditor"
+                "name": "FeatureEditor",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    },
+                    "TOC": {
+                        "priority": 1,
+                        "doNotHide": false
+                    }
+                }
             },
             {
                 "name": "QueryPanel",
@@ -3275,7 +3375,16 @@
                 }
             },
             {
-                "name": "Widgets"
+                "name": "Widgets",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    },
+                    "TOC": {
+                        "priority": 1,
+                        "doNotHide": false
+                    }
+                }
             },
             {
                 "name": "WidgetsTray",
@@ -3307,7 +3416,16 @@
                 "name": "Locate"
             },
             {
-                "name": "WidgetsBuilder"
+                "name": "WidgetsBuilder",
+                "override": {
+                    "ViewerLayout": {
+                        "priority": 1
+                    },
+                    "TOC": {
+                        "priority": 1,
+                        "doNotHide": false
+                    }
+                }
             },
             {
                 "name": "Save",
@@ -3347,8 +3465,21 @@
         ],
         "geostory_viewer": [
             { "name": "ViewerLayout" },
-            { "name": "ActionNavbar" },
+            {
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{(state('gnResourceData') || {}).detail_url + '/metadata'}",
+                            "labelId": "gnviewer.editMetadata",
+                            "perms": [{ "type": "resource", "value": "change_resourcebase" }]
+                        }
+                    ]
+                }
+            },
             { "name": "BrandNavbar" },
+            { "name": "DetailViewer"},
             {
                 "name": "GeoStory",
                 "cfg": {
@@ -3453,7 +3584,19 @@
         ],
         "document_viewer": [
             { "name": "ViewerLayout" },
-            { "name": "ActionNavbar" },
+            {
+                "name": "ActionNavbar",
+                "cfg": {
+                    "leftMenuItems": [
+                        {
+                            "type": "link",
+                            "href": "{(state('gnResourceData') || {}).detail_url + '/metadata'}",
+                            "labelId": "gnviewer.editMetadata",
+                            "perms": [{ "type": "resource", "value": "change_resourcebase" }]
+                        }
+                    ]
+                }
+            },
             { "name": "BrandNavbar" },
             { "name": "DetailViewer"},
             {"name": "MediaViewer"}
