@@ -6,14 +6,42 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import isEqual from 'lodash/isEqual';
+import { resizeMap } from '@mapstore/framework/actions/map';
 import { createPlugin } from '@mapstore/framework/utils/PluginsUtils';
 import usePluginItems from '@js/hooks/usePluginItems';
 import { getResourceId } from '@js/selectors/gnresource';
+import { withResizeDetector } from 'react-resize-detector';
+
+// ensure the map trigger the force update/resize
+// when the center container change size
+function Center({
+    configuredItems,
+    width,
+    onResize
+}) {
+    useEffect(() => {
+        onResize();
+    }, [width]);
+    return (
+        <>
+            {configuredItems
+                .filter(({ target }) => !target)
+                .map(({ Component, name }) => <Component key={name} />)}
+        </>
+    );
+}
+
+const ConnectedCenter = connect(
+    createSelector([], () => ({})),
+    {
+        onResize: resizeMap
+    }
+)(withResizeDetector(Center));
 function ViewerLayout({
     items,
     resourcePk
@@ -57,9 +85,7 @@ function ViewerLayout({
                         position: 'relative'
                     }}
                 >
-                    {configuredItems
-                        .filter(({ target }) => !target)
-                        .map(({ Component, name }) => <Component key={name} />)}
+                    <ConnectedCenter configuredItems={configuredItems}/>
                 </div>
                 <div className="gn-viewer-right-column">
                     {configuredItems

@@ -29,5 +29,5 @@ export const canViewResource = (state) => {
 };
 
 export const isNewResource = (state) => {
-    return state?.gnresource?.isNew;
+    return !!state?.gnresource?.isNew;
 };

@@ -46,11 +46,20 @@
 
 // display a margin on search bar and TOC buttons
 // to get a floating effect in map and layer viewer
+#navigationBar .mapToolbar,
 #drawer-menu-button,
-#mapstore-navbar-container {
-    margin: 5px;
+#mapstore-navbar-container,
+.background-plugin-position {
+    margin: 4px;
 }
-
+#navigationBar .mapToolbar,
+.background-plugin-position {
+    bottom: 30px;
+    margin-bottom: 35px;
+}
+.background-preview-button {
+    margin: 0 !important;
+}
 // hide di edit, remove and add buttons
 // because these functionalities are not supported on the geonode catalog
 .background-preview-button > .btn-group,
