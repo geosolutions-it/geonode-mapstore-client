@@ -8,17 +8,17 @@
 
 import axios from '@mapstore/framework/libs/ajax';
 
-export const getBaseMapConfiguration = (baseMapUrl = '/static/mapstore/configs/map.json') => {
-    return axios.get(baseMapUrl)
-        .then(({ data }) => data);
+export const getNewMapConfiguration = (newMapUrl = '/static/mapstore/configs/map.json') => {
+    return axios.get(newMapUrl)
+        .then(({ data }) => window.overrideNewMapConfig ? window.overrideNewMapConfig(data) : data);
 };
 
-export const getNewGeoStoryConfig = () => {
-    return axios.get('/static/mapstore/configs/geostory.json').then(({ data }) => data);
+export const getNewGeoStoryConfig = (newGeoStoryUrl = '/static/mapstore/configs/geostory.json') => {
+    return axios.get(newGeoStoryUrl)
+        .then(({ data }) => window.overrideNewGeoStoryConfig ? window.overrideNewGeoStoryConfig(data) : data);
 };
 
 export default {
-    getBaseMapConfiguration,
+    getNewMapConfiguration,
     getNewGeoStoryConfig
 };
-

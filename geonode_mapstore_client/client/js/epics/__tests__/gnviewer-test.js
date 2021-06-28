@@ -103,14 +103,18 @@ describe("gnviewer epics", () => {
 
     it("should call mapConfig", (done) => {
         mockAxios.onGet().reply(() => [200, {}]);
-        const NUM_ACTIONS = 1;
+        const NUM_ACTIONS = 3;
         testEpic(
             gnViewerRequestNewMapConfig,
             NUM_ACTIONS,
             requestNewMapConfig(),
             (actions) => {
                 try {
-                    expect(actions.map(({ type }) => type)).toEqual(["MAP_CONFIG_LOADED"]);
+                    expect(actions.map(({ type }) => type)).toEqual([
+                        "GEONODE:SET_NEW_RESOURCE",
+                        "MAP_CONFIG_LOADED",
+                        "GEONODE:SET_RESOURCE_TYPE"
+                    ]);
                     done();
                 } catch (error) {
                     done(error);

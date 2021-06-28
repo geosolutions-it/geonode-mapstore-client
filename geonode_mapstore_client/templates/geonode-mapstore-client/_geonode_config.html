@@ -2,6 +2,9 @@
 {% comment %}
     app and map configuration need to be normalized
 {% endcomment %}
+{{ MAP_BASELAYERS|json_script:"settings-MAP_BASELAYERS" }}
+{{ CATALOGUE_SERVICES|json_script:"settings-CATALOGUE_SERVICES" }}
+{{ CATALOGUE_SELECTED_SERVICE|json_script:"settings-CATALOGUE_SELECTED_SERVICE" }}
 <script>
     {% autoescape off %}
     (function(){
@@ -46,6 +49,32 @@
                 siteName: '{{ SITE_NAME|default:"Geonode" }}',
             }, 
         };
+
+        const baseLayerNode = document.getElementById('settings-MAP_BASELAYERS');
+        const baseLayers = baseLayerNode && JSON.parse(baseLayerNode.textContent) || [];
+        const catalogueServicesNode = document.getElementById('settings-CATALOGUE_SERVICES');
+        const catalogueServices = catalogueServicesNode && JSON.parse(catalogueServicesNode.textContent) || {};
+        const catalogueSelectedServiceNode = document.getElementById('settings-CATALOGUE_SELECTED_SERVICE');
+        const catalogueSelectedService = catalogueSelectedServiceNode && JSON.parse(catalogueSelectedServiceNode.textContent) || {};
+
+        // override maps configuration with properties from setting.py
+        window.overrideNewMapConfig = function(config) {
+            if (config && config.map && config.map.layers) {
+                config.map.layers.push(...baseLayers);
+            }
+            config.catalogServices = config.catalogServices || { services: {} };
+            if (catalogueServices) {
+                config.catalogServices.services = Object.assign(config.catalogServices.services || {}, catalogueServices);
+            }
+            if (catalogueSelectedService) {
+                config.catalogServices.selectedService = catalogueSelectedService;
+            }
+            return config;
+        };
+
+        // override new geostory configuration
+        // window.overrideNewGeoStoryConfig = function(config) { return config; };
+
     })();
     {% endautoescape %}
 </script>

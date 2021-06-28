@@ -17,7 +17,7 @@ import {
     REQUEST_NEW_GEOSTORY_CONFIG,
     REQUEST_NEW_MAP_CONFIG
 } from '@js/actions/gnviewer';
-import { getBaseMapConfiguration, getNewGeoStoryConfig } from '@js/api/geonode/config';
+import { getNewMapConfiguration, getNewGeoStoryConfig } from '@js/api/geonode/config';
 import {
     getLayerByPk,
     getGeoStoryByPk,
@@ -54,7 +54,7 @@ export const gnViewerRequestLayerConfig = (action$) =>
     action$.ofType(REQUEST_LAYER_CONFIG)
         .switchMap(({ pk, page }) => {
             return Observable.defer(() => axios.all([
-                getBaseMapConfiguration(),
+                getNewMapConfiguration(),
                 getLayerByPk(pk)
             ])).switchMap((response) => {
                 const [mapConfig, gnLayer] = response;
@@ -121,7 +121,7 @@ export const gnViewerRequestMapConfig = (action$) =>
 export const gnViewerRequestNewMapConfig = (action$) =>
     action$.ofType(REQUEST_NEW_MAP_CONFIG)
         .switchMap(() => {
-            return Observable.defer(getBaseMapConfiguration
+            return Observable.defer(getNewMapConfiguration
             ).switchMap((response) => {
                 return Observable.of(
                     configureMap(response),
