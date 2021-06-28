@@ -20,6 +20,7 @@
             "method": "bearer"
         }
     ],
+    "defaultLayerFormat": "image/png",
     "geoNodeApi": {
         "endpointAdapter": "/mapstore/rest",
         "endpointAutocomplete": "/base/autocomplete_response",
@@ -409,7 +410,7 @@
                         {
                             "type": "link",
                             "href": "/favourite/list/",
-                            "labelId": "gnhome.favourites"
+                            "labelId": "gnhome.favorites"
                         },
                         {
                             "type": "link",

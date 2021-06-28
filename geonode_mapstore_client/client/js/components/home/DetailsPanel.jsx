@@ -100,9 +100,9 @@ function DetailsPanel({
     editThumbnail,
     activeEditMode,
     closePanel,
-    favourite,
-    onFavourite,
-    enableFavourite
+    favorite,
+    onFavorite,
+    enableFavorite
 }) {
 
     const [editModeTitle, setEditModeTitle] = useState(false);
@@ -139,8 +139,8 @@ function DetailsPanel({
         }, 700);
     };
 
-    const handleFavourite = () => {
-        onFavourite(!favourite);
+    const handleFavorite = () => {
+        onFavorite(!favorite);
     };
 
     const types = getTypesInfo();
@@ -243,11 +243,11 @@ function DetailsPanel({
                         {
                             <div className="gn-details-panel-tools">
                                 {
-                                    enableFavourite &&
+                                    enableFavorite &&
                                     <Button
                                         variant="default"
-                                        onClick={debounce(handleFavourite, 500)}>
-                                        <FaIcon stylePrefix={favourite ? `fa` : `far`} name="star" />
+                                        onClick={debounce(handleFavorite, 500)}>
+                                        <FaIcon stylePrefix={favorite ? `fa` : `far`} name="star" />
                                     </Button>
                                 }
 
