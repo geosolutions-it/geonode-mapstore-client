@@ -86,12 +86,6 @@ function FilterForm({
         onChange(val);
     };
 
-    useEffect( () => {
-        submitOnChangeField
-        && onChange(values);
-    },
-    [values]);
-
     return (
         <div className="gn-filter-form" style={styleContainerForm} >
             <div className="gn-filter-form-header">

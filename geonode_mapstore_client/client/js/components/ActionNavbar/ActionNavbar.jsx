@@ -85,6 +85,7 @@ const RightContentMenu = ({ items, formatHref, query, parentRef, cfg }) => {
                     formatHref={formatHref}
                     query={query}
                     variant="primary"
+                    alignRight
                 />
 
             }

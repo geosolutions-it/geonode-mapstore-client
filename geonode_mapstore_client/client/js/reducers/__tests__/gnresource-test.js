@@ -36,6 +36,7 @@ describe('gnresource reducer', () => {
         const state = gnresource({}, setResource(resource));
         expect(state).toEqual({
             error: null,
+            isNew: false,
             data: resource,
             loading: false
         });
@@ -78,7 +79,8 @@ describe('gnresource reducer', () => {
     it('should test setNewResource', () => {
         const state = gnresource({}, setNewResource());
         expect(state).toEqual({
-            isNew: true
+            isNew: true,
+            data: {}
         });
     });
     it('should test setResourceId', () => {

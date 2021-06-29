@@ -22642,13 +22642,19 @@ Ported to CodeMirror by Peter Kroon
   flex: 1;
   flex-direction: row-reverse;
 }
-.msgapi .gn-action-navbar .gn-action-navbar-container .gn-action-navbar-content .gn-action-navbar-content-right ul:not(.dropdown-menu) {
+.msgapi .gn-action-navbar .gn-action-navbar-container .gn-action-navbar-content .gn-action-navbar-content-right > ul:not(.dropdown-menu) {
   display: flex;
   flex: 1;
   flex-direction: row-reverse;
 }
-.msgapi .gn-action-navbar .gn-action-navbar-container .gn-action-navbar-content .gn-action-navbar-content-right ul:not(.dropdown-menu) li {
+.msgapi .gn-action-navbar .gn-action-navbar-container .gn-action-navbar-content .gn-action-navbar-content-right > ul:not(.dropdown-menu) > li {
   display: flex;
+}
+.msgapi .gn-action-navbar .gn-action-navbar-container .gn-action-navbar-content .gn-action-navbar-content-right > ul:not(.dropdown-menu) > li + li {
+  margin-right: 0.4rem;
+}
+.msgapi .gn-action-navbar .gn-action-navbar-container .gn-action-navbar-content .gn-action-navbar-content-tools {
+  margin-left: 0.4rem;
 }
 .msgapi .gn-action-navbar .gn-action-navbar-container .gn-action-navbar-tools > * {
   margin: 0 0.8rem;
