@@ -20,6 +20,13 @@ from mapstore2_adapter.plugins.geonode import GeoNodeMapStore2ConfigConverter
 ms2_config_converter = GeoNodeMapStore2ConfigConverter()
 
 
+def resource_list_url(resource_type):
+    return '/#/search/?filter{resource_type.in}' + '={}'.format(resource_type)
+
+def resource_detail_url(resource_type, resource_id):
+    return '/viewer/#/{}/{}'.format(resource_type, resource_id)
+
+
 class MapStoreHookSet(BaseHookSet):
 
     def get_request(self, context):
@@ -140,6 +147,12 @@ class MapStoreHookSet(BaseHookSet):
             callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/layer_style_edit.html'
 
+    def layer_list_url(self):
+        return resource_list_url('layer')
+
+    def layer_detail_url(self, resource):
+        return resource_detail_url('layer', resource.id)
+
     # Maps
     def map_detail_template(self, context=None):
         self.initialize_context(
@@ -176,11 +189,24 @@ class MapStoreHookSet(BaseHookSet):
             callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/map_embed.html'
 
+    def map_list_url(self):
+        return resource_list_url('map')
+
+    def map_detail_url(self, resource):
+        return resource_detail_url('map', resource.id)
+
     # def map_download_template(self, context=None):
     #    self.initialize_context(
     #        context,
     #        callback=ms2_config_converter.convert)
     #    return 'geonode-mapstore-client/map_view.html'
+
+    # Documents
+    def document_list_url(self):
+        return resource_list_url('document')
+
+    def document_detail_url(self, resource):
+        return resource_detail_url('document', resource.id)
 
     # GeoApps
     def geoapp_list_template(self, context=None):
@@ -224,6 +250,12 @@ class MapStoreHookSet(BaseHookSet):
             context,
             callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/app_download.html'
+
+    def geoapp_list_url(self):
+        return resource_list_url('geostory')
+
+    def geoapp_detail_url(self, resource):
+        return resource_detail_url(resource.resource_type, resource.id)
 
     # Map Persisting
     def viewer_json(self, conf, context=None):
