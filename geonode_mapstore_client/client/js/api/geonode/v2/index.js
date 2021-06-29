@@ -340,7 +340,7 @@ export const getConfiguration = (configUrl = '/static/mapstore/configs/localConf
                 geoNodePageConfig.localConfig || {},
                 (objValue, srcValue) => {
                     if (isArray(objValue)) {
-                        return srcValue;
+                        return [...objValue, ...srcValue];
                     }
                     return undefined; // eslint-disable-line consistent-return
                 });

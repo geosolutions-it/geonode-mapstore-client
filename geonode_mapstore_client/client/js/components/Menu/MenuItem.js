@@ -43,7 +43,7 @@ import {
 const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, classItem, size, alignRight, variant }) => {
 
     const { formatHref, query } = menuItemsProps;
-    const { id, type, label, labelId = '', items = [], href, style, badge = '', image, subType, Component } = item;
+    const { id, type, label, labelId = '', items = [], href, style, badge = '', image, Component, target } = item;
 
     const badgeValue = badge;
     if (type === 'dropdown') {
@@ -69,23 +69,8 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
     }
 
     if (type === 'link') {
-        if (subType === 'tag') {
-            return (
-                <Tag
-                    tabIndex={tabIndex}
-                    draggable={draggable}
-                    href={href}
-                    style={style}
-                    variant={variant}
-                >
-                    {labelId && <Message msgId={labelId} /> || label}
-                    {isValidBadgeValue(badgeValue) && <Badge>{badgeValue}</Badge>}
-                </Tag>
-            );
-        }
-
         return (
-            <NavLink href={href} className={variant ? `btn btn-${variant}` : ''}>{labelId && <Message msgId={labelId} /> || label}</NavLink>
+            <NavLink href={href} target={target} className={variant ? `btn btn-${variant}` : ''}>{labelId && <Message msgId={labelId} /> || label}</NavLink>
         );
 
     }

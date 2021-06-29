@@ -19,14 +19,14 @@ import {
     isValidBadgeValue
 } from '@js/utils/MenuUtils';
 
-const itemElement = ({ labelId, href, badge }) =>  (
+const itemElement = ({ labelId, href, badge, target }) =>  (
     <>
-        <NavLink href={href}>{labelId && <Message msgId={labelId} />}
+        <NavLink href={href} target={target}>{labelId && <Message msgId={labelId} />}
             { isValidBadgeValue(badge) && <Badge>{badge}</Badge>}
         </NavLink>
     </>);
 
-const itemsList = (items) => ( items && items.map(({ labelId, href, badge }) => itemElement({ labelId, href, badge })));
+const itemsList = (items) => ( items && items.map(({ labelId, href, badge, target }) => itemElement({ labelId, href, badge, target })));
 
 /**
  * DropdownList component
@@ -92,6 +92,7 @@ const DropdownList = ({
                         href={itm.href}
                         style={itm.style}
                         as={itm?.items ? 'span' : 'a' }
+                        target={itm.target}
                     >
                         {itm.labelId && <Message msgId={itm.labelId} /> || itm.label}
                         {isValidBadgeValue(itm.badge) && <Badge>{itm.badge}</Badge>}
