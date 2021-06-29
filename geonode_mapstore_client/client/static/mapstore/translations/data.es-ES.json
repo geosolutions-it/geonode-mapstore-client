@@ -120,6 +120,7 @@
             "errors": {
                 "noPermissions": "No tienes permisos para agregar una geohistoria"
             }
+
         },
         "gnviewer":{
             "edit": "Editar",
@@ -127,7 +128,8 @@
             "editMetadata": "Editar Metadatos",
             "editStyle": "Editar Estilo",
             "editData": "Editar Datos",
-            "backToDataset": "Volver al Conjunto de Datos"
+            "backToDataset": "Volver al Conjunto de Datos",
+            "uploadImage": "Haga clic o arrastre y suelte una imagen"
         }
 
 
