@@ -16,6 +16,18 @@ export const getResourcePerms = (state) => {
     return state?.gnresource?.data?.perms || [];
 };
 
+export const getResourceName = (state) => {
+    return state?.gnresource?.data?.name || false;
+};
+
+export const getResourceDescription = (state) => {
+    return state?.gnresource?.data?.abstract || false;
+};
+
+export const getResourceThumbnail = (state) => {
+    return state?.gnresource?.data?.thumbnail_url || false;
+};
+
 export const canEditResource = (state) => {
     const canEdit = state?.gnresource?.permissions?.canEdit;
     const perms = state?.gnresource?.data?.perms || [];

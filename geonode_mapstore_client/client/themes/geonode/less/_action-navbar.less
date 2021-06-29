@@ -84,17 +84,21 @@
                 display: flex;
                 flex: 1;
                 flex-direction: row-reverse;
-                ul:not(.dropdown-menu) {
+                > ul:not(.dropdown-menu) {
                     display: flex;
                     flex: 1;
                     flex-direction: row-reverse;
-                    li{
+                    > li{
                         display: flex;
-    
+                    }
+                    > li + li {
+                        margin-right: 0.4rem;
                     }
                 }
             }
-
+            .gn-action-navbar-content-tools {
+                margin-left: 0.4rem;
+            }
         }
         .gn-action-navbar-tools > * {
             margin: 0 0.8rem;

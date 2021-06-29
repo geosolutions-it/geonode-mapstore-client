@@ -44,8 +44,8 @@ describe('FiltersForm component', () => {
         const applyButton = footerButtons[0];
         Simulate.click(applyButton);
     });
-    it('should trigger on change after clicking on clear', (done) => {
-        const onChange = (values) => {
+    it('should trigger on clear', (done) => {
+        const onClear = (values) => {
             try {
                 expect(values).toBeTruthy();
                 done();
@@ -53,7 +53,7 @@ describe('FiltersForm component', () => {
                 done(e);
             }
         };
-        ReactDOM.render( <FiltersForm show onChange={onChange} submitOnChangeField={false} />, document.getElementById("container"));
+        ReactDOM.render( <FiltersForm show onClear={onClear} submitOnChangeField={false} />, document.getElementById("container"));
         const filterFormNode = document.querySelector('.gn-filter-form');
         expect(filterFormNode).toBeTruthy();
         const footerButtons = filterFormNode.querySelectorAll('.gn-filter-form-footer > button');

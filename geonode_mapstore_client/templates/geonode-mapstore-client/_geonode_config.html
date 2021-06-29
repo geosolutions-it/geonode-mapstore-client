@@ -1,15 +1,45 @@
 {% load client_lib_tags %}
+{% load base_tags %}
+{% load get_menu_json %}
 {% comment %}
     app and map configuration need to be normalized
 {% endcomment %}
+
+{% comment %} setting.py variables {% endcomment %}
+{{ MAP_BASELAYERS|json_script:"settings-MAP_BASELAYERS" }}
+{{ CATALOGUE_SERVICES|json_script:"settings-CATALOGUE_SERVICES" }}
+{{ CATALOGUE_SELECTED_SERVICE|json_script:"settings-CATALOGUE_SELECTED_SERVICE" }}
+
+{% comment %} menu items {% endcomment %}
+
+{% get_menu_json 'TOPBAR_MENU' as TOPBAR_MENU %}
+{{ TOPBAR_MENU|json_script:"menu-TOPBAR_MENU" }}
+{% get_menu_json 'TOP_MENUBAR_LEFT' as TOP_MENUBAR_LEFT %}
+{{ TOP_MENUBAR_LEFT|json_script:"menu-TOP_MENUBAR_LEFT" }}
+{% get_menu_json 'TOP_MENUBAR_RIGHT' as TOP_MENUBAR_RIGHT %}
+{{ TOP_MENUBAR_RIGHT|json_script:"menu-TOP_MENUBAR_RIGHT" }}
+{% get_menu_json 'CARDS_MENU' as CARDS_MENU %}
+{{ CARDS_MENU|json_script:"menu-CARDS_MENU" }}
+
 <script>
     {% autoescape off %}
     (function(){
+
+        function getJSONScriptVariable(id, fallback) {
+            const node = document.getElementById(id);
+            return node && JSON.parse(node.textContent) || fallback;
+        }
 
         localStorage.setItem('showPopoverSync', false);
 
         const username = '{{ user|default:"" }}' || null;
         const token = '{{ access_token|default:"" }}' || '{{ ACCESS_TOKEN|default:"" }}' || null;
+
+        const topBarMenuItems = getJSONScriptVariable('menu-TOPBAR_MENU', []);
+        const topMenubarLeftItems = getJSONScriptVariable('menu-TOP_MENUBAR_LEFT', []);
+        const topMenubarRightItems = getJSONScriptVariable('menu-TOP_MENUBAR_RIGHT', []);
+        const cardsMenuItems = getJSONScriptVariable('menu-CARDS_MENU', []);
+
         window.__GEONODE_CONFIG__ = {
             languageCode: '{{ LANGUAGE_CODE }}',
             resourceId: {{ appId|default:'null' }},
@@ -44,8 +74,40 @@
                 printUrl: '{{ GEOSERVER_PUBLIC_LOCATION }}pdf/info.json',
                 bingApiKey: '{% bing_api_key %}',
                 siteName: '{{ SITE_NAME|default:"Geonode" }}',
+                geoNodeConfiguration: {
+                    menu: {
+                        items: [...topBarMenuItems, ...topMenubarLeftItems],
+                        rightItems: topMenubarRightItems
+                    },
+                    cardsMenu: {
+                        items: cardsMenuItems
+                    }
+                }
             }, 
         };
+
+        const baseLayers = getJSONScriptVariable('settings-MAP_BASELAYERS', []);
+        const catalogueServices = getJSONScriptVariable('settings-CATALOGUE_SERVICES', {});
+        const catalogueSelectedService = getJSONScriptVariable('settings-CATALOGUE_SELECTED_SERVICE', '');
+
+        // override maps configuration with properties from setting.py
+        window.overrideNewMapConfig = function(config) {
+            if (config && config.map && config.map.layers) {
+                config.map.layers.push(...baseLayers);
+            }
+            config.catalogServices = config.catalogServices || { services: {} };
+            if (catalogueServices) {
+                config.catalogServices.services = Object.assign(config.catalogServices.services || {}, catalogueServices);
+            }
+            if (catalogueSelectedService) {
+                config.catalogServices.selectedService = catalogueSelectedService;
+            }
+            return config;
+        };
+
+        // override new geostory configuration
+        // window.overrideNewGeoStoryConfig = function(config) { return config; };
+
     })();
     {% endautoescape %}
 </script>
