@@ -3600,6 +3600,7 @@
             },
             { "name": "BrandNavbar" },
             { "name": "DetailViewer"},
+            { "name": "Save" },
             {"name": "MediaViewer"}
         ]
     }

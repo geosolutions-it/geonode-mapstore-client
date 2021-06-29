@@ -193,6 +193,7 @@ export const gnViewerRequestDocumentConfig = (action$) =>
                 const [gnDocument] = response;
                 return Observable.of(
                     setResource(gnDocument),
+                    setResourceType('document'),
                     setResourceId(pk)
                 );
             }).catch(() => {
