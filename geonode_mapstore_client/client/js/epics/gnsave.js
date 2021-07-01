@@ -38,8 +38,8 @@ import {
 } from '@js/actions/gnresource';
 import {
     getResourceByPk,
-    createGeoStory,
-    updateGeoStory,
+    createGeoApp,
+    updateGeoApp,
     createMap,
     updateMap,
     updateDocument,
@@ -98,10 +98,11 @@ const SaveAPI = {
             'data': story
         };
         return id
-            ? updateGeoStory(id, body)
-            : createGeoStory({
+            ? updateGeoApp(id, body)
+            : createGeoApp({
                 'name': metadata.name + ' ' + uuid(),
                 'owner': user.name,
+                'resource_type': 'geostory',
                 ...body
             }).then((response) => {
                 if (reload) {

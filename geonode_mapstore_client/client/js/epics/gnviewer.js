@@ -20,7 +20,7 @@ import {
 import { getNewMapConfiguration, getNewGeoStoryConfig } from '@js/api/geonode/config';
 import {
     getLayerByPk,
-    getGeoStoryByPk,
+    getGeoAppByPk,
     getDocumentByPk,
     getMapByPk
 } from '@js/api/geonode/v2';
@@ -135,7 +135,7 @@ export const gnViewerRequestGeoStoryConfig = (action$) =>
     action$.ofType(REQUEST_GEOSTORY_CONFIG)
         .switchMap(({ pk }) => {
             return Observable.defer(() => axios.all([
-                getGeoStoryByPk(pk)
+                getGeoAppByPk(pk)
             ])).switchMap((response) => {
                 const [gnGeoStory] = response;
                 const { data, ...resource } = gnGeoStory;

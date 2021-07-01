@@ -283,31 +283,14 @@ export const getGeoAppByPk = (pk) => {
         .then(({ data }) => data.geoapp);
 };
 
-export const createGeoStory = (body) => {
-    return axios.post(parseDevHostname(`${endpoints[GEOSTORIES]}`), body, {
-        params: {
-            include: ['data']
-        }
-    })
-        .then(({ data }) => data.geostory);
-};
 
-export const getGeoStoryByPk = (pk) => {
-    return axios.get(parseDevHostname(`${endpoints[GEOSTORIES]}/${pk}`), {
+export const updateGeoApp = (pk, body) => {
+    return axios.patch(parseDevHostname(`${endpoints[GEOAPPS]}/${pk}`), body, {
         params: {
             include: ['data']
         }
     })
-        .then(({ data }) => data.geostory);
-};
-
-export const updateGeoStory = (pk, body) => {
-    return axios.patch(parseDevHostname(`${endpoints[GEOSTORIES]}/${pk}`), body, {
-        params: {
-            include: ['data']
-        }
-    })
-        .then(({ data }) => data.geostory);
+        .then(({ data }) => data.geoapp);
 };
 
 export const updateDocument = (pk, body) => {
@@ -621,9 +604,7 @@ export default {
     getResourceByPk,
     createGeoApp,
     getGeoAppByPk,
-    createGeoStory,
-    getGeoStoryByPk,
-    updateGeoStory,
+    updateGeoApp,
     getMaps,
     getDocumentsByDocType,
     getUserByPk,

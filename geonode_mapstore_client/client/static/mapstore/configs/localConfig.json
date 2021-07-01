@@ -361,8 +361,15 @@
                             "href": "/viewer/#/geostory/new",
                             "authenticated": true,
                             "perms": [{ "type": "user", "value": "add_resource" }]
+                        },
+                        {
+                            "labelId": "gnhome.dashboard",
+                            "value": "dashboard",
+                            "type": "link",
+                            "href": "/viewer/#/dashboard/new",
+                            "authenticated": true,
+                            "perms": [{ "type": "user", "value": "add_resource" }]
                         }
-
                     ]
                 },
                 {
