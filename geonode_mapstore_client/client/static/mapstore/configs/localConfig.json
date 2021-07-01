@@ -564,13 +564,13 @@
                             "type": "link",
                             "href": "#/search/?filter{resource_type.in}=geostory",
                             "labelId": "gnhome.geostories",
-                            "badge": "{state('geoNodeResourcesInfo') && state('geoNodeResourcesInfo').geoappsTotalCount}"
+                            "badge": "{state('geoNodeResourcesInfo') && state('geoNodeResourcesInfo').geostoriesTotalCount}"
                         },
                         {
                             "type": "link",
                             "href": "#/search/?filter{resource_type.in}=dashboard",
                             "labelId": "gnhome.dashboard",
-                            "badge": "{state('geoNodeResourcesInfo') && state('geoNodeResourcesInfo').geoappsTotalCount}"
+                            "badge": "{state('geoNodeResourcesInfo') && state('geoNodeResourcesInfo').dashboardsTotalCount}"
                         },
                         {
                             "type": "divider",

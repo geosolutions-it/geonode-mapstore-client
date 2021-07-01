@@ -24,7 +24,7 @@ def run_setup_hooks(*args, **kwargs):
     urlpatterns += [
         url(r'^mapstore/', include('mapstore2_adapter.urls')),
         url(r'^viewer/', TemplateView.as_view(template_name='geonode-mapstore-client/viewer.html')),
-        # required, otherwise will rage no-lookup errors | to be analysed
+        # required, otherwise will raise no-lookup errors | to be analysed
         url(r'^api/v2/', include(router.urls)),
     ]
 

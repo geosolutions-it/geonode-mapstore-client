@@ -29,7 +29,8 @@ let endpoints = {
     'layers': '/api/v2/layers',
     'maps': '/api/v2/maps',
     'geoapps': '/api/v2/geoapps',
-    'geostories': '/api/v2/geostories',
+    'geostories': '/api/v2/geoapps?filter{resource_type.in}=geostory',
+    'dashboards': '/api/v2/geoapps?filter{resource_type.in}=dashboard',
     'users': '/api/v2/users',
     'resource_types': '/api/v2/resources/resource_types',
     'categories': '/api/v2/categories',
@@ -44,6 +45,7 @@ const LAYERS = 'layers';
 const MAPS = 'maps';
 const GEOAPPS = 'geoapps';
 const GEOSTORIES = 'geostories';
+const DASHBOARDS = 'dashboards';
 const USERS = 'users';
 const RESOURCE_TYPES = 'resource_types';
 const OWNERS = 'owners';
@@ -406,7 +408,7 @@ export const getResourcesTotalCount = () => {
         LAYERS,
         MAPS,
         GEOSTORIES,
-        GEOAPPS
+        DASHBOARDS
     ];
     return axios.all(
         types.map((type) =>
@@ -420,14 +422,14 @@ export const getResourcesTotalCount = () => {
             layersTotalCount,
             mapsTotalCount,
             geostoriesTotalCount,
-            geoappsTotalCount
+            dashboardsTotalCount
         ]) => {
             return {
                 documentsTotalCount,
                 layersTotalCount,
                 mapsTotalCount,
                 geostoriesTotalCount,
-                geoappsTotalCount
+                dashboardsTotalCount
             };
         });
 };
