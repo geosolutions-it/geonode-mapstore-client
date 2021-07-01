@@ -123,8 +123,8 @@
 .gn-details-panel-content {
     padding: 1rem;
     font-size: 0.9em;
-    .inEdit{
-        margin-right: 0.5rem;
+    .fa-edit, .fa-check-circle{
+        font-size: 0.9rem;
     }
 }
 
@@ -132,19 +132,27 @@
     display: flex;
     margin-bottom: 1rem;
     h1 {
-        flex: 1;
+        display: flex;
         word-break: break-word;
         font-size: 1rem;
-        margin: 0.3rem 0 0 0;
+        margin: 0 0.4em 0 0;
+
         .fa {
             margin: 0;
             margin-right: 0.6rem;
         }
     }
     .gn-details-panel-tools{
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
         button, a{
             padding: 0.1rem 0 0 0.5rem;
         }
+    }
+    .inEdit{
+        align-items: center;
+        display: flex;
     }
 
 }
@@ -153,9 +161,15 @@
     font-size: 0.9rem;
     text-align: justify;
     word-break: break-word;
+    .gn-details-panel-text{
+        margin-right: 0.5rem;
+    }
     // force styles of html coming from WYSIWYG
     img {
         width: 100% !important;
         height: auto !important;
+    }
+    .editContainer, .gn-text-editable{
+        display: inline-block;
     }
 }
