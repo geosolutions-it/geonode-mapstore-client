@@ -152,6 +152,8 @@ function DetailsPanel({
     } = resource && (types[resource.doc_type] || types[resource.resource_type]) || {};
     const embedUrl = resource?.embed_url && formatEmbedUrl(resource);
     const detailUrl = resource?.pk && formatDetailUrl(resource);
+    const documentDownloadUrl = (resource?.href && resource?.href.includes('download')) ? resource?.href : undefined;
+
     return (
         <div
             ref={detailsContainerNode}
@@ -250,7 +252,11 @@ function DetailsPanel({
                                         <FaIcon stylePrefix={favorite ? `fa` : `far`} name="star" />
                                     </Button>
                                 }
-
+                                {documentDownloadUrl &&
+                                    <Button variant="default"
+                                        href={documentDownloadUrl} >
+                                        <FaIcon name="download" />
+                                    </Button>}
 
                                 {detailUrl && <CopyToClipboard
                                     tooltipPosition="top"
@@ -266,7 +272,8 @@ function DetailsPanel({
                                         onClick={handleCopyPermalink}>
                                         <FaIcon name="share-alt" />
                                     </Button>
-                                </CopyToClipboard>}
+                                </CopyToClipboard>
+                                }
                                 {detailUrl && !editThumbnail && <Button
                                     variant="default"
                                     href={detailUrl}
@@ -316,6 +323,7 @@ function DetailsPanel({
                             })}>{resource.category.identifier}</a>
                         </div>}
                     </p>
+
                 </div>
             </section>
         </div>
