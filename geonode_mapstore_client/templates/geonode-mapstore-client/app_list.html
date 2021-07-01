@@ -14,11 +14,13 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="create-new-app-dropdown-menu">
+      {% for app in GEOAPPS %}
         <li>
-          <a href="{% url "new_geoapp" %}?appType=GeoStory">
-            {% blocktrans %}GeoStory{% endblocktrans %}
+          <a href="{% url "new_geoapp" %}?appType={{item}}">
+            {% blocktrans %}{{item}}{% endblocktrans %}
           </a>
         </li>
+      {% endfor %}
       </ul>
     </div>
     {% endif %}
