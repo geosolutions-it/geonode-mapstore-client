@@ -33,6 +33,8 @@
             "geostory": "GeoStory",
             "geostories": "GeoStories",
             "createGeostory": "Create geostory",
+            "createDashboard": "Create dashboard",
+            "dashboard": "Dashboard",
             "createNew": "Create new",
             "maps": "Maps",
             "about": "About",
