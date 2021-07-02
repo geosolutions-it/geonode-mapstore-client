@@ -473,7 +473,7 @@ export const getCategories = ({ q, idIn, ...params }, filterKey = 'categories') 
                 .map((result) => {
                     const selectOption = {
                         value: result.identifier,
-                        label: addCountToLabel(result.gn_description || result.gn_description_en, result.total)
+                        label: addCountToLabel(result.gn_description || result.gn_description_en, result.count)
                     };
                     const category = {
                         ...result,
@@ -500,7 +500,7 @@ export const getRegions = ({ q, idIn, ...params }, filterKey = 'regions') => {
                 .map((result) => {
                     const selectOption = {
                         value: result.name,
-                        label: addCountToLabel(result.name, result.total)
+                        label: addCountToLabel(result.name, result.count)
                     };
                     const region = {
                         ...result,
@@ -527,7 +527,7 @@ export const getOwners = ({ q, idIn, ...params }, filterKey = 'owners') => {
                 .map((result) => {
                     const selectOption = {
                         value: result.username,
-                        label: addCountToLabel(result.username, result.total)
+                        label: addCountToLabel(result.username, result.count)
                     };
                     const owner = {
                         ...result,
@@ -552,9 +552,12 @@ export const getKeywords = ({ q, idIn, ...params }, filterKey =  'keywords') => 
         .then(({ data }) => {
             const results = (data?.HierarchicalKeywords || [])
                 .map((result) => {
+
+
+
                     const selectOption = {
                         value: result.slug,
-                        label: addCountToLabel(result.slug, result.total)
+                        label: addCountToLabel(result.slug, result.count)
                     };
                     const keyword = {
                         ...result,
