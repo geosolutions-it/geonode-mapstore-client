@@ -39,6 +39,7 @@ import widgets from '@mapstore/framework/reducers/widgets';
 import LayerViewerRoute from '@js/routes/LayerViewer';
 import MapViewerRoute from '@js/routes/MapViewer';
 import GeoStoryViewerRoute from '@js/routes/GeoStoryViewer';
+import DashboardViewerRoute from '@js/routes/DashboardViewerRoute';
 import DocumentViewerRoute from '@js/routes/DocumentViewer';
 
 import gnresource from '@js/reducers/gnresource';
@@ -119,6 +120,13 @@ const routes = [
             '/geostory/:pk'
         ],
         component: GeoStoryViewerRoute
+    },
+    {
+        name: 'dashboard_viewer',
+        path: [
+            '/dashboard/:pk'
+        ],
+        component: DashboardViewerRoute
     },
     {
         name: 'document_viewer',

@@ -273,13 +273,14 @@ export const createGeoApp = (body) => {
             include: ['data']
         }
     })
-        .then(({ data }) => data.resource);
+        .then(({ data }) => data.geoapp);
 };
 
 export const getGeoAppByPk = (pk) => {
     return axios.get(parseDevHostname(`${endpoints[GEOAPPS]}/${pk}`), {
         params: {
-            full: true
+            full: true,
+            include: ['data']
         }
     })
         .then(({ data }) => data.geoapp);

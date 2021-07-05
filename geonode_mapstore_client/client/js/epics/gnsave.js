@@ -53,8 +53,10 @@ import {
     getResourceThumbnail
 } from '@js/selectors/gnresource';
 
+const GEOAPPS_MAPPER = ['geostory', 'dashboard']
+
 const SaveAPI = {
-    map: (state, id, metadata, reload) => {
+    map: (state, id, metadata, reload, _resource_type) => {
         const map =  mapSelector(state) || {};
         const layers = layersSelector(state);
         const groups = groupsSelector(state);
@@ -88,7 +90,7 @@ const SaveAPI = {
                     return response.data;
                 });
     },
-    geostory: (state, id, metadata, reload) => {
+    geoapp: (state, id, metadata, reload, resource_type) => {
         const story = currentStorySelector(state);
         const user = userSelector(state);
         const body = {
@@ -102,7 +104,7 @@ const SaveAPI = {
             : createGeoApp({
                 'name': metadata.name + ' ' + uuid(),
                 'owner': user.name,
-                'resource_type': 'geostory',
+                'resource_type': resource_type,
                 ...body
             }).then((response) => {
                 if (reload) {
@@ -127,9 +129,14 @@ const SaveAPI = {
 export const gnSaveContent = (action$, store) =>
     action$.ofType(SAVE_CONTENT)
         .switchMap((action) => {
+            var resourceType = null;
             const state = store.getState();
-            const contentType = state.gnresource?.type || 'map';
-            return Observable.defer(() => SaveAPI[contentType](state, action.id, action.metadata, action.reload))
+            var contentType = state.gnresource?.type || 'map';
+            if (GEOAPPS_MAPPER.includes(contentType)) {
+                resourceType = contentType;
+                contentType = 'geoapp';
+            }
+            return Observable.defer(() => SaveAPI[contentType](state, action.id, action.metadata, action.reload, resourceType))
                 .switchMap((response) => {
                     return Observable.of(
                         saveSuccess(response),
