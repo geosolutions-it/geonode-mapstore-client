@@ -567,12 +567,6 @@
                             "badge": "{state('geoNodeResourcesInfo') && state('geoNodeResourcesInfo').geostoriesTotalCount}"
                         },
                         {
-                            "type": "link",
-                            "href": "#/search/?filter{resource_type.in}=dashboard",
-                            "labelId": "gnhome.dashboard",
-                            "badge": "{state('geoNodeResourcesInfo') && state('geoNodeResourcesInfo').dashboardsTotalCount}"
-                        },
-                        {
                             "type": "divider",
                             "authenticated": true,
                             "permissions": [],
@@ -583,6 +577,25 @@
                             "type": "link",
                             "href": "/viewer/#/geostory/new",
                             "labelId": "gnhome.createGeostory",
+                            "authenticated": true,
+                            "permissions": [],
+                            "allowedRoles": [],
+                            "perms": [{ "type": "user", "value": "add_resource" }]
+                        }
+                    ]
+                },
+                {
+                    "labelId": "gnhome.dashboard",
+                    "type": "dropdown",
+                    "items": [
+                        {
+                            "type": "link",
+                            "href": "#/search/?filter{resource_type.in}=dashboard",
+                            "labelId": "gnhome.dashboard",
+                            "badge": "{state('geoNodeResourcesInfo') && state('geoNodeResourcesInfo').dashboardsTotalCount}"
+                        },
+                        {
+                            "type": "divider",
                             "authenticated": true,
                             "permissions": [],
                             "allowedRoles": [],
