@@ -522,6 +522,9 @@
                     ]
                 },
                 {
+                    "type": "divider"
+                },
+                {
                     "labelId": "gnhome.maps",
                     "type": "dropdown",
                     "items": [
