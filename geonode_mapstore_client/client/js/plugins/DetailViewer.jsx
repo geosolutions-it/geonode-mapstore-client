@@ -11,10 +11,12 @@ import { createPlugin } from '@mapstore/framework/utils/PluginsUtils';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import DetailsPanel from '@js/components/home/DetailsPanel';
+import { userSelector } from '@mapstore/framework/selectors/security';
 import {
     editTitleResource,
     editAbstractResource,
-    editThumbnailResource
+    editThumbnailResource,
+    setFavoriteResource
 } from '@js/actions/gnresource';
 import controls from '@mapstore/framework/reducers/controls';
 import {toggleControl} from '@mapstore/framework/actions/controls';
@@ -31,14 +33,16 @@ import PropTypes from 'prop-types';
 const ConnectedDetailsPanel = connect(
     createSelector([
         state => state?.gnresource?.data || null,
-        state => state?.gnresource?.loading || false
-    ], (resource, loading, editMode) => ({
+        state => state?.gnresource?.loading || false,
+        state => state?.gnresource?.data?.favorite || false
+    ], (resource, loading, favorite) => ({
         resource,
         loading,
-        editMode
+        favorite
     })),
     {
-        closePanel: toggleControl.bind(null, 'DetailViewer', null)
+        closePanel: toggleControl.bind(null, 'DetailViewer', null),
+        onFavorite: setFavoriteResource
     }
 )(DetailsPanel);
 
@@ -85,7 +89,8 @@ function DetailViewer({
     onEditThumbnail,
     canEdit,
     width,
-    hide
+    hide,
+    user
 }) {
 
     const handleTitleValue = (val) => {
@@ -114,6 +119,7 @@ function DetailViewer({
                     editAbstract={handleAbstractValue}
                     editThumbnail={handleEditThumbnail}
                     activeEditMode={!enabled && canEdit}
+                    enableFavorite={!!user}
                     sectionStyle={{
                         width,
                         position: 'fixed'
@@ -137,11 +143,13 @@ const DetailViewerPlugin = connect(
         state => state?.controls?.DetailViewer?.enabled || false,
         canEditResource,
         isNewResource,
-        getResourceId
-    ], (enabled, canEdit, isNew, resourcePk) => ({
+        getResourceId,
+        userSelector
+    ], (enabled, canEdit, isNew, resourcePk, user) => ({
         enabled,
         canEdit,
-        hide: isNew || !resourcePk
+        hide: isNew || !resourcePk,
+        user
     })),
     {
         onEditResource: editTitleResource,
