@@ -77,7 +77,6 @@ function FilterForm({
 
     useEffect( () => {
         submitOnChangeField
-        && isEmpty(query)
         && setValues(formParams);
     },
     [formParams]);
@@ -86,6 +85,13 @@ function FilterForm({
         onChange(val);
     };
 
+    const extentChange =  debounce((extent) => {
+        setValues({
+            ...values,
+            extent
+        });
+        onChange(values);
+    }, timeDebounce);
     return (
         <div className="gn-filter-form" style={styleContainerForm} >
             <div className="gn-filter-form-header">
@@ -120,12 +126,9 @@ function FilterForm({
                             queryExtent={query.extent}
                             layers={extentProps?.layers}
                             vectorLayerStyle={extentProps?.style}
-                            onChange={debounce(({extent}) =>
-                                setValues({
-                                    ...values,
-                                    extent
-                                }), timeDebounce)
-                            }
+                            onChange={(({extent}) =>{
+                                extentChange(extent);
+                            })}
                         />
                     </form>
                 </div>
@@ -143,6 +146,7 @@ function FilterForm({
                     size="sm"
                     variant="default"
                     onClick={onClear}
+                    disabled={ isEmpty(query) }
                 >
                     <Message msgId="gnhome.clearFilters"/>
                 </Button>
