@@ -18,6 +18,16 @@ const BrandNavbar = forwardRef(({
     inline
 }, ref) => {
 
+
+    const navItemsHrefPath = navItems.map( (item) => {
+        const hrefPath = (item?.href?.slice(-1) === '=')
+            ? item.href + location.pathname + location.hash
+            : item.href;
+        return {
+            ...item,
+            href: hrefPath
+        };
+    });
     const centerNode = useRef();
     const centerWidth = centerNode.current
         ? centerNode.current.getBoundingClientRect().width
@@ -51,7 +61,7 @@ const BrandNavbar = forwardRef(({
                     {centerWidth >= centerMinWidth && children}
                 </div>}
                 <Menu
-                    items={[...navItems].reverse()}
+                    items={[...navItemsHrefPath].reverse()}
                     containerClass={`gn-brand-navbar-right-side`}
                     childrenClass={`gn-user-dropdown`}
                     alignRight
