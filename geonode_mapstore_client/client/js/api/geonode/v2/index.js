@@ -26,7 +26,7 @@ let endpoints = {
     // default values
     'resources': '/api/v2/resources',
     'documents': '/api/v2/documents',
-    'layers': '/api/v2/layers',
+    'layers': '/api/v2/datasets',
     'maps': '/api/v2/maps',
     'geoapps': '/api/v2/geoapps',
     'geostories': '/api/v2/geostories',
