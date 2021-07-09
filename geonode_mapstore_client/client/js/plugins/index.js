@@ -12,7 +12,8 @@ import { extendPluginsDefinition } from '@extend/jsapi/plugins';
 import {
     PrintActionButton,
     CatalogActionButton,
-    MeasureActionButton
+    MeasureActionButton,
+    LayerDownloadActionButton
 } from '@js/plugins/actionnavbar/buttons';
 
 function toLazyPlugin(name, imp, overrides) {
@@ -83,7 +84,16 @@ function splitLazyAndStaticPlugins(pluginsDefinition) {
 export const plugins = {
     LayerDownloadPlugin: toLazyPlugin(
         'LayerDownload',
-        import(/* webpackChunkName: 'plugins/layer-download' */ '@mapstore/framework/plugins/LayerDownload')
+        import(/* webpackChunkName: 'plugins/layer-download' */ '@mapstore/framework/plugins/LayerDownload'),
+        {
+            containers: {
+                ActionNavbar: {
+                    name: 'LayerDownload',
+                    target: 'leftMenuItem',
+                    Component: LayerDownloadActionButton
+                }
+            }
+        }
     ),
     SwipePlugin: toLazyPlugin(
         'Swipe',

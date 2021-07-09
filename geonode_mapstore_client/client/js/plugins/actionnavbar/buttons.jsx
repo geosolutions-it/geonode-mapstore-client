@@ -59,3 +59,17 @@ export const MeasureActionButton = connect(
         </Button>
     );
 });
+
+export const LayerDownloadActionButton = connect(
+    () => ({}),
+    { onClick: setControlProperty.bind(null, 'layerdownload', 'enabled', true, true) }
+)(({ onClick }) => {
+    return (
+        <Button
+            variant="primary"
+            onClick={() => onClick()}
+        >
+            <Message msgId="layerdownload.title"/>
+        </Button>
+    );
+});

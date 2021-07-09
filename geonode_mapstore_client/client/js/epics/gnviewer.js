@@ -73,17 +73,16 @@ export const gnViewerRequestLayerConfig = (action$) =>
                     ...(newLayer?.bbox?.bounds
                         ? [ zoomToExtent(newLayer.bbox.bounds, 'EPSG:4326') ]
                         : []),
+                    selectNode(newLayer.id, 'layer', false),
                     setResource(gnLayer),
                     setResourceId(pk),
                     ...(page === 'layer_edit_data_viewer'
                         ? [
-                            selectNode(newLayer.id, 'layer', false),
                             browseData(newLayer)
                         ]
                         : []),
                     ...(page === 'layer_edit_style_viewer'
                         ? [
-                            selectNode(newLayer.id, 'layer', false),
                             showSettings(newLayer.id, 'layers', {
                                 opacity: newLayer.opacity || 1
                             }),
