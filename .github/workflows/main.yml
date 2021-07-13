@@ -48,12 +48,15 @@ jobs:
       #############
       - name: npm install
         run: npm install
+        working-directory: ${{env.working_directory}}
 
       - name: ESlint
         run: npm run lint
+        working-directory: ${{env.working_directory}}
 
       - name: Unit Tests
         run: npm test
+        working-directory: ${{env.working_directory}}
  
   build:
     env:
@@ -91,6 +94,8 @@ jobs:
       #############
       - name: npm install
         run: npm install
+        working-directory: ${{env.working_directory}}
 
       - name: compile
         run: npm run compile
+        working-directory: ${{env.working_directory}}
