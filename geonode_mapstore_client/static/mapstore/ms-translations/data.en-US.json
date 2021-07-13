@@ -1502,7 +1502,7 @@
                 "file": "File Name",
                 "format": "Format",
                 "targetStore": "Target Store",
-                "storeType": "Store Type",
+                "subtype": "Store Type",
                 "storeName": "Store Name",
                 "layer": "Layer",
                 "transforms": "Transformations Chain",

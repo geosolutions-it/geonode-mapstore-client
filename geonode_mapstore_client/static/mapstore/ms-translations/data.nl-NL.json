@@ -1478,7 +1478,7 @@
                 "file": "Bestandsnaam",
                 "format": "Formaat",
                 "targetStore": "Doel Store",
-                "storeType": "Store Type",
+                "subtype": "Store Type",
                 "storeName": "Store Naam",
                 "layer": "Laag",
                 "transforms": "Transformatieketen",

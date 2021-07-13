@@ -56,7 +56,7 @@ class MapStoreHookSet(BaseHookSet):
     def isEditLayer(self, context):
         if context:
             req = self.get_request(context)
-            if req.GET.get("layer") and req.GET.get("storeType"):
+            if req.GET.get("layer") and req.GET.get("subtype"):
                 return True
         return False
 

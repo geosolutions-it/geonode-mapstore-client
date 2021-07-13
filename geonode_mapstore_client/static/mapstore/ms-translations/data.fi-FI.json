@@ -1256,7 +1256,7 @@
         "file": "Tiedostonimi",
         "format": "Formaatti",
         "targetStore": "Kohdesäilö",
-        "storeType": "Säilön tyyppi",
+        "subtype": "Säilön tyyppi",
         "storeName": "Säilön nimi",
         "layer": "Taso",
         "transforms": "Muutosketju",
