@@ -44,7 +44,6 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
 
     const { formatHref, query } = menuItemsProps;
     const { id, type, label, labelId = '', items = [], href, style, badge = '', image, Component, target } = item;
-
     const badgeValue = badge;
     if (type === 'dropdown') {
         return (<DropdownList
@@ -64,7 +63,7 @@ const MenuItem = ({ item, menuItemsProps, containerNode, tabIndex, draggable, cl
         />);
     }
 
-    if (type === 'custom' && Component) {
+    if ((type === 'custom' || type === 'plugin') && Component) {
         return <Component />;
     }
 

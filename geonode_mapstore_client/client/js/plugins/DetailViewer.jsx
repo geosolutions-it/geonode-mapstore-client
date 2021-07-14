@@ -169,7 +169,6 @@ export default createPlugin('DetailViewer', {
         },
         ActionNavbar: {
             name: 'ButtonViewer',
-            target: 'leftMenuItem',
             Component: ConnectedButton,
             priority: 1
         }

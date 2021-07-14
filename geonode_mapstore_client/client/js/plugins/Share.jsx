@@ -101,11 +101,12 @@ const SharePlugin = connect(
 
 function ShareButton({
     enabled,
+    variant,
     onClick
 }) {
     return enabled
         ? <Button
-            variant="primary"
+            variant={variant || "primary"}
             onClick={() => onClick()}
         >
             <Message msgId="share.title"/>
@@ -148,7 +149,6 @@ export default createPlugin('Share', {
         },
         ActionNavbar: {
             name: 'Share',
-            target: 'leftMenuItem',
             Component: ConnectedShareButton
         }
     },
