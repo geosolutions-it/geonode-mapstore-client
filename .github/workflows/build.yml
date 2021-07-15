@@ -2,6 +2,9 @@
 
 name: GeoNode Client CI (build)
 
+concurrency: 
+  group: "client_build"
+  cancel-in-progress: true
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push events but only for the master branch
