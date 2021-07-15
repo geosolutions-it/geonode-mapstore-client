@@ -1,7 +1,12 @@
+from avatar.templatetags.avatar_tags import avatar_url
 from django import template
-from geonode.base.models import Menu, MenuItem
+from django.conf import settings
+from geonode.base.models import Configuration, Menu, MenuItem
 
 register = template.Library()
+
+config = Configuration.load()
+
 
 def _handle_single_item(menu_item):
     m_item = {}
@@ -12,96 +17,100 @@ def _handle_single_item(menu_item):
         m_item['target'] = '_blank'
     return m_item
 
-@register.simple_tag
-def get_base_left_topbar_menu():
 
-    return [
-        {
-            "label": "Datasets",
-            "type": "dropdown",
-            "items": [
-                {
-                    "type": "link",
-                    "href": "/catalogue/#/search/?filter{resource_type.in}=layer",
-                    "label": "Datasets"
-                },
-                {
-                    "type": "divider"
-                },
+@register.simple_tag(takes_context=True)
+def get_base_left_topbar_menu(context):
+    datasets = {
+        "label": "Datasets",
+        "type": "dropdown",
+        "items": [
+            {
+                "type": "link",
+                "href": "/catalogue/#/search/?filter{resource_type.in}=layer",
+                "label": "Datasets"
+            }
+        ]
+    }
+
+    documents = {
+        "label": "Documents",
+        "type": "dropdown",
+        "items": [
+            {
+                "type": "link",
+                "href": "/catalogue/#/search/?filter{resource_type.in}=document",
+                "label": "Documents"
+            }
+        ]
+    }
+    devider = {
+        "type": "divider"
+    }
+    maps = {
+        "label": "Maps",
+        "type": "dropdown",
+        "items": [
+            {
+                "type": "link",
+                "href": "/catalogue/#/search/?filter{resource_type.in}=map",
+                "label": "Explore maps"
+            }
+        ]
+    }
+    geostories = {
+        "label": "GeoStories",
+        "type": "dropdown",
+        "items": [
+            {
+                "type": "link",
+                "href": "/catalogue/#/search/?filter{resource_type.in}=geostory",
+                "label": "GeoStories"
+            }
+        ]
+    }
+    user = context.get('request').user
+    if user.is_authenticated:
+        if "add_resource" in user.perms:
+            datasets['items'].extend([
+                devider,
                 {
                     "type": "link",
                     "href": "/layers/upload",
                     "label": "Upload dataset"
                 }
-            ]
-        },
-        {
-            "label": "Documents",
-            "type": "dropdown",
-            "items": [
-                {
-                    "type": "link",
-                    "href": "/catalogue/#/search/?filter{resource_type.in}=document",
-                    "label": "Documents"
-                },
-                {
-                    "type": "divider"
-                },
+            ])
+            documents['items'].extend([
+                devider,
                 {
                     "type": "link",
                     "href": "/documents/upload",
                     "label": "Upload document"
                 }
-            ]
-        },
-        {
-            "type": "divider"
-        },
-        {
-            "label": "Maps",
-            "type": "dropdown",
-            "items": [
-                {
-                    "type": "link",
-                    "href": "/catalogue/#/search/?filter{resource_type.in}=map",
-                    "label": "Explore maps"
-                },
-                {
-                    "type": "divider"
-                },
+            ])
+            maps['items'].extend([
+                devider,
                 {
                     "type": "link",
                     "href": "/catalogue/#/map/new",
                     "label": "Create Map"
                 }
-            ]
-        },
-        {
-            "label": "GeoStories",
-            "type": "dropdown",
-            "items": [
-                {
-                    "type": "link",
-                    "href": "/catalogue/#/search/?filter{resource_type.in}=geostory",
-                    "label": "GeoStories"
-                },
-                {
-                    "type": "divider"
-                },
+            ])
+            geostories['items'].extend([
+                devider,
                 {
                     "type": "link",
                     "href": "/catalogue/#/geostory/new",
                     "label": "Create GeoStory"
                 }
-            ]
-        }
-    ]
+            ])
 
-@register.simple_tag
-def get_base_right_topbar_menu():
+    return [datasets, documents, devider, maps, geostories]
 
-    return [
-        {
+
+@register.simple_tag(takes_context=True)
+def get_base_right_topbar_menu(context):
+    user = context.get('request').user
+    about = {
             "label": "About",
             "type": "dropdown",
             "items": [
@@ -125,109 +134,123 @@ def get_base_right_topbar_menu():
                     "href": "/announcements/",
                     "label": "Announcements"
                 },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "link",
-                    "href": "/invitations/geonode-send-invite/",
-                    "label": "Invite users"
-                },
-                {
-                    "type": "link",
-                    "href": "/admin/people/profile/add/",
-                    "label": "Add user"
-                },
-                {
-                    "type": "link",
-                    "href": "/groups/create/",
-                    "label": "Create group"
-                }
             ]
         }
-    ]
+    if user.is_authenticated and not config.read_only:
+        about['items'].extend([
+            {
+                "type": "divider"
+            },
+            {
+                "type": "link",
+                "href": "/invitations/geonode-send-invite/",
+                "label": "Invite users"
+            },
+            {
+                "type": "link",
+                "href": "/admin/people/profile/add/",
+                "label": "Add user"
+            } if user.is_superuser else None,
+            {
+                "type": "link",
+                "href": "/groups/create/",
+                "label": "Create group"
+            }
+        ])
+    return [about]
 
-@register.simple_tag
-def get_user_menu():
 
-    '''
-    if user is not authenticated
+@register.simple_tag(takes_context=True)
+def get_user_menu(context):
+    user = context.get('request').user
+
+    if not user.is_authenticated:
+        return [
+            {
+                "label": "Register",
+                "type": "link",
+                "href": "/account/signup/?next=/"
+            } if settings.ACCOUNT_OPEN_SIGNUP and not config.read_only else None,
+            {
+                "label": "Sign in",
+                "type": "link",
+                "href": "/account/login/?next=/"
+            },
+        ]
+
+    devider = {
+        "type": "divider"
+    }
+    profile = {
+        # get src of user avatar
+        "image": avatar_url(user),
+        "type": "dropdown",
+        "className": "gn-user-menu-dropdown",
+        "items": [
+            {
+                "type": "link",
+                # get href of user profile
+                "href": user.get_absolute_url(),
+                "label": "Profile"
+            },
+            {
+                "type": "link",
+                "href": "/social/recent-activity",
+                "label": "Recent activity"
+            },
+            {
+                "type": "link",
+                "href": "/favourite/list/",
+                "label": "Favorites"
+            },
+            {
+                "type": "link",
+                "href": "/messages/inbox/",
+                "label": "Inbox"
+            },
+            devider,
+        ]
+    }
+    general = [
         {
-            "label": "Register",
             "type": "link",
-            "href": "/account/signup/?next=/"
+            "href": "/help/",
+            "label": "Help"
+        },
+        devider,
+        {
+            "type": "link",
+            "href": "/account/logout/?next=/",
+            "label": "Log out"
+        }
+    ]
+    admin_only = [
+        {
+            "type": "link",
+            "href": "/admin/",
+            "label": "Admin"
         },
         {
-            "label": "Sign in",
             "type": "link",
-            "href": "/account/login/?next=/"
-        }
-    '''
-
-    '''
-    if user is authenticated
-    '''
-    return [
-        
+            "href": "/geoserver/",
+            "label": "GeoServer"
+        },
+        devider,
         {
-            # get src of user avatar
-            "image": "https://www.gravatar.com/avatar/7a68c67c8d409ff07e42aa5d5ab7b765/?s=240",
-            "type": "dropdown",
-            "className": "gn-user-menu-dropdown",
-            "items": [
-                {
-                    "type": "link",
-                    # get href of user profile
-                    "href": "{state('user') && state('user').hrefProfile}",
-                    "label": "Profile"
-                },
-                {
-                    "type": "link",
-                    "href": "/social/recent-activity",
-                    "label": "Recent activity"
-                },
-                {
-                    "type": "link",
-                    "href": "/favourite/list/",
-                    "label": "Favorites"
-                },
-                {
-                    "type": "link",
-                    "href": "/messages/inbox/",
-                    "label": "Inbox"
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "link",
-                    "href": "/admin/",
-                    "label": "Admin"
-                },
-                {
-                    "type": "link",
-                    "href": "/geoserver/",
-                    "label": "GeoServer"
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "link",
-                    "href": "/help/",
-                    "label": "Help"
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "link",
-                    "href": "/account/logout/?next=/",
-                    "label": "Log out"
-                }
-            ]
-        }
-    ]
+            "type": "link",
+            "href": "/monitoring/",
+            "label": "Monitoring & Analytics"
+        },
+        devider,
+    ] + general
+
+    if user.is_superuser:
+        profile['items'].extend(admin_only)
+    else:
+        profile['items'].extend(general)
+
+    return [profile]
+
 
 @register.simple_tag
 def get_menu_json(placeholder_name):
