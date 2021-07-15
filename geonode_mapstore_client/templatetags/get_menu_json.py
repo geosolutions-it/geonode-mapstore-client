@@ -18,93 +18,34 @@ def _handle_single_item(menu_item):
     return m_item
 
 
-@register.simple_tag(takes_context=True)
-def get_base_left_topbar_menu(context):
-    datasets = {
-        "label": "Datasets",
-        "type": "dropdown",
-        "items": [
-            {
-                "type": "link",
-                "href": "/catalogue/#/search/?filter{resource_type.in}=layer",
-                "label": "Datasets"
-            }
-        ]
-    }
+@register.simple_tag
+def get_base_left_topbar_menu():
 
-    documents = {
-        "label": "Documents",
-        "type": "dropdown",
-        "items": [
-            {
-                "type": "link",
-                "href": "/catalogue/#/search/?filter{resource_type.in}=document",
-                "label": "Documents"
-            }
-        ]
-    }
-    devider = {
-        "type": "divider"
-    }
-    maps = {
-        "label": "Maps",
-        "type": "dropdown",
-        "items": [
-            {
-                "type": "link",
-                "href": "/catalogue/#/search/?filter{resource_type.in}=map",
-                "label": "Explore maps"
-            }
-        ]
-    }
-    geostories = {
-        "label": "GeoStories",
-        "type": "dropdown",
-        "items": [
-            {
-                "type": "link",
-                "href": "/catalogue/#/search/?filter{resource_type.in}=geostory",
-                "label": "GeoStories"
-            }
-        ]
-    }
-    user = context.get('request').user
-    if user.is_authenticated:
-        if "add_resource" in user.perms:
-            datasets['items'].extend([
-                devider,
-                {
-                    "type": "link",
-                    "href": "/layers/upload",
-                    "label": "Upload dataset"
-                }
-            ])
-            documents['items'].extend([
-                devider,
-                {
-                    "type": "link",
-                    "href": "/documents/upload",
-                    "label": "Upload document"
-                }
-            ])
-            maps['items'].extend([
-                devider,
-                {
-                    "type": "link",
-                    "href": "/catalogue/#/map/new",
-                    "label": "Create Map"
-                }
-            ])
-            geostories['items'].extend([
-                devider,
-                {
-                    "type": "link",
-                    "href": "/catalogue/#/geostory/new",
-                    "label": "Create GeoStory"
-                }
-            ])
-
-    return [datasets, documents, devider, maps, geostories]
+    return [
+        {
+            "type": "link",
+            "href": "/catalogue/#/search/?filter{resource_type.in}=layer",
+            "label": "Datasets"
+        },
+        {
+            "type": "link",
+            "href": "/catalogue/#/search/?filter{resource_type.in}=document",
+            "label": "Documents"
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "link",
+            "href": "/catalogue/#/search/?filter{resource_type.in}=map",
+            "label": "Maps"
+        },
+        {
+            "type": "link",
+            "href": "/catalogue/#/search/?filter{resource_type.in}=geostory",
+            "label": "GeoStories"
+        }
+    ]
 
 
 @register.simple_tag(takes_context=True)
