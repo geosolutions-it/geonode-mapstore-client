@@ -76,6 +76,7 @@ export const gnViewerRequestLayerConfig = (action$) =>
                     selectNode(newLayer.id, 'layer', false),
                     setResource(gnLayer),
                     setResourceId(pk),
+                    setResourceType('layer'),
                     ...(page === 'layer_edit_data_viewer'
                         ? [
                             browseData(newLayer)

@@ -310,6 +310,12 @@ export const updateGeoStory = (pk, body) => {
         .then(({ data }) => data.geostory);
 };
 
+
+export const updateLayer = (pk, body) => {
+    return axios.patch(parseDevHostname(`${endpoints[LAYERS]}/${pk}`), body)
+        .then(({ data }) => (data.layer));
+};
+
 export const updateDocument = (pk, body) => {
     return axios.patch(parseDevHostname(`${endpoints[DOCUMENTS]}/${pk}`), body)
         .then(({ data }) => data.document);
@@ -625,6 +631,7 @@ export default {
     createGeoStory,
     getGeoStoryByPk,
     updateGeoStory,
+    updateLayer,
     getMaps,
     getDocumentsByDocType,
     getUserByPk,
