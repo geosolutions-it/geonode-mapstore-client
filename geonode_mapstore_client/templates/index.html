@@ -19,7 +19,7 @@
         {% block extra_style %}
         {% endblock %}
     </head>
-    <body class="gn-theme gn-theme-light gn-homepage ms2">
+    <body class="gn-theme gn-theme-{{ custom_theme.variant }} gn-homepage ms2">
         {% include './geonode-mapstore-client/_geonode_config.html' %}
         {% block header %}
             {% include './geonode-mapstore-client/snippets/header.html' with show_hero=True %}
