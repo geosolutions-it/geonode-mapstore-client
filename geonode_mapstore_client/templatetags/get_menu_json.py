@@ -5,8 +5,6 @@ from geonode.base.models import Configuration, Menu, MenuItem
 
 register = template.Library()
 
-config = Configuration.load()
-
 
 def _handle_single_item(menu_item):
     m_item = {}
@@ -77,7 +75,7 @@ def get_base_right_topbar_menu(context):
                 },
             ]
         }
-    if user.is_authenticated and not config.read_only:
+    if user.is_authenticated and not Configuration.load().read_only:
         about['items'].extend([
             {
                 "type": "divider"
@@ -111,7 +109,7 @@ def get_user_menu(context):
                 "label": "Register",
                 "type": "link",
                 "href": "/account/signup/?next=/"
-            } if settings.ACCOUNT_OPEN_SIGNUP and not config.read_only else None,
+            } if settings.ACCOUNT_OPEN_SIGNUP and not Configuration.load().read_only else None,
             {
                 "label": "Sign in",
                 "type": "link",
