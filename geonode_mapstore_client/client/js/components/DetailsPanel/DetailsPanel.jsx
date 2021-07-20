@@ -1,3 +1,4 @@
+/* eslint-disable no-script-url */
 /*
  * Copyright 2020, GeoSolutions Sas.
  * All rights reserved.
@@ -10,6 +11,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import FaIcon from '@js/components/FaIcon';
 import Button from '@js/components/Button';
+import Tabs from '@js/components/Tabs';
+import DefinitionList from '@js/components/DefinitionList';
 import Spinner from '@js/components/Spinner';
 import Message from '@mapstore/framework/components/I18N/Message';
 import tooltip from '@mapstore/framework/components/misc/enhancers/tooltip';
@@ -88,6 +91,28 @@ function ThumbnailPreview({
     );
 }
 
+
+const DefinitionListMoreItem = ({itemslist, extraItemsList}) => {
+
+    const [extraItems, setExtraItems] = useState(false);
+    const handleMoreInfo = () => {
+        setExtraItems(!extraItems);
+    };
+
+    return (
+        <div className="DList-containner">
+            <DefinitionList itemslist={itemslist} />
+
+            { extraItemsList.length > 0 && <a className={"moreinfo"} href="javascript:void(0);"  onClick={handleMoreInfo}><Message msgId={"gnviewer.moreinfo"} /></a> }
+
+            {extraItemsList.length > 0 && extraItems && <DefinitionList itemslist={extraItemsList} />}
+        </div>
+
+
+    );
+};
+
+
 function DetailsPanel({
     resource,
     formatHref,
@@ -153,6 +178,109 @@ function DetailsPanel({
     const embedUrl = resource?.embed_url && formatEmbedUrl(resource);
     const detailUrl = resource?.pk && formatDetailUrl(resource);
     const documentDownloadUrl = (resource?.href && resource?.href.includes('download')) ? resource?.href : undefined;
+
+    const infoField = [
+        {
+            "label": "Title",
+            "value": resource?.title
+        },
+        {
+            "label": "Abstract",
+            "value": resource?.raw_abstract
+        },
+        {
+            "label": "Owner",
+            "value": resource?.owner?.username
+        },
+        {
+            "label": "Created",
+            "value": moment(resource?.created).format('MMMM Do YYYY')
+        },
+        {
+            "label": "Published",
+            "value": moment(resource?.date).format('MMMM Do YYYY')
+        },
+        {
+            "label": "Last Modified",
+            "value": moment(resource?.last_updated).format('MMMM Do YYYY')
+        },
+        {
+            "label": "Resource Type",
+            "value": resource?.resource_type + " " + resource.subtype
+        },
+        {
+            "label": "Category",
+            "value": resource?.category
+        },
+        {
+            "label": "Keywords",
+            "value": resource?.keywords?.join(" ")
+        },
+        {
+            "label": "Regions",
+            "value": resource?.regions?.map(map => map.name + " ")
+        }
+    ];
+
+    const extraItemsList = [
+        {
+            "label": "Point of Contact",
+            "value": (resource?.poc?.first_name + resource?.poc?.last_name || resource?.poc?.username)
+        },
+        {
+            "label": "License",
+            "value": resource?.license?.name_long
+        },
+        {
+            "label": "Attribution",
+            "value": resource?.attribution
+        },
+        {
+            "label": "Restriction",
+            "value": resource?.restriction_code_type?.identifier
+        },
+        {
+            "label": "Edition",
+            "value": resource?.edition
+        },
+        {
+            "label": "Maintenance Frequency",
+            "value": resource?.maintenance_frequency
+        },
+        {
+            "label": "Language",
+            "value": resource?.language
+        },
+        {
+            "label": "Purpose",
+            "value": resource?.raw_purpose
+        },
+        {
+            "label": "Data Quality",
+            "value": resource?.raw_data_quality_statement
+        },
+        {
+            "label": "Temporal extent",
+            "value": (resource?.temporal_extent_start) ? resource?.temporal_extent_start + " - " : undefined  + (resource?.temporal_extent_end) ? resource?.temporal_extent_end : undefined
+        },
+        {
+            "label": "Spatial Representation Type",
+            "value": resource?.spatial_representation_type?.identifier
+        },
+        {
+            "label": "Supplemental Information",
+            "value": resource?.raw_supplemental_information
+        }
+    ];
+
+
+    const itemsTab = [
+        {
+            title: "Info",
+            data: <DefinitionListMoreItem itemslist={infoField} extraItemsList={extraItemsList} />
+        }
+    ];
+
 
     return (
         <div
@@ -313,6 +441,8 @@ function DetailsPanel({
                         {activeEditMode && !editModeAbstract && <span onClick={handleEditModeAbstract} ><FaIcon name={'edit'} /></span>}
                     </div>
 
+
+                    {editTitle && <Tabs itemsTab={itemsTab} />}
                     <p>
                         {resource?.category?.identifier && <div>
                             <Message msgId="gnhome.category" />:{' '}
