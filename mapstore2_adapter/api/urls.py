@@ -19,5 +19,4 @@ router.register(r'resources', views.MapStoreResourceViewSet, basename="resources
 
 urlpatterns = [
     url(r'^rest/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
