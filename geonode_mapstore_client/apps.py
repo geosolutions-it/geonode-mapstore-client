@@ -9,7 +9,7 @@
 #
 #########################################################################
 import os
-from django.apps import AppConfig as BaseAppConfig
+from django.apps import apps, AppConfig as BaseAppConfig
 from django.views.generic import TemplateView
 
 def run_setup_hooks(*args, **kwargs):
@@ -33,5 +33,6 @@ class AppConfig(BaseAppConfig):
     label = "geonode_mapstore_client"
 
     def ready(self):
-        run_setup_hooks()
+        if not apps.ready:
+            run_setup_hooks()
         super(AppConfig, self).ready()
