@@ -40,6 +40,11 @@ export const canViewResource = (state) => {
     return canView || perms.includes('view_resourcebase');
 };
 
+export const canAddResource = () => {
+    return (state) => state?.security?.user?.perms?.includes("add_resource");
+};
+
+
 export const isNewResource = (state) => {
     return !!state?.gnresource?.isNew;
 };

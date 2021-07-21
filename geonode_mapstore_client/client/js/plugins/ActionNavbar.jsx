@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import ActionNavbar from '@js/components/ActionNavbar';
 import usePluginItems from '@js/hooks/usePluginItems';
-import { getResourcePerms } from '@js/selectors/gnresource';
+import { getResourcePerms, canAddResource } from '@js/selectors/gnresource';
 import { hasPermissionsTo, reduceArrayRecursive } from '@js/utils/MenuUtils';
 
 function checkResourcePerms(menuItem, resourcePerms) {
@@ -28,7 +28,6 @@ function ActionNavbarPlugin({
     leftMenuItems,
     resourcePerms
 }, context) {
-
 
     const { loadedPlugins } = context;
     const configuredItems = usePluginItems({ items, loadedPlugins });
@@ -46,7 +45,6 @@ function ActionNavbarPlugin({
         leftMenuItemsPlugins,
         menuItem => checkResourcePerms(menuItem, resourcePerms)
     );
-
     return (
 
         <ActionNavbar
@@ -69,9 +67,13 @@ ActionNavbarPlugin.defaultProps = {
 
 const ConnectedActionNavbarPlugin = connect(
     createSelector([
-        getResourcePerms
-    ], (resourcePerms) => ({
-        resourcePerms
+        getResourcePerms,
+        canAddResource
+    ], (resourcePerms, userCanAddResource) => ({
+        resourcePerms: (resourcePerms.length > 0 ) ?
+            resourcePerms : ((userCanAddResource)
+                ? [ "change_resourcebase"] : [] ),
+        canAddResource
     }))
 )(ActionNavbarPlugin);
 
