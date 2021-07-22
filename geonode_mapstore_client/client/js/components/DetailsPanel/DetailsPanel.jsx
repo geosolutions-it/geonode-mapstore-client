@@ -299,7 +299,7 @@ function DetailsPanel({
                     </Button>
                 </div>
                 }
-                {!activeEditMode && <div className="gn-details-panel-preview">
+                {!activeEditMode && !editThumbnail && <div className="gn-details-panel-preview">
                     <div
                         className="gn-loader-placeholder"
                         style={{
@@ -312,7 +312,7 @@ function DetailsPanel({
                         }}>
                         <FaIcon name={icon} />
                     </div>
-                    {embedUrl && !editThumbnail
+                    {embedUrl
                         ? <iframe
                             key={embedUrl}
                             src={embedUrl}
@@ -323,7 +323,7 @@ function DetailsPanel({
                             }}
                             frameBorder="0"
                         />
-                        : (<ThumbnailPreview
+                        : (!embedUrl && !editThumbnail ? (<ThumbnailPreview
                             src={resource?.thumbnail_url}
                             style={{
                                 position: 'absolute',
@@ -333,6 +333,7 @@ function DetailsPanel({
                                 left: 0,
                                 backgroundColor: 'inherit'
                             }} />)
+                            : undefined )
                     }
                     {loading && <div
                         className="gn-details-panel-preview-loader"
@@ -352,109 +353,114 @@ function DetailsPanel({
                     </div>}
                 </div>}
 
-                {activeEditMode && editThumbnail && <div className="gn-details-panel-preview inediting"> <EditThumbnail onEdit={editThumbnail} image={resource?.thumbnail_url} /> </div>}
-
-
                 <div className="gn-details-panel-content">
-                    <div className="gn-details-panel-title" >
-
-                        {!editModeTitle && <h1>
-                            {icon && <><FaIcon name={icon} /></>}
-                            {resource?.title}
-                        </h1>
-                        }
-                        {activeEditMode && !editModeTitle && <span onClick={handleEditModeTitle} ><FaIcon name={'edit'} /></span>}
+                    {editThumbnail && <div className="gn-details-panel-content-img">
+                        {!activeEditMode && <ThumbnailPreview src={resource?.thumbnail_url} />}
+                        {activeEditMode && <div className="gn-details-panel-preview inediting"> <EditThumbnail onEdit={editThumbnail} image={resource?.thumbnail_url} /> </div>}
+                    </div>
+                    }
 
 
-                        {editModeTitle && <h1>
-                            <EditTitle title={resource?.title} onEdit={editTitle} />
-                            <span className="inEdit" onClick={handleEditModeTitle} ><FaIcon name={'check-circle'} /></span>
-                        </h1>
-                        }
-                        {
-                            <div className="gn-details-panel-tools">
-                                {
-                                    enableFavorite &&
+                    <div className="gn-details-panel-content-text">
+                        <div className="gn-details-panel-title" >
+
+                            {!editModeTitle && <h1>
+                                {icon && <><FaIcon name={icon} /></>}
+                                {resource?.title}
+                            </h1>
+                            }
+                            {activeEditMode && !editModeTitle && <span onClick={handleEditModeTitle} ><FaIcon name={'edit'} /></span>}
+
+
+                            {editModeTitle && <h1>
+                                <EditTitle title={resource?.title} onEdit={editTitle} />
+                                <span className="inEdit" onClick={handleEditModeTitle} ><FaIcon name={'check-circle'} /></span>
+                            </h1>
+                            }
+                            {
+                                <div className="gn-details-panel-tools">
+                                    {
+                                        enableFavorite &&
                                     <Button
                                         variant="default"
                                         onClick={debounce(handleFavorite, 500)}>
                                         <FaIcon stylePrefix={favorite ? `fa` : `far`} name="star" />
                                     </Button>
-                                }
-                                {documentDownloadUrl &&
+                                    }
+                                    {documentDownloadUrl &&
                                     <Button variant="default"
                                         href={documentDownloadUrl} >
                                         <FaIcon name="download" />
                                     </Button>}
 
-                                {detailUrl && <CopyToClipboard
-                                    tooltipPosition="top"
-                                    tooltipId={
-                                        copiedResourceLink
-                                            ? 'gnhome.copiedResourceUrl'
-                                            : 'gnhome.copyResourceUrl'
+                                    {detailUrl && <CopyToClipboard
+                                        tooltipPosition="top"
+                                        tooltipId={
+                                            copiedResourceLink
+                                                ? 'gnhome.copiedResourceUrl'
+                                                : 'gnhome.copyResourceUrl'
+                                        }
+                                        text={formatResourceLinkUrl(detailUrl)}
+                                    >
+                                        <Button
+                                            variant="default"
+                                            onClick={handleCopyPermalink}>
+                                            <FaIcon name="share-alt" />
+                                        </Button>
+                                    </CopyToClipboard>
                                     }
-                                    text={formatResourceLinkUrl(detailUrl)}
-                                >
-                                    <Button
+                                    {detailUrl && !editThumbnail && <Button
                                         variant="default"
-                                        onClick={handleCopyPermalink}>
-                                        <FaIcon name="share-alt" />
-                                    </Button>
-                                </CopyToClipboard>
-                                }
-                                {detailUrl && !editThumbnail && <Button
-                                    variant="default"
-                                    href={detailUrl}
-                                    rel="noopener noreferrer">
-                                    <Message msgId={`gnhome.view${name || ''}`} />
-                                </Button>}
-                            </div>
-                        }
-
-
-                    </div>
-
-
-                    {<p>
-                        {resource?.owner && <><a href={formatHref({
-                            query: {
-                                'filter{owner.username.in}': resource.owner.username
+                                        href={detailUrl}
+                                        rel="noopener noreferrer">
+                                        <Message msgId={`gnhome.view${name || ''}`} />
+                                    </Button>}
+                                </div>
                             }
-                        })}>{getUserName(resource.owner)}</a></>}
-                        {(resource?.date_type && resource?.date)
-                            && <>{' '}/{' '}{moment(resource.date).format('MMMM Do YYYY')}</>}
-                    </p>
-                    }
-                    <div className="gn-details-panel-description">
-                        {editModeAbstract && <>
-                            <EditAbstract abstract={resource?.abstract} onEdit={editAbstract} />
-                            <span className="inEdit" onClick={handleEditModeAbstract} ><FaIcon name={'check-circle'} /></span>
-
-                        </>
-                        }
-                        {
-                            !editModeAbstract && resource?.abstract ?
-                                <span className="gn-details-panel-text" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(resource.abstract) }} />
-                                : null
-                        }
-                        {activeEditMode && !editModeAbstract && <span onClick={handleEditModeAbstract} ><FaIcon name={'edit'} /></span>}
-                    </div>
 
 
-                    {editTitle && <Tabs itemsTab={itemsTab} />}
-                    <p>
-                        {resource?.category?.identifier && <div>
-                            <Message msgId="gnhome.category" />:{' '}
-                            <a href={formatHref({
+                        </div>
+
+
+                        {<p>
+                            {resource?.owner && <><a href={formatHref({
                                 query: {
-                                    'filter{category.identifier.in}': resource.category.identifier
+                                    'filter{owner.username.in}': resource.owner.username
                                 }
-                            })}>{resource.category.identifier}</a>
-                        </div>}
-                    </p>
+                            })}>{getUserName(resource.owner)}</a></>}
+                            {(resource?.date_type && resource?.date)
+                            && <>{' '}/{' '}{moment(resource.date).format('MMMM Do YYYY')}</>}
+                        </p>
+                        }
+                        <div className="gn-details-panel-description">
+                            {editModeAbstract && <>
+                                <EditAbstract abstract={resource?.abstract} onEdit={editAbstract} />
+                                <span className="inEdit" onClick={handleEditModeAbstract} ><FaIcon name={'check-circle'} /></span>
 
+                            </>
+                            }
+                            {
+                                !editModeAbstract && resource?.abstract ?
+                                    <span className="gn-details-panel-text" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(resource.abstract) }} />
+                                    : null
+                            }
+                            {activeEditMode && !editModeAbstract && <span onClick={handleEditModeAbstract} ><FaIcon name={'edit'} /></span>}
+                        </div>
+
+                        <p>
+                            {resource?.category?.identifier && <div>
+                                <Message msgId="gnhome.category" />:{' '}
+                                <a href={formatHref({
+                                    query: {
+                                        'filter{category.identifier.in}': resource.category.identifier
+                                    }
+                                })}>{resource.category.identifier}</a>
+                            </div>}
+                        </p>
+
+                    </div>
                 </div>
+                {editTitle && <div className="gn-details-panel-info"><Tabs itemsTab={itemsTab} /></div>}
             </section>
         </div>
     );
