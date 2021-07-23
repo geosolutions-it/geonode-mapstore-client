@@ -206,7 +206,7 @@ function DetailsPanel({
         },
         {
             "label": "Resource Type",
-            "value": resource?.resource_type + " " + resource.subtype
+            "value": resource?.resource_type
         },
         {
             "label": "Category",
