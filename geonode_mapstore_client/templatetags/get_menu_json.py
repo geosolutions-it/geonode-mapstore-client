@@ -62,17 +62,7 @@ def get_base_right_topbar_menu(context):
                     "type": "link",
                     "href": "/groups/",
                     "label": "Groups"
-                },
-                {
-                    "type": "link",
-                    "href": "/groups/categories/",
-                    "label": "Groups categories"
-                },
-                {
-                    "type": "link",
-                    "href": "/announcements/",
-                    "label": "Announcements"
-                },
+                }
             ]
         }
     if user.is_authenticated and not Configuration.load().read_only:
