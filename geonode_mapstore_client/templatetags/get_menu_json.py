@@ -139,7 +139,7 @@ def get_user_menu(context):
             },
             {
                 "type": "link",
-                "href": "/favourite/list/",
+                "href": "/catalogue/#/search/?f=favorite",
                 "label": "Favorites"
             },
             {
