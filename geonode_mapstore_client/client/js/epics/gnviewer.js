@@ -22,11 +22,10 @@ import {
 import { getNewMapConfiguration, getNewGeoStoryConfig } from '@js/api/geonode/config';
 import {
     getDatasetByPk,
-    getGeoStoryByPk,
+    getGeoAppByPk,
     getDocumentByPk,
     getMapByPk
 } from '@js/api/geonode/v2';
-
 import { error as errorNotification } from '@mapstore/framework/actions/notifications';
 import { configureMap } from '@mapstore/framework/actions/config';
 import {
@@ -49,16 +48,17 @@ import {
     setEditing
 } from '@mapstore/framework/actions/geostory';
 import {
-    // dashboardLoaded,
+    dashboardLoaded,
     dashboardLoading
 } from '@mapstore/framework/actions/dashboard';
 
 import { setControlProperty } from '@mapstore/framework/actions/controls';
 import { resourceToLayerConfig } from '@js/utils/ResourceUtils';
 
-export const gnViewerrequestDatasetConfig = (action$) =>
+export const gnViewerRequestDatasetConfig = (action$) =>
     action$.ofType(REQUEST_DATASET_CONFIG)
-        .switchMap(({ pk, page }) => {
+        .switchMap(({ pk, options }) => {
+            const { page } = options || {};
             return Observable.defer(() => axios.all([
                 getNewMapConfiguration(),
                 getDatasetByPk(pk)
@@ -144,7 +144,7 @@ export const gnViewerRequestGeoStoryConfig = (action$) =>
     action$.ofType(REQUEST_GEOSTORY_CONFIG)
         .switchMap(({ pk }) => {
             return Observable.defer(() => axios.all([
-                getGeoStoryByPk(pk)
+                getGeoAppByPk(pk)
             ])).switchMap((response) => {
                 const [gnGeoStory] = response;
                 const { data, ...resource } = gnGeoStory;
@@ -213,22 +213,24 @@ export const gnViewerRequestDocumentConfig = (action$) =>
 
 export const gnViewerRequestDashboardConfig = (action$) =>
     action$.ofType(REQUEST_DASHBOARD_CONFIG)
-        .switchMap(() => {
+        .switchMap(({ pk, options }) => {
 
-            return Observable.defer(() => new Promise(resolve => resolve({})))
-                .switchMap(( /* gnDashboard */ ) => {
-                    /*
+            return Observable.defer(() => getGeoAppByPk(pk))
+                .switchMap(( gnDashboard ) => {
                     const { data, ...resource } = gnDashboard;
+                    const { readOnly } = options || {};
+                    const canEdit = !readOnly && resource?.perms?.includes('change_resourcebase') ? true : false;
+                    const canDelete = !readOnly && resource?.perms?.includes('delete_resourcebase') ? true : false;
                     return Observable.of(
                         dashboardLoaded(
-                            { // ms dashboard config example
-                                canDelete: false,
-                                canEdit: false,
-                                creation:'2020-02-20T11:10:09.488+01:00',
-                                description: 'Filtering Capabilities',
-                                id: 21694,
-                                lastUpdate: '2021-04-09T10:37:07.870+02:00',
-                                name: 'Demo Dashboard'
+                            {
+                                canDelete,
+                                canEdit,
+                                creation: resource.created,
+                                description: resource.abstract,
+                                id: pk,
+                                lastUpdate: resource.last_updated,
+                                name: resource.title
                             },
                             data
                         ),
@@ -236,8 +238,6 @@ export const gnViewerRequestDashboardConfig = (action$) =>
                         setResourceId(pk),
                         setResourceType('dashboard')
                     );
-                    */
-                    return Observable.empty();
                 }).catch(() => {
                     return Observable.empty();
                 })
@@ -247,18 +247,15 @@ export const gnViewerRequestDashboardConfig = (action$) =>
 export const gnViewerRequestNewDashboardConfig = (action$) =>
     action$.ofType(REQUEST_NEW_DASHBOARD_CONFIG)
         .switchMap(() => {
-
-            return Observable.defer(() => new Promise(resolve => resolve({})))
-                .switchMap(() => {
-                    return Observable.empty();
-                }).catch(() => {
-                    return Observable.empty();
-                })
-                .startWith(setNewResource(), dashboardLoading(false));
+            return Observable.of(
+                setNewResource(),
+                dashboardLoading(false),
+                setResourceType('dashboard')
+            );
         });
 
 export default {
-    gnViewerrequestDatasetConfig,
+    gnViewerRequestDatasetConfig,
     gnViewerRequestMapConfig,
     gnViewerRequestNewMapConfig,
     gnViewerRequestGeoStoryConfig,
