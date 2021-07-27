@@ -15,7 +15,7 @@ SQL_MIGRATION = '''WITH mapstore_blob AS (
     JOIN public.maps_map md 
     ON msd.resource_id =md.resourcebase_ptr_id)
 UPDATE base_resourcebase
-SET "blob"=subquery."blob"
+SET "blob"=to_json(subquery."blob"::text)
 FROM (select resource_id,"blob" from mapstore_blob gg) AS subquery
 WHERE base_resourcebase.id=subquery.resource_id;
 '''
