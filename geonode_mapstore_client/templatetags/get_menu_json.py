@@ -21,17 +21,20 @@ def get_base_left_topbar_menu():
 
     return [
         {
-            "type": "link",
-            "href": "/catalogue/#/search/?filter{resource_type.in}=dataset",
-            "label": "Datasets"
-        },
-        {
-            "type": "link",
-            "href": "/catalogue/#/search/?filter{resource_type.in}=document",
-            "label": "Documents"
-        },
-        {
-            "type": "divider"
+            "label": "Data",
+            "type": "dropdown",
+            "items": [
+                {
+                    "type": "link",
+                    "href": "/catalogue/#/search/?filter{resource_type.in}=dataset",
+                    "label": "Datasets"
+                },
+                {
+                    "type": "link",
+                    "href": "/catalogue/#/search/?filter{resource_type.in}=document",
+                    "label": "Documents"
+                }
+            ]
         },
         {
             "type": "link",
