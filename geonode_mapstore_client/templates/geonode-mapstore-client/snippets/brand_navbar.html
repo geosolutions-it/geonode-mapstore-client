@@ -15,7 +15,7 @@
                             {% if custom_theme.logo and custom_theme.logo.url %}
                                 <img src="{{ custom_theme.logo.url }}">
                             {% else %}
-                                <img src="/static/mapstore/img/geonode-logo.svg">
+                                <img src="{% block logo_src %}/static/mapstore/img/geonode-logo.svg{% endblock %}">
                             {% endif %}
                         </a>
                     </li>
