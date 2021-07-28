@@ -13,6 +13,7 @@ import FaIcon from '@js/components/FaIcon';
 import Button from '@js/components/Button';
 import Tabs from '@js/components/Tabs';
 import DefinitionList from '@js/components/DefinitionList';
+import Table from '@js/components/Table';
 import Spinner from '@js/components/Spinner';
 import Message from '@mapstore/framework/components/I18N/Message';
 import tooltip from '@mapstore/framework/components/misc/enhancers/tooltip';
@@ -126,7 +127,6 @@ function DetailsPanel({
     onFavorite,
     enableFavorite
 }) {
-
     const [editModeTitle, setEditModeTitle] = useState(false);
     const [editModeAbstract, setEditModeAbstract] = useState(false);
 
@@ -176,6 +176,7 @@ function DetailsPanel({
     const detailUrl = resource?.pk && formatDetailUrl(resource);
     const documentDownloadUrl = (resource?.href && resource?.href.includes('download')) ? resource?.href : undefined;
 
+    const attributeSet = resource?.attribute_set;
     const infoField = [
         {
             "label": "Title",
@@ -273,10 +274,29 @@ function DetailsPanel({
 
     const itemsTab = [
         {
-            title: "Info",
+            title: <Message msgId={"gnviewer.info"} />,
             data: <DefinitionListMoreItem itemslist={infoField} extraItemsList={extraItemsList} />
         }
+
     ];
+
+    const tableHead = [{
+        key: "attribute",
+        value: <Message msgId={"gnviewer.attributeName"} />
+    },
+    {
+        key: "attribute_label",
+        value: <Message msgId={"gnviewer.label"} />
+    },
+    {
+        key: "description",
+        value: <Message msgId={"gnviewer.description"} />
+    }];
+
+    (attributeSet) ? itemsTab.push({
+        title: <Message msgId={"gnviewer.attributes"} />,
+        data: <Table head={tableHead} body={attributeSet} />
+    }) : undefined;
 
     return (
         <div
