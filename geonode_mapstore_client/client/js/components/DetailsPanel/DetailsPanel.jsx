@@ -23,7 +23,6 @@ import {
 } from '@js/utils/GNSearchUtils';
 import debounce from 'lodash/debounce';
 import CopyToClipboardCmp from 'react-copy-to-clipboard';
-import url from 'url';
 import { TextEditable, ThumbnailEditable } from '@js/components/ContentsEditable/';
 
 const CopyToClipboard = tooltip(CopyToClipboardCmp);
@@ -55,9 +54,7 @@ function formatResourceLinkUrl(resourceUrl = '') {
     if (resourceUrl.indexOf('http') === 0) {
         return resourceUrl;
     }
-    const { path } = url.parse(resourceUrl);
-    const { protocol, host } = window.location;
-    return `${protocol}://${host}${path}`;
+    return window.location.href;
 }
 
 function ThumbnailPreview({
@@ -280,7 +277,6 @@ function DetailsPanel({
             data: <DefinitionListMoreItem itemslist={infoField} extraItemsList={extraItemsList} />
         }
     ];
-
 
     return (
         <div
