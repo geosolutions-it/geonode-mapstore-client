@@ -2,19 +2,18 @@ import React from 'react';
 import {Tabs as TabsRB, Tab} from "react-bootstrap";
 import PropTypes from 'prop-types';
 
-const Tabs = ({itemsTab, transition}) => {
+const Tabs = ({itemsTab, transition, defaultActiveKey}) => {
 
     const alltabs = itemsTab.map( (tabInfo, index) => {
         return (
-            <Tab  key={index} eventKey={tabInfo?.title} title={tabInfo?.title}>
+            <Tab  key={index} eventKey={index} title={tabInfo?.title}>
                 {tabInfo?.data}
             </Tab>
         );
     });
-
     return (
         <TabsRB
-            defaultActiveKey={itemsTab?.shift()?.title}
+            defaultActiveKey={defaultActiveKey}
             transition={transition}
             className={"tabs-info"}
             id={"tabs-info"}
@@ -29,12 +28,14 @@ const Tabs = ({itemsTab, transition}) => {
 
 Tabs.propTypes = {
     itemsTab: PropTypes.array,
-    transition: PropTypes.bool
+    transition: PropTypes.bool,
+    defaultActiveKey: PropTypes.number
 };
 
 Tabs.defaultProps = {
     itemsTab: [],
-    transition: true
+    transition: true,
+    defaultActiveKey: 0
 };
 
 export default Tabs;
