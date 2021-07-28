@@ -92,7 +92,7 @@
                         q = params[i].replace('q=', '');
                     }
                 }
-                return q;
+                return decodeURIComponent(q);
             }
 
             function onSearch(q) {
