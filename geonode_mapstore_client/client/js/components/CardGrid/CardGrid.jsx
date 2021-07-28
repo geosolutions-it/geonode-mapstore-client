@@ -84,9 +84,9 @@ const Cards = withResizeDetector(({
             style={cardLayoutStyle === 'list' ? {} : containerStyle}
         >
             {resources.map((resource, idx) => {
-
-                const allowedOptions = options
-                    .filter((opt) => hasPermissionsTo(resource?.perms, opt?.perms, 'resource'));
+                // enable allowedOptions (menu cards) only for list layout
+                const allowedOptions =  (cardLayoutStyle === 'list') ? options
+                    .filter((opt) => hasPermissionsTo(resource?.perms, opt?.perms, 'resource')) : [];
 
                 return (
                     <li
