@@ -15,7 +15,8 @@ import {
     getDatasetByPk,
     getGeoAppByPk,
     getDocumentByPk,
-    getMapByPk
+    getMapByPk,
+    getCompactPermissionsByPk
 } from '@js/api/geonode/v2';
 import { configureMap } from '@mapstore/framework/actions/config';
 import {
@@ -33,7 +34,8 @@ import {
     REQUEST_RESOURCE_CONFIG,
     resetResourceState,
     loadingResourceConfig,
-    resourceConfigError
+    resourceConfigError,
+    setResourceCompactPermissions
 } from '@js/actions/gnresource';
 
 import {
@@ -77,7 +79,7 @@ const resourceTypes = {
                                 ...mapConfig.map,
                                 layers: [
                                     ...mapConfig.map.layers,
-                                    newLayer
+                                    { ...newLayer, isDataset: true }
                                 ]
                             }
                         }),
@@ -236,7 +238,7 @@ export const gnViewerRequestNewResourceConfig = (action$, store) =>
                     return Observable.of(
                         resetControls(),
                         resetResourceState(),
-                        resourceConfigError(error.message)
+                        resourceConfigError(error?.data?.detail || error?.statusText || error?.message)
                     );
                 });
         });
@@ -262,6 +264,13 @@ export const gnViewerRequestResourceConfig = (action$) =>
                     loadingResourceConfig(true),
                     setResourceType(action.resourceType)
                 ),
+                Observable.defer(() => getCompactPermissionsByPk(action.pk))
+                    .switchMap((compactPermissions) => {
+                        return Observable.of(setResourceCompactPermissions(compactPermissions));
+                    })
+                    .catch(() => {
+                        return Observable.empty();
+                    }),
                 resourceObservable(action.pk, action.options),
                 Observable.of(
                     loadingResourceConfig(false)
@@ -271,7 +280,7 @@ export const gnViewerRequestResourceConfig = (action$) =>
                     return Observable.of(
                         resetControls(),
                         resetResourceState(),
-                        resourceConfigError(error.message)
+                        resourceConfigError(error?.data?.detail || error?.statusText || error?.message)
                     );
                 });
         });
