@@ -12,6 +12,8 @@ import ContentEditable from 'react-contenteditable';
 const TextEditable = forwardRef(({
     text,
     className = "gn-text-editable",
+    tagName,
+    disabled,
     onEdit = () => {}
 
 }, ref ) => {
@@ -19,6 +21,8 @@ const TextEditable = forwardRef(({
         innerRef={ref}
         className={className}
         html={text}
+        tagName={tagName}
+        disabled={disabled}
         onClick={evt => {
             evt.stopPropagation();
         }}
