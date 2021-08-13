@@ -13,6 +13,7 @@ import Dropdown from '@js/components/Dropdown';
 import Spinner from '@js/components/Spinner';
 import { getUserName } from '@js/utils/SearchUtils';
 import { getResourceTypesInfo } from '@js/utils/ResourceUtils';
+import ResourceStatus from '@js/components/ResourceStatus/';
 
 function ALink({ href, readOnly, children }) {
     return readOnly ? children : <a href={href}>{children}</a>;
@@ -32,7 +33,6 @@ const ResourceCard = forwardRef(({
     className,
     loading
 }, ref) => {
-
     const res = data;
     const types = getTypesInfo();
     const { icon } = types[res.subtype] || types[res.resource_type] || {};
@@ -74,6 +74,13 @@ const ResourceCard = forwardRef(({
                             {res.title}
                         </ALink>
                     </div>
+                    {
+                        (!res?.is_approved || !res?.is_published) &&
+                        <p><ResourceStatus
+                            isApproved={res?.is_approved}
+                            isPublished={res?.is_published}/>
+                        </p>
+                    }
                     <p
                         className="card-text gn-card-description"
                     >
