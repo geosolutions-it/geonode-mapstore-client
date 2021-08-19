@@ -12,6 +12,7 @@ import { createPlugin } from '@mapstore/framework/utils/PluginsUtils';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import ActionNavbar from '@js/components/ActionNavbar';
+
 import FaIcon from '@js/components/FaIcon';
 import usePluginItems from '@js/hooks/usePluginItems';
 import {
@@ -36,6 +37,7 @@ function checkResourcePerms(menuItem, resourcePerms) {
 function ActionNavbarPlugin({
     items,
     leftMenuItems,
+    rightMenuItems,
     resourcePerms,
     resource,
     isDirtyState
@@ -57,8 +59,22 @@ function ActionNavbarPlugin({
         return (item);
     });
 
+    const rightMenuItemsPlugins = reduceArrayRecursive(rightMenuItems, (item) => {
+        configuredItems.find(plugin => {
+            if ( item.type === 'plugin' && plugin.name === item.name ) {
+                item.Component = plugin?.Component;
+            }
+        });
+        return (item);
+    });
+
     const leftItems = reduceArrayRecursive(
         leftMenuItemsPlugins,
+        menuItem => checkResourcePerms(menuItem, resourcePerms)
+    );
+
+    const rightItems = reduceArrayRecursive(
+        rightMenuItemsPlugins,
         menuItem => checkResourcePerms(menuItem, resourcePerms)
     );
 
@@ -66,6 +82,7 @@ function ActionNavbarPlugin({
 
         <ActionNavbar
             leftItems={leftItems}
+            rightItems={rightItems}
             variant="default"
             size="sm"
         >
@@ -76,12 +93,14 @@ function ActionNavbarPlugin({
 
 ActionNavbarPlugin.propTypes = {
     items: PropTypes.array,
-    leftMenuItems: PropTypes.array
+    leftMenuItems: PropTypes.array,
+    rightMenuItems: PropTypes.array
 };
 
 ActionNavbarPlugin.defaultProps = {
     items: [],
-    leftMenuItems: []
+    leftMenuItems: [],
+    rightMenuItems: []
 };
 
 const ConnectedActionNavbarPlugin = connect(

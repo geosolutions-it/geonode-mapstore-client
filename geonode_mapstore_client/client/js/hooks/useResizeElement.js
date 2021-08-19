@@ -13,7 +13,7 @@ const useResizeElement = (elemRef) => {
     const [height, setHeight] = useState(0);
 
     const handleResize = () => {
-        if (elemRef.current) {
+        if (elemRef?.current) {
             setWidth(elemRef.current.offsetWidth);
             setHeight(elemRef.current.offsetHeight);
         }

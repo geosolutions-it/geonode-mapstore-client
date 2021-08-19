@@ -15,7 +15,8 @@ import {
     CatalogActionButton,
     MeasureActionButton,
     LayerDownloadActionButton,
-    AnnotationsActionButton
+    AnnotationsActionButton,
+    FullScreenActionButton
 } from '@js/plugins/actionnavbar/buttons';
 import { getMetadataUrl } from '@js/utils/ResourceUtils';
 
@@ -189,7 +190,16 @@ export const plugins = {
     ),
     FullScreenPlugin: toLazyPlugin(
         'FullScreen',
-        import(/* webpackChunkName: 'plugins/fullscreen-plugin' */ '@mapstore/framework/plugins/FullScreen')
+        import(/* webpackChunkName: 'plugins/fullscreen-plugin' */ '@mapstore/framework/plugins/FullScreen'),
+        {
+            containers: {
+                ActionNavbar: {
+                    name: 'FullScreen',
+                    Component: FullScreenActionButton,
+                    priority: 5
+                }
+            }
+        }
     ),
     AddGroupPlugin: toLazyPlugin(
         'AddGroup',
