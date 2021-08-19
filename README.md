@@ -1,6 +1,6 @@
 # GeoNode MapStore Client [![Build Status](https://travis-ci.org/GeoNode/geonode-mapstore-client.svg?branch=master)](https://travis-ci.org/GeoNode/geonode-mapstore-client) [![Code Climate](https://codeclimate.com/github/GeoNode/geonode-viewer/badges/gpa.svg)](https://codeclimate.com/github/GeoNode/geonode-viewer) [![Test Coverage](https://codecov.io/gh/GeoNode/geonode/branch/master/graph/badge.svg)](https://codecov.io/gh/GeoNode/geonode/branch/master)
 
-MapStore is an Open Source WebGIS framework based on ReactJS and it can be integrated inside GeoNode as maps, layers and apps viewer. GeoNode 
+MapStore is an Open Source WebGIS framework based on ReactJS and it can be integrated inside GeoNode as maps, layers and apps viewer. GeoNode
 
 - [Structure of directories](#structure-of-directories)
 - [Running in developer mode](#running-in-developer-mode)
@@ -354,7 +354,7 @@ Some examples:
         }
         */
         return _.mergeWith(localConfig, {
-            /* 
+            /*
             ... my custom configuration
             */
         }, function(objValue, srcValue, key) {
@@ -395,6 +395,82 @@ Some examples:
 {% endblock %}
 ```
 
+- update plugin configuration
+
+```html
+{% extends 'geonode-mapstore-client/_geonode_config.html' %}
+{% block override_local_config %}
+<script>
+    window.__GEONODE_CONFIG__.overrideLocalConfig = function(localConfig, _) {
+        /**
+        * this is an example of function used to merge new plugin configuration in the default localConfig
+        * if match the plugin name for the GeoNode section, extend or override it
+        * if the plugin is new, add it to localConfig
+        * Note: you can create your on function or manipulate the localConfig to get your expected final configuration
+        * @param {object} config localConfig to update
+        * @param {string[]} options.pages array of page keys to target
+        * @param {string} options.name name of plugin
+        * @param {object} options.cfg new cfg to apply
+        */
+        function mergePluginConfig(config, options) {
+            var pages = options.pages;
+            var pluginName = options.name;
+            var pluginCfg = options.cfg;
+            for (var j = 0; j < pages.length; j++ ) {
+                var page = pages[j];
+                var plugins = config.plugins[page];
+                var merged = false;
+                for (var i = 0; i < config.plugins[page].length; i++ ) {
+                    var plugin = plugins[i];
+                    if (plugin.name === pluginName) {
+                        plugin.cfg = _.merge(plugin.cfg, pluginCfg);
+                        merged = true;
+                        break;
+                    }
+                }
+                if (!merged) {
+                    plugins.push({
+                        name: pluginName,
+                        cfg: pluginCfg
+                    })
+                }
+            }
+        }
+        mergePluginConfig(localConfig, {
+            pages: [ 'map_edit', 'map_view' ],
+            name: 'Search',
+            cfg: {
+                "searchOptions": {
+                    "services": [
+                        // { "type": "nominatim", "priority": 5 }, // default service
+                        {
+                            "type": "wfs",
+                            "priority": 3,
+                            "displayName": "${properties.propToDisplay}",
+                            "subTitle": " (a subtitle for the results coming from this service [ can contain expressions like ${properties.propForSubtitle}])",
+                            "options": {
+                                "url": "{state('settings') && state('settings').geoserverUrl ? state('settings').geoserverUrl + '/wfs' : '/geoserver/wfs'}",
+                                "typeName": "workspace:layer",
+                                "queriableAttributes": [
+                                    "attribute_to_query"
+                                ],
+                                "sortBy": "id",
+                                "srsName": "EPSG:4326",
+                                "maxFeatures": 20,
+                                "blacklist": [
+                                    "... an array of strings to exclude from  the final search filter "
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+        return localConfig;
+    };
+</script>
+{% endblock %}
+```
 ### Customization via fork/branch (advanced)
 
 Create a new fork/branch, apply changes, compile the new client then install the specific branch with pip in the requirement.txt of the geonode-project.
@@ -406,7 +482,7 @@ Expected version in requirement.txt
 
 ## Integrating into GeoNode/Django
 
-### WARNING: 
+### WARNING:
 
 - **Deprecated** `django-mapstore-adapter`; this library has been now merged into `django-geonode-mapstore-client`
 - You don't have to change anything on your `settings.py` but you will have to **remove** `django-mapstore-adapter` from `requirements.txt` and `setup.cfg`
