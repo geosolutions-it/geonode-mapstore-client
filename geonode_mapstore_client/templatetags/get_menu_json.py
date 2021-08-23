@@ -33,6 +33,11 @@ def get_base_left_topbar_menu():
                     "type": "link",
                     "href": "/catalogue/#/search/?f=document",
                     "label": "Documents"
+                },
+                {
+                    "type": "link",
+                    "href": "/services/?limit=5",
+                    "label": "Remote Services"
                 }
             ]
         },
