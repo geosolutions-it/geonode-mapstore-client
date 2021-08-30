@@ -1,0 +1,50 @@
+<script>
+    (function(window) {
+
+        function openDataserExportWindow(MapStoreAPI, config) {
+
+            const layers = config.resourceConfig && config.resourceConfig.map && config.resourceConfig.map.layers;
+            var layer = layers && layers[layers.length - 1];
+
+            function openModal(layer){
+
+                if(layer){
+
+                    MapStoreAPI.triggerAction({
+                                type: 'LAYERS:SELECT_NODE',
+                                id: layer.node,
+                                nodeType: layer.nodeType,
+                                ctrlKey: false
+                    });
+                    MapStoreAPI.triggerAction({
+                                type: 'GEONODE:SET_SELECTED_LAYER_PERMISSIONS',
+                                permissions: layer.options.perms || []
+                    });
+
+                    MapStoreAPI.triggerAction({
+                                type: 'SET_CONTROL_PROPERTY',
+                                control: 'layerdownload',
+                                property: 'available',
+                            value: true
+                    });
+                    MapStoreAPI.triggerAction({
+                            type: 'TOGGLE_CONTROL',
+                            control: 'layerdownload'
+                    });
+
+                }
+
+
+            }
+            MapStoreAPI.onAction('UPDATE_NODE', openModal);
+        }
+
+        window.onInitMapStoreAPI =  function(MapStoreAPI, config) {
+            openDataserExportWindow(MapStoreAPI, config);
+        };
+
+
+    })(window);
+</script>
+
+{% include "./map_edit.html" with plugins_config_key="layer_export" %}
