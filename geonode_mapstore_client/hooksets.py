@@ -278,5 +278,13 @@ class MapStoreHookSet(BaseHookSet):
     def metadata_update_redirect(self, url):
         url = url.replace('/metadata', '')
         resource_identifier = url.split('/')[-1]
-        resource_type = ResourceBase.objects.get(id=int(resource_identifier)).resource_type
+        try:
+            resource_identifier = int(resource_identifier)
+            resource_type = ResourceBase.objects.get(
+                id=resource_identifier).resource_type
+        except ValueError:
+            resource_type = ResourceBase.objects.get(
+                alternate=resource_identifier).resource_type
+            resource_identifier = ResourceBase.objects.get(
+                alternate=resource_identifier).id
         return resource_detail_url(resource_type, resource_identifier)
