@@ -140,6 +140,12 @@ class MapStoreHookSet(BaseHookSet):
             callback=ms2_config_converter.convert)
         return 'geonode-mapstore-client/layer_style_edit.html'
 
+    def layer_export_template(self, context=None):
+        self.initialize_context(
+            context,
+            callback=ms2_config_converter.convert)
+        return 'geonode-mapstore-client/layer_export.html'
+
     # Maps
     def map_detail_template(self, context=None):
         self.initialize_context(
