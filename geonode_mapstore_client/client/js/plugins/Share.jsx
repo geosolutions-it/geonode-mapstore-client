@@ -31,7 +31,6 @@ import Permissions from '@js/components/Permissions';
 import { getUsers, getGroups } from '@js/api/geonode/v2';
 import { resourceToPermissionEntry } from '@js/utils/ResourceUtils';
 import SharePageLink from '@js/plugins/share/SharePageLink';
-import ShareEmbedLink from '@js/plugins/share/ShareEmbedLink';
 import { getCurrentResourcePermissionsLoading } from '@js/selectors/resourceservice';
 
 const entriesTabs = [
@@ -94,11 +93,8 @@ function Share({
     canEdit,
     permissionsGroupOptions,
     permissionsDefaultGroupOptions,
-    permissionsLoading,
-    embedUrl
+    permissionsLoading
 }) {
-
-    const shareUrl = embedUrl;
 
     return (
         <OverlayContainer
@@ -116,12 +112,7 @@ function Share({
                 </div>
                 <div className="gn-share-panel-body">
                     <SharePageLink />
-                    <div className="gn-share-panel-label"><label><Message msgId="gnviewer.embed" />:</label></div>
-                    <ShareEmbedLink
-                        shareUrl={shareUrl}
-                    />
                     {canEdit && <>
-                        <div className="gn-share-panel-label"><label><Message msgId="gnviewer.permissions" />:</label></div>
                         <Permissions
                             compactPermissions={compactPermissions}
                             layers={layers} entriesTabs={entriesTabs}

@@ -164,7 +164,7 @@
             "anonymous": "Chiunque",
             "registered-members": "Membri registrati",
             "permissionsEntriesNoResults": "Nessun risultato...",
-            "shareThisResource": "Condividi questa risorsa",
+            "shareThisResource": "Condividi con utenti e gruppi",
             "embed": "Incorpora",
             "deleteResourceTitle": "{count, plural, =1 {Sei sicuro di voler eliminare questa risorsa?} other {Sei sicuro di voler eliminare queste risorse?}}",
             "deleteResourceNo": "{count, plural, =1 {No, non eliminarlo} other {No, non eliminarli}}",

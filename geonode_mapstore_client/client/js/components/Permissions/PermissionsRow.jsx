@@ -24,6 +24,7 @@ function PermissionsRow({
     clearable,
     onChange
 }) {
+
     return (
         <div
             className="gn-share-permissions-row"
@@ -38,14 +39,12 @@ function PermissionsRow({
                 {children}
             </div>
             {!hideOptions && <div className="gn-share-permissions-options">
-                {permissions === 'owner'
-                    ? <Message msgId="gnviewer.permissionOwner" />
-                    : <Select
-                        clearable={clearable}
-                        options={options.map(({ value, labelId }) => ({ value, label: <Message msgId={labelId} /> }))}
-                        value={permissions}
-                        onChange={(option) => onChange({ permissions: option?.value || '' })}
-                    />}
+                <Select
+                    clearable={clearable}
+                    options={options.map(({ value, labelId }) => ({ value, label: <Message msgId={labelId} /> }))}
+                    value={permissions}
+                    onChange={(option) => onChange({ permissions: option?.value || '' })}
+                />
             </div>}
         </div>
     );

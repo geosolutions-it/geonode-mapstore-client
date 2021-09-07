@@ -162,7 +162,7 @@
             "anonymous": "Jeder",
             "registered-members": "Registrierte Mitglieder",
             "permissionsEntriesNoResults": "Keine Ergebnisse...",
-            "shareThisResource": "Diese Ressource teilen",
+            "shareThisResource": "Mit Personen und Gruppen teilen",
             "embed": "Einbetten",
             "deleteResourceTitle": "{count, plural, =1 {Möchten Sie diese Ressource wirklich löschen?} other {Möchten Sie diese Ressourcen wirklich löschen?}}",
             "deleteResourceNo": "{count, plural, =1 {Nein, nicht löschen} other {Nein, lösche sie nicht}}",
