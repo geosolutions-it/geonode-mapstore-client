@@ -7,8 +7,8 @@ const DefinitionList = ({itemslist}) => {
     const items = itemslist?.map( item => {
         return (
             item.value && <>
-                <dt className="DList-cell DList-cell--medium"><strong>{`${item.label}`}</strong></dt>
-                <dd className="DList-cell">{`${item.value}`}</dd>
+                <dt className="DList-cell DList-cell--medium"><strong>{item.label}</strong></dt>
+                <dd className="DList-cell">{item.value}</dd>
             </>
 
         );

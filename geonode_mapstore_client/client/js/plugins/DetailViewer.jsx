@@ -31,6 +31,10 @@ import Button from '@js/components/Button';
 import PropTypes from 'prop-types';
 import useDetectClickOut from '@js/hooks/useDetectClickOut';
 import OverlayContainer from '@js/components/OverlayContainer';
+import { withRouter } from 'react-router';
+import {
+    hashLocationToHref
+} from '@js/utils/SearchUtils';
 
 const ConnectedDetailsPanel = connect(
     createSelector([
@@ -85,6 +89,7 @@ const ConnectedButton = connect(
 
 
 function DetailViewer({
+    location,
     enabled,
     onEditResource,
     onEditAbstractResource,
@@ -114,6 +119,13 @@ function DetailViewer({
         }
     });
 
+    const handleFormatHref = (options) => {
+        return hashLocationToHref({
+            location,
+            ...options
+        });
+    };
+
     if (hide) {
         return null;
     }
@@ -132,6 +144,7 @@ function DetailViewer({
                 editThumbnail={handleEditThumbnail}
                 activeEditMode={enabled && canEdit}
                 enableFavorite={!!user}
+                formatHref={handleFormatHref}
             />
         </OverlayContainer>
     );
@@ -164,7 +177,7 @@ const DetailViewerPlugin = connect(
         onEditThumbnail: editThumbnailResource,
         onClose: setControlProperty.bind(null, 'rightOverlay', 'enabled', false)
     }
-)(DetailViewer);
+)(withRouter(DetailViewer));
 
 
 export default createPlugin('DetailViewer', {
