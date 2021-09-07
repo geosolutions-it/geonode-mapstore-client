@@ -13,6 +13,9 @@ import {
     SET_FAVORITE_RESOURCE
 } from '@js/actions/gnresource';
 import {
+    updateResources
+} from '@js/actions/gnsearch';
+import {
     setFavoriteResource
 } from '@js/api/geonode/v2';
 
@@ -21,15 +24,25 @@ export const gnSaveFavoriteContent = (action$, store) =>
         .switchMap((action) => {
             const state = store.getState();
             const pk = state?.gnresource?.data.pk;
+            const isFavoriteList = (state?.gnsearch?.params?.f === 'favorite') ? true : false;
+            const resource =  state?.gnresource?.data;
             const favorite =  action.favorite;
+            const resources = store.getState().gnsearch?.resources || [];
             return Observable
                 .defer(() => setFavoriteResource(pk, favorite))
                 .switchMap(() => {
+                    const newResources = (resources.some(item => item.pk === resource.pk)) ?
+                        resources.filter((item) => item.pk !== resource.pk)
+                        : [...resources, resource];
+
                     return Observable.of(
                         updateResourceProperties({
                             'favorite': favorite
-                        })
+                        }),
+                        isFavoriteList && updateResources(newResources, true)
+
                     );
+
                 })
                 .catch((error) => {
                     return Observable.of(resourceError(error.data || error.message));
