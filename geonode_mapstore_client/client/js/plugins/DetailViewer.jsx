@@ -68,7 +68,7 @@ const ButtonViewer = ({
             variant={variant}
             size={size}
             onClick={handleClickButton}
-        > <Message msgId="gnviewer.details"/>
+        > <Message msgId="gnviewer.info"/>
         </Button>)
         : null
     ;
