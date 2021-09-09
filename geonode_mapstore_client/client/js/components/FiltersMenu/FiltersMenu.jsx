@@ -52,13 +52,14 @@ const FiltersMenu = forwardRef(({
                         </Button>
                         {' '}
                         <Badge>
-                            <Message msgId="gnhome.resourcesFound" msgParams={{ count: totalResources }}/> | <span onClick={onClick} className={"resources-found"}> <Message msgId="gnhome.filterApplied" msgParams={{ count: totalFilters }}/></span>
+                            <span className={"resources-count"}> <Message msgId="gnhome.resourcesFound" msgParams={{ count: totalResources }}/> </span>
+                            { totalFilters > 0 &&  <> {' '}|{' '}<span onClick={onClick} className={"resources-count"}> <Message msgId="gnhome.filterApplied" msgParams={{ count: totalFilters }}/></span> </>}
                             {' '}
                             { filtersActive &&
 
                                 <span className={"clear-pointer"}
                                     onClick={onClear}
-                                ><FaIcon name={"trash"} />
+                                ><FaIcon name={"trash"} className={"fa-sm"} />
                                 </span>
 
                             }
