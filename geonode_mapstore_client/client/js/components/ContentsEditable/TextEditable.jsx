@@ -10,7 +10,7 @@ import ContentEditable from 'react-contenteditable';
 
 
 const TextEditable = forwardRef(({
-    text,
+    text = "",
     className = "gn-text-editable",
     tagName,
     disabled,
