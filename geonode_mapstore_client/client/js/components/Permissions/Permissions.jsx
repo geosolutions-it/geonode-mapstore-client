@@ -167,9 +167,21 @@ function Permissions({
 
     return (
         <div className="gn-share-permissions-container">
-
             <ul className="gn-share-permissions-list">
                 <li className="gn-share-permissions-pinned">
+                    {filteredEntries
+                        .filter((item) => item.permissions === 'owner'  )
+                        .map((item) => {
+                            return (<p className="gn-share-permissions-name" >
+                                <Message msgId="gnviewer.permissionOwner" />: {' '}
+                                <a href={`/people/profile/${item?.username}/`}>
+                                    {(item?.first_name !== "" && item?.last_name !== "") ?
+                                        (item?.first_name + ' ' + item?.last_name) :
+                                        item?.username
+                                    }
+                                </a>
+                            </p>);
+                        })}
                     {permissionsGroups
                         .map((group) => {
                             return (

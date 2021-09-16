@@ -184,7 +184,7 @@ function DetailsPanel({
         },
         {
             "label": "Owner",
-            "value": <a href={`/people/profile/${resource?.owner?.username}/`}> {resource?.owner?.username} </a>
+            "value": <a href={`/people/profile/${resource?.owner?.username}/`}> {(resource?.owner?.first_name !== "" && resource?.owner?.last_name !== "" ) ? (resource?.owner?.first_name + " " + resource?.owner?.last_name) : resource?.owner?.username} </a>
         },
         {
             "label": "Created",
@@ -243,7 +243,7 @@ function DetailsPanel({
     const extraItemsList = [
         {
             "label": "Point of Contact",
-            "value": <a href={`/messages/create/${resource?.owner?.pk}/`}> {(resource?.poc?.first_name + resource?.poc?.last_name || resource?.poc?.username)} </a>
+            "value": <a href={`/messages/create/${resource?.poc?.pk}/`}> {(resource?.poc?.first_name !== "" && resource?.poc?.last_name !== "" ) ? (resource?.poc?.first_name + " " + resource?.poc?.last_name) : resource?.poc?.username} </a>
         },
         {
             "label": "License",
