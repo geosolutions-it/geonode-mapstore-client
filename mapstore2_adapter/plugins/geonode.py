@@ -113,7 +113,7 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
         """
         # Initialization
         viewer_obj = json.loads(viewer)
-
+        data = {}
         map_id = None
         if 'id' in viewer_obj and viewer_obj['id']:
             try:
@@ -121,135 +121,14 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
             except Exception:
                 pass
 
-        data = {}
-        data['version'] = 2
+        # Security Info
+        info = {}
+        info['canDelete'] = False
+        info['canEdit'] = False
+        info['description'] = viewer_obj['about']['abstract']
+        info['id'] = map_id
+        info['name'] = viewer_obj['about']['title']
 
-        # Map Definition
-        try:
-            # Map Definition
-            ms2_map = {}
-            ms2_map['projection'] = viewer_obj['map']['projection']
-            ms2_map['units'] = viewer_obj['map']['units']
-            ms2_map['zoom'] = viewer_obj['map']['zoom'] if viewer_obj['map']['zoom'] > 0 else 2
-            ms2_map['maxExtent'] = viewer_obj['map']['maxExtent']
-            ms2_map['maxResolution'] = viewer_obj['map']['maxResolution']
-
-            # Backgrouns
-            backgrounds = self.getBackgrounds(viewer, MAP_BASELAYERS)
-            if backgrounds:
-                ms2_map['layers'] = backgrounds
-            else:
-                ms2_map['layers'] = MAP_BASELAYERS + [
-                    # TODO: covnert Viewer Background Layers
-                    # Add here more backgrounds e.g.:
-                    # {
-                    # 	"type": "wms",
-                    # 	"url": "https://demo.geo-solutions.it/geoserver/wms",
-                    # 	"visibility": True,
-                    # 	"opacity": 0.5,
-                    # 	"title": "Weather data",
-                    # 	"name": "nurc:Arc_Sample",
-                    # 	"group": "Meteo",
-                    # 	"format": "image/png",
-                    # 	"bbox": {
-                    # 		"bounds": {
-                    # 			"minx": -25.6640625,
-                    # 			"miny": 26.194876675795218,
-                    # 			"maxx": 48.1640625,
-                    # 			"maxy": 56.80087831233043
-                    # 		},
-                    # 		"crs": "EPSG:4326"
-                    # 	}
-                    # }, ...
-                ]
-
-            if settings.BING_API_KEY:
-                ms2_map['bingApiKey'] = settings.BING_API_KEY
-
-            # Security Info
-            info = {}
-            info['canDelete'] = False
-            info['canEdit'] = False
-            info['description'] = viewer_obj['about']['abstract']
-            info['id'] = map_id
-            info['name'] = viewer_obj['about']['title']
-            ms2_map['info'] = info
-
-            # Overlays
-            overlays, selected = self.get_overlays(viewer, request=request)
-            if selected and 'name' in selected and selected['name'] and not map_id:
-                # We are generating a Layer Details View
-                center, zoom = self.get_center_and_zoom(viewer_obj['map'], selected)
-                ms2_map['center'] = center
-                ms2_map['zoom'] = zoom
-
-                try:
-                    # - extract from GeoNode guardian
-                    from geonode.layers.views import (_resolve_layer,
-                                                      _PERMISSION_MSG_MODIFY,
-                                                      _PERMISSION_MSG_DELETE)
-                    if _resolve_layer(request,
-                                      selected['name'],
-                                      'base.change_resourcebase',
-                                      _PERMISSION_MSG_MODIFY
-                                      ).user_can(request.user, 'base.change_resourcebase'):
-                        info['canEdit'] = True
-
-                    if _resolve_layer(request,
-                                      selected['name'],
-                                      'base.delete_resourcebase',
-                                      _PERMISSION_MSG_DELETE
-                                      ).user_can(request.user, 'base.delete_resourcebase'):
-                        info['canDelete'] = True
-                except Exception:
-                    tb = traceback.format_exc()
-                    logger.debug(tb)
-            else:
-                # We are getting the configuration of a Map
-                # On GeoNode model the Map Center is always saved in 4326
-                _x = get_valid_number(viewer_obj['map']['center'][0])
-                _y = get_valid_number(viewer_obj['map']['center'][1])
-                _crs = 'EPSG:4326'
-                if _x > 360.0 or _x < -360.0:
-                    _crs = viewer_obj['map']['projection']
-                ms2_map['center'] = {
-                    'x': _x,
-                    'y': _y,
-                    'crs': _crs
-                }
-                try:
-                    # - extract from GeoNode guardian
-                    from geonode.maps.views import (_resolve_map,
-                                                    _PERMISSION_MSG_SAVE,
-                                                    _PERMISSION_MSG_DELETE)
-                    if _resolve_map(request,
-                                    str(map_id),
-                                    'base.change_resourcebase',
-                                    _PERMISSION_MSG_SAVE
-                                    ).user_can(request.user, 'base.change_resourcebase'):
-                        info['canEdit'] = True
-
-                    if _resolve_map(request,
-                                    str(map_id),
-                                    'base.delete_resourcebase',
-                                    _PERMISSION_MSG_DELETE
-                                    ).user_can(request.user, 'base.delete_resourcebase'):
-                        info['canDelete'] = True
-                except Exception:
-                    tb = traceback.format_exc()
-                    logger.debug(tb)
-
-            for overlay in overlays:
-                if 'name' in overlay and overlay['name']:
-                    ms2_map['layers'].append(overlay)
-
-            data['map'] = ms2_map
-        except Exception:
-            # traceback.print_exc()
-            tb = traceback.format_exc()
-            logger.debug(tb)
-
-        # Additional Configurations
         if map_id:
             from mapstore2_adapter import fixup_map
             from mapstore2_adapter.api.models import MapStoreResource
@@ -259,16 +138,146 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                 ms2_map_data = ms2_resource.data.blob
                 if isinstance(ms2_map_data, string_types):
                     ms2_map_data = json.loads(ms2_map_data)
-                if 'map' in ms2_map_data:
-                    for _k, _v in ms2_map_data['map'].items():
-                        if _k not in data['map']:
-                            data['map'][_k] = ms2_map_data['map'][_k]
-                    del ms2_map_data['map']
-                data.update(ms2_map_data)
+                data = ms2_map_data
+                backgrounds = self.getBackgrounds(data, MAP_BASELAYERS)
+                other_layers = []
+                if backgrounds:
+                    for layer in data['map']['layers']:
+                        if 'group' in layer and layer['group'] == "background":
+                            continue
+                        else:
+                            other_layers.append(layer)
+                    backgrounds.extend(other_layers)
+                    data['map']['layers'] = backgrounds
             except Exception:
                 # traceback.print_exc()
                 tb = traceback.format_exc()
                 logger.debug(tb)
+
+            # add permissions configuration of a Map
+            try:
+                # - extract from GeoNode guardian
+                from geonode.maps.views import (_resolve_map,
+                                                _PERMISSION_MSG_SAVE,
+                                                _PERMISSION_MSG_DELETE)
+                if _resolve_map(request,
+                                str(map_id),
+                                'base.change_resourcebase',
+                                _PERMISSION_MSG_SAVE
+                                ).user_can(request.user, 'change_resourcebase'):
+                    info['canEdit'] = True
+
+                if _resolve_map(request,
+                                str(map_id),
+                                'base.delete_resourcebase',
+                                _PERMISSION_MSG_DELETE
+                                ).user_can(request.user, 'delete_resourcebase'):
+                    info['canDelete'] = True
+            except Exception:
+                tb = traceback.format_exc()
+                logger.debug(tb)
+
+        else:
+            try:
+                # Map Definition
+                ms2_map = {}
+                ms2_map['projection'] = viewer_obj['map']['projection']
+                ms2_map['units'] = viewer_obj['map']['units']
+                ms2_map['zoom'] = viewer_obj['map']['zoom'] if viewer_obj['map']['zoom'] > 0 else 2
+                ms2_map['maxExtent'] = viewer_obj['map']['maxExtent']
+                ms2_map['maxResolution'] = viewer_obj['map']['maxResolution']
+
+                # Backgrounds
+                backgrounds = self.getBackgrounds(viewer, MAP_BASELAYERS)
+                if backgrounds:
+                    ms2_map['layers'] = backgrounds
+                else:
+                    ms2_map['layers'] = MAP_BASELAYERS + [
+                        # TODO: covnert Viewer Background Layers
+                        # Add here more backgrounds e.g.:
+                        # {
+                        # 	"type": "wms",
+                        # 	"url": "https://demo.geo-solutions.it/geoserver/wms",
+                        # 	"visibility": True,
+                        # 	"opacity": 0.5,
+                        # 	"title": "Weather data",
+                        # 	"name": "nurc:Arc_Sample",
+                        # 	"group": "Meteo",
+                        # 	"format": "image/png",
+                        # 	"bbox": {
+                        # 		"bounds": {
+                        # 			"minx": -25.6640625,
+                        # 			"miny": 26.194876675795218,
+                        # 			"maxx": 48.1640625,
+                        # 			"maxy": 56.80087831233043
+                        # 		},
+                        # 		"crs": "EPSG:4326"
+                        # 	}
+                        # }, ...
+                    ]
+
+                if settings.BING_API_KEY:
+                    ms2_map['bingApiKey'] = settings.BING_API_KEY
+
+                # Overlays
+                overlays, selected = self.get_overlays(viewer, request=request)
+                if selected and 'name' in selected and selected['name'] and not map_id:
+                    # We are generating a Layer Details View
+                    center, zoom = self.get_center_and_zoom(viewer_obj['map'], selected)
+                    ms2_map['center'] = center
+                    ms2_map['zoom'] = zoom
+
+                    try:
+                        # - extract from GeoNode guardian
+                        from geonode.layers.views import (
+                            _resolve_layer,
+                            _PERMISSION_MSG_MODIFY,
+                            _PERMISSION_MSG_DELETE
+                        )
+                        if _resolve_layer(
+                            request,
+                            selected['name'],
+                            'base.change_resourcebase',
+                            _PERMISSION_MSG_MODIFY
+                        ).user_can(request.user, 'base.change_resourcebase'):
+                            info['canEdit'] = True
+
+                        if _resolve_layer(
+                            request,
+                            selected['name'],
+                            'base.delete_resourcebase',
+                            _PERMISSION_MSG_DELETE
+                        ).user_can(request.user, 'base.delete_resourcebase'):
+                            info['canDelete'] = True
+                    except Exception:
+                        tb = traceback.format_exc()
+                        logger.debug(tb)
+                else:
+                    # We are getting the configuration of a Map
+                    # On GeoNode model the Map Center is always saved in 4326
+                    _x = get_valid_number(viewer_obj['map']['center'][0])
+                    _y = get_valid_number(viewer_obj['map']['center'][1])
+                    _crs = 'EPSG:4326'
+                    if _x > 360.0 or _x < -360.0:
+                        _crs = viewer_obj['map']['projection']
+                    ms2_map['center'] = {
+                        'x': _x,
+                        'y': _y,
+                        'crs': _crs
+                    }
+
+                for overlay in overlays:
+                    if 'name' in overlay and overlay['name']:
+                        ms2_map['layers'].append(overlay)
+
+                data['map'] = ms2_map
+            except Exception:
+                # traceback.print_exc()
+                tb = traceback.format_exc()
+                logger.debug(tb)
+
+        data['version'] = 2
+        data['map']['info'] = info
 
         # Default Catalogue Services Definition
         try:
@@ -296,7 +305,9 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                 def_background = bg
                 break
         try:
-            viewer_obj = json.loads(viewer)
+            viewer_obj = viewer
+            if isinstance(viewer_obj, str):
+                viewer_obj = json.loads(viewer)
             layers = viewer_obj['map']['layers']
             for bg in backgrounds:
                 bg['visibility'] = False
@@ -338,7 +349,7 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                     overlay = {}
                     if 'url' in source:
                         if 'ptype' not in source or source['ptype'] != 'gxp_arcrestsource': 
-                            overlay['type'] = "wms" 
+                            overlay['type'] = "wms"
                             overlay['tileSize'] = getattr(settings, "DEFAULT_TILE_SIZE", 512)
                         else:
                             overlay['type'] = "arcgis"

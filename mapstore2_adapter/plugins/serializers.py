@@ -16,6 +16,8 @@ from ..api.models import (MapStoreData,
 
 from rest_framework.exceptions import APIException
 
+from copy import deepcopy
+
 import json
 import base64
 import logging
@@ -296,15 +298,20 @@ class GeoNodeSerializer(object):
 
                     # Update GeoNode Map
                     _map_conf['map'] = _map_obj
-                    map_obj.update_from_viewer(
-                        _map_conf,
-                        context={'config': _map_conf})
 
                     if is_analytics_enabled:
                         register_event(caller.request, event_type, map_obj)
 
                     serializer.validated_data['id'] = map_obj.id
                     serializer.save(user=caller.request.user)
+
+                    # Filter annotations
+                    new_conf = deepcopy(_map_conf)
+                    new_conf['map']['layers'] = [x for x in new_conf['map']['layers'] if x['type'] != 'vector']
+                    map_obj.update_from_viewer(
+                        new_conf,
+                        context={'config': new_conf})
+
             except Exception as e:
                 tb = traceback.format_exc()
                 logger.error(tb)
