@@ -134,6 +134,9 @@
         "gnviewer": {
             "edit": "Modifica",
             "editMetadata": "Modifica Metadati",
+            "view": "Visualizza",
+            "viewMetadata": "Visualizza i metadati",
+            "viewData": "Visualizza i dati",
             "editStyle": "Modifica Stile",
             "editData": "Modifica Dati",
             "backToDataset": "Torna al Dataset",
