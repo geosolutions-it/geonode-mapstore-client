@@ -131,6 +131,7 @@
         },
         "gnviewer": {
             "edit": "Éditer",
+            "export": "Exportation",
             "editMetadata": "Modifier les Métadonnées",
             "view": "Vue",
             "viewMetadata": "Afficher les métadonnées",
