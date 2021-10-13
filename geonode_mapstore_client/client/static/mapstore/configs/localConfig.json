@@ -411,7 +411,7 @@
                 {
                     "type": "link",
                     "href": "${detail_url}",
-                    "labelId": "gnhome.open",
+                    "labelId": "gnhome.view",
                     "icon": "edit",
                     "perms": [
                         {

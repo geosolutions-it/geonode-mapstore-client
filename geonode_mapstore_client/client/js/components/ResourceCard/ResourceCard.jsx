@@ -10,6 +10,7 @@ import React, { forwardRef } from 'react';
 import Message from '@mapstore/framework/components/I18N/Message';
 import FaIcon from '@js/components/FaIcon';
 import Dropdown from '@js/components/Dropdown';
+import Button from '@js/components/Button';
 import Spinner from '@js/components/Spinner';
 import { getUserName } from '@js/utils/SearchUtils';
 import { getResourceTypesInfo } from '@js/utils/ResourceUtils';
@@ -36,7 +37,10 @@ const ResourceCard = forwardRef(({
     const res = data;
     const types = getTypesInfo();
     const { icon } = types[res.subtype] || types[res.resource_type] || {};
-
+    const {
+        formatDetailUrl = resource => resource?.detail_url
+    } = res && (types[res.subtype] || types[res.resource_type]) || {};
+    const detailUrl = res?.pk && formatDetailUrl(res);
     return (
         <div
             ref={ref}
@@ -89,8 +93,18 @@ const ResourceCard = forwardRef(({
                             }
                         })}>{getUserName(res.owner)}</ALink>
                     </p>
-
                 </div>
+                {(!readOnly && options && options.length === 0) && detailUrl &&
+                <div className="gn-card-view-editor">
+                    <Button
+                        variant="default"
+                        href={detailUrl}
+                        rel="noopener noreferrer"><FaIcon name={'edit'} />
+                        <Message msgId={`gnhome.view`} />
+
+                    </Button>
+                </div>
+                }
                 {(!readOnly && options && options.length > 0) && <Dropdown
                     className="gn-card-options"
                     pullRight
@@ -127,7 +141,9 @@ const ResourceCard = forwardRef(({
                                 );
                             })}
                     </Dropdown.Menu>
-                </Dropdown>}
+                </Dropdown>
+
+                }
             </div>
         </div>
     );

@@ -34,7 +34,7 @@
         &:not(.read-only):hover {
             .border-color-var(@theme-vars[focus-color]);
         }
-        .gn-card-options {
+        .gn-card-options, .gn-card-view-editor {
             .color-var(@theme-vars[main-color]);
             .background-color-var(@theme-vars[main-bg]);
         }
@@ -61,7 +61,8 @@
         width: 100%;
         height: 100%;
     }
-    .gn-card-options {
+
+    .gn-card-options, .gn-card-view-editor  {
         position: absolute;
         right: 0;
         bottom: 0;
@@ -74,12 +75,24 @@
         }
     }
 
+    .gn-card-view-editor  {
+        margin-bottom: 0.9rem;
+    }
+
     .gn-card-options .dropdown-toggle::after {
         display: none;
     }
     .gn-card-options,
     a {
         pointer-events: auto;
+    }
+    .gn-card-view-editor{
+        span{
+            margin: 0 0.2rem;
+        }
+        a {
+            font-size: 0.75rem;
+        }
     }
     .card-body {
         position: relative;
