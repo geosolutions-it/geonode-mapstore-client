@@ -11,6 +11,7 @@
 
 from __future__ import absolute_import
 from uuid import uuid4
+from copy import deepcopy
 
 from rest_framework.exceptions import APIException
 import json
@@ -60,10 +61,10 @@ class GeoNodeSerializer(object):
         _map_name = serializer.validated_data['title'] or map_obj.title
         _map_title = serializer.validated_data['title'] or map_obj.title
         _map_abstract = serializer.validated_data.get('abstract', '') or '' if not hasattr(map_obj, 'abstract') else map_obj.abstract
-       
+
         if data:
             try:
-                data_blob = data.copy()
+                data_blob = serializer.validated_data.get('blob') or data.copy()
                 _map_conf = dict(data)
                 _map_conf["about"] = {
                     "name": _map_name,
@@ -208,11 +209,15 @@ class GeoNodeSerializer(object):
                     serializer.instance = map_obj
                     serializer.save()
 
+                    # filter annotations
+                    new_conf = deepcopy(_map_conf)
+                    new_conf['map']['layers'] = [x for x in new_conf['map']['layers'] if x['type'] != 'vector']
+
                     serializer.instance.update_from_viewer(
-                        _map_conf,
-                        context={'config': _map_conf})
+                        new_conf,
+                        context={'config': new_conf})
                     return serializer
-                    
+
             except Exception as e:
                 tb = traceback.format_exc()
                 logger.error(tb)
