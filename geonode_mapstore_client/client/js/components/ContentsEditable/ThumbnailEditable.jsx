@@ -6,35 +6,48 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Thumbnail from '@mapstore/framework/components/misc/Thumbnail';
 import FaIcon from '@js/components/FaIcon';
+import Button from '@js/components/Button';
+import tooltip from '@mapstore/framework/components/misc/enhancers/tooltip';
 import Message from '@mapstore/framework/components/I18N/Message';
+const ButtonWithToolTip = tooltip(Button);
 
 const ThumbnailEditable = ({
     defaultImage,
     onEdit = () => {}
 }) => {
-
+    const thumbnailRef = useRef(null);
     const [thumbnail, setThumbnail] =  useState();
     useEffect(() => {
         setThumbnail(defaultImage);
 
-    }, [ ]);
+    }, [defaultImage]);
+
+    const handleDialaogWindowUpload = () => {
+        thumbnailRef?.current?.nextElementSibling.click();
+    };
 
     return (
         <>
             <Thumbnail
+                ref={thumbnailRef}
                 thumbnail={thumbnail}
                 onUpdate={(data) => {
                     setThumbnail(data);
                     onEdit(data);
                 }}
-                message={<Message msgId="gnviewer.uploadImage"/>}
             />
-            <div className={`icon-image-preview`} >
+            <ButtonWithToolTip
+                variant="default"
+                className="upload-thumbnail"
+                onClick={ () => handleDialaogWindowUpload()}
+                tooltip={  <Message msgId="gnviewer.uploadImage"/>  }
+                tooltipPosition={"top"}
+            >
                 <FaIcon name="upload" />
-            </div>
+            </ButtonWithToolTip>
         </>
     );
 };

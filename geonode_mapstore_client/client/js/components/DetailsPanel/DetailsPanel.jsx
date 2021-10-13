@@ -133,7 +133,8 @@ function DetailsPanel({
     closePanel,
     favorite,
     onFavorite,
-    enableFavorite
+    enableFavorite,
+    buttonSaveThumbnailMap
 }) {
     const detailsContainerNode = useRef();
     const isMounted = useRef();
@@ -411,7 +412,13 @@ function DetailsPanel({
                 <div className="gn-details-panel-content">
                     {editThumbnail && <div className="gn-details-panel-content-img">
                         {!activeEditMode && <ThumbnailPreview src={resource?.thumbnail_url} />}
-                        {activeEditMode && <div className="gn-details-panel-preview inediting"> <EditThumbnail onEdit={editThumbnail} image={resource?.thumbnail_url} /> </div>}
+                        {activeEditMode && <div className="gn-details-panel-preview inediting">
+                            <EditThumbnail
+                                onEdit={editThumbnail}
+                                image={resource?.thumbnail_url}
+                            />
+                            { buttonSaveThumbnailMap }
+                        </div>}
                     </div>
                     }
 

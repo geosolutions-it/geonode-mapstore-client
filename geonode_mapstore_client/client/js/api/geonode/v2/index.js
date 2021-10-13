@@ -243,6 +243,10 @@ export const getDocumentsByDocType = (docType = 'image', {
         }));
 };
 
+export const setMapThumbnail = (pk, body) => {
+    return axios.post(parseDevHostname(`${endpoints[RESOURCES]}/${pk}/set_thumbnail_from_bbox`), body)
+        .then(({ data }) => (data));
+};
 
 export const setFavoriteResource = (pk, favorite) => {
     const request = favorite ? axios.post : axios.delete;

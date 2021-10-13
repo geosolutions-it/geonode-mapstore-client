@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import DetailsPanel from '@js/components/DetailsPanel';
 import { userSelector } from '@mapstore/framework/selectors/security';
+import usePluginItems from '@js/hooks/usePluginItems';
 import {
     editTitleResource,
     editAbstractResource,
@@ -89,6 +90,7 @@ const ConnectedButton = connect(
 
 
 function DetailViewer({
+    items,
     location,
     enabled,
     onEditResource,
@@ -99,7 +101,12 @@ function DetailViewer({
     hide,
     user,
     onClose
-}) {
+}, context) {
+
+    const { loadedPlugins } = context;
+    const configuredItems = usePluginItems({ items, loadedPlugins });
+    const buttonSaveThumbnailMap = configuredItems.filter(({ name }) => name === "MapThumbnail")
+        .map(({ Component, name }) => <Component key={name} />);
 
     const handleTitleValue = (val) => {
         onEditResource(val);
@@ -143,6 +150,7 @@ function DetailViewer({
                 editAbstract={handleAbstractValue}
                 editThumbnail={handleEditThumbnail}
                 activeEditMode={enabled && canEdit}
+                buttonSaveThumbnailMap={buttonSaveThumbnailMap}
                 enableFavorite={!!user}
                 formatHref={handleFormatHref}
             />
