@@ -275,16 +275,21 @@ class MapStoreHookSet(BaseHookSet):
         context['config'] = conf
         return 'geonode-mapstore-client/legacy/edit_map.html'
 
-    def metadata_update_redirect(self, url):
+    def metadata_update_redirect(self, url, request=None):
         url = url.replace('/metadata', '')
         resource_identifier = url.split('/')[-1]
-        try:
-            resource_identifier = int(resource_identifier)
-            resource_type = ResourceBase.objects.get(
-                id=resource_identifier).resource_type
-        except ValueError:
-            resource_type = ResourceBase.objects.get(
-                alternate=resource_identifier).resource_type
-            resource_identifier = ResourceBase.objects.get(
-                alternate=resource_identifier).id
+        if isinstance(resource_identifier, int):
+            try:
+                dataset = ResourceBase.objects.get(id=int(resource_identifier))
+            except ValueError:
+                dataset = ResourceBase.objects.get(alternate=resource_identifier)
+        else:
+            from geonode.layers.views import _resolve_dataset
+            dataset = _resolve_dataset(
+                request,
+                resource_identifier,
+                'base.change_resourcebase',
+                'Not allowed')
+        resource_identifier = dataset.id
+        resource_type = dataset.resource_type
         return resource_detail_url(resource_type, resource_identifier)
