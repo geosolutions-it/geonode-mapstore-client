@@ -166,6 +166,16 @@ def get_user_menu(context):
             "label": "Log out"
         }
     ]
+    monitoring = []
+    if settings.MONITORING_ENABLED:
+        monitoring = [
+            devider,
+            {
+                "type": "link",
+                "href": "/monitoring/",
+                "label": "Monitoring & Analytics"
+            }
+        ]
     admin_only = [
         {
             "type": "link",
@@ -176,15 +186,8 @@ def get_user_menu(context):
             "type": "link",
             "href": "/geoserver/",
             "label": "GeoServer"
-        },
-        devider,
-        {
-            "type": "link",
-            "href": "/monitoring/",
-            "label": "Monitoring & Analytics"
-        },
-        devider,
-    ] + general
+        }
+    ] + monitoring + [devider] + general
 
     if user.is_superuser:
         profile['items'].extend(admin_only)
