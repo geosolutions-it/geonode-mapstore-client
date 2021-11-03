@@ -62,11 +62,27 @@
         height: 100%;
     }
 
-    .gn-card-options, .gn-card-view-editor  {
+    .gn-card-actions{
         position: absolute;
         right: 0;
         bottom: 0;
+        display: flex;
+    }
+
+    .gn-card-options{
+        margin: 0.25rem 0.25rem 0.25rem 0;
+    }
+
+    .gn-card-view-editor{
+        margin: 0.25rem 0;
+    }
+
+    .gn-card-view-editor-right{
         margin: 0.25rem;
+    }
+
+    .gn-card-options, .gn-card-view-editor  {
+
         .dropdown-menu {
             min-width: 8rem;
         }
@@ -75,8 +91,8 @@
         }
     }
 
-    .gn-card-view-editor  {
-        margin-bottom: 0.9rem;
+    .gn-card-view-editor {
+        margin-bottom: 0.4rem;
     }
 
     .gn-card-options .dropdown-toggle::after {
