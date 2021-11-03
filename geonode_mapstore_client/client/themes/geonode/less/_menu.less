@@ -16,6 +16,12 @@
         &.gn-default {
             .color-var(@theme-vars[main-variant-color]);
             .background-color-var(@theme-vars[main-variant-bg]);
+            .gn-menu-divider {
+                .background-color-var(@theme-vars[main-border-color]);
+            }
+        }
+        &.gn-default,
+        .gn-menu-content-right {
             .btn-default {
                 background: transparent;
                 border-color: transparent;
@@ -28,9 +34,7 @@
                     .background-color-var(@theme-vars[primary]);
                 }
             }
-            .gn-menu-divider {
-                .background-color-var(@theme-vars[main-border-color]);
-            }
+
         }
     }
 }
