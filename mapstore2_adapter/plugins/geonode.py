@@ -140,15 +140,16 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                     ms2_map_data = json.loads(ms2_map_data)
                 data = ms2_map_data
                 backgrounds = self.getBackgrounds(data, MAP_BASELAYERS)
-                other_layers = []
+                map_layers = []
                 if backgrounds:
-                    for layer in data['map']['layers']:
-                        if 'group' in layer and layer['group'] == "background":
-                            continue
-                        else:
-                            other_layers.append(layer)
-                    backgrounds.extend(other_layers)
-                    data['map']['layers'] = backgrounds
+                    map_layers.extend(backgrounds)
+                for layer in data['map']['layers']:
+                    if 'group' in layer and layer['group'] == "background":
+                        continue
+                    else:
+                        layer['featureInfo'] = self.get_layer_featureinfotemplate(layer)
+                        map_layers.append(layer)
+                data['map']['layers'] = map_layers
             except Exception:
                 # traceback.print_exc()
                 tb = traceback.format_exc()
@@ -451,60 +452,7 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                                 overlay['bbox']['crs'] = layer['srs'] if 'srs' in layer else \
                                     viewer_obj['map']['projection']
 
-                        if 'ftInfoTemplate' in layer and layer['ftInfoTemplate']:
-                            featureInfo = {'format': 'TEMPLATE'}
-                            featureInfo['template'] = layer['ftInfoTemplate']
-                            overlay['featureInfo'] = featureInfo
-                        elif 'getFeatureInfo' in layer and layer['getFeatureInfo']:
-                            if 'fields' in layer['getFeatureInfo'] and layer['getFeatureInfo']['fields'] and \
-                                    'propertyNames' in layer['getFeatureInfo'] and \
-                                    layer['getFeatureInfo']['propertyNames']:
-                                fields = layer['getFeatureInfo']['fields']
-                                propertyNames = layer['getFeatureInfo']['propertyNames']
-                                displayTypes = layer['getFeatureInfo']['displayTypes'] if 'displayTypes' in layer['getFeatureInfo'] else dict()
-                                featureInfo = {'format': 'TEMPLATE'}
-
-                                _template = '<div>'
-                                for _field in fields:
-                                    _label = propertyNames[_field] if propertyNames[_field] else _field
-                                    _template += '<div class="row">'
-
-                                    if _field in displayTypes and displayTypes[_field] == 'type_href':
-                                        _template += '<div class="col-xs-6" style="font-weight: bold; word-wrap: break-word;">%s:</div> \
-                                            <div class="col-xs-6" style="word-wrap: break-word;"><a href="${properties.%s}" target="_new">${properties.%s}</a></div>' % \
-                                            (_label, _field, _field)
-                                    elif _field in displayTypes and displayTypes[_field] == 'type_image':
-                                        _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
-                                            <a href="${properties.%s}" target="_new"><img width="100%%" height="auto" src="${properties.%s}" title="%s" alt="%s"/></a></div>' % \
-                                            (_field, _field, _label, _label)
-                                    elif _field in displayTypes and 'type_video' in displayTypes[_field]:
-                                        if 'youtube' in displayTypes[_field]:
-                                            _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
-                                                <iframe src="${properties.%s}" width="100%%" height="360" frameborder="0" allowfullscreen></iframe></div>' % \
-                                                (_field)
-                                        else:
-                                            _type = "video/%s" % (displayTypes[_field][11:])
-                                            _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
-                                                <video width="100%%" height="360" controls><source src="${properties.%s}" type="%s">Your browser does not support the video tag.</video></div>' % \
-                                                (_field, _type)
-                                    elif _field in displayTypes and displayTypes[_field] == 'type_audio':
-                                        _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
-                                            <audio controls><source src="${properties.%s}" type="audio/mpeg">Your browser does not support the audio element.</audio></div>' % \
-                                            (_field)
-                                    elif _field in displayTypes and displayTypes[_field] == 'type_iframe':
-                                        _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
-                                            <iframe src="/proxy/?url=${properties.%s}" width="100%%" height="360" frameborder="0" allowfullscreen></iframe></div>' % \
-                                            (_field)
-                                    else:
-                                        _template += '<div class="col-xs-6" style="font-weight: bold; word-wrap: break-word;">%s:</div> \
-                                            <div class="col-xs-6" style="word-wrap: break-word;">${properties.%s}</div>' % \
-                                            (propertyNames[_field] if propertyNames[_field] else _field, _field)
-
-                                    _template += '</div>'
-                                _template += '</div>'
-
-                                featureInfo['template'] = _template
-                                overlay['featureInfo'] = featureInfo
+                        overlay['featureInfo'] = self.get_layer_featureinfotemplate(layer)
                     elif 'name' in layer and layer['name'] == 'Annotations':
                         overlay = layer
 
@@ -608,3 +556,62 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
             config_bbox = [ms2_bbox[0], ms2_bbox[2], ms2_bbox[1], ms2_bbox[3]]
             viewer['map']['bbox'] = config_bbox
         return viewer
+
+    def get_layer_featureinfotemplate(self, layer):
+        featureInfo = {}
+        if 'ftInfoTemplate' in layer and layer['ftInfoTemplate']:
+            featureInfo['format'] = 'TEMPLATE'
+            featureInfo['template'] = layer['ftInfoTemplate']
+        elif 'getFeatureInfo' in layer and layer['getFeatureInfo']:
+            if 'fields' in layer['getFeatureInfo'] and layer['getFeatureInfo']['fields'] and \
+                'propertyNames' in layer['getFeatureInfo'] and \
+                    layer['getFeatureInfo']['propertyNames']:
+
+                fields = layer['getFeatureInfo']['fields']
+                propertyNames = layer['getFeatureInfo']['propertyNames']
+                displayTypes = layer['getFeatureInfo']['displayTypes'] if 'displayTypes' in layer['getFeatureInfo'] else dict()
+                featureInfo['format'] = 'TEMPLATE'
+
+                _template = '<div>'
+                for _field in fields:
+                    _label = propertyNames[_field] if propertyNames[_field] else _field
+                    _template += '<div class="row">'
+
+                    if _field in displayTypes and displayTypes[_field] == 'type_href':
+                        _template += '<div class="col-xs-6" style="font-weight: bold; word-wrap: break-word;">%s:</div> \
+                            <div class="col-xs-6" style="word-wrap: break-word;"><a href="${properties.%s}" target="_new">${properties.%s}</a></div>' % \
+                            (_label, _field, _field)
+                    elif _field in displayTypes and displayTypes[_field] == 'type_image':
+                        _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
+                            <a href="${properties.%s}" target="_new"><img width="100%%" height="auto" src="${properties.%s}" title="%s" alt="%s"/></a></div>' % \
+                            (_field, _field, _label, _label)
+                    elif _field in displayTypes and 'type_video' in displayTypes[_field]:
+                        if 'youtube' in displayTypes[_field]:
+                            _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
+                                <iframe src="${properties.%s}" width="100%%" height="360" frameborder="0" allowfullscreen></iframe></div>' % \
+                                (_field)
+                        else:
+                            _type = "video/%s" % (displayTypes[_field][11:])
+                            _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
+                                <video width="100%%" height="360" controls><source src="${properties.%s}" type="%s">Your browser does not support the video tag.</video></div>' % \
+                                (_field, _type)
+                    elif _field in displayTypes and displayTypes[_field] == 'type_audio':
+                        _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
+                            <audio controls><source src="${properties.%s}" type="audio/mpeg">Your browser does not support the audio element.</audio></div>' % \
+                            (_field)
+                    elif _field in displayTypes and displayTypes[_field] == 'type_iframe':
+                        _template += '<div class="col-xs-12" align="center" style="font-weight: bold; word-wrap: break-word;"> \
+                            <iframe src="/proxy/?url=${properties.%s}" width="100%%" height="360" frameborder="0" allowfullscreen></iframe></div>' % \
+                            (_field)
+                    else:
+                        _template += '<div class="col-xs-6" style="font-weight: bold; word-wrap: break-word;">%s:</div> \
+                            <div class="col-xs-6" style="word-wrap: break-word;">${properties.%s}</div>' % \
+                            (propertyNames[_field] if propertyNames[_field] else _field, _field)
+
+                    _template += '</div>'
+
+                _template += '</div>'
+                featureInfo['template'] = _template
+        elif 'featureInfo' in layer and layer['featureInfo']:
+            featureInfo = layer['featureInfo']
+        return featureInfo
