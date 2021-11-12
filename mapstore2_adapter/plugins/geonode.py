@@ -149,6 +149,15 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                     else:
                         layer['featureInfo'] = self.get_layer_featureinfotemplate(layer)
                         map_layers.append(layer)
+                # the dynamic layer has already been processed by GeoNode upstream views
+                # but we can't tell if it was the one from GET params or not, so we parse it again
+                layer_name = request.GET.get('layer_name')
+                if layer_name:
+                    for lyr in viewer_obj['map']['layers']:
+                        if lyr['name'] == layer_name:
+                            layer_from_request = self.get_overlay(viewer_obj, lyr, get_wfs_endpoint(request))
+                            if layer_from_request:
+                                map_layers.append(layer_from_request)
                 data['map']['layers'] = map_layers
             except Exception:
                 # traceback.print_exc()
@@ -336,130 +345,138 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
             logger.debug(tb)
         return backgrounds
 
-    def get_overlays(self, viewer, request=None):
+    def get_overlay(self, viewer_obj, layer, wfs_url=''):
+        sources = viewer_obj['sources']
+
+        if 'group' not in layer or layer['group'] != "background":
+            source = sources[layer['source']]
+            overlay = {}
+            if 'url' in source:
+                if 'ptype' not in source or source['ptype'] != 'gxp_arcrestsource': 
+                    overlay['type'] = "wms"
+                    overlay['tileSize'] = getattr(settings, "DEFAULT_TILE_SIZE", 512)
+                else:
+                    overlay['type'] = "arcgis"
+                _p_url = parse.urlparse(source['url'])
+                if _p_url.query:
+                    overlay['params'] = dict(parse.parse_qsl(_p_url.query))
+                overlay['url'] = source['url']
+                overlay['bbox'] = {}
+
+                for _key, _default in LAYER_PARAMS.items():
+                    if _key in layer:
+                        overlay[_key] = layer[_key]
+                    elif _default:
+                        overlay[_key] = _default
+
+                if 'capability' in layer:
+                    capa = layer['capability']
+                    if 'store' in capa:
+                        overlay['store'] = capa['store']
+                    if 'styles' in capa:
+                        overlay['styles'] = capa['styles']
+                    if 'style' in capa:
+                        overlay['style'] = capa['style']
+                    if 'abstract' in capa:
+                        overlay['abstract'] = capa['abstract']
+                    if 'attribution' in capa:
+                        overlay['attribution'] = capa['attribution']
+                    if 'keywords' in capa:
+                        overlay['keywords'] = capa['keywords']
+                    if 'dimensions' in capa and capa['dimensions']:
+                        overlay['dimensions'] = self.get_layer_dimensions(dimensions=capa['dimensions'])
+                    if 'storeType' in capa and capa['storeType'] == 'dataStore':
+                        overlay['search'] = {
+                            "url": wfs_url,
+                            "type": "wfs"
+                        }
+                    if 'llbbox' in capa:
+                        bbox = capa['llbbox']
+                        # Must be in the form xmin, ymin, xmax, ymax
+                        llbbox = [
+                            get_valid_number(bbox[0]),
+                            get_valid_number(bbox[2]),
+                            get_valid_number(bbox[1]),
+                            get_valid_number(bbox[3]),
+                        ]
+                        overlay['llbbox'] = llbbox
+                        overlay['bbox']['bounds'] = {
+                            "minx": llbbox[0],
+                            "miny": llbbox[1],
+                            "maxx": llbbox[2],
+                            "maxy": llbbox[3]
+                        }
+                        overlay['bbox']['crs'] = 'EPSG:4326'
+                    elif 'bbox' in capa:
+                        bbox = capa['bbox']
+                        if viewer_obj['map']['projection'] in bbox:
+                            proj = viewer_obj['map']['projection']
+                            bbox = capa['bbox'][proj]
+                            overlay['bbox']['bounds'] = {
+                                "minx": get_valid_number(bbox['bbox'][0]),
+                                "miny": get_valid_number(bbox['bbox'][1]),
+                                "maxx": get_valid_number(bbox['bbox'][2]),
+                                "maxy": get_valid_number(bbox['bbox'][3])
+                            }
+                            overlay['bbox']['crs'] = bbox['srs']
+
+                if 'nativeCrs' in layer:
+                    overlay['nativeCrs'] = layer['nativeCrs']
+                else:
+                    try:
+                        from geonode.layers.models import Layer
+                        _gn_layer = Layer.objects.get(
+                            store=overlay['store'],
+                            alternate=overlay['name'])
+                        if _gn_layer.srid:
+                            overlay['nativeCrs'] = _gn_layer.srid
+                    except Exception:
+                        tb = traceback.format_exc()
+                        logger.debug(tb)
+
+                if 'bbox' in layer and not overlay['bbox']:
+                    if 'bounds' in layer['bbox']:
+                        overlay['bbox'] = layer['bbox']
+                    else:
+                        overlay['bbox']['bounds'] = {
+                            "minx": get_valid_number(layer['bbox'][0],
+                                                        default=layer['bbox'][2],
+                                                        complementar=True),
+                            "miny": get_valid_number(layer['bbox'][1],
+                                                        default=layer['bbox'][3],
+                                                        complementar=True),
+                            "maxx": get_valid_number(layer['bbox'][2],
+                                                        default=layer['bbox'][0],
+                                                        complementar=True),
+                            "maxy": get_valid_number(layer['bbox'][3],
+                                                        default=layer['bbox'][1],
+                                                        complementar=True)
+                        }
+                        overlay['bbox']['crs'] = layer['srs'] if 'srs' in layer else \
+                            viewer_obj['map']['projection']
+
+                overlay['featureInfo'] = self.get_layer_featureinfotemplate(layer)
+            elif 'name' in layer and layer['name'] == 'Annotations':
+                overlay = layer
+
+            # Restore the id of ms2 layer
+            if "extraParams" in layer and "msId" in layer["extraParams"]:
+                overlay["id"] = layer["extraParams"]["msId"]
+            return overlay
+        return None
+
+    def get_overlays(self, viewer, request=None, layers=None):
         overlays = []
         selected = None
+        wfs_url = get_wfs_endpoint(request)
         try:
             viewer_obj = json.loads(viewer)
-            layers = viewer_obj['map']['layers']
-            sources = viewer_obj['sources']
+            layers = layers if layers else viewer_obj['map']['layers']
 
             for layer in layers:
-                if 'group' not in layer or layer['group'] != "background":
-                    source = sources[layer['source']]
-                    overlay = {}
-                    if 'url' in source:
-                        if 'ptype' not in source or source['ptype'] != 'gxp_arcrestsource': 
-                            overlay['type'] = "wms"
-                            overlay['tileSize'] = getattr(settings, "DEFAULT_TILE_SIZE", 512)
-                        else:
-                            overlay['type'] = "arcgis"
-                        _p_url = parse.urlparse(source['url'])
-                        if _p_url.query:
-                            overlay['params'] = dict(parse.parse_qsl(_p_url.query))
-                        overlay['url'] = source['url']
-                        overlay['bbox'] = {}
-
-                        for _key, _default in LAYER_PARAMS.items():
-                            if _key in layer:
-                                overlay[_key] = layer[_key]
-                            elif _default:
-                                overlay[_key] = _default
-
-                        if 'capability' in layer:
-                            capa = layer['capability']
-                            if 'store' in capa:
-                                overlay['store'] = capa['store']
-                            if 'styles' in capa:
-                                overlay['styles'] = capa['styles']
-                            if 'style' in capa:
-                                overlay['style'] = capa['style']
-                            if 'abstract' in capa:
-                                overlay['abstract'] = capa['abstract']
-                            if 'attribution' in capa:
-                                overlay['attribution'] = capa['attribution']
-                            if 'keywords' in capa:
-                                overlay['keywords'] = capa['keywords']
-                            if 'dimensions' in capa and capa['dimensions']:
-                                overlay['dimensions'] = self.get_layer_dimensions(dimensions=capa['dimensions'])
-                            if 'storeType' in capa and capa['storeType'] == 'dataStore':
-                                overlay['search'] = {
-                                    "url": get_wfs_endpoint(request),
-                                    "type": "wfs"
-                                }
-                            if 'llbbox' in capa:
-                                bbox = capa['llbbox']
-                                # Must be in the form xmin, ymin, xmax, ymax
-                                llbbox = [
-                                    get_valid_number(bbox[0]),
-                                    get_valid_number(bbox[2]),
-                                    get_valid_number(bbox[1]),
-                                    get_valid_number(bbox[3]),
-                                ]
-                                overlay['llbbox'] = llbbox
-                                overlay['bbox']['bounds'] = {
-                                    "minx": llbbox[0],
-                                    "miny": llbbox[1],
-                                    "maxx": llbbox[2],
-                                    "maxy": llbbox[3]
-                                }
-                                overlay['bbox']['crs'] = 'EPSG:4326'
-                            elif 'bbox' in capa:
-                                bbox = capa['bbox']
-                                if viewer_obj['map']['projection'] in bbox:
-                                    proj = viewer_obj['map']['projection']
-                                    bbox = capa['bbox'][proj]
-                                    overlay['bbox']['bounds'] = {
-                                        "minx": get_valid_number(bbox['bbox'][0]),
-                                        "miny": get_valid_number(bbox['bbox'][1]),
-                                        "maxx": get_valid_number(bbox['bbox'][2]),
-                                        "maxy": get_valid_number(bbox['bbox'][3])
-                                    }
-                                    overlay['bbox']['crs'] = bbox['srs']
-
-                        if 'nativeCrs' in layer:
-                            overlay['nativeCrs'] = layer['nativeCrs']
-                        else:
-                            try:
-                                from geonode.layers.models import Layer
-                                _gn_layer = Layer.objects.get(
-                                    store=overlay['store'],
-                                    alternate=overlay['name'])
-                                if _gn_layer.srid:
-                                    overlay['nativeCrs'] = _gn_layer.srid
-                            except Exception:
-                                tb = traceback.format_exc()
-                                logger.debug(tb)
-
-                        if 'bbox' in layer and not overlay['bbox']:
-                            if 'bounds' in layer['bbox']:
-                                overlay['bbox'] = layer['bbox']
-                            else:
-                                overlay['bbox']['bounds'] = {
-                                    "minx": get_valid_number(layer['bbox'][0],
-                                                             default=layer['bbox'][2],
-                                                             complementar=True),
-                                    "miny": get_valid_number(layer['bbox'][1],
-                                                             default=layer['bbox'][3],
-                                                             complementar=True),
-                                    "maxx": get_valid_number(layer['bbox'][2],
-                                                             default=layer['bbox'][0],
-                                                             complementar=True),
-                                    "maxy": get_valid_number(layer['bbox'][3],
-                                                             default=layer['bbox'][1],
-                                                             complementar=True)
-                                }
-                                overlay['bbox']['crs'] = layer['srs'] if 'srs' in layer else \
-                                    viewer_obj['map']['projection']
-
-                        overlay['featureInfo'] = self.get_layer_featureinfotemplate(layer)
-                    elif 'name' in layer and layer['name'] == 'Annotations':
-                        overlay = layer
-
-                    # Restore the id of ms2 layer
-                    if "extraParams" in layer and "msId" in layer["extraParams"]:
-                        overlay["id"] = layer["extraParams"]["msId"]
-                    overlays.append(overlay)
+                    overlay = self.get_overlay(viewer_obj, layer, wfs_url)
+                    if overlay:
+                        overlays.append(overlay)
                     if not selected or ('selected' in layer and layer['selected']):
                         selected = overlay
         except Exception:
