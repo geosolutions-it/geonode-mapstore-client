@@ -170,7 +170,7 @@ function Permissions({
             <ul className="gn-share-permissions-list">
                 <li className="gn-share-permissions-pinned">
                     {filteredEntries
-                        .filter((item) => item.permissions === 'owner'  )
+                        .filter((item) => item.permissions === 'owner' && !item.is_superuser)
                         .map((item) => {
                             return (<p className="gn-share-permissions-name" >
                                 <Message msgId="gnviewer.permissionOwner" />: {' '}
@@ -271,7 +271,7 @@ function Permissions({
             </div>
             <ul className="gn-share-permissions-list">
                 {filteredEntries
-                    .filter((item) => item.permissions !== 'owner'  )
+                    .filter((item) => item.permissions !== 'owner' && !item.is_superuser)
                     .map((entry, idx) => {
                         return (
                             <li

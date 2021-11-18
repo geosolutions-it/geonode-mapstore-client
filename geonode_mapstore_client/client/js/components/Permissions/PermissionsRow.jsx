@@ -76,7 +76,7 @@ PermissionsRow.defaultProps = {
         }
     ],
     clearable: false,
-    onChange: () => {}
+    onChange: () => { }
 };
 
 export default PermissionsRow;
