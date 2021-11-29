@@ -8,7 +8,16 @@
  */
 
 import expect from 'expect';
-import { resourceToLayerConfig, getResourcePermissions, availableResourceTypes, setAvailableResourceTypes } from '../ResourceUtils';
+import {
+    resourceToLayerConfig,
+    getResourcePermissions,
+    availableResourceTypes,
+    setAvailableResourceTypes,
+    getGeoNodeMapLayers,
+    toGeoNodeMapConfig,
+    compareBackgroundLayers,
+    toMapStoreMapConfig
+} from '../ResourceUtils';
 
 describe('Test Resource Utils', () => {
     it('should keep the wms params from the url if available', () => {
@@ -25,7 +34,7 @@ describe('Test Resource Utils', () => {
             perms: [],
             pk: 1
         });
-        expect(newLayer.params).toEqual({ map: 'name', map_resolution: '91' } );
+        expect(newLayer.params).toEqual({ map: 'name', map_resolution: '91' });
     });
 
     it('should parse arcgis dataset', () => {
@@ -62,7 +71,8 @@ describe('Test Resource Utils', () => {
         }];
         const permissionOptions = getResourcePermissions(data[0].allowed_perms.compact);
         expect(permissionOptions).toEqual({
-            test1: [{ value: 'none', labelId: `gnviewer.nonePermission` },
+            test1: [
+                { value: 'none', labelId: `gnviewer.nonePermission` },
                 { value: 'view', labelId: `gnviewer.viewPermission` }
             ]
         });
@@ -72,5 +82,313 @@ describe('Test Resource Utils', () => {
         setAvailableResourceTypes({ test: 'test data' });
 
         expect(availableResourceTypes).toEqual({ test: 'test data' });
+    });
+    it('should convert data blob to geonode maplayers', () => {
+        const data = {
+            map: {
+                layers: [
+                    { id: '01', type: 'osm', source: 'osm' },
+                    { id: '02', type: 'vector', features: [] },
+                    {
+                        id: '03',
+                        type: 'wms',
+                        name: 'geonode:layer',
+                        url: 'geoserver/wms',
+                        style: 'geonode:style',
+                        availableStyles: [{ name: 'custom:style', title: 'My Style' }],
+                        extendedParams: {
+                            mapLayer: {
+                                pk: 10
+                            }
+                        }
+                    }
+                ]
+            }
+        };
+        const mapLayers = getGeoNodeMapLayers(data);
+        expect(mapLayers.length).toBe(1);
+        expect(mapLayers[0]).toEqual({
+            pk: 10,
+            extra_params: {
+                msId: '03',
+                styles: [{ name: 'custom:style', title: 'My Style' }]
+            },
+            current_style: 'geonode:style',
+            name: 'geonode:layer'
+        });
+    });
+    it('should convert data blob to geonode map properties', () => {
+        const data = {
+            map: {
+                projection: 'EPSG:3857',
+                layers: [
+                    { id: '01', type: 'osm', source: 'osm' },
+                    { id: '02', type: 'vector', features: [] },
+                    {
+                        id: '03',
+                        type: 'wms',
+                        name: 'geonode:layer',
+                        url: 'geoserver/wms',
+                        style: 'geonode:style',
+                        availableStyles: [{ name: 'custom:style', title: 'My Style' }],
+                        extendedParams: {
+                            mapLayer: {
+                                pk: 10
+                            }
+                        }
+                    }
+                ]
+            }
+        };
+        const mapState = {
+            bbox: {
+                bounds: { minx: -10, miny: -10, maxx: 10, maxy: 10 },
+                crs: 'EPSG:4326'
+            }
+        };
+        const geoNodeMapConfig = toGeoNodeMapConfig(data, mapState);
+        expect(geoNodeMapConfig.maplayers.length).toBe(1);
+        expect(geoNodeMapConfig.srid).toBe('EPSG:3857');
+        expect(geoNodeMapConfig.bbox_polygon).toBeTruthy();
+        expect(geoNodeMapConfig.ll_bbox_polygon).toBeTruthy();
+    });
+    it('should be able to compare background layers with different ids', () => {
+        expect(compareBackgroundLayers({ type: 'osm', source: 'osm', id: '11' }, { type: 'osm', source: 'osm' })).toBe(true);
+    });
+    it('should transform a resource to a mapstore map config', () => {
+        const resource = {
+            maplayers: [
+                {
+                    pk: 10,
+                    current_style: 'geonode:style01',
+                    extra_params: {
+                        msId: '03'
+                    },
+                    dataset: {
+                        pk: 1
+                    }
+                }
+            ],
+            data: {
+                map: {
+                    layers: [
+                        { id: '01', type: 'osm', source: 'osm', group: 'background', visibility: true },
+                        { id: '02', type: 'vector', features: [] },
+                        {
+                            id: '03',
+                            type: 'wms',
+                            name: 'geonode:layer',
+                            url: 'geoserver/wms',
+                            style: 'geonode:style',
+                            extendedParams: {
+                                mapLayer: {
+                                    pk: 10
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+        const baseConfig = {
+            map: {
+                layers: [
+                    { type: 'osm', source: 'osm', group: 'background', visibility: true }
+                ]
+            }
+        };
+        const mapStoreMapConfig = toMapStoreMapConfig(resource, baseConfig);
+        expect(mapStoreMapConfig).toEqual(
+            {
+                map: {
+                    layers: [
+                        { type: 'osm', source: 'osm', group: 'background', visibility: true },
+                        { id: '02', type: 'vector', features: [] },
+                        {
+                            id: '03',
+                            type: 'wms',
+                            name: 'geonode:layer',
+                            url: 'geoserver/wms',
+                            style: 'geonode:style01',
+                            extendedParams: {
+                                mapLayer: {
+                                    pk: 10,
+                                    current_style: 'geonode:style01',
+                                    extra_params: {
+                                        msId: '03'
+                                    },
+                                    dataset: {
+                                        pk: 1
+                                    }
+                                }
+                            },
+                            availableStyles: []
+                        }
+                    ]
+                }
+            }
+        );
+    });
+    it('should transform a resource to a mapstore map config', () => {
+        const resource = {
+            maplayers: [
+                {
+                    pk: 10,
+                    current_style: 'geonode:style01',
+                    extra_params: {
+                        msId: '03'
+                    },
+                    dataset: {
+                        pk: 1
+                    }
+                }
+            ],
+            data: {
+                map: {
+                    layers: [
+                        { id: '01', type: 'osm', source: 'osm', group: 'background', visibility: true },
+                        { id: '02', type: 'vector', features: [] },
+                        {
+                            id: '03',
+                            type: 'wms',
+                            name: 'geonode:layer',
+                            url: 'geoserver/wms',
+                            style: 'geonode:style',
+                            extendedParams: {
+                                mapLayer: {
+                                    pk: 10
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+        const baseConfig = {
+            map: {
+                layers: [
+                    { type: 'osm', source: 'osm', group: 'background', visibility: true }
+                ]
+            }
+        };
+        const mapStoreMapConfig = toMapStoreMapConfig(resource, baseConfig);
+        expect(mapStoreMapConfig).toEqual(
+            {
+                map: {
+                    layers: [
+                        { type: 'osm', source: 'osm', group: 'background', visibility: true },
+                        { id: '02', type: 'vector', features: [] },
+                        {
+                            id: '03',
+                            type: 'wms',
+                            name: 'geonode:layer',
+                            url: 'geoserver/wms',
+                            style: 'geonode:style01',
+                            extendedParams: {
+                                mapLayer: {
+                                    pk: 10,
+                                    current_style: 'geonode:style01',
+                                    extra_params: {
+                                        msId: '03'
+                                    },
+                                    dataset: {
+                                        pk: 1
+                                    }
+                                }
+                            },
+                            availableStyles: []
+                        }
+                    ]
+                }
+            }
+        );
+    });
+    it('should transform a resource to a mapstore map config and update backgrounds', () => {
+        const resource = {
+            maplayers: [
+                {
+                    pk: 10,
+                    current_style: 'geonode:style01',
+                    extra_params: {
+                        msId: '03'
+                    },
+                    dataset: {
+                        pk: 1
+                    }
+                }
+            ],
+            data: {
+                map: {
+                    layers: [
+                        { id: '01', type: 'osm', source: 'osm', group: 'background', visibility: true },
+                        { id: '02', type: 'vector', features: [] },
+                        {
+                            id: '03',
+                            type: 'wms',
+                            name: 'geonode:layer',
+                            url: 'geoserver/wms',
+                            style: 'geonode:style',
+                            extendedParams: {
+                                mapLayer: {
+                                    pk: 10
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+        const baseConfig = {
+            map: {
+                layers: [
+                    {
+                        name: 'OpenTopoMap',
+                        provider: 'OpenTopoMap',
+                        source: 'OpenTopoMap',
+                        type: 'tileprovider',
+                        visibility: true,
+                        group: 'background'
+                    }
+                ]
+            }
+        };
+        const mapStoreMapConfig = toMapStoreMapConfig(resource, baseConfig);
+        expect(mapStoreMapConfig).toEqual(
+            {
+                map: {
+                    layers: [
+                        {
+                            name: 'OpenTopoMap',
+                            provider: 'OpenTopoMap',
+                            source: 'OpenTopoMap',
+                            type: 'tileprovider',
+                            visibility: true,
+                            group: 'background'
+                        },
+                        { id: '02', type: 'vector', features: [] },
+                        {
+                            id: '03',
+                            type: 'wms',
+                            name: 'geonode:layer',
+                            url: 'geoserver/wms',
+                            style: 'geonode:style01',
+                            extendedParams: {
+                                mapLayer: {
+                                    pk: 10,
+                                    current_style: 'geonode:style01',
+                                    extra_params: {
+                                        msId: '03'
+                                    },
+                                    dataset: {
+                                        pk: 1
+                                    }
+                                }
+                            },
+                            availableStyles: []
+                        }
+                    ]
+                }
+            }
+        );
     });
 });
