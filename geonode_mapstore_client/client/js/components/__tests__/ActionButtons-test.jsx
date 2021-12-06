@@ -9,7 +9,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import expect from 'expect';
-import ALink from '../ALink';
+import ActionButtons from '../ActionButtons';
 
 describe('ALink test', () => {
     beforeEach((done) => {
@@ -18,14 +18,16 @@ describe('ALink test', () => {
     });
 
     afterEach((done) => {
-        ReactDOM.unmountComponentAtNode(document.getElementById("container"));
+        ReactDOM.unmountComponentAtNode(document.getElementById('container'));
         document.body.innerHTML = '';
         setTimeout(done);
     });
 
-    it('render ALink', () => {
-        ReactDOM.render(<ALink />, document.getElementById("container"));
-        const aLink = document.querySelector('a');
-        expect(aLink).toExist();
+    it('render Action Button with defaults', () => {
+        ReactDOM.render(<ActionButtons />, document.getElementById('container'));
+        const actionButton = document.querySelector(
+            '.gn-resource-action-buttons'
+        );
+        expect(actionButton).toExist();
     });
 });
