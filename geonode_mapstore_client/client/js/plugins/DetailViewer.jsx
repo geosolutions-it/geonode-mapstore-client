@@ -33,9 +33,8 @@ import PropTypes from 'prop-types';
 import useDetectClickOut from '@js/hooks/useDetectClickOut';
 import OverlayContainer from '@js/components/OverlayContainer';
 import { withRouter } from 'react-router';
-import {
-    hashLocationToHref
-} from '@js/utils/SearchUtils';
+import { hashLocationToHref } from '@js/utils/SearchUtils';
+import Message from '@mapstore/framework/components/I18N/Message';
 import { layersSelector } from '@mapstore/framework/selectors/layers';
 
 const ConnectedDetailsPanel = connect(
@@ -59,7 +58,7 @@ const ConnectedDetailsPanel = connect(
     }
 )(DetailsPanel);
 
-const ButtonViewer = ({ onClick, hide, variant, size }) => {
+const ButtonViewer = ({ onClick, hide, variant, size, showMessage }) => {
     const handleClickButton = () => {
         onClick();
     };
@@ -70,7 +69,7 @@ const ButtonViewer = ({ onClick, hide, variant, size }) => {
             size={size}
             onClick={handleClickButton}
         >
-            <FaIcon name="info-circle" />
+            {!showMessage ? <FaIcon name="info-circle" /> : <Message msgId="gnviewer.editInfo"/>}
         </Button>
     ) : null;
 };
