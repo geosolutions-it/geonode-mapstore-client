@@ -11,10 +11,9 @@ import PropTypes from 'prop-types';
 import Menu from '@js/components/Menu';
 import BurgerMenu from '@js/components/Menu/BurgerMenu';
 import useResizeElement from '@js/hooks/useResizeElement';
-import FaIcon from '@js/components/FaIcon';
-import NavLink from '@js/components/Menu/NavLink';
+import BreadCrumb from '@js/components/BreadCrumb';
 
-const LeftContentMenu = ({ items, formatHref, query, variant, size }) => {
+const LeftContentMenu = ({ items, formatHref, query, variant, size, resourceName }) => {
     const navbarContentLeft = useRef();
     const navbarLeft = useRef();
     const { width: widthContentLeft } = useResizeElement(navbarContentLeft);
@@ -42,6 +41,7 @@ const LeftContentMenu = ({ items, formatHref, query, variant, size }) => {
                     query={query}
                     variant={variant}
                     size={size}
+                    resourceName={resourceName}
                 />
             )}
         </div>
@@ -80,7 +80,8 @@ const ActionNavbar = forwardRef(
             variant,
             size,
             resource,
-            titleItems
+            titleItems,
+            disableTitle
         },
         ref
     ) => {
@@ -88,29 +89,10 @@ const ActionNavbar = forwardRef(
             <nav ref={ref} className={`gn-menu gn-${variant}`} style={style}>
                 <div className="gn-menu-container">
                     <div className="gn-menu-content">
-                        <div className="gn-action-navbar-title">
-                            <div>
-                                <NavLink
-                                    href="#"
-                                    className="gn-action-navbar-breadcrumb-link"
-                                >
-                                    <FaIcon name="home" />
-                                </NavLink>
-                                <FaIcon
-                                    name="angle-right"
-                                    className="gn-action-navbar-breadcrumb-seperator"
-                                />
-                                <p
-                                    title={resource?.title}
-                                    className="gn-action-navbar-resource-title"
-                                >
-                                    {resource?.title}
-                                </p>
-                            </div>
-                            {titleItems.map(({ Component, name }) => (
-                                <Component key={name} variant="info"/>
-                            ))}
-                        </div>
+                        {!disableTitle && <BreadCrumb
+                            resource={resource}
+                            titleItems={titleItems}
+                        />}
                         {leftItems.length > 0 && (
                             <LeftContentMenu
                                 items={leftItems}
@@ -118,6 +100,7 @@ const ActionNavbar = forwardRef(
                                 query={query}
                                 variant={variant}
                                 size={size}
+                                resourceName={resource.title}
                             />
                         )}
                         {rightItems.length > 0 && (
@@ -142,7 +125,8 @@ ActionNavbar.propTypes = {
     rightItems: PropTypes.array,
     query: PropTypes.object,
     formatHref: PropTypes.func,
-    variant: PropTypes.string
+    variant: PropTypes.string,
+    disableTitle: PropTypes.bool
 };
 
 ActionNavbar.defaultProps = {
@@ -151,7 +135,8 @@ ActionNavbar.defaultProps = {
     titleItems: [],
     query: {},
     formatHref: () => '#',
-    variant: 'primary'
+    variant: 'primary',
+    disableTitle: false
 };
 
 export default ActionNavbar;
