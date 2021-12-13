@@ -30,6 +30,8 @@ from dynamic_rest.fields.fields import DynamicRelationField
 from geonode.geoapps.models import GeoAppData
 from geonode.base.api.serializers import ResourceBaseSerializer
 
+from mapstore2_adapter.geoapps.utils import update_geoapp_thumbnail
+
 from ..models import Dashboard
 
 logger = logging.getLogger(__name__)
@@ -117,6 +119,9 @@ class DashboardSerializer(ResourceBaseSerializer):
         # Create a new instance
         _instance = Dashboard.objects.create(**validated_data)
 
+        if _instance:
+            update_geoapp_thumbnail(_instance, validated_data)
+
         if _instance and _data:
             try:
                 _geo_app, _created = GeoAppData.objects.get_or_create(resource=_instance)
@@ -153,6 +158,9 @@ class DashboardSerializer(ResourceBaseSerializer):
             instance.refresh_from_db()
         except Exception as e:
             raise ValidationError(e)
+
+        if instance:
+            update_geoapp_thumbnail(instance, validated_data)
 
         if instance and _data:
             try:

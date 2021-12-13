@@ -30,6 +30,8 @@ from dynamic_rest.fields.fields import DynamicRelationField
 from geonode.geoapps.models import GeoAppData
 from geonode.base.api.serializers import ResourceBaseSerializer
 
+from mapstore2_adapter.geoapps.utils import update_geoapp_thumbnail
+
 from ..models import GeoStory
 
 logger = logging.getLogger(__name__)
@@ -86,6 +88,7 @@ class GeoStorySerializer(ResourceBaseSerializer):
         request = self.context.get('request')
         if request:
             data['owner'] = request.user
+
         return data
 
     def create(self, validated_data):
@@ -117,6 +120,9 @@ class GeoStorySerializer(ResourceBaseSerializer):
 
         # Create a new instance
         _instance = GeoStory.objects.create(**validated_data)
+
+        if _instance:
+            update_geoapp_thumbnail(_instance, validated_data)
 
         if _instance and _data:
             try:
@@ -154,6 +160,9 @@ class GeoStorySerializer(ResourceBaseSerializer):
             instance.refresh_from_db()
         except Exception as e:
             raise ValidationError(e)
+
+        if instance:
+            update_geoapp_thumbnail(instance, validated_data)
 
         if instance and _data:
             try:
