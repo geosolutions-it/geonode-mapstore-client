@@ -365,7 +365,7 @@ export const getResourcePermissions = (options) => {
     return permissionsOptions;
 };
 
-function parseStyleName({ workspace, name }) {
+export function parseStyleName({ workspace, name }) {
     const nameParts = name.split(':');
     if (nameParts.length > 1) {
         return name;
@@ -376,7 +376,7 @@ function parseStyleName({ workspace, name }) {
     if (isObject(workspace) && workspace?.name !== undefined) {
         return `${workspace.name}:${name}`;
     }
-    return  name;
+    return name;
 }
 
 export function cleanStyles(styles = [], excluded = []) {
@@ -496,3 +496,19 @@ export function toMapStoreMapConfig(resource, baseConfig) {
         }
     };
 }
+
+/**
+ * Parse metadata information from getStyleCodeByName api response
+ * @param {Array} entry Array containing layer metadata information
+ * @returns {Object} metadata object
+ */
+export const parseMetadata = ({ entry }) => {
+    const metadata = {};
+    entry.forEach((entryObj) => {
+        const entryArray = Object.values(entryObj);
+        if (entryArray.length > 1) {
+            metadata[entryArray[0]] = entryArray[1];
+        }
+    });
+    return metadata;
+};

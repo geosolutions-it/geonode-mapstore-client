@@ -16,7 +16,9 @@ import {
     getGeoNodeMapLayers,
     toGeoNodeMapConfig,
     compareBackgroundLayers,
-    toMapStoreMapConfig
+    toMapStoreMapConfig,
+    parseStyleName,
+    parseMetadata
 } from '../ResourceUtils';
 
 describe('Test Resource Utils', () => {
@@ -393,5 +395,33 @@ describe('Test Resource Utils', () => {
                 }
             }
         );
+    });
+
+    it('should parse style name into accepted format', () => {
+        const styleObj = {
+            name: 'testName',
+            workspace: 'test'
+        };
+
+        const pasrsedStyleName = parseStyleName(styleObj);
+
+        expect(pasrsedStyleName).toBe('test:testName');
+    });
+
+    it('should extract metadata information from metadata object', () => {
+        const metadata = {
+            entry: [{
+                a: 'key1',
+                b: 'test'
+            },
+            {
+                a: 'key2',
+                b: 'test2'
+            }]
+        };
+
+        const metadataObj = parseMetadata(metadata);
+
+        expect(metadataObj).toEqual({key1: 'test', key2: 'test2'});
     });
 });
