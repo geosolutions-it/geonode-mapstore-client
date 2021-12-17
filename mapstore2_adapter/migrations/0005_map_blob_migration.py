@@ -3,10 +3,11 @@
 
 
 from django.db import migrations
-
+import json
 import logging
+
 logger = logging.getLogger(__name__)
-   
+
 SQL_MIGRATION = '''WITH mapstore_blob AS (
     SELECT
         msd.resource_id, msd.blob
@@ -20,6 +21,16 @@ FROM (select resource_id,"blob" from mapstore_blob gg) AS subquery
 WHERE base_resourcebase.id=subquery.resource_id;
 '''
 
+def convert_map_blob(apps, _):
+    model = apps.get_model('base', 'ResourceBase')
+    for item in model.objects.filter(resource_type='map'):
+        if isinstance(item.blob, str):
+            try:
+                new_blob = json.loads(item.blob)
+                model.objects.filter(id=item.id).update(blob=new_blob)
+            except Exception as e:
+                logger.exception(e)
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -28,5 +39,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL(SQL_MIGRATION)
+        migrations.RunSQL(SQL_MIGRATION, migrations.RunPython.noop),
+        migrations.RunPython(convert_map_blob, migrations.RunPython.noop)
     ]
