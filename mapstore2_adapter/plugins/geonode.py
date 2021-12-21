@@ -125,9 +125,9 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
         info = {}
         info['canDelete'] = False
         info['canEdit'] = False
-        info['description'] = viewer_obj['about']['abstract']
+        info['description'] = viewer_obj['about']['abstract'] if viewer_obj.get('about') else ''
         info['id'] = map_id
-        info['name'] = viewer_obj['about']['title']
+        info['name'] = viewer_obj['about']['title']if viewer_obj.get('about') else ''
 
         if map_id:
             from mapstore2_adapter import fixup_map
@@ -287,7 +287,8 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                 logger.debug(tb)
 
         data['version'] = 2
-        data['map']['info'] = info
+        if data.get('map'):
+            data['map']['info'] = info
 
         # Default Catalogue Services Definition
         try:
