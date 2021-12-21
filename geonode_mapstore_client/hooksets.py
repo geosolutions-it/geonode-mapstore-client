@@ -160,18 +160,15 @@ class MapStoreHookSet(BaseHookSet):
     def metadata_update_redirect(self, url, request=None):
         url = url.replace('/metadata', '')
         resource_identifier = url.split('/')[-1]
-        if isinstance(resource_identifier, int):
-            try:
-                dataset = ResourceBase.objects.get(id=int(resource_identifier))
-            except ValueError:
-                dataset = ResourceBase.objects.get(alternate=resource_identifier)
-        else:
+        try:
+            resource = ResourceBase.objects.get(id=int(resource_identifier))
+        except ValueError:
             from geonode.layers.views import _resolve_dataset
-            dataset = _resolve_dataset(
+            resource = _resolve_dataset(
                 request,
                 resource_identifier,
                 'base.change_resourcebase',
                 'Not allowed')
-        resource_identifier = dataset.id
-        resource_type = dataset.resource_type
+        resource_identifier = resource.id
+        resource_type = resource.resource_type
         return resource_detail_url(resource_type, resource_identifier)
