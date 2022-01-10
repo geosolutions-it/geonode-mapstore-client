@@ -7,4 +7,4 @@ The GeoNode MapStore Client application can be customized with the following app
 - [Edit localConfig.json via template override](override-local-config.md)
 
 Advanced customizations:
-- [Install a custom branch of the geonode-mapstore-client in the geonode-project](custom-branch)
+- [Install a custom branch of the geonode-mapstore-client in the geonode-project](custom-branch.md)
