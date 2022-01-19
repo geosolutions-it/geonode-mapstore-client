@@ -22,21 +22,24 @@ const ResourceStatus = ({ resource = {} }) => {
     } = getResourceStatuses(resource);
     return !isEmpty(resource)
         ? (
-            <p>
-                {(!isProcessing && !isApproved) && <span className={'gn-resource-status gn-resource-status-warning'} >
-                    <Message msgId={'gnviewer.underApproval'} />
+            <p className="gn-resource-status-text">
+                {(!isProcessing && !isApproved) && <span className="gn-resource-status gn-resource-status-pending" >
+                    <Message msgId="gnviewer.notApproved" />
                 </span>}
-                {(!isProcessing && !isPublished) && <span className={'gn-resource-status gn-resource-status-danger'} >
-                    <Message msgId={'gnviewer.unpublish'} />
+                {(!isProcessing && !isApproved && !isPublished) && <span className="gn-resource-status gn-resource-status-pending" >
+                    {' '}-{' '}
                 </span>}
-                {isDeleting && <span className={'gn-resource-status gn-resource-status-danger'} >
-                    <Message msgId={'gnviewer.deleting'} />
+                {(!isProcessing && !isPublished) && <span className="gn-resource-status gn-resource-status-pending" >
+                    <Message msgId="gnhome.unpublished" />
                 </span>}
-                {isDeleted && <span className={'gn-resource-status gn-resource-status-danger'} >
-                    <Message msgId={'gnviewer.deleted'} />
+                {isDeleting && <span className="gn-resource-status gn-resource-status-danger" >
+                    <Message msgId="gnviewer.deleting" />
                 </span>}
-                {isCopying && <span className={'gn-resource-status gn-resource-status-primary'} >
-                    <Message msgId={'gnviewer.cloning'} />
+                {isDeleted && <span className="gn-resource-status gn-resource-status-danger" >
+                    <Message msgId="gnviewer.deleted" />
+                </span>}
+                {isCopying && <span className="gn-resource-status gn-resource-status-primary" >
+                    <Message msgId="gnviewer.cloning" />
                 </span>}
             </p>
         )
