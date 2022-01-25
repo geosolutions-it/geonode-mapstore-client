@@ -575,5 +575,3 @@ export const parseMapConfig = (mapResponse, resource = {}) => {
         type: 'map'
     };
 };
-
-
