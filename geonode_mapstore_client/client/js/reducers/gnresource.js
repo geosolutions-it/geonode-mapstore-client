@@ -26,7 +26,8 @@ import {
     RESOURCE_CONFIG_ERROR,
     SET_RESOURCE_COMPACT_PERMISSIONS,
     UPDATE_RESOURCE_COMPACT_PERMISSIONS,
-    RESET_GEO_LIMITS
+    RESET_GEO_LIMITS,
+    ENABLE_MAP_THUMBNAIL_VIEWER
 } from '@js/actions/gnresource';
 
 import {
@@ -158,6 +159,13 @@ function gnresource(state = defaultState, action) {
                 ...state?.data,
                 updatingThumbnail: true
             }
+        };
+    }
+
+    case ENABLE_MAP_THUMBNAIL_VIEWER: {
+        return {
+            ...state,
+            showMapThumbnail: action.enabled
         };
     }
 

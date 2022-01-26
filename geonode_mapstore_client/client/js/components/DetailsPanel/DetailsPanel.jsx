@@ -27,7 +27,8 @@ import mapTypeHOC from '@mapstore/framework/components/map/enhancers/mapType';
 import AuthorInfo from '@js/components/AuthorInfo/AuthorInfo';
 import Loader from '@mapstore/framework/components/misc/Loader';
 import { getUserName } from '@js/utils/SearchUtils';
-import FitBounds from '@mapstore/framework/components/geostory/common/map/FitBounds';
+import ZoomTo from '@js/components/ZoomTo';
+import { boundsToExtentString } from '@js/utils/CoordinatesUtils';
 
 const Map = mapTypeHOC(BaseMap);
 Map.displayName = 'Map';
@@ -124,15 +125,12 @@ const DefinitionListContainer = ({itemslist}) => {
 const MapThumbnailView = ({ initialBbox, layers, onMapThumbnail, onClose, savingThumbnailMap } ) => {
 
     const [currentBbox, setCurrentBbox] = useState();
+    const { bounds, crs } = initialBbox;
+    const extent = boundsToExtentString(bounds, crs);
 
     function handleOnMapViewChanges(center, zoom, bbox) {
         setCurrentBbox(bbox);
     }
-
-    const { bounds, crs } = initialBbox;
-    const { minx, miny, maxx, maxy } = bounds;
-    const extent = [minx, miny, maxx, maxy];
-    const projection = crs;
 
     return (
         <div>
@@ -158,21 +156,15 @@ const MapThumbnailView = ({ initialBbox, layers, onMapThumbnail, onClose, saving
                         ...(layers ? layers : [])
                     ]}
                 >
-                    <FitBounds
-                        mapType="openlayers"
-                        active
-                        geometry={extent}
-                        duration={300}
-                        geometryProjection={projection}
-                    />
+                    <ZoomTo extent={extent} />
                 </Map>
                 {savingThumbnailMap && <div className="gn-details-thumbnail-loader">
                     <Loader size={50} />
                 </div>
                 }
             </div>
-            <div className="gn-detail-extent-action" >
-                <Button className="btn-primary" onClick={() => onMapThumbnail(currentBbox)} ><Message msgId={"gnhome.apply"} /></Button><Button onClick={() => onClose() }><i className="fa fa-close"/></Button></div>
+            <div className="gn-detail-extent-action">
+                <Button className="btn-primary" onClick={() => onMapThumbnail(currentBbox)} ><Message msgId={"gnhome.apply"} /></Button><Button onClick={() => onClose(false) }><i className="fa fa-close"/></Button></div>
         </div>
     );
 
@@ -208,7 +200,9 @@ function DetailsPanel({
     isThumbnailChanged,
     onResourceThumbnail,
     resourceThumbnailUpdating,
-    initialBbox
+    initialBbox,
+    enableMapViewer,
+    onClose
 }) {
     const detailsContainerNode = useRef();
     const isMounted = useRef();
@@ -254,16 +248,6 @@ function DetailsPanel({
     const resourceCanPreviewed = resource?.pk && canPreviewed && canPreviewed(resource);
     const documentDownloadUrl = (resource?.href && resource?.href.includes('download')) ? resource?.href : undefined;
     const metadataDetailUrl = resource?.pk && getMetadataDetailUrl(resource);
-
-    const [enableMapViewer, setEnableMapViewer] = useState(false);
-
-    const handleEnableMapViewer = () => {
-        setEnableMapViewer(false);
-    };
-
-    const handleMapViewer = () => {
-        setEnableMapViewer(!enableMapViewer);
-    };
 
     const validateDataType = (data) => {
 
@@ -504,7 +488,7 @@ function DetailsPanel({
                                 (resource.resource_type === ResourceTypes.MAP || resource.resource_type === ResourceTypes.DATASET) &&
                                 ( <><MapThumbnailButtonToolTip
                                     variant="default"
-                                    onClick={handleMapViewer}
+                                    onClick={() => onClose(!enableMapViewer)}
                                     className="map-thumbnail"
                                     tooltip={<Message msgId="gnviewer.saveMapThumbnail" />}
                                     tooltipPosition={"top"}
@@ -520,7 +504,7 @@ function DetailsPanel({
                                 : <MapThumbnailView
                                     layers={layers}
                                     onMapThumbnail={onMapThumbnail}
-                                    onClose={handleEnableMapViewer}
+                                    onClose={onClose}
                                     savingThumbnailMap={savingThumbnailMap}
                                     initialBbox={initialBbox}
                                 />
@@ -532,16 +516,9 @@ function DetailsPanel({
 
                     <div className="gn-details-panel-content-text">
                         <div className="gn-details-panel-title" >
-                            <div className="gn-details-panel-title-flex">
-                                <div>
-                                    <span className="gn-details-panel-title-icon" ><FaIcon name={icon} /> </span> <EditTitle disabled={!activeEditMode} tagName="h1"  title={resource?.title} onEdit={editTitle} >
+                            <span className="gn-details-panel-title-icon" ><FaIcon name={icon} /> </span> <EditTitle disabled={!activeEditMode} tagName="h1"  title={resource?.title} onEdit={editTitle} >
 
-                                    </EditTitle>
-                                </div>
-                                <div>
-                                    <ResourceStatus resource={resource} />
-                                </div>
-                            </div>
+                            </EditTitle>
 
                             {
                                 <div className="gn-details-panel-tools">
@@ -586,6 +563,7 @@ function DetailsPanel({
 
 
                         </div>
+                        <ResourceStatus resource={resource} />
                         {<p className="gn-details-panel-meta-text">
                             {resource?.owner &&  <div>{resource?.owner.avatar &&
                             <img src={resource?.owner.avatar} alt={getUserName(resource?.owner)} className="gn-card-author-image" />
