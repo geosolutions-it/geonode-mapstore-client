@@ -12,12 +12,16 @@ import FaIcon from '@js/components/FaIcon';
 import Button from '@js/components/Button';
 import Badge from '@js/components/Badge';
 import Message from '@mapstore/framework/components/I18N/Message';
+import Spinner from '@js/components/Spinner';
+
 
 function PendingUploadCard({
     missingExt,
     baseName,
     onRemove,
-    filesExt
+    filesExt,
+    loading,
+    progress
 }) {
     return (
         <div className="gn-upload-card">
@@ -35,15 +39,36 @@ function PendingUploadCard({
                     <Message msgId="gnviewer.missingFiles"/>: {missingExt.join(', ')}
                 </div>
             </div>}
-            {<ul>
-                {filesExt.map(ext => {
-                    return (
-                        <li key={ext}>
-                            <Badge>.{ext}</Badge>
-                        </li>
-                    );
-                })}
-            </ul>}
+            <div className="gn-upload-card-bottom">
+                <ul>
+                    {filesExt.map(ext => {
+                        return (
+                            <li key={ext}>
+                                <Badge>.{ext}</Badge>
+                            </li>
+                        );
+                    })}
+                </ul>
+                {loading && progress && <div className="gn-upload-card-progress-read">{progress?.[baseName] ? `${progress?.[baseName]}%` : <Spinner />}</div>}
+            </div>
+            {loading && progress && <div style={{position: 'relative'}}>
+                <div
+                    className="gn-upload-card-progress"
+                    style={{
+                        width: '100%',
+                        height: 2
+                    }}
+                >
+                    <div
+                        style={{
+                            width: `${progress?.[baseName]}%`,
+                            height: 2,
+                            transition: '0.3s all'
+                        }}
+                    >
+                    </div>
+                </div>
+            </div>}
         </div>
     );
 }
