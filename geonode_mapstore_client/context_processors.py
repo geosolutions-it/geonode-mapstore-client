@@ -29,7 +29,7 @@ def resource_urls(request):
         'DEFAULT_MAP_ZOOM': getattr(settings, "DEFAULT_MAP_ZOOM", 0),
         'DEFAULT_TILE_SIZE': getattr(settings, "DEFAULT_TILE_SIZE", 512),
         'DATASET_MAX_UPLOAD_SIZE': get_max_upload_size("dataset_upload_size"),
-        'DOCUMENT_MAX_UPLOAD_SIZE': get_max_upload_size("documet_upload_size"),
+        'DOCUMENT_MAX_UPLOAD_SIZE': get_max_upload_size("document_upload_size"),
         'DEFAULT_LAYER_FORMAT': getattr(settings, "DEFAULT_LAYER_FORMAT", 'image/png'),
         'ALLOWED_DOCUMENT_TYPES': getattr(settings, "ALLOWED_DOCUMENT_TYPES", []),
         'LANGUAGES': getattr(settings, "LANGUAGES", []),
