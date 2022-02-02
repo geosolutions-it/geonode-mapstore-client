@@ -62,6 +62,11 @@ def get_base_left_topbar_menu(context):
             "type": "link",
             "href": "/catalogue/#/search/?f=dashboard",
             "label": "Dashboards"
+        },
+        {
+            "type": "link",
+            "href": "/catalogue/#/search/?f=featured",
+            "label": "Featured"
         }
     ]
 
@@ -74,6 +79,11 @@ def get_base_right_topbar_menu(context):
     if is_mobile:
         return []
 
+    home = {
+        "type": "link",
+        "href": "/",
+        "label": "Home"
+    }
     user = context.get('request').user
     about = {
             "label": "About",
@@ -112,7 +122,7 @@ def get_base_right_topbar_menu(context):
                 "label": "Create group"
             }
         ])
-    return [about]
+    return [home, about]
 
 
 @register.simple_tag(takes_context=True)
