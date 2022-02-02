@@ -1,5 +1,6 @@
 {% load static %}
 {% load get_menu_json %}
+{% load catalogue_urls %}
 {% get_user_menu as USER_MENU %}
 
 {% block extra_style %}
@@ -11,7 +12,7 @@
                 {% block left_menu %}
                 <ul class="gn-menu-list">
                     <li>
-                        <a href="{% block logo_href %}#{% endblock %}">
+                        <a href="{% block logo_href %}{% catalogue_home %}{% endblock %}">
                             {% if custom_theme.logo and custom_theme.logo.url %}
                                 <img src="{{ custom_theme.logo.url }}">
                             {% else %}
