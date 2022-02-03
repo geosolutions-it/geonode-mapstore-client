@@ -11,6 +11,7 @@
 from django.apps import AppConfig as BaseAppConfig
 from django.utils.translation import ugettext_lazy as _
 from django.apps import apps
+from django.conf import settings as django_settings
 
 
 def run_setup_hooks(*args, **kwargs):
@@ -22,6 +23,15 @@ def run_setup_hooks(*args, **kwargs):
         url(r'^', include('mapstore2_adapter.geoapps.geostories.api.urls')),
         url(r'^', include('mapstore2_adapter.geoapps.dashboards.api.urls')),
     ]
+    
+    # adding default format for metadata schema validation
+    django_settings.EXTRA_METADATA_SCHEMA = {
+        **django_settings.EXTRA_METADATA_SCHEMA,
+        **{
+            "geostory": django_settings.DEFAULT_EXTRA_METADATA_SCHEMA,
+            "dashboard": django_settings.DEFAULT_EXTRA_METADATA_SCHEMA 
+        }
+    }
 
 
 class AppConfig(BaseAppConfig):
