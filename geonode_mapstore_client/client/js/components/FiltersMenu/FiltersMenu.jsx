@@ -11,6 +11,7 @@ import Dropdown from '@js/components/Dropdown';
 import Button from '@js/components/Button';
 import Badge from '@js/components/Badge';
 import Message from '@mapstore/framework/components/I18N/Message';
+import { getConfigProp } from '@mapstore/framework/utils/ConfigUtils';
 import FaIcon from '@js/components/FaIcon';
 import useLocalStorage from '@js/hooks/useLocalStorage';
 import Menu from '@js/components/Menu';
@@ -31,11 +32,13 @@ const FiltersMenu = forwardRef(({
     loading
 }, ref) => {
 
+    const { isMobile } = getConfigProp('geoNodeSettings');
     const selectedSort = orderOptions.find(({ value }) => order === value);
     const [cardLayoutStyle, setCardLayoutStyle] = useLocalStorage('layoutCardsStyle', 'grid');
     function handleToggleCardLayoutStyle() {
         setCardLayoutStyle(cardLayoutStyle === 'grid' ? 'list' : 'grid');
     }
+
     return (
         <div
             className="gn-filters-menu gn-menu gn-default"
@@ -50,7 +53,7 @@ const FiltersMenu = forwardRef(({
                             size="sm"
                             onClick={onClick}
                         >
-                            <FaIcon name="filter" />
+                            {isMobile ? <FaIcon name="filter" /> : 'Filter'}
                         </Button>
                         {' '}
                         <Badge>
