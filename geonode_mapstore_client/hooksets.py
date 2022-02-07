@@ -75,6 +75,9 @@ class MapStoreHookSet(BaseHookSet):
     def dataset_list_url(self):
         return resource_list_url('dataset')
 
+    def dataset_upload_url(self):
+        return '/catalogue/#/upload/dataset'
+
     def dataset_detail_url(self, resource):
         return resource_detail_url('dataset', resource.id)
 
