@@ -155,7 +155,7 @@ class GeoNodeMapStore2ConfigConverter(BaseMapStore2ConfigConverter):
                         layer_ = viewerobj_layers.get(layer['name'])
                         if layer_:
                             layer['featureInfo'] = self.get_layer_featureinfotemplate(layer_)
-                            map_layers.append(layer)
+                        map_layers.append(layer)
                 # the dynamic layer has already been processed by GeoNode upstream views
                 # but we can't tell if it was the one from GET params or not, so we parse it again
                 layer_name = request.GET.get('layer_name')
