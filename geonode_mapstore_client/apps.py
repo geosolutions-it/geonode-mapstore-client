@@ -48,6 +48,15 @@ def run_setup_hooks(*args, **kwargs):
         url(r'^api/v2/', include(router.urls)),
     ]
 
+    # adding default format for metadata schema validation
+    settings.EXTRA_METADATA_SCHEMA = {
+        **settings.EXTRA_METADATA_SCHEMA,
+        **{
+            "geostory": settings.DEFAULT_EXTRA_METADATA_SCHEMA,
+            "dashboard": settings.DEFAULT_EXTRA_METADATA_SCHEMA 
+        }
+    }
+
 def connect_geoserver_style_visual_mode_signal():
     from geonode.geoserver.signals import geoserver_automatic_default_style_set
     from geonode_mapstore_client.utils import set_default_style_to_open_in_visual_mode
