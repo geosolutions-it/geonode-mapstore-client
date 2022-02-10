@@ -43,7 +43,7 @@
             </div>
             <div class="gn-menu-content-center">
                 {% block center_menu %}
-                    {% include './search_bar.html' %}
+                    {% include './search_bar.html' with search_bar_id='gn-search-bar' %}
                 {% endblock %}
             </div>
             <div class="gn-menu-content-right">
@@ -60,7 +60,7 @@
 </nav>
 <div id="{{ id|default:'' }}-bottom">
     {% block bottom_menu %}
-        {% include './search_bar.html' %}
+        {% include './search_bar.html' with search_bar_id='gn-search-bar-bottom' %}
     {% endblock %}
 </div>
 {% block extra_script %}
