@@ -147,7 +147,8 @@ export const getResources = ({
             ...(sort && { sort: isArray(sort) ? sort : [ sort ]}),
             page,
             page_size: pageSize,
-            'filter{metadata_only}': false // exclude resources such as services
+            'filter{metadata_only}': false, // exclude resources such as services
+            include: ['executions']
         }
     })
         .then(({ data }) => {
@@ -286,7 +287,11 @@ export const setFavoriteResource = (pk, favorite) => {
 };
 
 export const getResourceByPk = (pk) => {
-    return axios.get(parseDevHostname(`${endpoints[RESOURCES]}/${pk}`))
+    return axios.get(parseDevHostname(`${endpoints[RESOURCES]}/${pk}`), {
+        params: {
+            include: ['executions']
+        }
+    })
         .then(({ data }) => data.resource);
 };
 
