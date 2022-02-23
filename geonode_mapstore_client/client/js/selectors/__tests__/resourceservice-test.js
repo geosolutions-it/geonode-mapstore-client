@@ -7,18 +7,58 @@
  */
 
 import expect from 'expect';
-import { getCurrentProcesses } from '../resourceservice';
+import { getCurrentProcesses, processingDownload, generalResourceDownload, featuredResourceDownload } from '../resourceservice';
 
-const testState = {
-    resourceservice: {
-        processes: [{ name: 'test process' }]
-    }
-};
 
 describe('resourceservice selector', () => {
 
     it('test getCurrentProcesses', () => {
+        const testState = {
+            resourceservice: {
+                processes: [{ name: 'test process' }]
+            }
+        };
         expect(getCurrentProcesses(testState)).toEqual([{ name: 'test process' }]);
+    });
+
+    it('test processingDownload', () => {
+        const testState = {
+            gnresource: {
+                data: {
+                    pk: 1
+                }
+            },
+            resourceservice: {
+                downloads: [{  pk: 1 }]
+            }
+        };
+        expect(processingDownload(testState)).toEqual(true);
+    });
+
+    it('test featuredResourceDownload', () => {
+        const testState = {
+            resourceservice: {
+                downloads: [{  pk: 1 }]
+            },
+            gnsearch: {
+                featuredResources: {
+                    resources: [{  pk: 1 }]
+                }
+            }
+        };
+        expect(featuredResourceDownload(testState)).toEqual([{ pk: 1 }]);
+    });
+
+    it('test generalResourceDownload', () => {
+        const testState = {
+            resourceservice: {
+                downloads: [{  pk: 1 }]
+            },
+            gnsearch: {
+                resources: [{  pk: 1 }]
+            }
+        };
+        expect(generalResourceDownload(testState)).toEqual([{ pk: 1 }]);
     });
 
 });

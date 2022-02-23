@@ -714,6 +714,17 @@ export const copyResource = (resource) => {
         .then(({ data }) => data);
 };
 
+export const downloadResource = (resource) => {
+    const url = resource.download_url || resource.href;
+    return axios.get(url, {
+        responseType: 'blob',
+        headers: {
+            'Content_type': 'application/jsson'
+        }
+    })
+        .then(({ data, headers }) => ({output: data, headers}));
+};
+
 export const getPendingUploads = () => {
     return axios.get(parseDevHostname(endpoints[UPLOADS]), {
         params: {
@@ -813,6 +824,7 @@ export default {
     updateCompactPermissionsByPk,
     deleteResource,
     copyResource,
+    downloadResource,
     getDatasets,
     getPendingUploads,
     getProcessedUploadsById,
