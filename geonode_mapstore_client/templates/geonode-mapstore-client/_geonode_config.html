@@ -44,6 +44,7 @@
         const defaultTileSize = geoNodeSettings.DEFAULT_TILE_SIZE || 512;
         const datasetMaxUploadSize = geoNodeSettings.DATASET_MAX_UPLOAD_SIZE;
         const documentMaxUploadSize = geoNodeSettings.DOCUMENT_MAX_UPLOAD_SIZE;
+        const maxParallelUploads = geoNodeSettings.MAX_PARALLEL_UPLOADS
         const defaultLayerFormat = geoNodeSettings.DEFAULT_LAYER_FORMAT || 'image/png';
         const catalogueServices = geoNodeSettings.CATALOGUE_SERVICES || {};
         const catalogueSelectedService = geoNodeSettings.CATALOGUE_SELECTED_SERVICE || '';
@@ -93,6 +94,7 @@
                     isMobile: isMobile,
                     datasetMaxUploadSize: datasetMaxUploadSize,
                     documentMaxUploadSize: documentMaxUploadSize,
+                    maxParallelUploads: maxParallelUploads,
                 },
                 geoNodeConfiguration: {
                     cardsMenu: {
