@@ -90,17 +90,10 @@ const Cards = withResizeDetector(({
             style={cardLayoutStyle === 'list' ? {} : containerStyle}
         >
             {resources.map((resource, idx) => {
-                const {
-                    isProcessing,
-                    isDeleted
-                } = getResourceStatuses(resource);
+                const { isProcessing } = getResourceStatuses(resource);
                 // enable allowedOptions (menu cards)
                 const allowedOptions =  !isProcessing ? options
                     .filter((opt) => hasPermissionsTo(resource?.perms, opt?.perms, 'resource')) : [];
-
-                if (isDeleted) {
-                    return null;
-                }
 
                 return (
                     <li
@@ -108,7 +101,6 @@ const Cards = withResizeDetector(({
                         style={(layoutSpace(idx))}
                     >
                         <ResourceCard
-                            className={`${isDeleted ? 'deleted' : ''}`}
                             active={isCardActive(resource)}
                             data={resource}
                             formatHref={formatHref}
@@ -118,7 +110,7 @@ const Cards = withResizeDetector(({
                             actions={actions}
                             onAction={onAction}
                             loading={isProcessing}
-                            readOnly={isDeleted || isProcessing}
+                            readOnly={isProcessing}
                             onDownload={onDownload}
                             downloading={downloading?.find((download) => download.pk === resource.pk) ? true : false}
                         />

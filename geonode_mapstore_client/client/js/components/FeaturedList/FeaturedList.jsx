@@ -36,6 +36,7 @@ const FeaturedList = withResizeDetector(({
 }) => {
 
     const [count, setCount] = useState();
+
     const nextIconStyles = {
         fontSize: '1rem',
         ...(!isNextPageAvailable || loading ? {color: 'grey', cursor: 'not-allowed'} : {cursor: 'pointer'})
