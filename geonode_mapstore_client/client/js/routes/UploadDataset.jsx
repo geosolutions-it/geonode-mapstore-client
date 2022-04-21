@@ -207,6 +207,13 @@ function UploadList({
             }))
                 .then((responses) => {
                     const successfulUploads = responses.filter(({ status }) => status === 'success');
+                    const errorUploads = responses.filter(({ status }) => status === 'error');
+                    if (errorUploads.length > 0) {
+                        errorUploads.forEach((upload) => {
+                            const { baseName } = upload;
+                            waitingUploads[baseName].error = true;
+                        });
+                    }
                     if (successfulUploads.length > 0) {
                         const successfulUploadsIds = successfulUploads.map(({ data }) => data?.id);
                         const successfulUploadsNames = successfulUploads.map(({ baseName }) => baseName);
