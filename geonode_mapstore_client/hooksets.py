@@ -9,10 +9,12 @@
 #
 #########################################################################
 
+from urllib.parse import urlparse
 try:
     import json
 except ImportError:
     from django.utils import simplejson as json
+from django.conf import settings
 
 from geonode.client.hooksets import BaseHookSet
 from mapstore2_adapter.plugins.geonode import GeoNodeMapStore2ConfigConverter
@@ -63,6 +65,18 @@ class MapStoreHookSet(BaseHookSet):
     def initialize_context(self, context, callback):
         if context:
             request = self.get_request(context)
+            siteurl = settings.SITEURL
+            proxyurl = getattr(
+                    settings,
+                    'PROXY_URL',
+                    '/proxy/?url=')
+            apikey = request.GET.get('apikey')
+            if apikey:
+                siteurl = f'{settings.SITEURL[-1]}?apikey={apikey}/'
+                pproxyurl = urlparse(proxyurl)
+                proxyurl = f'{pproxyurl.path}?apikey={apikey}&{pproxyurl.query}'
+            context['SITEURL'] = siteurl
+            context['PROXY_URL'] = proxyurl
             context['USER'] = self.get_user(request)
             context['ACCESS_TOKEN'] = self.get_access_token(request)
             config = context['viewer'] if 'viewer' in context else None
