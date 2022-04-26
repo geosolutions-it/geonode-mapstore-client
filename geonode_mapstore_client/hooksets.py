@@ -17,6 +17,7 @@ except ImportError:
 from django.conf import settings
 
 from geonode.client.hooksets import BaseHookSet
+from geonode.base.auth import get_token_object
 from mapstore2_adapter.plugins.geonode import GeoNodeMapStore2ConfigConverter
 
 ms2_config_converter = GeoNodeMapStore2ConfigConverter()
@@ -45,6 +46,9 @@ class MapStoreHookSet(BaseHookSet):
     def get_access_token(self, request):
         if request and 'access_token' in request.session:
             return request.session['access_token']
+        elif request.GET.get('apikey'):
+            access_token = get_token_object(request.GET.get('apikey'))
+            return access_token.token
         return None
 
     # return if we are editing a layer or creating a new map
