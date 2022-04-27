@@ -74,11 +74,12 @@ class MapStoreHookSet(BaseHookSet):
                     settings,
                     'PROXY_URL',
                     '/proxy/?url=')
-            apikey = request.GET.get('apikey')
-            if apikey:
-                siteurl = f'{settings.SITEURL[-1]}?apikey={apikey}/'
-                pproxyurl = urlparse(proxyurl)
-                proxyurl = f'{pproxyurl.path}?apikey={apikey}&{pproxyurl.query}'
+            if request:
+                apikey = request.GET.get('apikey')
+                if apikey:
+                    siteurl = f'{settings.SITEURL[-1]}?apikey={apikey}/'
+                    pproxyurl = urlparse(proxyurl)
+                    proxyurl = f'{pproxyurl.path}?apikey={apikey}&{pproxyurl.query}'
             context['SITEURL'] = siteurl
             context['PROXY_URL'] = proxyurl
             context['USER'] = self.get_user(request)
