@@ -46,7 +46,7 @@ class MapStoreHookSet(BaseHookSet):
     def get_access_token(self, request):
         if request and 'access_token' in request.session:
             return request.session['access_token']
-        elif request.GET.get('apikey'):
+        elif request and request.GET.get('apikey'):
             access_token = get_token_object(request.GET.get('apikey'))
             return access_token.token
         return None
