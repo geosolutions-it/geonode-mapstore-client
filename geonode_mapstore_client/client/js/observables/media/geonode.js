@@ -29,6 +29,9 @@ function parseMapConfig({ data, attributes, user, id }, resource) {
         if (layer.group === 'background' && (layer.type === 'ol' || layer.type === 'OpenLayers.Layer')) {
             layer.type = 'empty';
         }
+        if (layer.provider === 'MapBoxStyle' || layer.provider === 'MapBox') {
+            layer.accessToken = window.__GEONODE_CONFIG__?.mapboxAccessToken
+        }
         return layer;
     }));
 
