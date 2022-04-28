@@ -84,6 +84,7 @@ class MapStoreHookSet(BaseHookSet):
             context['PROXY_URL'] = proxyurl
             context['USER'] = self.get_user(request)
             context['ACCESS_TOKEN'] = self.get_access_token(request)
+            context['MAPBOX_ACCESS_TOKEN'] = settings.MAPBOX_ACCESS_TOKEN
             config = context['viewer'] if 'viewer' in context else None
             if not config:
                 if 'config' in context and context['config']:
