@@ -12,6 +12,7 @@
         const token = '{{ access_token|default:"" }}' || '{{ ACCESS_TOKEN|default:"" }}' || null;
         window.__GEONODE_CONFIG__ = {
             languageCode: '{{ LANGUAGE_CODE }}',
+            mapboxAccessToken: '{{ MAPBOX_ACCESS_TOKEN }}',
             resourceId: {{ appId|default:'null' }},
             {% if is_app %}
                 resourceConfig: {{ config|default:'false'|safe }},
