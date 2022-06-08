@@ -26,7 +26,6 @@ export const creatMapStoreMap = (body = {}) => {
     return axios.post(parseDevHostname(`${endpointAdapter}/resources/`),
         body,
         {
-            timeout: 10000,
             params: {
                 full: true
             }
