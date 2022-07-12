@@ -17,6 +17,8 @@ import {
     REDUCE_TOTAL_COUNT
 } from '@js/actions/gnsearch';
 
+import { UPDATE_SINGLE_RESOURCE } from '@js/actions/gnresource';
+
 const defaultState = {
     resources: [],
     params: {},
@@ -45,6 +47,20 @@ function gnsearch(state = defaultState, action) {
                     ...state.resources,
                     ...action.resources
                 ]
+        };
+    }
+    case UPDATE_SINGLE_RESOURCE: {
+        const updatedState = state.resources.map(resource => {
+            if (resource.pk === action?.data?.pk) {
+                return action?.data;
+            } return resource;
+        });
+        return {
+            ...state,
+            isFirstRequest: false,
+            resources: [
+                ...updatedState
+            ]
         };
     }
     case UPDATE_RESOURCES_METADATA: {
