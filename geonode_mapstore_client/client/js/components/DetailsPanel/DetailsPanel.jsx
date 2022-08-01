@@ -283,6 +283,10 @@ function DetailsPanel({
             "label": "Title",
             "value": validateDataType(resource?.title)
         },
+	{
+            "label": "Custom Metadata",
+            "value": validateDataType(resource?.raw_custom_md)
+	},
         {
             "label": "Abstract",
             "value": validateDataType(resource?.raw_abstract)?.length > 100 ? <div>{validateDataType(resource?.raw_abstract)?.substring(0, 100)}{extraContent}{' '}<a className="read-more-link" onClick={() => setReadMore(!readMore) }>{linkName}</a></div> : validateDataType(resource?.raw_abstract)
