@@ -23,6 +23,10 @@ register = template.Library()
 # Entry registered as Rollup input in vite.config.js -> rollupOptions.input
 ADMIN_APP_ENTRY = "src/main.jsx"
 
+# Must match `base` in vite.config.js (dev branch). Vite serves all dev
+# assets under this prefix, so the <script> tags need to include it.
+ADMIN_APP_DEV_BASE = "/manage/"
+
 
 def _dev_server_url():
     return getattr(settings, "ADMIN_APP_DEV_SERVER", "http://localhost:5173")
@@ -65,9 +69,10 @@ def admin_app_assets():
     """
     if _is_dev():
         dev = _dev_server_url().rstrip("/")
+        base = ADMIN_APP_DEV_BASE
         return mark_safe(
-            f'<script type="module" src="{dev}/@vite/client"></script>\n'
-            f'<script type="module" src="{dev}/{ADMIN_APP_ENTRY}"></script>'
+            f'<script type="module" src="{dev}{base}@vite/client"></script>\n'
+            f'<script type="module" src="{dev}{base}{ADMIN_APP_ENTRY}"></script>'
         )
 
     manifest = _load_manifest()

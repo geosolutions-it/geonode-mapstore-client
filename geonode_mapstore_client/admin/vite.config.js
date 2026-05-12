@@ -2,36 +2,54 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
 
-// The admin app supports two dev workflows:
+// The admin app supports three dev workflows. All three are HMR-enabled.
 //
-//   1. Django-served shell + Vite-served JS.
+//   1. Django-served shell + Vite-served JS (Mode 1).
 //      Browser hits Django at http://localhost:8000/manage/. Django renders
-//      a template that loads <script type="module" src="http://localhost:5173/src/main.jsx">.
+//      the admin-app/index.html template (GeoNode chrome + React root) and
+//      loads <script type="module" src="http://localhost:5173/manage/src/main.jsx">.
 //      Same-origin API calls hit Django directly; no proxy needed.
 //      Selected when VITE_PROXY_TARGET is empty.
 //
-//   2. Reverse-proxy + admin overlay (default with VITE_PROXY_TARGET set).
+//   2. Reverse-proxy + admin overlay (Mode 2).
 //      Browser hits http://localhost:5173/. Vite forwards everything to the
-//      GeoNode target (local or remote) — catalogue, API, auth, static files
-//      — except /manage/*, which Vite serves itself with HMR. The result is a
-//      single origin where the full GeoNode UI is available, with the in-dev
-//      admin app overlaid at /manage/.
+//      GeoNode target (local or remote) — catalogue, API, auth, static —
+//      except /manage/*, which Vite serves itself from index.html (bare
+//      shell, no GeoNode chrome).
+//      Selected by setting VITE_PROXY_TARGET; default behavior.
 //
-// Set VITE_PROXY_TARGET=http://localhost:8000 (local) or =https://stable.demo.geonode.org
-// (remote) in .env to enable mode 2.
+//   3. Reverse-proxy with Django-rendered /manage shell (Mode 3).
+//      Same single-origin model as Mode 2, but /manage/<route> HTML requests
+//      are also forwarded to upstream Django so its template renders the
+//      GeoNode chrome. Vite still serves dev assets (/manage/src/*,
+//      /manage/@*, /manage/node_modules/*) locally for HMR.
+//      Requires the upstream to have this branch installed.
+//      Selected by setting VITE_PROXY_TARGET *and* VITE_PROXY_MANAGE=true.
+//
+// HMR WebSocket: fixed at /__vite_admin_hmr (outside /manage) so the proxy
+// rules in modes 2 and 3 can be simple.
+const HMR_PATH = '/__vite_admin_hmr';
+
+// Mode 2: proxy everything that isn't /manage/* and isn't the HMR ws.
+const MODE_2_PROXY_REGEX = `^(?!/manage(?:/|$)|${HMR_PATH}).*`;
+
+// Mode 3: proxy everything that isn't a Vite dev asset path or the HMR ws.
+// /manage/<html-route> is forwarded so Django renders the shell, but
+// /manage/src/*, /manage/@*, /manage/node_modules/*, /manage/__vite* stay
+// local on Vite. The leading `^` is required for Vite to treat the key as a
+// regex; the rest is a single negative lookahead.
+const MODE_3_PROXY_REGEX =
+    `^(?!${HMR_PATH}|/manage/(?:src/|@|node_modules/|__vite)).*`;
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
     const proxyTarget = env.VITE_PROXY_TARGET || '';
+    const proxyManageToUpstream = env.VITE_PROXY_MANAGE === 'true';
 
-    // One regex catch-all: forward everything to GeoNode EXCEPT /manage/*
-    // (the admin app) and Vite's own dev-server endpoints. The latter all
-    // live under /manage/ too because `base: '/manage/'` reroutes them
-    // there (e.g. /manage/@vite/client, /manage/src/main.jsx, the HMR
-    // websocket). So a single negative lookahead on /manage is sufficient.
+    const proxyKey = proxyManageToUpstream ? MODE_3_PROXY_REGEX : MODE_2_PROXY_REGEX;
     const proxy = proxyTarget
         ? {
-            '^(?!/manage(?:/|$)).*': {
+            [proxyKey]: {
                 target: proxyTarget,
                 changeOrigin: true,
                 secure: false,
@@ -66,6 +84,9 @@ export default defineConfig(({ mode }) => {
             // CORS open so Django (port 8000) can load modules from Vite (port 5173).
             cors: true,
             origin: `http://${env.VITE_DEV_HOST || 'localhost'}:${env.VITE_DEV_PORT || 5173}`,
+            // Pin the HMR ws to a stable path outside /manage so the proxy
+            // rules don't accidentally swallow it.
+            hmr: { path: HMR_PATH },
             proxy
         },
         build: {

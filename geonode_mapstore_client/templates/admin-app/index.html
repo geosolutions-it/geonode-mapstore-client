@@ -1,12 +1,36 @@
-{% load admin_app_tags %}<!doctype html>
-<html lang="en">
+{% load static %}
+{% load admin_app_tags %}
+<!DOCTYPE html>
+<html>
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>GeoNode Admin</title>
+        {% include 'geonode-mapstore-client/snippets/head.html' %}
+
+        {% block custom_theme %}
+            {% include 'geonode-mapstore-client/snippets/custom_theme.html' %}
+        {% endblock %}
+
+        {% block extra_style %}{% endblock %}
     </head>
-    <body>
-        <div id="gn-admin-root"></div>
-        {% admin_app_assets %}
+    <body class="msgapi">
+        <div class="gn-page-wrapper {% if request.user_agent.is_mobile %}gn-mobile{% else %}gn-desktop{% endif %}">
+            {% include 'geonode-mapstore-client/_geonode_config.html' %}
+
+            <div class="gn-theme {% block page_class %}gn-admin-page{% endblock %}">
+                {% block header %}
+                    {% include 'geonode-mapstore-client/snippets/header.html' %}
+                {% endblock %}
+
+                {# React mount point — the admin app takes over from here. #}
+                <div id="gn-admin-root"></div>
+
+                {% block footer %}
+                    {% include 'geonode-mapstore-client/snippets/footer.html' %}
+                {% endblock %}
+
+                {# Vite assets: dev = HMR client + source entry; prod = hashed
+                   bundle resolved from the build manifest. #}
+                {% admin_app_assets %}
+            </div>
+        </div>
     </body>
 </html>
