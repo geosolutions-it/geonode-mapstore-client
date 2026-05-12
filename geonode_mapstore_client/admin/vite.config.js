@@ -4,49 +4,49 @@ import path from 'node:path';
 
 // The admin app supports two dev workflows:
 //
-//   1. Django-served shell + Vite-served JS (default).
+//   1. Django-served shell + Vite-served JS.
 //      Browser hits Django at http://localhost:8000/manage/. Django renders
 //      a template that loads <script type="module" src="http://localhost:5173/src/main.jsx">.
 //      Same-origin API calls hit Django directly; no proxy needed.
+//      Selected when VITE_PROXY_TARGET is empty.
 //
-//   2. Standalone Vite + API proxy.
-//      Browser hits http://localhost:5173/manage/. Vite serves index.html
-//      and proxies API / static / auth paths to a local or remote GeoNode.
-//      Useful when you want to develop the UI against a remote staging server
-//      without running GeoNode locally.
+//   2. Reverse-proxy + admin overlay (default with VITE_PROXY_TARGET set).
+//      Browser hits http://localhost:5173/. Vite forwards everything to the
+//      GeoNode target (local or remote) — catalogue, API, auth, static files
+//      — except /manage/*, which Vite serves itself with HMR. The result is a
+//      single origin where the full GeoNode UI is available, with the in-dev
+//      admin app overlaid at /manage/.
 //
-// Mode 1 is selected by default. Set VITE_PROXY_TARGET=http://staging.example.org
-// (or your local http://localhost:8000) in .env to enable mode 2.
+// Set VITE_PROXY_TARGET=http://localhost:8000 (local) or =https://stable.demo.geonode.org
+// (remote) in .env to enable mode 2.
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
     const proxyTarget = env.VITE_PROXY_TARGET || '';
-    const proxyHost = proxyTarget ? new URL(proxyTarget).host : '';
 
-    // Paths that should be forwarded to GeoNode in standalone mode.
-    const proxyPaths = [
-        '/api',
-        '/account',
-        '/o',
-        '/static',
-        '/avatar',
-        '/geoserver',
-        '/catalogue',
-        '/proxy'
-    ];
-
+    // One regex catch-all: forward everything to GeoNode EXCEPT /manage/*
+    // (the admin app) and Vite's own dev-server endpoints. The latter all
+    // live under /manage/ too because `base: '/manage/'` reroutes them
+    // there (e.g. /manage/@vite/client, /manage/src/main.jsx, the HMR
+    // websocket). So a single negative lookahead on /manage is sufficient.
     const proxy = proxyTarget
-        ? Object.fromEntries(
-            proxyPaths.map((p) => [
-                p,
-                {
-                    target: proxyTarget,
-                    changeOrigin: true,
-                    secure: false,
-                    headers: { Host: proxyHost }
-                }
-            ])
-        )
+        ? {
+            '^(?!/manage(?:/|$)).*': {
+                target: proxyTarget,
+                changeOrigin: true,
+                secure: false,
+                ws: true,
+                // Strip the Domain attribute on Set-Cookie so cookies issued
+                // by the upstream (sessionid, csrftoken) attach to localhost
+                // and travel back on subsequent proxied requests.
+                cookieDomainRewrite: '',
+                // Tell the upstream the request came from localhost:5173 so
+                // it can build correct redirect URLs (requires
+                // USE_X_FORWARDED_HOST=True on Django for absolute Location
+                // headers; relative redirects work without it).
+                xfwd: true
+            }
+        }
         : undefined;
 
     return {

@@ -79,22 +79,43 @@ Then open `http://localhost:8000/manage/`. You'll see the Hello page.
 > If you don't want Vite to kick in (e.g. you want to test the built bundle
 > served from Django statics), set `ADMIN_APP_DEV=False` in Django settings.
 
-### Mode 2 — Standalone Vite + API proxy
+### Mode 2 — Reverse-proxy + admin overlay
 
-Useful when you want to develop against a *remote* GeoNode (e.g. staging)
-without running Django locally.
+A single dev origin that mirrors a full GeoNode (local or remote), with
+the in-dev admin app overlaid at `/manage/`. Vite forwards every path it
+doesn't own to `VITE_PROXY_TARGET`; only `/manage/*` (the admin app and
+its HMR assets) is served locally.
 
 ```bash
 cd geonode_mapstore_client/admin
 cp .env.example .env
-# In .env, set:
-#   VITE_PROXY_TARGET=https://staging.geonode.example.org
+# In .env, set ONE of:
+#   VITE_PROXY_TARGET=http://localhost:8000             # your local GeoNode
+#   VITE_PROXY_TARGET=https://stable.demo.geonode.org   # a remote one
 npm install
 npm run dev
 ```
 
-Then open `http://localhost:5173/manage/`. Vite serves `index.html` and
-proxies `/api/`, `/account/`, `/static/`, ... to the configured target.
+Then open `http://localhost:5173/`:
+
+- `/` and any non-`/manage` path → forwarded to the target. You see the
+  full GeoNode UI (catalogue, datasets, maps, login, ...), authenticate
+  normally, navigate around.
+- `/manage/` → served locally by Vite with HMR. The admin app reuses the
+  session cookie that the upstream set during login (cookie Domain is
+  stripped so it attaches to `localhost`), so authenticated API calls
+  Just Work.
+
+**Caveats with a remote target:**
+- Some redirects issued by the upstream may be absolute (e.g. login flow
+  bouncing through `oauth/`). Those will jump to the remote host's URL.
+  This is fine against a local GeoNode (`localhost:8000` ↔ `localhost:5173`
+  is a small annoyance, not a break); against a remote one you'll
+  occasionally land on the remote site and have to navigate back to
+  `localhost:5173`.
+- CSRF can fail if the upstream validates Origin / Referer strictly. The
+  proxy passes them through unchanged, so the upstream sees
+  `http://localhost:5173`. Most GeoNode installs accept this.
 
 ## Production build
 
