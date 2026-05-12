@@ -99,6 +99,15 @@ def run_setup_hooks(*args, **kwargs):
         re_path(r"^maps$", TemplateView.as_view(template_name="geonode-mapstore-client/pages/maps.html")),
         re_path(r"^documents$", TemplateView.as_view(template_name="geonode-mapstore-client/pages/documents.html")),
         re_path(r"^geostories$", TemplateView.as_view(template_name="geonode-mapstore-client/pages/geostories.html")),
+
+        # Admin app (React + Vite). All sub-paths render the same shell so
+        # react-router-dom can take over on the client. The trailing wildcard
+        # is what makes deep-link reloads work (e.g. /manage/users/42).
+        re_path(
+            r"^manage(?:/.*)?$",
+            TemplateView.as_view(template_name="admin-app/index.html"),
+            name="admin-app",
+        ),
     ]
 
     # adding default format for metadata schema validation

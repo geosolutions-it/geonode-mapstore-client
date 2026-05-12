@@ -1,0 +1,11 @@
+{
+  "src/main.jsx": {
+    "file": "assets/main-DdjOslFy.js",
+    "name": "main",
+    "src": "src/main.jsx",
+    "isEntry": true,
+    "css": [
+      "assets/main-DKgaMz0p.css"
+    ]
+  }
+}
