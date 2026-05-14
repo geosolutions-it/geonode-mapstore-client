@@ -4,7 +4,10 @@ import { apiFetch } from '../api/client.js';
 
 // Smoke test: hit a public GeoNode v2 endpoint to prove the dev proxy /
 // same-origin integration works end-to-end (browser -> Vite/Django -> GeoNode).
-const PROBE_ENDPOINT = '/api/v2/categories/?page_size=3';
+// The `catalog_list` preset returns a slim payload; `metadata_only=false`
+// excludes metadata-only records so we get real resources back.
+const PROBE_ENDPOINT =
+    '/api/v2/resources?api_preset=catalog_list&filter%7Bmetadata_only%7D=false&page=1&page_size=12';
 
 export default function Hello() {
     const [state, setState] = useState({ status: 'loading' });
